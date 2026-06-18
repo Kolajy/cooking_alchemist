@@ -1,0 +1,24 @@
+[submodule "core"]
+	path = core
+	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/core.git
+	branch = main
+[submodule "web"]
+	path = web
+	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/web.git
+	branch = main
+[submodule "desktop"]
+	path = desktop
+	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/desktop.git
+	branch = main
+[submodule "ios"]
+	path = ios
+	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/ios.git
+	branch = main
+[submodule "android"]
+	path = android
+	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/android.git
+	branch = main
+[submodule "wasm"]
+	path = wasm
+	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/wasm.git
+	branch = main
