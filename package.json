@@ -1,0 +1,29 @@
+{
+  "name": "culinary-alchemy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Culinary Alchemy monorepo — web dev client, native Steam (egui), native iOS (SwiftUI), native Android (Compose)",
+  "workspaces": [
+    "web",
+    "content"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @culinary-alchemy/web",
+    "build": "npm run build --workspace @culinary-alchemy/web",
+    "preview": "npm run preview --workspace @culinary-alchemy/web",
+    "test": "npm run test --workspace @culinary-alchemy/web",
+    "test:packs": "npm run test:packs --workspace @culinary-alchemy/web",
+    "export-native": "tsx scripts/export_native_bundle.ts && tsx scripts/generate_content_reference.ts",
+    "docs:generate": "tsx scripts/generate_content_reference.ts",
+    "submodules:init": "bash scripts/setup_submodules.sh",
+    "submodules:sync": "git submodule update --init --recursive",
+    "desktop:dev": "npm run export-native && cargo run -p culinary-desktop",
+    "desktop:build": "npm run export-native && cargo build -p culinary-desktop --release",
+    "steam:dev": "npm run desktop:dev",
+    "steam:build": "npm run desktop:build",
+    "ios:assets": "npm run export-native",
+    "android:assets": "npm run export-native",
+    "android:build": "npm run android:assets && cd android && ./gradlew assembleDebug",
+    "android:install": "npm run android:build && cd android && ./gradlew installDebug"
+  }
+}
