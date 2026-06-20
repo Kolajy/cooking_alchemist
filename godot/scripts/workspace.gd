@@ -19,8 +19,11 @@ func _ready():
 		get_node("UI/ActionBar/BtnHeat").pressed.connect(set_active_action.bind("heat"))
 	if has_node("UI/ActionBar/BtnTime"):
 		get_node("UI/ActionBar/BtnTime").pressed.connect(set_active_action.bind("time"))
+	if has_node("UI/HeaderBar/BtnLedgerBook"):
+		get_node("UI/HeaderBar/BtnLedgerBook").pressed.connect(_on_ledger_book_pressed)
 		
 	update_action_ui()
+	update_progress_ui()
 	# Spawn starters to begin
 	spawn_starter_tokens()
 
@@ -49,6 +52,17 @@ func spawn_token(id: String, pos: Vector2):
 
 func _on_discovery_changed():
 	update_highlights()
+	update_progress_ui()
+
+func update_progress_ui():
+	if has_node("UI/HeaderBar/LedgerProgressLabel"):
+		get_node("UI/HeaderBar/LedgerProgressLabel").text = "📖 Ledger Restored: " + str(GameState.get_restored_percentage()) + "%"
+
+func _on_ledger_book_pressed():
+	var root = get_tree().root.get_child(0)
+	var book = root.find_child("LedgerBook", true, false)
+	if book and book.has_method("show_book"):
+		book.show_book()
 
 func set_active_action(action: String):
 	GameState.active_action = action

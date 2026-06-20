@@ -1,0 +1,186 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx9y3d2df1g5v"]
+
+[ext_resource type="Script" path="res://scripts/ledger_book.gd" id="1_book"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.04, 0.03, 0.02, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.18, 0.14, 0.1, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.78, 0.6, 0.32, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.6)
+
+[node name="LedgerBook" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_book")
+
+[node name="Backdrop" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="BookFrame" type="Panel" parent="."]
+custom_minimum_size = Vector2(800, 560)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -280.0
+offset_right = 400.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(400, 280)
+theme_override_styles/panel = SubResource("StyleBoxFlat_2")
+
+[node name="Header" type="Label" parent="BookFrame"]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 776.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.78, 0.6, 0.32, 1)
+theme_override_font_sizes/font_size = 18
+text = "📖 Grandmother's Ledger 📖"
+horizontal_alignment = 1
+
+[node name="BtnClose" type="Button" parent="BookFrame"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 48.0
+grow_horizontal = 0
+text = "✕"
+
+[node name="TabContainer" type="TabContainer" parent="BookFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 64.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+
+[node name="Produce" type="Control" parent="BookFrame/TabContainer"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="BookFrame/TabContainer/Produce"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="BookFrame/TabContainer/Produce/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="Forage" type="Control" parent="BookFrame/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="BookFrame/TabContainer/Forage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="BookFrame/TabContainer/Forage/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="Proteins" type="Control" parent="BookFrame/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="BookFrame/TabContainer/Proteins"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="BookFrame/TabContainer/Proteins/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="Liquids" type="Control" parent="BookFrame/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="BookFrame/TabContainer/Liquids"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="BookFrame/TabContainer/Liquids/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="Pantry" type="Control" parent="BookFrame/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="BookFrame/TabContainer/Pantry"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="BookFrame/TabContainer/Pantry/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3

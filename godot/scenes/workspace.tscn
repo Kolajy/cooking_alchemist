@@ -9,6 +9,22 @@ script = ExtResource("1_ws")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="HeaderBar" type="HBoxContainer" parent="UI"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 924.0
+offset_bottom = 48.0
+theme_override_constants/separation = 16
+
+[node name="LedgerProgressLabel" type="Label" parent="UI/HeaderBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.6, 0.32, 1)
+text = "📖 Ledger Restored: 0%"
+
+[node name="BtnLedgerBook" type="Button" parent="UI/HeaderBar"]
+layout_mode = 2
+text = "📖 Ledger Book"
+
 [node name="ActionBar" type="HBoxContainer" parent="UI"]
 anchors_preset = 12
 anchor_top = 1.0

@@ -23,5 +23,19 @@ func _ready():
 			var ui = ui_scene.instantiate()
 			add_child(ui)
 			print("✅ Pantry UI loaded.")
+			
+		# Load Discovery Popup Overlay
+		var popup_scene = preload("res://scenes/discovery_popup.tscn")
+		if popup_scene:
+			var popup = popup_scene.instantiate()
+			add_child(popup)
+			print("✅ Discovery Popup loaded.")
+			
+		# Load Ledger Book Overlay
+		var book_scene = preload("res://scenes/ledger_book.tscn")
+		if book_scene:
+			var book = book_scene.instantiate()
+			add_child(book)
+			print("✅ Ledger Book loaded.")
 	else:
 		print("❌ Database verification failed. No items loaded.")
