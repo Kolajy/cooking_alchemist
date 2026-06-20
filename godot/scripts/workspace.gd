@@ -37,12 +37,16 @@ func _ready():
 
 func spawn_starter_tokens():
 	var screen_size = get_viewport_rect().size
+	if screen_size.x < 200 or screen_size.y < 200:
+		screen_size = Vector2(1280, 720)
+		
+	# Shift layout center to the left to avoid spawning starters under the 340px right sidebar
+	var workspace_width = screen_size.x - 340
 	var spawn_points = [
-		Vector2(screen_size.x * 0.4, screen_size.y * 0.5),
-		Vector2(screen_size.x * 0.6, screen_size.y * 0.5)
+		Vector2(workspace_width * 0.35, screen_size.y * 0.5),
+		Vector2(workspace_width * 0.65, screen_size.y * 0.5)
 	]
 	
-	# Spawn berries and tubers to start
 	var starters_to_spawn = ["berries", "tubers"]
 	for i in range(starters_to_spawn.size()):
 		var id = starters_to_spawn[i]
@@ -53,8 +57,8 @@ func spawn_token(id: String, pos: Vector2, push_undo: bool = true):
 	if not token_scene:
 		return
 	var token = token_scene.instantiate()
-	token_container.add_child(token)
 	token.global_position = pos
+	token_container.add_child(token)
 	token.setup(id)
 	update_highlights()
 	

@@ -23,6 +23,7 @@ func _ready():
 
 func setup(id: String):
 	item_id = id
+	target_position = global_position
 	var data = Database.discoverable_items.get(id)
 	if not data:
 		# Check starters
