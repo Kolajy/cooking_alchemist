@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://help_dialog_scene"]
+
+[ext_resource type="Script" path="res://scripts/help_dialog.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_backdrop"]
+bg_color = Color(0.04, 0.03, 0.02, 0.6)
+
+[node name="HelpDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Backdrop" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_backdrop")
+
+[node name="Card" type="Panel" parent="."]
+custom_minimum_size = Vector2(520, 460)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -230.0
+offset_right = 260.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(260, 230)
+
+[node name="VBox" type="VBoxContainer" parent="Card"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Card/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.6, 0.32, 1)
+theme_override_font_sizes/font_size = 18
+text = "❓ How to Play"
+horizontal_alignment = 1
+
+[node name="Intro" type="Label" parent="Card/VBox"]
+layout_mode = 2
+text = "Drag ingredients from the Pantry onto the counter. Select an action, then click items to apply techniques or remove them."
+autowrap_mode = 2
+
+[node name="ShortcutList" type="VBoxContainer" parent="Card/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="BtnClose" type="Button" parent="Card/VBox"]
+layout_mode = 2
+text = "Back to Kitchen"

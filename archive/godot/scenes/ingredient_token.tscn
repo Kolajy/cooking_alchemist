@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8yv3d2df1g5v"]
+
+[ext_resource type="Script" path="res://scripts/ingredient_token.gd" id="1_token"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 44.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.992, 0.984, 0.961, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.69, 0.62, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.75, 0.58, 0.28, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="IngredientToken" type="Area2D"]
+script = ExtResource("1_token")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="Background" type="Panel" parent="."]
+custom_minimum_size = Vector2(88, 88)
+offset_left = -44.0
+offset_top = -44.0
+offset_right = 44.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Emoji" type="Label" parent="."]
+offset_left = -44.0
+offset_top = -36.0
+offset_right = 44.0
+offset_bottom = 8.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 28
+text = "🫐"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Name" type="Label" parent="."]
+offset_left = -40.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 36.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.251, 0.2, 0.18, 1)
+theme_override_font_sizes/font_size = 10
+text = "Berries"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Dot" type="Panel" parent="."]
+custom_minimum_size = Vector2(10, 10)
+offset_left = 24.0
+offset_top = -40.0
+offset_right = 34.0
+offset_bottom = -30.0
+mouse_filter = 2
+
+[node name="Highlight" type="Panel" parent="."]
+custom_minimum_size = Vector2(96, 96)
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2")

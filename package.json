@@ -2,10 +2,11 @@
   "name": "culinary-alchemy",
   "version": "1.0.0",
   "private": true,
-  "description": "Culinary Alchemy monorepo — web dev client, native Steam (egui), native iOS (SwiftUI), native Android (Compose)",
+  "description": "Culinary Alchemy monorepo — web dev client, Electron shell, native Steam (egui)",
   "workspaces": [
     "web",
-    "content"
+    "content",
+    "electron"
   ],
   "scripts": {
     "dev": "npm run dev --workspace @culinary-alchemy/web",
@@ -22,9 +23,8 @@
     "desktop:build": "npm run export-native && cargo build -p culinary-desktop --release",
     "steam:dev": "npm run desktop:dev",
     "steam:build": "npm run desktop:build",
-    "ios:assets": "npm run export-native",
-    "android:assets": "npm run export-native",
-    "android:build": "npm run android:assets && cd android && ./gradlew assembleDebug",
-    "android:install": "npm run android:build && cd android && ./gradlew installDebug"
+    "electron:dev": "npm run dev --workspace @culinary-alchemy/electron",
+    "electron:build": "npm run build --workspace @culinary-alchemy/electron",
+    "electron:pack": "npm run pack --workspace @culinary-alchemy/electron"
   }
 }

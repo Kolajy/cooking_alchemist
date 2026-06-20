@@ -1,0 +1,121 @@
+[gd_scene load_steps=3 format=3 uid="uid://e8yv3d2df1g5v"]
+
+[ext_resource type="Script" path="res://scripts/pantry_ui.gd" id="1_pantry"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.941, 0.902, 0.867, 0.78)
+border_width_left = 1
+border_color = Color(0.62, 0.56, 0.47, 0.35)
+
+[node name="PantryUI" type="Control"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -340.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_pantry")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="Label" parent="Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.34, 0.28, 0.75)
+theme_override_font_sizes/font_size = 16
+text = "❧  PANTRY  ❧"
+horizontal_alignment = 1
+
+[node name="TabBar" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="BtnCabinet" type="Button" parent="Layout/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+text = "🗄️ Cabinet"
+
+[node name="BtnSkills" type="Button" parent="Layout/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+text = "🎓 Skills"
+
+[node name="BtnJournal" type="Button" parent="Layout/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+text = "📓 Journal"
+
+[node name="BtnTrophies" type="Button" parent="Layout/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+text = "🏆 Trophies"
+
+[node name="TabBarRule" type="ColorRect" parent="Layout"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.62, 0.56, 0.47, 0.28)
+
+[node name="SearchRow" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="SearchField" type="LineEdit" parent="Layout/SearchRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search name or :tags (e.g. :raw, :recent)…"
+
+[node name="TabContents" type="Control" parent="Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CabinetScroll" type="ScrollContainer" parent="Layout/TabContents"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="CabinetGrid" type="GridContainer" parent="Layout/TabContents/CabinetScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+
+[node name="FooterHint" type="Label" parent="Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.36, 0.32, 0.72)
+theme_override_font_sizes/font_size = 11
+text = "Drag something onto the counter to begin."
+horizontal_alignment = 1
+autowrap_mode = 2

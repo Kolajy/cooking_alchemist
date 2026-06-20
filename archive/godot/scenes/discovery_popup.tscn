@@ -1,0 +1,187 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx8y3d2df1g5v"]
+
+[ext_resource type="Script" path="res://scripts/discovery_popup.gd" id="1_popup"]
+[ext_resource type="Script" path="res://scripts/discovery_sparkles.gd" id="2_sparkles"]
+
+[node name="DiscoveryPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_popup")
+
+[node name="Backdrop" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Glow" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -280.0
+offset_right = 280.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.831, 0.659, 0.29, 0)
+
+[node name="Card" type="Panel" parent="."]
+custom_minimum_size = Vector2(420, 480)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -240.0
+offset_right = 210.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(210, 240)
+
+[node name="Sparkles" type="Control" parent="Card"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_sparkles")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Card"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 24.0
+offset_right = -28.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="Label" parent="Card/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.733, 0.451, 0.282, 1)
+theme_override_font_sizes/font_size = 11
+text = "ANOTHER DISCOVERY!"
+horizontal_alignment = 1
+
+[node name="ModalTitle" type="Label" parent="Card/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.251, 0.2, 0.18, 1)
+theme_override_font_sizes/font_size = 22
+text = "New Ingredient Discovered"
+horizontal_alignment = 1
+
+[node name="ItemBox" type="PanelContainer" parent="Card/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HBox" type="HBoxContainer" parent="Card/VBoxContainer/ItemBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ItemEmoji" type="Label" parent="Card/VBoxContainer/ItemBox/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "🍤"
+vertical_alignment = 1
+
+[node name="ItemName" type="Label" parent="Card/VBoxContainer/ItemBox/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.251, 0.2, 0.18, 1)
+theme_override_font_sizes/font_size = 20
+text = "Shrimp"
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="Card/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.36, 0.32, 1)
+theme_override_font_sizes/font_size = 12
+text = "Description of the dish goes here."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ExpPanel" type="PanelContainer" parent="Card/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExpInner" type="VBoxContainer" parent="Card/VBoxContainer/ExpPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ExpHeader" type="HBoxContainer" parent="Card/VBoxContainer/ExpPanel/ExpInner"]
+layout_mode = 2
+
+[node name="ExpSkillLabel" type="Label" parent="Card/VBoxContainer/ExpPanel/ExpInner/ExpHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.251, 0.2, 0.18, 1)
+theme_override_font_sizes/font_size = 12
+text = "🔪 Separate"
+
+[node name="ExpGainLabel" type="Label" parent="Card/VBoxContainer/ExpPanel/ExpInner/ExpHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.671, 0.439, 0.282, 1)
+theme_override_font_sizes/font_size = 10
+text = "+1 EXP"
+horizontal_alignment = 2
+
+[node name="ExpBar" type="ProgressBar" parent="Card/VBoxContainer/ExpPanel/ExpInner"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+max_value = 10.0
+show_percentage = false
+
+[node name="ExpDetailLabel" type="Label" parent="Card/VBoxContainer/ExpPanel/ExpInner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.36, 0.32, 0.85)
+theme_override_font_sizes/font_size = 10
+text = "1 / 10 exp"
+horizontal_alignment = 0
+
+[node name="TipPanel" type="PanelContainer" parent="Card/VBoxContainer"]
+layout_mode = 2
+
+[node name="TipInner" type="VBoxContainer" parent="Card/VBoxContainer/TipPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TipHeading" type="Label" parent="Card/VBoxContainer/TipPanel/TipInner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.671, 0.439, 0.282, 1)
+theme_override_font_sizes/font_size = 11
+text = "📜 Did You Know?"
+
+[node name="ScienceTip" type="Label" parent="Card/VBoxContainer/TipPanel/TipInner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.36, 0.32, 1)
+theme_override_font_sizes/font_size = 11
+text = "A short historical or culinary fact goes here."
+autowrap_mode = 2
+
+[node name="XpLabel" type="Label" parent="Card/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="BtnClose" type="Button" parent="Card/VBoxContainer"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cook Onwards!"

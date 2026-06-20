@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
-  "outputDirectory": "godot_web_dist",
-  "buildCommand": "echo 'skip build'",
+  "outputDirectory": "web/dist",
+  "buildCommand": "npm run build",
   "headers": [
     {
       "source": "/(.*)",

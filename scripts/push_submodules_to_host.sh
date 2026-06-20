@@ -14,8 +14,6 @@ declare -A REPOS=(
   [core]=culinary-core
   [web]=culinary-web
   [desktop]=culinary-desktop
-  [ios]=culinary-ios
-  [android]=culinary-android
   [wasm]=culinary-wasm
 )
 

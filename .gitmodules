@@ -10,14 +10,6 @@
 	path = desktop
 	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/desktop.git
 	branch = main
-[submodule "ios"]
-	path = ios
-	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/ios.git
-	branch = main
-[submodule "android"]
-	path = android
-	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/android.git
-	branch = main
 [submodule "wasm"]
 	path = wasm
 	url = file:///Users/kolajy/pg/cooking/.git-submodule-bare/wasm.git

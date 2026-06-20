@@ -9,7 +9,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-MODULES=(content core web desktop ios android wasm)
+MODULES=(content core web desktop wasm)
 BARE_DIR="$ROOT/.git-submodule-bare"
 STAGING_ROOT="$ROOT/.submodule-staging"
 
