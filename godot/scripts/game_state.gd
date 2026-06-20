@@ -121,3 +121,10 @@ func load_progress():
 			reset_to_starters()
 	else:
 		reset_to_starters()
+
+func add_skill_xp(skill_id: String, amount: int):
+	if not skills_xp.has(skill_id):
+		skills_xp[skill_id] = 0
+	skills_xp[skill_id] += amount
+	save_progress()
+	emit_signal("discovery_changed")

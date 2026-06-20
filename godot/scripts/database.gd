@@ -6,6 +6,7 @@ var technique_categories: Dictionary = {}
 var player_actions: Dictionary = {}
 var milestones: Array = []
 var transitions: Array = []
+var achievements: Array = []
 
 func _ready():
 	load_data()
@@ -27,6 +28,7 @@ func load_data():
 			technique_categories = prog.get("techniqueCategories", {})
 			player_actions = prog.get("playerActions", {})
 			milestones = prog.get("milestones", [])
+			achievements = data.get("achievements", [])
 			
 			print("Loaded game_bundle.json successfully: ", discoverable_items.size(), " items loaded.")
 		else:

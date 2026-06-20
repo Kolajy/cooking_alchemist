@@ -221,6 +221,11 @@ func apply_technique(token):
 					GameState.discover_ingredient(next_output)
 					spawn_token(next_output, old_pos, false)
 					push_undo_technique(old_id, next_output, old_pos)
+					
+					var skill_key = action
+					if action == "separate":
+						skill_key = "prep"
+					GameState.add_skill_xp(skill_key, 1)
 					return
 
 func on_token_released(dragged_token):
