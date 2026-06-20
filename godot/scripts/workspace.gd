@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var token_scene: PackedScene = preload("res://scenes/ingredient_token.tscn")
+@export var particle_scene: PackedScene = preload("res://scenes/cooking_particles.tscn")
 
 @onready var token_container = $TokenContainer
 @onready var action_label = $UI/ActionBar/ActiveActionLabel
@@ -157,6 +158,20 @@ func apply_technique(token):
 					var old_pos = token.global_position
 					token.queue_free()
 					
+					# Play SFX and Particle effects based on action
+					if action == "separate":
+						SoundManager.play_sfx("chop")
+						spawn_particles("Steam", old_pos)
+					elif action == "force":
+						SoundManager.play_sfx("smash")
+						spawn_particles("Steam", old_pos)
+					elif action == "heat":
+						SoundManager.play_sfx("sizzle")
+						spawn_particles("Embers", old_pos)
+					elif action == "time":
+						SoundManager.play_sfx("ui_select")
+						spawn_particles("Sparkles", old_pos)
+					
 					# Spawn result at the same position
 					GameState.discover_ingredient(next_output)
 					spawn_token(next_output, old_pos)
@@ -186,6 +201,10 @@ func on_token_released(dragged_token):
 			var spawn_pos = target_token.global_position
 			dragged_token.queue_free()
 			target_token.queue_free()
+			
+			# Play Sound & Particles for successful combination
+			SoundManager.play_sfx("discovery")
+			spawn_particles("Sparkles", spawn_pos)
 			
 			GameState.discover_ingredient(result)
 			spawn_token(result, spawn_pos)
@@ -220,3 +239,10 @@ func spawn_token_at_mouse(id: String):
 		var last_token = tokens[tokens.size() - 1]
 		last_token.dragging = true
 		last_token.grab_offset = Vector2.ZERO
+
+func spawn_particles(type: String, pos: Vector2):
+	if particle_scene:
+		var node = particle_scene.instantiate()
+		add_child(node)
+		node.global_position = pos
+		node.play_effect(type)

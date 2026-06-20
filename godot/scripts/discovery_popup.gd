@@ -21,6 +21,7 @@ func _on_discovery_changed():
 		GameState.recent_highlight_ids.clear()
 
 func show_discovery(id: String):
+	SoundManager.play_sfx("discovery")
 	var data = Database.discoverable_items.get(id)
 	if not data:
 		return
@@ -55,6 +56,7 @@ func show_discovery(id: String):
 	tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func hide_popup():
+	SoundManager.play_sfx("ui_select")
 	var tween = create_tween()
 	tween.tween_property(card, "scale", Vector2(0.2, 0.2), 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	tween.tween_callback(self.set.bind("visible", false))

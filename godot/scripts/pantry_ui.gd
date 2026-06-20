@@ -23,6 +23,7 @@ func _on_discovery_changed():
 	rebuild_cabinet()
 
 func _on_tab_pressed(tab_name: String):
+	SoundManager.play_sfx("ui_select")
 	# Update active tab in state
 	GameState.active_main_view = tab_name
 	
@@ -65,6 +66,7 @@ func create_slot(id: String, emoji: String, name: String):
 	slot.connect("item_clicked", Callable(self, "_on_slot_clicked"))
 
 func _on_slot_clicked(id: String):
+	SoundManager.play_sfx("ui_select")
 	# Tell workspace to spawn token at mouse
 	var root = get_tree().root.get_child(0)
 	var ws = root.find_child("Workspace", true, false)
