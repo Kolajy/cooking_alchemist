@@ -21,9 +21,7 @@ func load_data():
 			var data = json.data
 			starters = data.get("starters", [])
 			
-			var items = data.get("discoverables", [])
-			for item in items:
-				discoverable_items[item.get("id")] = item
+			discoverable_items = data.get("discoverable", {})
 			
 			var prog = data.get("progression", {})
 			technique_categories = prog.get("techniqueCategories", {})
