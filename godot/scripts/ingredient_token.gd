@@ -63,13 +63,17 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int):
 			dragging = true
 			grab_offset = get_global_mouse_position() - global_position
 			get_viewport().set_input_as_handled()
-		elif dragging:
+
+func _input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if not event.pressed and dragging:
 			dragging = false
-			# Update drag/merge checks in workspace on release
+			# Resolve workspace grandparent safely
 			var ws = get_parent()
-			if ws and ws.has_method("on_token_released"):
+			while ws and not ws.has_method("on_token_released"):
+				ws = ws.get_parent()
+			if ws:
 				ws.on_token_released(self)
-			get_viewport().set_input_as_handled()
 
 func set_highlight_visible(is_visible: bool, type: String = "valid"):
 	if not highlight:
