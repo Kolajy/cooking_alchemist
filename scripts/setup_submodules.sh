@@ -109,7 +109,7 @@ fi
 
 echo "==> Adding submodules"
 cd "$ROOT"
-git config protocol.file.allow always
+GIT=(git -c protocol.file.allow=always)
 for mod in "${MODULES[@]}"; do
   bare="$BARE_DIR/${mod}.git"
   if [ ! -d "$bare" ]; then
@@ -122,12 +122,17 @@ for mod in "${MODULES[@]}"; do
   if [ -d "$ROOT/$mod" ]; then
     rm -rf "$ROOT/$mod"
   fi
-  git submodule add "file://${bare}" "$mod"
+  url="file://${bare}"
+  if ! "${GIT[@]}" submodule add -b main "$url" "$mod"; then
+    echo "  submodule add failed for $mod; cloning manually"
+    "${GIT[@]}" clone -b main "$url" "$mod"
+    "${GIT[@]}" submodule add -b main --force "$url" "$mod" || true
+  fi
 done
 
-git add .gitmodules
-if ! git diff --cached --quiet; then
-  git commit -m "Add platform and shared engine submodules"
+"${GIT[@]}" add .gitmodules "${MODULES[@]}"
+if ! "${GIT[@]}" diff --cached --quiet; then
+  "${GIT[@]}" commit -m "Add platform and shared engine submodules"
 fi
 
 rm -rf "$STAGING_ROOT"

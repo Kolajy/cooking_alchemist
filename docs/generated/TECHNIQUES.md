@@ -1,6 +1,6 @@
 # Culinary Alchemy — Techniques & Progression
 
-> **Auto-generated** from `content/` on 2026-06-18. Do not edit by hand.
+> **Auto-generated** from `content/` on 2026-06-19. Do not edit by hand.
 > Regenerate with `npm run docs:generate` after content changes.
 
 ## Player toolbar actions
@@ -11,8 +11,9 @@ Four top-level methods shown on the counter. Sub-skills come from linked techniq
 |----|---|------|-------------------|--------|-------------|
 | `separate` | 🔪 | Separate | `separate` | Always available | Split, peel, and pull ingredients apart. |
 | `force` | ✊ | Force | `smash` (default: `smash`) | Always available | Crush, grind, and break ingredients down. |
-| `combine` | 🥣 | Combine | `combine` | Always available | Merge ingredients together and mix them into unified blends. |
-| `change` | 🔥 | Transform | `thermal` (default: `char`) | 5 recipes discovered | Heat, cook, and transform ingredients. |
+| `combine` | 🥣 | Combine | `combine` | 15 recipes discovered | Merge ingredients together and mix them into unified blends. |
+| `change` | 🔥 | Heat | `thermal` (default: `char`) | 40 recipes discovered | Heat, cook, and transform ingredients. |
+| `time` | ⏳ | Time | `time` (default: `rest`) | 200 recipes discovered | Steep, rest, ferment, or age ingredients. |
 
 ## Technique categories
 
@@ -39,22 +40,10 @@ Crush tubers, roots, or nuts with raw manual force.
 | Category | smash |
 | Toolbar actions | `pound` |
 | Depends on | `smash` |
-| Leads to | `press` |
+| Leads to | `grind` |
 | Unlock | smash ≥ 3 |
 
 Pound ingredients into pastes using a mortar and pestle.
-
-#### 🪵 Press (`press`)
-
-| Field | Value |
-|-------|-------|
-| Category | smash |
-| Toolbar actions | `press` |
-| Depends on | `pound` |
-| Leads to | `grind` |
-| Unlock | pound ≥ 3 |
-
-Extract liquids and oils by applying continuous pressure.
 
 #### 🪨 Grind (`grind`)
 
@@ -62,11 +51,23 @@ Extract liquids and oils by applying continuous pressure.
 |-------|-------|
 | Category | smash |
 | Toolbar actions | `grind`, `chop`, `dice`, `mince` |
-| Depends on | `press` |
-| Leads to | `knead` |
-| Unlock | press ≥ 4 |
+| Depends on | `pound` |
+| Leads to | `press` |
+| Unlock | pound ≥ 3 |
 
 Grind or chop grains, seeds, and vegetables into fine textures.
+
+#### 🪵 Press (`press`)
+
+| Field | Value |
+|-------|-------|
+| Category | smash |
+| Toolbar actions | `press` |
+| Depends on | `grind` |
+| Leads to | `knead` |
+| Unlock | grind ≥ 4 |
+
+Extract liquids and oils by applying continuous pressure.
 
 #### 👐 Knead (`knead`)
 
@@ -74,9 +75,9 @@ Grind or chop grains, seeds, and vegetables into fine textures.
 |-------|-------|
 | Category | smash |
 | Toolbar actions | `knead` |
-| Depends on | `grind` |
+| Depends on | `press` |
 | Leads to | `emulsify` |
-| Unlock | grind ≥ 4 |
+| Unlock | press ≥ 4 |
 
 Stagger, fold, and knead dough to develop gluten structures.
 
@@ -101,34 +102,10 @@ Emulsify oils and liquids into unified sauces and dressings.
 | Category | tear |
 | Toolbar actions | `tear` |
 | Depends on | — |
-| Leads to | `structured_tear` |
+| Leads to | `cutting` |
 | Unlock | separate ≥ 4 |
 
 Tear leafy herbs, greens, or cooked meats by hand.
-
-#### 🥗 Structured Tear (`structured_tear`)
-
-| Field | Value |
-|-------|-------|
-| Category | tear |
-| Toolbar actions | `structured_tear`, `shred` |
-| Depends on | `tear` |
-| Leads to | `chunking` |
-| Unlock | tear ≥ 3 |
-
-Tear along grain lines or predefined lines with careful handling.
-
-#### 🪵 Chunking (`chunking`)
-
-| Field | Value |
-|-------|-------|
-| Category | tear |
-| Toolbar actions | `chunk` |
-| Depends on | `structured_tear` |
-| Leads to | `cutting` |
-| Unlock | structured_tear ≥ 3 |
-
-Break down food into large, rough pieces or chunks.
 
 #### 🔪 Cutting (`cutting`)
 
@@ -136,9 +113,9 @@ Break down food into large, rough pieces or chunks.
 |-------|-------|
 | Category | tear |
 | Toolbar actions | `cut`, `chop` |
-| Depends on | `chunking` |
+| Depends on | `tear` |
 | Leads to | `slicing` |
-| Unlock | chunking ≥ 4 |
+| Unlock | tear ≥ 3 |
 
 Cut foods cleanly using basic knife strokes.
 
@@ -162,7 +139,7 @@ Slice meats and vegetables into thin, even strips.
 | Toolbar actions | `dice` |
 | Depends on | `slicing` |
 | Leads to | `julienne` |
-| Unlock | slicing ≥ 5 |
+| Unlock | slicing ≥ 4 |
 
 Cut ingredients into precise, small cubes.
 
@@ -218,41 +195,77 @@ Cleanly separate fish meat from bones and debone red meats.
 
 ### Thermal (`thermal`)
 
-#### 🔥 Uncontrolled Heat (`char`)
+#### 🔥 Ash & Embers (`char`)
 
 | Field | Value |
 |-------|-------|
 | Category | thermal |
 | Toolbar actions | `char`, `roast` |
 | Depends on | — |
-| Leads to | `cook` |
+| Leads to | `pit_cook` |
 | Unlock | Unlocked at start |
 
 Cooking directly on open fire, coals, or hot ash.
+
+#### 🛖 Earth & Dirt Oven (`pit_cook`)
+
+| Field | Value |
+|-------|-------|
+| Category | thermal |
+| Toolbar actions | `pit_cook`, `bake` |
+| Depends on | `char` |
+| Leads to | `hearth_bake` |
+| Unlock | char ≥ 3 |
+
+Slow roasting underground using heated stone pits.
+
+#### 🧱 Hearth & Clay Oven (`hearth_bake`)
+
+| Field | Value |
+|-------|-------|
+| Category | thermal |
+| Toolbar actions | `hearth_bake`, `bake` |
+| Depends on | `pit_cook` |
+| Leads to | `cook` |
+| Unlock | pit_cook ≥ 3 |
+
+Baking bread and roasting in clay tandoors or stone hearths.
 
 #### 🍳 Controlled Heat (`cook`)
 
 | Field | Value |
 |-------|-------|
 | Category | thermal |
-| Toolbar actions | `cook`, `fry`, `boil`, `simmer` |
-| Depends on | `char` |
-| Leads to | `precision` |
-| Unlock | char ≥ 3 |
+| Toolbar actions | `cook`, `fry`, `boil`, `simmer`, `steam` |
+| Depends on | `hearth_bake` |
+| Leads to | `smoke` |
+| Unlock | hearth_bake ≥ 4 |
 
-Stovetop cooking: medium heat boil, simmer, and pan-fry.
+Stovetop cooking: boiling, simmering, steaming, and pan-frying.
 
-#### 🌡️ Oven & Precision (`precision`)
+#### 💨 Smoke & Cure (`smoke`)
 
 | Field | Value |
 |-------|-------|
 | Category | thermal |
-| Toolbar actions | `precision`, `bake`, `sous_vide`, `reduce` |
+| Toolbar actions | `smoke` |
 | Depends on | `cook` |
-| Leads to | — |
-| Unlock | cook ≥ 5 |
+| Leads to | `precision` |
+| Unlock | cook ≥ 4 |
 
-Oven baking, roasting, and precise temperature cook profiles.
+Exposing ingredients to aromatic hardwood smoke for flavor.
+
+#### 🌡️ Modern Precision (`precision`)
+
+| Field | Value |
+|-------|-------|
+| Category | thermal |
+| Toolbar actions | `precision`, `sous_vide`, `reduce` |
+| Depends on | `smoke` |
+| Leads to | — |
+| Unlock | smoke ≥ 5 |
+
+Oven baking, temperature-controlled sous-vide, and precise reductions.
 
 ### Structure & Mix (`structure`)
 
@@ -292,16 +305,54 @@ Incorporate air or butter fat clump formation.
 
 Chemical gelification and culinary foam stabilization.
 
+### Time & Age (`time`)
+
+#### ⏳ Rest & Steep (`rest`)
+
+| Field | Value |
+|-------|-------|
+| Category | time |
+| Toolbar actions | `rest`, `steep` |
+| Depends on | — |
+| Leads to | `ferment` |
+| Unlock | Unlocked at start |
+
+Let dough relax, tea steep, or marinades settle.
+
+#### 🦠 Ferment & Culture (`ferment`)
+
+| Field | Value |
+|-------|-------|
+| Category | time |
+| Toolbar actions | `ferment`, `culture` |
+| Depends on | `rest` |
+| Leads to | `age` |
+| Unlock | rest ≥ 3 |
+
+Cultivate yeast or bacteria to ferment doughs, brews, or batters.
+
+#### 🏺 Age & Cure (`age`)
+
+| Field | Value |
+|-------|-------|
+| Category | time |
+| Toolbar actions | `age`, `cure` |
+| Depends on | `ferment` |
+| Leads to | — |
+| Unlock | ferment ≥ 4 |
+
+Cure or age ingredients over longer time spans.
+
 ## Action IDs used in recipes
 
 Union of all `actions` arrays across skills — these are the tool ids referenced in recipe transitions.
 
-`bake` · `blend` · `boil` · `char` · `chop` · `chunk` · `churn` · `combine` · `cook` · `core` · `cut` · `debone` · `dice` · `emulsify` · `fillet` · `foam` · `fry` · `gel` · `grind` · `hand_mix` · `julienne` · `knead` · `mince` · `peel` · `pound` · `precision` · `press` · `reduce` · `roast` · `seed` · `separate` · `shred` · `simmer` · `slice` · `smash` · `sous_vide` · `stir` · `structured_tear` · `tear` · `whisk` · `zest`
+`age` · `bake` · `blend` · `boil` · `char` · `chop` · `churn` · `combine` · `cook` · `core` · `culture` · `cure` · `cut` · `debone` · `dice` · `emulsify` · `ferment` · `fillet` · `foam` · `fry` · `gel` · `grind` · `hand_mix` · `hearth_bake` · `julienne` · `knead` · `mince` · `peel` · `pit_cook` · `pound` · `precision` · `press` · `reduce` · `rest` · `roast` · `seed` · `separate` · `simmer` · `slice` · `smash` · `smoke` · `sous_vide` · `steam` · `steep` · `stir` · `tear` · `whisk` · `zest`
 
 
 ### Coverage in current content
 
 | Status | Action IDs |
 |--------|------------|
-| Used in at least one transition | `char`, `peel`, `pound`, `roast`, `separate`, `smash`, `tear` |
-| Defined in progression, not yet in recipes | `bake`, `blend`, `boil`, `chop`, `chunk`, `churn`, `combine`, `cook`, `core`, `cut`, `debone`, `dice`, `emulsify`, `fillet`, `foam`, `fry`, `gel`, `grind`, `hand_mix`, `julienne`, `knead`, `mince`, `precision`, `press`, `reduce`, `seed`, `shred`, `simmer`, `slice`, `sous_vide`, `stir`, `structured_tear`, `whisk`, `zest` |
+| Used in at least one transition | `bake`, `boil`, `char`, `cook`, `dice`, `ferment`, `fillet`, `grind`, `hearth_bake`, `julienne`, `peel`, `pit_cook`, `pound`, `precision`, `press`, `roast`, `separate`, `simmer`, `slice`, `smash`, `smoke`, `tear` |
+| Defined in progression, not yet in recipes | `age`, `blend`, `chop`, `churn`, `combine`, `core`, `culture`, `cure`, `cut`, `debone`, `emulsify`, `foam`, `fry`, `gel`, `hand_mix`, `knead`, `mince`, `reduce`, `rest`, `seed`, `sous_vide`, `steam`, `steep`, `stir`, `whisk`, `zest` |

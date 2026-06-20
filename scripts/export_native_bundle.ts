@@ -5,9 +5,6 @@ import { fileURLToPath } from "node:url";
 import "../content/data/index";
 import { PROGRESSION_CONFIG } from "../content/progression_config";
 import { buildTransitionIndex } from "../content/data/transitions/index";
-import starters from "../content/data/ingredients/starters";
-import unlockables from "../content/data/ingredients/unlockables";
-import discoverableRecipes from "../content/data/recipes/index";
 import { ACHIEVEMENTS } from "../content/data/achievements";
 import { ACHIEVEMENT_RULES } from "../content/data/achievement_rules";
 
@@ -22,7 +19,9 @@ mkdirSync(iosAssets, { recursive: true });
 mkdirSync(androidAssets, { recursive: true });
 mkdirSync(webPublicAssets, { recursive: true });
 
-const discoverable = discoverableRecipes as Record<string, unknown>;
+const starters = (globalThis as any).STARTER_ELEMENTS;
+const unlockables = (globalThis as any).UNLOCKABLE_ELEMENTS;
+const discoverable = (globalThis as any).DISCOVERABLE_ITEMS;
 
 const bundle = {
   version: 1,

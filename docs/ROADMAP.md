@@ -228,7 +228,7 @@ gantt
 | [DATA_LAYER.md](./DATA_LAYER.md) | Engineers — cross-platform contract |
 | [DATA_SCHEMA.md](./DATA_SCHEMA.md) | Content + engineers |
 | [GAME_DESIGN.md](./GAME_DESIGN.md) | Design + product |
-| [ROADMAP.md](./ROADMAP.md) | Everyone |
+| [MONOREPO.md](./MONOREPO.md) | Everyone — git submodules |
 | [ART_DIRECTION.md](./ART_DIRECTION.md) | Art, UI, marketing |
 | [RECIPES_REFERENCE.md](./RECIPES_REFERENCE.md) | Content inspiration |
 | [generated/CONTENT_REFERENCE.md](./generated/CONTENT_REFERENCE.md) | Shipped ingredients, techniques, transitions |

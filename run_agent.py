@@ -39,7 +39,7 @@ def main():
     parser = argparse.ArgumentParser(description="Run Google Antigravity SDK Agents for Cooking Web Game Development.")
     parser.add_argument(
         "--agent", 
-        choices=["architect", "developer", "porting", "qa"], 
+        choices=["architect", "developer", "porting", "qa", "writer", "designer", "localization", "food_researcher"], 
         required=True,
         help="The specialized agent to run."
     )

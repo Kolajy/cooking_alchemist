@@ -66,10 +66,10 @@ flowchart TB
     H[Hearth / wooden table — dark warm surround]
     E[Ember particles + vignette]
   end
-  subgraph shell [App shell — the scroll]
-    R[Rollers + knobs]
-    P[Parchment sheet + fiber texture]
-    F[Inner frame + corner ornaments]
+  subgraph shell [App shell — the map sheet]
+    P[Aged parchment sheet + fiber texture]
+    B[Burnt / scorched edges]
+    F[Inner ruling + corner ornaments]
   end
   subgraph play [Play layer]
     C[Counter — lighter work surface on the page]
@@ -166,11 +166,45 @@ Canonical values live in `web/src/styles/tokens.css`. Do not introduce off-palet
 - Never flat #F5F0E6 — always subtle grain at 5–15% opacity
 - Fold creases at corners (`grand-scroll__crinkles--folds`) — suggest handling
 
-### Wood & metal
+### Page background — aged parchment scroll
 
-- Scroll rollers: dark walnut (`--scroll-roll`), subtle cylindrical highlight
-- Knobs / caps: `--scroll-wood-cap` with brass ring (`--scroll-brass`)
-- Wax seal on scroll (`grand-scroll__seal`) — optional discovery milestone reward visual
+> **Vibe:** an old map or medieval manuscript laid flat on the table — the whole page reads as a single aged, fire-touched sheet of parchment.
+
+The full-page background (behind the scroll/counter chrome) is a static parchment field. It is intentionally background-only: it never alters layout, components, center content, or the existing ember/mote animations that drift above it.
+
+| Layer | Role | Implementation |
+|-------|------|----------------|
+| Parchment field | Warm amber sepia base with uneven tonal mottling | `body` + `.fantasy-backdrop__warmth` radial gradients |
+| Grain / noise | Fine paper fiber texture | `.fantasy-backdrop__warmth::before` — SVG `feTurbulence`, `mix-blend-mode: multiply`, ~32% opacity |
+| Crinkle / folds | Subtle diagonal creases suggesting a handled sheet | `.fantasy-backdrop__warmth::after` — repeating-linear-gradient creases |
+| Burned vignette | Darkened, singed edges and scorched corners | `.fantasy-backdrop__vignette` + `::before` corner scorch |
+
+**Background palette (parchment scroll):**
+
+| Swatch | Hex | Use |
+|--------|-----|-----|
+| Light parchment | `#F5E6C8` | Base sheet tone |
+| Amber gold | `#D4A843` | Tonal mottling, warm stains |
+| Dark sepia | `#8B6914` | Crease ink, deep mottle, edge grading |
+| Scorch brown | `#261406` / `rgba(38,20,6,…)` | Burned vignette + corner scorch |
+
+**Direction:** keep it quiet and aged — the parchment is a stage, not a focal point. Mottling is irregular (no symmetry), grain stays subtle, and burned edges frame the play area without crowding it. Any future change here must remain background-only.
+
+### Wax seal & accents
+
+- Wax seal on the map (`grand-scroll__seal`) — red wax, optional discovery milestone reward visual; fits the pirate-map vibe
+- Corner ornaments + inner ruling (`grand-scroll__inner-frame`, `grand-scroll__ornament`) — light manuscript marginalia, not heavy framing
+
+### The map sheet — old pirate / medieval paper (no hardware)
+
+> **Vibe:** an old pirate's map or medieval manuscript page — a single piece of aged, fire-touched paper laid flat. **No wooden rollers, rods, knobs, or scroll hardware.** The paper itself is the star.
+
+- `grand-scroll__parchment` is one sheet of aged map paper: warm sepia parchment texture (grain + stains + folds), slightly **irregular rounded corners** (`border-radius` with uneven values), and a lifted drop shadow.
+- **Burnt / scorched edges**: darkened, uneven perimeter with scorched corners — layered via `grand-scroll__crinkles--edges` (behind content) and a `grand-scroll__parchment::after` perimeter frame (above content, `mix-blend-mode: multiply`) so the singed edge reads even where panels cover the paper.
+- Keep edge darkening soft enough that UI inside the map stays legible — it should frame, never muddy, the content.
+- The entrance still gently "unrolls" top→bottom (`scroll-unfurl-down` clip reveal) — motion only, no physical rollers.
+
+**Avoid:** wooden dowels, brass knobs, cylindrical roller bars, or any mechanical scroll apparatus. The aesthetic is *paper*, not *device*.
 
 ### Glass / cards
 

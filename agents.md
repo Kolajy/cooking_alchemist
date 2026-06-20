@@ -51,6 +51,39 @@ graph TD
 *   **Default Prompt Focus**:
     *   *System instructions focus on stress testing, boundary condition checks, and identifying visual/logic regressions.*
 
+### 5. Culinary Content Creator Agent
+*   **Role**: Content Creator & Writer.
+*   **Responsibilities**:
+    *   Researches real-world cooking science and culinary facts.
+    *   Writes informative descriptions and tooltip science tips for items and recipes.
+*   **Default Prompt Focus**:
+    *   *System instructions focus on writing informative, engaging, and scientifically accurate text.*
+
+### 6. Art & Audio Asset Agent
+*   **Role**: Creative Asset Designer.
+*   **Responsibilities**:
+    *   Designs consistent game visual themes and layouts.
+    *   Generates or selects food and tool icons.
+    *   Configures sound trigger tables mapping sound effects to gameplay events.
+*   **Default Prompt Focus**:
+    *   *System instructions focus on visual coherence and satisfying sensory/audio feedback loops.*
+
+### 7. Localization & Translation Agent
+*   **Role**: Language Resource Translator.
+*   **Responsibilities**:
+    *   Manages translation source files (e.g. key-value assets).
+    *   Translates game names, descriptions, and educational science tips into Steam languages.
+*   **Default Prompt Focus**:
+    *   *System instructions focus on semantic translation accuracy and managing international language encodings.*
+
+### 8. Food Researcher Agent
+*   **Role**: Culinary Expert & Recipe Designer.
+*   **Responsibilities**:
+    *   Researches raw ingredients and real-world dishes to map out their logical recipe progression.
+    *   Breaks down intermediate cooking steps, intermediate food items, and the specific kitchen techniques required to create a dish.
+*   **Default Prompt Focus**:
+    *   *System instructions focus on culinary authenticity, structured progression mapping, and designing logical ingredient combining pathways.*
+
 ---
 
 ## Workspace Setup
@@ -107,3 +140,14 @@ When starting a new feature or debugging an issue, follow this multi-agent loop:
 2.  **Implementation**: Pass the specification to the **Gameplay & UI Developer** to generate the HTML, CSS, or JS changes. Content changes go in `content/`; run `npm run export-native` before native testing.
 3.  **Local Testing**: Have the **QA Agent** review the code, suggest test cases, or inspect it for bottlenecks (like redundant redraw calls). Run `npm test` and `cargo test -p culinary-core`.
 4.  **Packaging/Porting**: For build validation, use the **Steam Integration Agent** to run `npm run steam:dev` and verify native desktop builds.
+
+---
+
+## Token Optimization & Project Scoping Rules
+
+To minimize token costs and maintain optimal context efficiency:
+- **Default Modification Target**: All code edits and enhancements target the `web/` client subdirectory and data structures/recipes in the `core/` repository by default.
+- **Search Scoping**: Do NOT search, grep, or read source files in native platforms (`desktop/`, `ios/`, `android/`, `core/` Rust code) unless explicitly requested by the user.
+- **Context Preservation**: Avoid running workspace-wide searches (e.g. searching the root directory) unless targeting a specific file. Limit tool searches to the narrowest directory target possible.
+- **Decoupled Validation**: Run tests locally in isolated modules (like `node src/engine/cli_test.js`) rather than processing full visual app rendering loops to keep validation steps quick and lightweight.
+- **Git-Persisted Planning**: Always create or update `plans/active_plan.md` before starting code changes or execution commands. Upon completion of a task, archive the plan as `plans/archive/YYYY-MM-DD-feature-name.md` and document it in the index of `plans/README.md`.

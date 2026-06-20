@@ -128,6 +128,20 @@ interface GameContext {
 
 This breaks the workspace ↔ cooking import cycle (workspace calls actions through `getCtx().actions`).
 
+### Gameplay event bus (`game/events/`)
+
+Domain actions in `cooking.ts` emit typed events (`discovery`, `xp`, `achievementCheck`, `discoveryChanged`). `registerGameplayEffects()` wires subscribers for persistence, milestones, achievements, UI refresh, and journal updates — keeping gameplay orchestration out of the action module.
+
+### Save repository (`game/save-repository.ts`)
+
+`hydrateGameSession()` + `refreshGameSessionUi()` centralize portable save import and UI resync. `buildPortableSave()` is the single builder for export JSON.
+
+### Security (`game/security/`)
+
+- **`escapeHtml()`** — all dynamic `innerHTML` paths escape game text (ingredient names, blurbs, notifications, graph labels).
+- **Save import** — max file size (2 MB), bounded arrays, strict id pattern (`snake_case`), rejects `__proto__` / prototype keys in XP maps.
+- **localStorage load** — discovery and progression payloads sanitized on read (same id bounds).
+
 ---
 
 ## Core subsystems

@@ -7,12 +7,11 @@ cd "$ROOT"
 
 MODULES=(content core web desktop ios android wasm)
 BARE_DIR="$ROOT/.git-submodule-bare"
+GIT=(git -c protocol.file.allow=always)
 
-git config protocol.file.allow always
-
-if ! git rev-parse --verify HEAD >/dev/null 2>&1; then
-  git add -A
-  git commit -m "Monorepo root: orchestration, docs, and scripts"
+if ! "${GIT[@]}" rev-parse --verify HEAD >/dev/null 2>&1; then
+  "${GIT[@]}" add -A
+  "${GIT[@]}" commit -m "Monorepo root: orchestration, docs, and scripts"
 fi
 
 for mod in "${MODULES[@]}"; do
@@ -26,11 +25,21 @@ for mod in "${MODULES[@]}"; do
     continue
   fi
   if [ -d "$mod" ]; then
-    rm -rf "$mod"
+  rm -rf "$mod"
   fi
-  git submodule add "file://${bare}" "$mod"
+  url="file://${bare}"
+  "${GIT[@]}" submodule add -b main "$url" "$mod" || {
+    echo "submodule add failed for $mod; cloning manually"
+    "${GIT[@]}" clone -b main "$url" "$mod"
+    "${GIT[@]}" submodule absorbgitdirs "$mod" 2>/dev/null || true
+  }
 done
 
-git add .gitmodules
-git commit -m "Add platform and shared engine submodules" || true
+if [ ! -f .gitmodules ]; then
+  echo "error: .gitmodules was not created"
+  exit 1
+fi
+
+"${GIT[@]}" add .gitmodules "${MODULES[@]}"
+"${GIT[@]}" commit -m "Add platform and shared engine submodules" || true
 echo "Submodules restored."
