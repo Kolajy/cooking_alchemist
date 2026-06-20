@@ -73,6 +73,38 @@ func set_active_action(action: String):
 func update_action_ui():
 	if action_label:
 		action_label.text = "Active Action: " + GameState.active_action.capitalize()
+	
+	var action = GameState.active_action
+	if has_node("UI/ActionBar/BtnSeparate"):
+		_set_button_selected_style(get_node("UI/ActionBar/BtnSeparate"), action == "separate")
+	if has_node("UI/ActionBar/BtnForce"):
+		_set_button_selected_style(get_node("UI/ActionBar/BtnForce"), action == "force")
+	if has_node("UI/ActionBar/BtnCombine"):
+		_set_button_selected_style(get_node("UI/ActionBar/BtnCombine"), action == "combine")
+	if has_node("UI/ActionBar/BtnHeat"):
+		_set_button_selected_style(get_node("UI/ActionBar/BtnHeat"), action == "heat")
+	if has_node("UI/ActionBar/BtnTime"):
+		_set_button_selected_style(get_node("UI/ActionBar/BtnTime"), action == "time")
+
+func _set_button_selected_style(button: Button, is_selected: bool):
+	if is_selected:
+		var sb_active = StyleBoxFlat.new()
+		sb_active.bg_color = Color(0.48, 0.30, 0.23)
+		sb_active.border_width_left = 1
+		sb_active.border_width_top = 1
+		sb_active.border_width_right = 1
+		sb_active.border_width_bottom = 1
+		sb_active.border_color = Color(0.35, 0.22, 0.17)
+		sb_active.set_corner_radius_all(8)
+		button.add_theme_stylebox_override("normal", sb_active)
+		button.add_theme_stylebox_override("hover", sb_active)
+		button.add_theme_color_override("font_color", Color(0.99, 0.98, 0.96))
+		button.add_theme_color_override("font_hover_color", Color(0.99, 0.98, 0.96))
+	else:
+		button.remove_theme_stylebox_override("normal")
+		button.remove_theme_stylebox_override("hover")
+		button.remove_theme_color_override("font_color")
+		button.remove_theme_color_override("font_hover_color")
 
 func update_highlights():
 	var action = GameState.active_action
