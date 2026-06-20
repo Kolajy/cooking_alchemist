@@ -196,3 +196,13 @@ func get_combine_result(inputs: Array) -> String:
 				if outputs.size() > 0:
 					return outputs[0]
 	return ""
+
+func spawn_token_at_mouse(id: String):
+	var pos = get_global_mouse_position()
+	spawn_token(id, pos)
+	# Find the newly spawned token to start dragging immediately
+	var tokens = token_container.get_children()
+	if tokens.size() > 0:
+		var last_token = tokens[tokens.size() - 1]
+		last_token.dragging = true
+		last_token.grab_offset = Vector2.ZERO

@@ -16,5 +16,12 @@ func _ready():
 			var ws = ws_scene.instantiate()
 			add_child(ws)
 			print("✅ Workspace countertop loaded.")
+			
+		# Load Pantry/Cabinet UI
+		var ui_scene = preload("res://scenes/pantry_ui.tscn")
+		if ui_scene:
+			var ui = ui_scene.instantiate()
+			add_child(ui)
+			print("✅ Pantry UI loaded.")
 	else:
 		print("❌ Database verification failed. No items loaded.")
