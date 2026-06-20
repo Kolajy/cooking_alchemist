@@ -1,0 +1,133 @@
+/* Culinary Alchemy — discovery journal */
+
+.journal-panel__intro {
+  padding: 0.85rem 1rem 0.65rem;
+  border-bottom: 1px solid hsla(38, 30%, 55%, 0.2);
+}
+
+.journal-panel__lead {
+  margin: 0;
+  font-family: var(--font-fantasy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--scroll-gold);
+  letter-spacing: 0.04em;
+}
+
+.journal-panel__hint {
+  margin: 0.35rem 0 0.55rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--color-text-dim);
+}
+
+.journal-panel__count {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.discovery-log-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.65rem 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.discovery-log-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.discovery-log-list::-webkit-scrollbar-track {
+  background: var(--cozy-scrollbar-track);
+}
+
+.discovery-log-list::-webkit-scrollbar-thumb {
+  background-color: var(--cozy-scrollbar-thumb);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.discovery-log-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--cozy-scrollbar-thumb-hover);
+}
+
+.discovery-log-empty {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--color-text-dim);
+  text-align: center;
+}
+
+.discovery-log-entry {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.7rem 0.8rem;
+  background: hsla(42, 40%, 96%, 0.85);
+  border: 1px solid hsla(38, 36%, 58%, 0.32);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 hsla(48, 70%, 98%, 0.55);
+}
+
+.discovery-log-entry--recipe {
+  border-color: hsla(38, 45%, 48%, 0.42);
+  background: linear-gradient(
+    135deg,
+    hsla(42, 48%, 97%, 0.95) 0%,
+    hsla(38, 42%, 92%, 0.9) 100%
+  );
+}
+
+.discovery-log-entry__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.discovery-log-entry__emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.discovery-log-entry__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.discovery-log-entry__name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.discovery-log-entry__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.discovery-log-entry__category {
+  font-size: 0.62rem;
+  color: var(--color-text-dim);
+}
+
+.discovery-log-entry__time {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: hsla(28, 16%, 46%, 0.85);
+  text-align: right;
+  white-space: nowrap;
+}

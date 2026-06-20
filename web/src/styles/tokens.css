@@ -1,0 +1,118 @@
+/* Culinary Alchemy — tokens */
+
+/* Custom properties — cozy rustic kitchen / worn recipe scroll */
+:root {
+  --font-display: 'Lora', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-rustic: 'Lora', 'Georgia', 'Times New Roman', serif;
+  --font-fantasy-title: 'Cinzel', 'Lora', serif;
+  --font-charm: 'Caveat', 'Segoe Print', cursive;
+
+  --hue-fire: 16;
+  --hue-gold: 32;
+  --hue-sage: 128;
+  --hue-earth: 42;
+  --hue-ember: 12;
+
+  --color-bg-deep: hsl(38, 36%, 91%);
+  --color-bg-dark: hsl(34, 28%, 87%);
+  --color-bg-card: hsl(44, 45%, 97%);
+  --color-bg-glass: hsla(40, 40%, 96%, 0.94);
+  --color-border: hsl(30, 18%, 78%);
+  --color-border-hover: hsl(var(--hue-fire), 38%, 52%);
+
+  --color-text: hsl(22, 18%, 30%);
+  --color-text-muted: hsl(26, 12%, 38%);
+  --color-text-dim: hsl(28, 10%, 48%);
+
+  --color-fire: hsl(var(--hue-fire), 44%, 48%);
+  --color-fire-glow: hsla(var(--hue-fire), 44%, 48%, 0.16);
+  --color-gold: hsl(var(--hue-gold), 48%, 42%);
+  --color-gold-glow: hsla(var(--hue-gold), 48%, 42%, 0.12);
+  --color-sage: hsl(var(--hue-sage), 20%, 38%);
+  --color-sage-soft: hsla(var(--hue-sage), 24%, 86%, 0.9);
+
+  --color-success: hsl(128, 26%, 38%);
+  --color-danger: hsl(6, 42%, 44%);
+
+  --color-surface-warm: hsl(34, 32%, 86%);
+  --color-surface-wood: hsl(28, 26%, 72%);
+  --color-primitive-tint: hsla(265, 36%, 92%, 0.95);
+  --color-raw-tint: hsla(120, 28%, 91%, 0.95);
+  --color-processed-tint: hsla(34, 46%, 91%, 0.95);
+  --color-recipe-tint: hsla(345, 42%, 92%, 0.95);
+
+  --scroll-parchment: hsl(40, 48%, 90%);
+  --scroll-parchment-deep: hsl(36, 40%, 82%);
+  --scroll-ink: hsl(22, 30%, 26%);
+  --scroll-ink-muted: hsl(26, 16%, 42%);
+  --scroll-accent: hsl(20, 52%, 44%);
+  --scroll-accent-soft: hsl(32, 48%, 54%);
+  --scroll-copper: hsl(26, 46%, 46%);
+  --scroll-moss: hsl(128, 22%, 40%);
+  --scroll-ember: hsl(28, 72%, 58%);
+  --scroll-honey: hsl(38, 62%, 62%);
+  --scroll-cream: hsl(42, 55%, 95%);
+  --scroll-roll: hsl(24, 26%, 30%);
+  --scroll-roll-highlight: hsl(28, 22%, 42%);
+  --scroll-wood-cap: hsl(26, 28%, 32%);
+  --scroll-wood-cap-light: hsl(30, 24%, 48%);
+  --scroll-brass: hsl(36, 38%, 48%);
+  --scroll-shadow: hsla(22, 32%, 12%, 0.32);
+  --scroll-roller-height: 32px;
+  --scroll-knob-size: 34px;
+  --scroll-edge-height: 16px;
+  --scroll-parchment-light: hsl(44, 52%, 94%);
+  --hearth-glow: hsla(32, 85%, 58%, 0.28);
+  --mystic-glow: hsla(128, 32%, 48%, 0.1);
+  --cozy-amber-glow: hsla(32, 80%, 55%, 0.22);
+  --table-deep: hsl(24, 28%, 16%);
+  --table-mid: hsl(26, 24%, 24%);
+  --table-warm: hsl(28, 26%, 30%);
+  /* Tileable parchment fiber (paper grain via diffuse-lit turbulence) */
+  --parchment-fiber:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='5' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23efdfb6' surfaceScale='1.25'%3E%3CfeDistantLight azimuth='65' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23f)'/%3E%3C/svg%3E");
+  /* Tileable aged mottling / blotches (translucent brown clouds) */
+  --parchment-mottle:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='4' seed='14' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.36 0 0 0 0 0.26 0 0 0 0 0.14 0 0 0 -1.15 0.52'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23m)'/%3E%3C/svg%3E");
+  --parchment-bg:
+    var(--parchment-mottle),
+    radial-gradient(ellipse 130% 70% at 50% -10%, hsla(46, 60%, 95%, 0.55), transparent 55%),
+    radial-gradient(ellipse 120% 80% at 50% 110%, hsla(28, 32%, 40%, 0.18), transparent 55%),
+    linear-gradient(172deg, var(--scroll-parchment-light) 0%, var(--scroll-parchment) 42%, var(--scroll-parchment-deep) 100%),
+    var(--parchment-fiber);
+  --parchment-blend: multiply, soft-light, multiply, normal, normal;
+  /* Pre-rasterized grain (baked once as an image — cheap, unlike a live SVG filter). */
+  --paper-noise:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.42 0 0 0 0 0.34 0 0 0 0 0.26 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* aliases for shared rustic tokens */
+  --font-fantasy: var(--font-rustic);
+  --scroll-gold: var(--scroll-copper);
+  --scroll-gold-bright: var(--scroll-accent-soft);
+
+  --transition-smooth: all 0.45s cubic-bezier(0.33, 0, 0.2, 1);
+  --transition-elastic: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Balanced middle ground between the 0.18s snap and 0.45s smooth. */
+  --transition-gentle: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  --shadow-lg: 0 10px 28px -12px hsla(28, 22%, 28%, 0.14);
+  --shadow-glow: 0 4px 16px var(--color-fire-glow);
+
+  /* Cozy long-session interaction tokens — soft golden warmth */
+  --cozy-focus-ring: 0 0 0 2px hsla(38, 65%, 55%, 0.5);
+  --cozy-hover-glow: hsla(32, 70%, 55%, 0.16);
+  --cozy-scrollbar-track: hsla(38, 30%, 78%, 0.16);
+  --cozy-scrollbar-thumb: hsla(30, 38%, 48%, 0.45);
+  --cozy-scrollbar-thumb-hover: hsla(30, 44%, 50%, 0.68);
+
+  /* Softer cinnamon active state, shared by toolbar + cabinet filters */
+  --active-gradient: linear-gradient(165deg, hsl(24, 40%, 46%) 0%, hsl(18, 34%, 36%) 100%);
+  --active-gradient-hover: linear-gradient(165deg, hsl(24, 42%, 50%) 0%, hsl(18, 36%, 40%) 100%);
+
+  /* Spacing rhythm */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1.25rem;
+}

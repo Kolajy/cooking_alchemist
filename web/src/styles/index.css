@@ -1,0 +1,36 @@
+/* -------------------------------------------------------------
+   Culinary Alchemy — Stylesheet entry (modular imports)
+
+   Layer order:
+   1. tokens & base     — design variables, reset, page shell
+   2. animations        — shared @keyframes and motion utilities
+   3. layout & chrome   — scroll frame, app grid, header, buttons
+   4. game surfaces     — workspace, pantry, toolbar
+   5. overlays          — dialogs, discovery, skills, toasts
+   6. progress map      — ingredient graph
+   7. responsive        — breakpoints (last)
+---------------------------------------------------------------- */
+
+@import url("./tokens.css");
+@import url("./base.css");
+@import url("./animations.css");
+@import url("./scroll.css");
+@import url("./layout.css");
+@import url("./header.css");
+@import url("./buttons.css");
+@import url("./workspace.css");
+@import url("./cabinet.css");
+@import url("./toolbar.css");
+@import url("./dialogs.css");
+@import url("./discovery.css");
+@import url("./skills.css");
+@import url("./journal.css");
+@import url("./save-export.css");
+@import url("./hints.css");
+@import url("./achievements.css");
+@import url("./settings.css");
+@import url("./notifications.css");
+@import url("./cursors.css");
+@import url("./graph.css");
+@import url("./hover-panel.css");
+@import url("./responsive.css");

@@ -1,0 +1,570 @@
+/* Culinary Alchemy — graph */
+
+/* --- Ingredient Progress Graph --- */
+dialog.graph-modal {
+  width: min(1200px, 94vw);
+  max-width: 94vw;
+}
+
+.graph-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+}
+
+.ingredient-graph-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+  flex: 1;
+}
+
+.graph-dialog-content {
+  max-height: 85vh;
+  min-height: 420px;
+}
+
+.graph-dialog-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.graph-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.graph-focus-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.graph-focus-label {
+  font-family: var(--font-fantasy);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--scroll-ink-muted);
+  white-space: nowrap;
+}
+
+.graph-focus-select {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 6px;
+  background: hsla(42, 40%, 96%, 0.9);
+  border: 1px solid hsla(38, 36%, 58%, 0.4);
+  color: var(--scroll-ink);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+
+.graph-focus-select:focus {
+  outline: none;
+  border-color: var(--scroll-gold);
+}
+
+.graph-search-wrap {
+  position: relative;
+  flex: 1 1 280px;
+  min-width: 220px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.graph-search-control {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.graph-search-input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border-radius: 6px;
+  background: hsla(42, 40%, 96%, 0.9);
+  border: 1px solid hsla(38, 36%, 58%, 0.4);
+  color: var(--scroll-ink);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+
+.graph-search-input:focus {
+  outline: none;
+  border-color: var(--scroll-gold);
+  box-shadow: 0 0 0 3px hsla(32, 50%, 52%, 0.15);
+}
+
+.graph-search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: hsla(42, 44%, 96%, 0.98);
+  border: 1px solid hsla(38, 36%, 58%, 0.45);
+  box-shadow: 0 10px 24px hsla(28, 22%, 22%, 0.16);
+}
+
+.graph-search-result {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 0.55rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--scroll-ink);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.graph-search-result:hover,
+.graph-search-result:focus-visible {
+  background: hsla(32, 38%, 88%, 0.85);
+  outline: none;
+}
+
+.graph-search-empty {
+  padding: 0.55rem 0.65rem;
+  font-size: 0.78rem;
+  color: var(--scroll-ink-muted);
+}
+
+.graph-focus-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.45rem 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: hsla(32, 38%, 88%, 0.75);
+  border: 1px solid hsla(32, 32%, 52%, 0.35);
+  font-size: 0.78rem;
+  color: var(--scroll-ink);
+}
+
+.graph-focus-chip__label {
+  font-family: var(--font-fantasy);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--scroll-ink-muted);
+}
+
+.graph-focus-chip__clear {
+  border: none;
+  background: transparent;
+  color: var(--scroll-ink-muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.15rem;
+}
+
+.graph-focus-chip__clear:hover {
+  color: var(--scroll-ink);
+}
+
+.graph-viewport--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  cursor: default;
+}
+
+.graph-empty-message {
+  max-width: 28rem;
+  text-align: center;
+  font-family: var(--font-charm);
+  font-size: 1.05rem;
+  color: var(--scroll-ink-muted);
+  line-height: 1.45;
+  padding: 1rem;
+}
+
+.graph-toolbar-toggles {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.graph-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.graph-zoom-controls {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.graph-zoom-btn {
+  min-width: 2.25rem;
+  padding: 0.35rem 0.65rem;
+}
+
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+.graph-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid transparent;
+}
+
+.legend-swatch--primitive {
+  background: hsla(var(--hue-sage), 28%, 78%, 0.65);
+  border-color: hsla(var(--hue-sage), 25%, 50%, 0.45);
+}
+
+.legend-swatch--raw {
+  background: hsla(var(--hue-earth), 32%, 80%, 0.7);
+  border-color: hsla(var(--hue-earth), 28%, 52%, 0.45);
+}
+
+.legend-swatch--processed {
+  background: hsla(var(--hue-gold), 50%, 82%, 0.7);
+  border-color: hsla(var(--hue-gold), 45%, 55%, 0.4);
+}
+
+.legend-swatch--locked {
+  background: hsla(30, 8%, 75%, 0.6);
+  border-color: hsla(30, 8%, 60%, 0.4);
+}
+
+.graph-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+  height: min(62vh, 680px);
+  border: 2px solid hsla(38, 36%, 58%, 0.35);
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at top, hsla(42, 50%, 92%, 0.5), transparent 50%),
+    linear-gradient(180deg, var(--scroll-parchment-light) 0%, hsl(36, 32%, 84%) 100%);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  box-shadow: inset 0 0 24px hsla(30, 28%, 40%, 0.05);
+}
+
+.graph-viewport:active {
+  cursor: grabbing;
+}
+
+.ingredient-graph-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.graph-edge {
+  fill: none;
+  stroke: hsla(28, 12%, 55%, 0.4);
+  stroke-width: 1.5;
+  color: hsla(28, 12%, 55%, 0.4);
+}
+
+.graph-edge.is-unlocked {
+  stroke: hsla(var(--hue-gold), 70%, 55%, 0.75);
+  color: hsla(var(--hue-gold), 70%, 55%, 0.75);
+}
+
+.graph-transition-line {
+  fill: none;
+  stroke-width: 1.75;
+  pointer-events: none;
+}
+
+.graph-transition-line--technique {
+  stroke: hsla(20, 70%, 55%, 0.45);
+}
+
+.graph-transition-line--technique.is-unlocked {
+  stroke: hsla(20, 90%, 58%, 0.9);
+}
+
+.graph-transition-line--combine-in,
+.graph-transition-line--combine-out {
+  stroke: hsla(200, 60%, 55%, 0.4);
+  stroke-dasharray: 5 4;
+}
+
+.graph-transition-line--combine-in.is-unlocked,
+.graph-transition-line--combine-out.is-unlocked {
+  stroke: hsla(200, 75%, 62%, 0.9);
+  stroke-dasharray: none;
+}
+
+.graph-transition-marker {
+  fill: hsl(40, 35%, 97%);
+  stroke: hsla(32, 14%, 72%, 0.85);
+  stroke-width: 1.25;
+  pointer-events: none;
+}
+
+.graph-transition-marker.is-unlocked {
+  stroke: hsla(var(--hue-gold), 60%, 50%, 0.55);
+}
+
+.graph-transition--technique.is-unlocked .graph-transition-marker {
+  stroke: hsla(20, 80%, 55%, 0.65);
+}
+
+.graph-transition--combine.is-unlocked .graph-transition-marker {
+  stroke: hsla(200, 70%, 58%, 0.65);
+}
+
+.graph-transition-marker-symbol {
+  fill: var(--color-text);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  pointer-events: none;
+}
+
+.graph-transitions-panel {
+  margin: 0 0 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: hsla(40, 30%, 98%, 0.9);
+  border: 1px solid hsla(32, 14%, 72%, 0.45);
+  max-height: 9.5rem;
+  overflow-y: auto;
+}
+
+.graph-transitions-panel__title {
+  margin: 0 0 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: hsla(28, 10%, 42%, 0.9);
+}
+
+.graph-transitions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.graph-transitions-list__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: center;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.graph-path-from,
+.graph-path-to {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.graph-path-from {
+  text-align: right;
+  color: var(--color-text-dim);
+}
+
+.graph-path-to {
+  text-align: left;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.graph-path-via {
+  flex-shrink: 0;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: hsla(20, 70%, 55%, 0.12);
+  color: hsl(20, 55%, 38%);
+}
+
+.graph-transitions-list__item--combine .graph-path-via {
+  background: hsla(200, 70%, 55%, 0.12);
+  color: hsl(200, 55%, 36%);
+}
+
+.graph-legend-hint {
+  font-size: 0.72rem;
+  color: var(--color-text-dim);
+  font-style: italic;
+}
+
+.legend-line {
+  width: 22px;
+  height: 0;
+  border-top: 2px solid transparent;
+  display: inline-block;
+}
+
+.legend-line--technique {
+  border-color: hsl(20, 90%, 58%);
+}
+
+.legend-line--combine {
+  border-color: hsl(200, 75%, 62%);
+  border-top-style: dashed;
+}
+
+.graph-edge-label {
+  fill: var(--color-text-dim);
+  font-size: 9px;
+  font-family: var(--font-body);
+  pointer-events: none;
+}
+
+.graph-row-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  fill: hsla(28, 10%, 48%, 0.75);
+  pointer-events: none;
+}
+
+.graph-node-bg {
+  fill: hsl(40, 40%, 98%);
+  stroke: hsla(32, 14%, 78%, 0.9);
+  stroke-width: 1.5;
+}
+
+.graph-node--primitive .graph-node-bg {
+  fill: hsla(var(--hue-sage), 22%, 94%, 0.95);
+  stroke: hsla(var(--hue-sage), 22%, 58%, 0.45);
+}
+
+.graph-node--raw .graph-node-bg {
+  fill: hsla(var(--hue-earth), 28%, 94%, 0.95);
+  stroke: hsla(var(--hue-earth), 28%, 58%, 0.45);
+}
+
+.graph-node--processed .graph-node-bg {
+  fill: hsla(var(--hue-gold), 38%, 95%, 0.95);
+  stroke: hsla(var(--hue-gold), 45%, 55%, 0.4);
+}
+
+.graph-node.is-unlocked .graph-node-bg {
+  stroke-width: 2;
+}
+
+.graph-node.is-locked {
+  opacity: 0.72;
+}
+
+.graph-node.is-locked .graph-node-bg {
+  fill: hsl(32, 10%, 88%);
+  stroke: hsla(30, 8%, 62%, 0.55);
+  stroke-dasharray: 4 3;
+}
+
+.graph-node.is-locked .graph-node-emoji {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  fill: var(--color-text-dim);
+}
+
+.graph-node.is-locked .graph-node-name {
+  fill: var(--color-text-dim);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.graph-node.is-locked .graph-node-badge {
+  fill: var(--color-text-dim);
+  letter-spacing: 0.1em;
+}
+
+.graph-node--focus .graph-node-bg {
+  stroke: var(--color-gold);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 8px var(--color-gold-glow));
+}
+
+.graph-node-emoji {
+  font-size: 22px;
+  pointer-events: none;
+}
+
+.graph-node-name {
+  fill: var(--color-text);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  pointer-events: none;
+}
+
+.graph-node-badge {
+  fill: var(--color-text-dim);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  pointer-events: none;
+}
+
+.graph-node.is-unlocked .graph-node-badge {
+  fill: var(--color-success);
+}
+
+.graph-node--raw.is-unlocked .graph-node-badge {
+  fill: hsl(var(--hue-earth), 38%, 36%);
+}
+
+.graph-node--processed.is-unlocked .graph-node-badge {
+  fill: hsl(var(--hue-gold), 50%, 40%);
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@culinary-alchemy/content",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-platform game content authoring — ingredients, recipes, progression, achievements"
+}

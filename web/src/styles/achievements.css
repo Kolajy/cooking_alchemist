@@ -1,0 +1,179 @@
+/* Culinary Alchemy — achievements panel */
+
+.achievements-panel__intro {
+  padding: 0.85rem 1rem 0.65rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.achievements-panel__lead {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.achievements-panel__hint {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.achievements-panel__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.achievements-panel__bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: hsla(30, 18%, 72%, 0.35);
+  overflow: hidden;
+}
+
+.achievements-panel__bar-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-gold), hsl(var(--hue-fire), 44%, 52%));
+  transition: width 0.35s ease;
+}
+
+.achievements-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0.85rem 1rem;
+}
+
+.achievements-section + .achievements-section {
+  margin-top: 1rem;
+}
+
+.achievements-section__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.achievements-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.achievement-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: hsla(42, 40%, 98%, 0.72);
+}
+
+.achievement-card--unlocked {
+  border-color: hsla(var(--hue-gold), 38%, 58%, 0.45);
+  box-shadow: 0 1px 0 hsla(var(--hue-gold), 48%, 88%, 0.8) inset;
+}
+
+.achievement-card--locked {
+  opacity: 0.82;
+}
+
+.achievement-card__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.achievement-card__emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.achievement-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.achievement-card__name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.achievement-card__desc {
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+.achievement-card__time {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  color: var(--color-text-dim);
+  white-space: nowrap;
+}
+
+.achievements-empty {
+  margin: 0;
+  padding: 1rem 0.25rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.achievement-notification {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  z-index: 2010;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(92%, 360px);
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid hsla(var(--hue-gold), 42%, 52%, 0.55);
+  background: hsla(42, 45%, 98%, 0.96);
+  box-shadow: 0 12px 36px hsla(var(--hue-gold), 32%, 42%, 0.18), var(--shadow-lg);
+  pointer-events: none;
+}
+
+.achievement-notification__emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.achievement-notification__text h4 {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: hsl(var(--hue-gold), 42%, 34%);
+}
+
+.achievement-notification__text p {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.achievement-notification__text strong {
+  color: var(--color-text);
+}

@@ -1,0 +1,25 @@
+/* Culinary Alchemy — layout */
+
+/* App Layout */
+#app-shell.grand-scroll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Container Layout */
+.game-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.main-stage {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  position: relative;
+}

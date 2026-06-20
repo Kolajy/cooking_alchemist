@@ -14,3 +14,4 @@ venv/
 target/
 .git-submodule-bare/
 .submodule-staging/
+core/assets/

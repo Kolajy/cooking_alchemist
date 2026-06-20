@@ -1,0 +1,41 @@
+/* Culinary Alchemy — contextual player hints */
+
+.kitchen-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--color-text);
+  background: hsla(42, 48%, 96%, 0.96);
+  border: 1px solid hsla(38, 45%, 52%, 0.45);
+  box-shadow: 0 8px 22px hsla(24, 20%, 20%, 0.16);
+  z-index: 2006;
+  pointer-events: none;
+}
+
+.kitchen-hint__icon {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.kitchen-hint__text {
+  flex: 1;
+}
+
+.kitchen-hint--banner {
+  text-align: center;
+  justify-content: center;
+}
+
+.kitchen-hint--anchored {
+  text-align: left;
+}
+
+.floating-warning {
+  line-height: 1.35;
+}

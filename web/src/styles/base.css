@@ -1,0 +1,207 @@
+/* Culinary Alchemy — base */
+
+/* Reset & Base Rules */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  /* Aged parchment base — warm amber sepia (#F5E6C8 → #E8D2A5 → #D6BA87). */
+  background:
+    radial-gradient(ellipse 130% 110% at 50% 0%,
+      #f5e6c8 0%,
+      #ecd9b0 45%,
+      #ddc190 78%,
+      #cdad77 100%);
+  color: var(--scroll-ink);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Disable browser text highlighting when double-clicking or dragging elements */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.fantasy-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Parchment field — uneven tonal mottling like aged manuscript stock. */
+.fantasy-backdrop__warmth {
+  position: absolute;
+  inset: 0;
+  background-color: #f5e6c8;
+  background-image:
+    radial-gradient(ellipse 58% 50% at 18% 24%, rgba(212, 168, 67, 0.20) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 46% at 82% 28%, rgba(139, 105, 20, 0.16) 0%, transparent 52%),
+    radial-gradient(ellipse 55% 50% at 74% 80%, rgba(212, 168, 67, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 52% 42% at 22% 84%, rgba(139, 105, 20, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 38% at 50% 52%, rgba(245, 230, 200, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 130% 100% at 50% 50%,
+      #f5e6c8 0%,
+      #ecd6ac 55%,
+      #dcbf8d 100%);
+}
+
+/* Fine paper grain / noise via fractal turbulence. */
+.fantasy-backdrop__warmth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+}
+
+/* Subtle crinkle / fold creases running across the sheet. */
+.fantasy-backdrop__warmth::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(118deg,
+      rgba(139, 105, 20, 0.035) 0px,
+      transparent 2px,
+      transparent 46px,
+      rgba(255, 248, 228, 0.05) 48px,
+      transparent 50px),
+    repeating-linear-gradient(28deg,
+      rgba(139, 105, 20, 0.028) 0px,
+      transparent 3px,
+      transparent 64px),
+    radial-gradient(ellipse 90% 70% at 50% 40%, transparent 60%, rgba(139, 105, 20, 0.06) 100%);
+}
+
+.fantasy-backdrop__embers {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 70%, hsla(32, 90%, 62%, 0.9), transparent),
+    radial-gradient(1px 1px at 22% 82%, hsla(28, 85%, 58%, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 35% 75%, hsla(36, 88%, 65%, 0.8), transparent),
+    radial-gradient(1px 1px at 48% 88%, hsla(30, 80%, 55%, 0.6), transparent),
+    radial-gradient(2px 2px at 8% 55%, hsla(32, 90%, 60%, 0.5), transparent),
+    radial-gradient(1px 1px at 18% 92%, hsla(34, 85%, 62%, 0.65), transparent);
+  background-size: 100% 100%;
+  animation: ember-flicker 10s ease-in-out infinite alternate;
+}
+
+/* Slow-drifting warm dust / ember motes — ambient hearth life behind the scroll. */
+.fantasy-backdrop__motes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fantasy-backdrop__motes::before,
+.fantasy-backdrop__motes::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+}
+
+/* Near layer — larger, warmer motes drifting faster. */
+.fantasy-backdrop__motes::before {
+  background-image:
+    radial-gradient(2px 2px at 16% 88%, hsla(34, 92%, 66%, 0.85), transparent 60%),
+    radial-gradient(1.5px 1.5px at 38% 96%, hsla(30, 88%, 60%, 0.7), transparent 60%),
+    radial-gradient(2.5px 2.5px at 62% 90%, hsla(38, 90%, 68%, 0.75), transparent 60%),
+    radial-gradient(1.5px 1.5px at 82% 94%, hsla(28, 85%, 58%, 0.65), transparent 60%),
+    radial-gradient(2px 2px at 50% 84%, hsla(36, 90%, 64%, 0.7), transparent 60%);
+  animation: mote-drift 16s linear infinite;
+}
+
+/* Far layer — finer, dimmer motes drifting slower for parallax. */
+.fantasy-backdrop__motes::after {
+  background-image:
+    radial-gradient(1.5px 1.5px at 24% 92%, hsla(40, 80%, 70%, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 46% 98%, hsla(32, 78%, 62%, 0.45), transparent 60%),
+    radial-gradient(1.5px 1.5px at 70% 95%, hsla(36, 82%, 66%, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 90% 90%, hsla(28, 76%, 58%, 0.4), transparent 60%),
+    radial-gradient(1px 1px at 8% 96%, hsla(38, 80%, 64%, 0.42), transparent 60%);
+  animation: mote-drift 26s linear infinite;
+  animation-delay: -9s;
+}
+
+html[data-motion="reduced"] .fantasy-backdrop__motes {
+  display: none;
+}
+
+/* Burned, darkened vignette edges — singed manuscript border. */
+.fantasy-backdrop__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 88% 82% at 50% 50%,
+      transparent 48%,
+      rgba(120, 74, 22, 0.30) 72%,
+      rgba(74, 44, 12, 0.55) 88%,
+      rgba(38, 20, 6, 0.82) 100%);
+}
+
+/* Scorched corners for an aged, fire-touched edge. */
+.fantasy-backdrop__vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(34, 17, 5, 0.62) 0%, transparent 24%),
+    radial-gradient(circle at 100% 0%, rgba(34, 17, 5, 0.58) 0%, transparent 24%),
+    radial-gradient(circle at 0% 100%, rgba(34, 17, 5, 0.62) 0%, transparent 24%),
+    radial-gradient(circle at 100% 100%, rgba(34, 17, 5, 0.58) 0%, transparent 24%);
+}
+
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.boot-error-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  background: hsla(22, 30%, 12%, 0.92);
+  color: hsl(42, 45%, 96%);
+}
+
+.boot-error-panel h2 {
+  font-family: var(--font-display);
+  color: hsl(32, 70%, 68%);
+}
+
+.boot-error-hint {
+  max-width: 36rem;
+  line-height: 1.5;
+  color: hsla(42, 30%, 90%, 0.85);
+}
+
+.boot-error-hint code {
+  background: hsla(32, 20%, 22%, 0.8);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}

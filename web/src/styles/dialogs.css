@@ -1,0 +1,214 @@
+/* Culinary Alchemy — dialogs */
+
+/* --- Dialog Modals (Parchment scrolls) --- */
+dialog {
+  margin: auto;
+  border: 2px solid hsl(36, 34%, 68%);
+  background: transparent;
+  color: var(--scroll-ink);
+  border-radius: 4px;
+  outline: none;
+  box-shadow: 0 28px 56px -14px var(--scroll-shadow);
+  max-width: 90vw;
+  width: 580px;
+  overflow: hidden;
+}
+
+dialog::backdrop {
+  background-color: hsla(24, 28%, 10%, 0.68);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Webkit dialog fade in */
+dialog[open] {
+  animation: dialog-fade-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.dialog-content {
+  background: var(--parchment-bg);
+  background-size: 420px 420px, 100% 100%, 100% 100%, 100% 100%, 280px 280px;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-blend-mode: var(--parchment-blend);
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  box-shadow: inset 0 0 0 1px hsla(48, 70%, 96%, 0.45);
+}
+
+.dialog-header {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px dashed hsla(30, 18%, 52%, 0.35);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, hsla(40, 38%, 90%, 0.5) 0%, transparent 100%);
+}
+
+.dialog-header h2 {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--scroll-accent);
+  letter-spacing: 0.02em;
+}
+
+.close-dialog-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-dim);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: var(--transition-smooth);
+}
+.close-dialog-btn:hover {
+  color: var(--color-danger);
+}
+
+.dialog-body {
+  padding: 1.65rem;
+  overflow-y: auto;
+}
+
+.dialog-intro {
+  color: var(--color-text-muted);
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.help-body {
+  padding-top: 1rem;
+}
+
+.help-section + .help-section {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed hsla(30, 18%, 52%, 0.25);
+}
+
+.help-section-title {
+  font-family: var(--font-fantasy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--scroll-gold);
+  margin-bottom: 0.45rem;
+}
+
+.help-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--scroll-ink-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.help-list li + li {
+  margin-top: 0.35rem;
+}
+
+.help-shortcuts kbd {
+  display: inline-block;
+  min-width: 1.35em;
+  padding: 0.08em 0.38em;
+  border-radius: 4px;
+  border: 1px solid hsla(38, 36%, 58%, 0.55);
+  background: hsla(42, 45%, 96%, 0.95);
+  box-shadow: inset 0 -1px 0 hsla(32, 30%, 42%, 0.12);
+  font-family: var(--font-body);
+  font-size: 0.78em;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--scroll-ink);
+}
+
+/* Recipe grid inside Modal */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  align-content: start;
+}
+
+.recipe-card {
+  background: hsla(42, 40%, 96%, 0.9);
+  border: 1px solid hsla(38, 36%, 58%, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: var(--transition-smooth);
+  position: relative;
+  cursor: help;
+  box-shadow: inset 0 1px 0 hsla(48, 70%, 98%, 0.65);
+}
+
+.recipe-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--scroll-gold);
+  box-shadow:
+    0 6px 14px hsla(38, 40%, 30%, 0.12),
+    0 0 20px var(--cozy-hover-glow);
+}
+
+.recipe-card-emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-card-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--color-text);
+}
+
+.recipe-card-category {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.recipe-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+/* Tooltip on hover recipe */
+.recipe-card .tooltip {
+  visibility: hidden;
+  position: absolute;
+  width: 250px;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  text-align: left;
+  padding: 0.75rem;
+  border-radius: 8px;
+  z-index: 1000;
+  bottom: 105%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  box-shadow: var(--shadow-lg);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.recipe-card .tooltip h4 {
+  color: var(--color-gold);
+  margin-bottom: 0.25rem;
+}
+
+.recipe-card:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

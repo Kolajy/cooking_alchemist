@@ -1,0 +1,519 @@
+/* Culinary Alchemy — cabinet */
+
+/* Sidebar Cabinet */
+.sidebar-cabinet {
+  width: 340px;
+  min-height: 0;
+  height: 100%;
+  background:
+    linear-gradient(180deg, hsla(40, 42%, 90%, 0.55) 0%, hsla(38, 36%, 86%, 0.25) 40%, transparent 100%),
+    linear-gradient(90deg, hsla(34, 28%, 72%, 0.2) 0%, transparent 20px);
+  border-left: 1px solid hsla(32, 30%, 52%, 0.3);
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 8px 0 24px hsla(28, 22%, 38%, 0.04);
+}
+
+.sidebar-cabinet__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem 0.35rem;
+  flex-shrink: 0;
+}
+
+.sidebar-cabinet__ornament {
+  font-size: 0.7rem;
+  color: hsla(32, 38%, 48%, 0.45);
+}
+
+.sidebar-cabinet__label {
+  font-family: var(--font-fantasy-title);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: hsla(28, 30%, 42%, 0.65);
+}
+
+.search-container {
+  padding: 1rem;
+}
+
+.search-container input[type="search"] {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  background: hsla(42, 40%, 96%, 0.85);
+  border: 1px solid hsla(38, 36%, 58%, 0.4);
+  color: var(--scroll-ink);
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.search-container input[type="search"]:focus {
+  border-color: var(--scroll-gold);
+  box-shadow: 0 0 0 2px hsla(38, 50%, 45%, 0.15);
+}
+
+/* Tabs */
+.cabinet-tabs {
+  display: flex;
+  border-bottom: 2px solid hsla(38, 42%, 58%, 0.3);
+  background: hsla(40, 38%, 90%, 0.35);
+}
+
+.cabinet-tabs .tab-btn {
+  flex: 1;
+  padding: 0.65rem 0.35rem;
+  background: none;
+  border: none;
+  color: var(--scroll-ink-muted);
+  font-family: var(--font-fantasy);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-gentle);
+  border-bottom: 2px solid transparent;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tab-btn:hover {
+  color: var(--scroll-ink);
+}
+
+.tab-btn.active {
+  color: var(--scroll-ember);
+  border-bottom-color: var(--scroll-ember);
+  background: linear-gradient(180deg, hsla(40, 42%, 94%, 0.6) 0%, transparent 100%);
+  text-shadow: 0 0 12px hsla(32, 55%, 52%, 0.15);
+}
+
+/* Cabinet filters — state and type */
+.cabinet-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-bottom: 1px solid hsla(38, 36%, 58%, 0.25);
+  background: hsla(40, 36%, 90%, 0.3);
+}
+
+.cabinet-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.cabinet-filter-group + .cabinet-filter-group {
+  border-top: 1px solid hsla(38, 36%, 58%, 0.18);
+}
+
+.cabinet-filter-label {
+  font-family: var(--font-fantasy);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--scroll-ink-muted);
+  padding: 0.4rem 1rem 0;
+}
+
+.cabinet-filter-hint {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 0.58rem;
+  color: hsla(28, 12%, 42%, 0.75);
+}
+
+.cabinet-filter-group .subtabs-container {
+  border-bottom: none;
+  background: transparent;
+  padding-top: 0.15rem;
+  padding-bottom: 0.45rem;
+}
+
+/* Subtabs (Ingredient Categories) */
+.subtabs-container {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  border-bottom: 1px solid hsla(38, 36%, 58%, 0.25);
+  background: hsla(40, 36%, 90%, 0.3);
+}
+.subtabs-container::-webkit-scrollbar {
+  display: none; /* Hide Chrome/Safari scrollbar */
+}
+
+.subtab-btn {
+  font-family: var(--font-fantasy);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.32rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid hsla(38, 36%, 58%, 0.35);
+  background: hsla(42, 40%, 94%, 0.6);
+  color: var(--scroll-ink-muted);
+  cursor: pointer;
+  transition: var(--transition-gentle);
+}
+
+.subtab-btn:hover {
+  color: var(--scroll-ink);
+  border-color: hsla(38, 40%, 50%, 0.5);
+}
+
+.subtab-btn.active {
+  background: var(--active-gradient);
+  color: hsl(38, 38%, 96%);
+  border-style: solid;
+  border-color: hsl(22, 26%, 46%);
+}
+
+.subtab-btn--include {
+  background: var(--active-gradient);
+  color: hsl(38, 38%, 96%);
+  border-color: hsl(22, 26%, 46%);
+  box-shadow: inset 0 0 0 1px hsla(42, 55%, 88%, 0.2);
+}
+
+.subtab-btn--exclude {
+  background: linear-gradient(165deg, hsl(6, 34%, 88%) 0%, hsl(8, 28%, 82%) 100%);
+  color: hsl(8, 42%, 34%);
+  border-color: hsla(6, 38%, 52%, 0.45);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.subtab-btn--exclude:hover {
+  color: hsl(6, 48%, 28%);
+  border-color: hsla(6, 42%, 46%, 0.6);
+}
+
+/* Cabinet Grid list */
+.cabinet-grid {
+  flex: 1;
+  min-height: 180px;
+  overflow-y: auto;
+  padding: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.cabinet-grid::-webkit-scrollbar {
+  width: 7px;
+}
+.cabinet-grid::-webkit-scrollbar-track {
+  background: var(--cozy-scrollbar-track);
+}
+.cabinet-grid::-webkit-scrollbar-thumb {
+  background-color: var(--cozy-scrollbar-thumb);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.cabinet-grid::-webkit-scrollbar-thumb:hover {
+  background-color: var(--cozy-scrollbar-thumb-hover);
+}
+
+/* Element Tags */
+.alchemy-element {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  background: linear-gradient(145deg, hsla(44, 48%, 97%, 0.98) 0%, hsla(40, 38%, 92%, 0.95) 100%);
+  border: 1px solid hsla(32, 28%, 58%, 0.32);
+  box-shadow:
+    0 2px 6px hsla(28, 18%, 30%, 0.07),
+    inset 0 1px 0 hsla(48, 55%, 98%, 0.8);
+  cursor: grab;
+  user-select: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--scroll-ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.alchemy-element:not(.canvas-element):hover {
+  transform: translateY(-3px);
+  border-color: hsla(32, 42%, 52%, 0.5);
+  box-shadow:
+    0 6px 16px hsla(28, 25%, 32%, 0.12),
+    0 0 20px hsla(32, 50%, 52%, 0.1);
+}
+
+/* Primitive vs processed ingredient distinction */
+.alchemy-element[data-origin="primitive"] {
+  border-color: hsla(265, 30%, 65%, 0.35);
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-primitive-tint) 100%);
+}
+
+.alchemy-element[data-origin="primitive"]:hover {
+  border-color: hsla(265, 45%, 55%, 0.55);
+  box-shadow:
+    0 6px 16px hsla(265, 25%, 32%, 0.12),
+    0 0 20px hsla(265, 50%, 52%, 0.1);
+}
+
+.alchemy-element[data-origin="raw"] {
+  border-color: hsla(120, 24%, 60%, 0.35);
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-raw-tint) 100%);
+}
+
+.alchemy-element[data-origin="raw"]:hover {
+  border-color: hsla(120, 36%, 50%, 0.55);
+  box-shadow:
+    0 6px 16px hsla(120, 25%, 32%, 0.12),
+    0 0 20px hsla(120, 50%, 52%, 0.1);
+}
+
+.alchemy-element[data-origin="processed"],
+.alchemy-element[data-state="prepared"] {
+  border-color: hsla(34, 30%, 65%, 0.35);
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-processed-tint) 100%);
+}
+
+.alchemy-element[data-origin="processed"]:hover,
+.alchemy-element[data-state="prepared"]:hover {
+  border-color: hsla(34, 45%, 50%, 0.65);
+  box-shadow:
+    0 6px 16px hsla(34, 25%, 32%, 0.12),
+    0 0 20px hsla(34, 50%, 52%, 0.1);
+}
+
+.alchemy-element[data-state="recipe"] {
+  border-color: hsla(345, 35%, 65%, 0.35);
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-recipe-tint) 100%);
+}
+
+.alchemy-element[data-state="recipe"]:hover {
+  border-color: hsla(345, 50%, 55%, 0.65);
+  box-shadow:
+    0 6px 16px hsla(345, 25%, 32%, 0.12),
+    0 0 20px hsla(345, 50%, 52%, 0.1);
+}
+
+.alchemy-element .element-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.alchemy-element .element-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.origin-badge {
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.origin-badge--primitive {
+  color: var(--color-sage);
+  background-color: hsla(var(--hue-sage), 28%, 88%, 0.9);
+  border: 1px solid hsla(var(--hue-sage), 22%, 70%, 0.45);
+}
+
+.origin-badge--raw {
+  color: hsl(var(--hue-earth), 38%, 34%);
+  background-color: hsla(var(--hue-earth), 32%, 90%, 0.95);
+  border: 1px solid hsla(var(--hue-earth), 28%, 68%, 0.45);
+}
+
+.origin-badge--processed {
+  color: hsl(var(--hue-gold), 50%, 38%);
+  background-color: hsla(var(--hue-gold), 55%, 92%, 0.95);
+  border: 1px solid hsla(var(--hue-gold), 45%, 70%, 0.4);
+}
+
+.origin-badge--recipe {
+  color: hsl(var(--hue-ember), 58%, 34%);
+  background-color: hsla(var(--hue-ember), 62%, 92%, 0.96);
+  border: 1px solid hsla(var(--hue-ember), 48%, 68%, 0.42);
+}
+
+.cabinet-grid .alchemy-element.cabinet-item--recent-new {
+  animation: cabinet-recent-glow 2.2s ease-in-out 2;
+  border-color: hsla(var(--hue-gold), 62%, 52%, 0.65);
+  background:
+    linear-gradient(120deg, hsla(var(--hue-gold), 55%, 94%, 0.45) 0%, transparent 55%),
+    linear-gradient(135deg, var(--color-bg-card) 0%, hsla(40, 42%, 94%, 0.95) 100%);
+}
+
+.cabinet-grid .alchemy-element {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.3rem;
+  min-height: 80px;
+  border-radius: 8px;
+  white-space: nowrap;
+  touch-action: none;
+  cursor: grab;
+  position: relative;
+}
+
+.cabinet-item__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.cabinet-item__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.cabinet-grid .alchemy-element .element-emoji {
+  font-size: 1.85rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin: 0;
+}
+
+.cabinet-grid .alchemy-element .element-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1.2;
+  max-width: 100%;
+  color: var(--scroll-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.cabinet-grid .alchemy-element .element-desc {
+  display: none;
+}
+
+.cabinet-grid .alchemy-element .origin-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 0;
+  overflow: hidden;
+  border: none;
+}
+
+.cabinet-grid .alchemy-element[data-origin="primitive"] .origin-badge {
+  background-color: hsl(265, 55%, 60%);
+}
+.cabinet-grid .alchemy-element[data-origin="raw"] .origin-badge {
+  background-color: hsl(120, 36%, 50%);
+}
+.cabinet-grid .alchemy-element[data-state="prepared"] .origin-badge,
+.cabinet-grid .alchemy-element[data-origin="processed"] .origin-badge {
+  background-color: hsl(34, 60%, 52%);
+}
+.cabinet-grid .alchemy-element[data-state="recipe"] .origin-badge {
+  background-color: hsl(345, 60%, 55%);
+}
+
+.cabinet-grid .alchemy-element:active {
+  cursor: grabbing;
+}
+
+/* Drag preview lifted from the cabinet — follows the pointer onto the counter. */
+.cabinet-drag-ghost {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.55rem;
+  border-color: hsla(var(--hue-gold), 70%, 48%, 0.75) !important;
+  box-shadow:
+    0 0 0 2px hsla(var(--hue-gold), 80%, 52%, 0.55),
+    0 8px 20px hsla(28, 28%, 18%, 0.28);
+  cursor: grabbing !important;
+  will-change: transform;
+}
+
+/* While dragging from the cabinet, keep a firm grab cursor (not combine "copy" / plus). */
+body.is-cabinet-dragging,
+body.is-cabinet-dragging #workspace,
+body.is-cabinet-dragging .alchemy-element {
+  cursor: grabbing !important;
+}
+
+.workspace-area.workspace-drop-target {
+  box-shadow:
+    inset 0 0 0 2px hsla(var(--hue-gold), 80%, 52%, 0.45),
+    inset 0 0 50px hsla(32, 30%, 42%, 0.07),
+    inset 0 2px 0 hsla(48, 55%, 96%, 0.5);
+}
+
+.cabinet-empty-hint {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--scroll-accent-soft);
+  font-family: var(--font-charm);
+  font-size: 1.05rem;
+  padding: 2rem 0.75rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+/* Techniques category visual distinction */
+.alchemy-element[data-type="technique"] {
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-processed-tint) 100%);
+  border-color: hsla(var(--hue-gold), 45%, 55%, 0.35);
+}
+.alchemy-element[data-type="technique"]:hover {
+  box-shadow: 0 0 15px var(--color-gold-glow);
+  border-color: var(--color-gold);
+}
+
+/* Sidebar Footer hint */
+.sidebar-footer {
+  padding: 0.85rem;
+  font-family: var(--font-charm);
+  font-size: 1rem;
+  text-align: center;
+  color: var(--scroll-ink-muted);
+  border-top: 1px dashed hsla(30, 18%, 52%, 0.3);
+  background: hsla(38, 30%, 88%, 0.2);
+}
+
+/* Sidebar panel tabs */
+.sidebar-panel {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.sidebar-panel.active {
+  display: flex;
+}

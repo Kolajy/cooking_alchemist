@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Culinary Alchemy | Cook & Discover Recipes</title>
+  <meta name="description" content="Combine ingredients and cooking techniques to discover real-life recipes and learn the science of cooking.">
+  
+  <!-- Premium Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cinzel:wght@500;600&family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet (also imported from main.ts for Vite bundling) -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="fantasy-backdrop" aria-hidden="true">
+    <div class="fantasy-backdrop__warmth"></div>
+    <div class="fantasy-backdrop__embers"></div>
+    <div class="fantasy-backdrop__motes"></div>
+    <div class="fantasy-backdrop__vignette"></div>
+  </div>
+
+  <!-- App Shell — parchment unfurling top to bottom -->
+  <div id="app-shell" class="grand-scroll">
+    <div class="grand-scroll__assembly">
+      <div class="grand-scroll__sheet">
+        <div class="grand-scroll__parchment">
+          <div class="grand-scroll__inner-frame" aria-hidden="true"></div>
+          <div class="grand-scroll__ornament grand-scroll__ornament--tl" aria-hidden="true">✦</div>
+          <div class="grand-scroll__ornament grand-scroll__ornament--tr" aria-hidden="true">✦</div>
+          <div class="grand-scroll__warm-wash" aria-hidden="true"></div>
+          <div class="grand-scroll__crinkles grand-scroll__crinkles--grain" aria-hidden="true"></div>
+          <div class="grand-scroll__crinkles grand-scroll__crinkles--stains" aria-hidden="true"></div>
+          <div class="grand-scroll__crinkles grand-scroll__crinkles--folds" aria-hidden="true"></div>
+          <div class="grand-scroll__crinkles grand-scroll__crinkles--edges" aria-hidden="true"></div>
+          <div class="grand-scroll__seal" aria-hidden="true"></div>
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="logo-emoji" aria-hidden="true">🍳</span>
+        <div class="logo-text">
+          <h1>Culinary Alchemy</h1>
+          <p class="logo-tagline">A cozy hearth of discoveries</p>
+        </div>
+      </div>
+      <div class="stats-and-actions">
+        <div class="stats-counter" aria-live="polite">
+          <span class="stats-label">📖 Ledger Restored:</span>
+          <span id="unlocked-count" class="stats-value">0%</span>
+        </div>
+        <button id="btn-sound" class="btn btn-icon" type="button" aria-pressed="false" aria-label="Enable kitchen sounds" title="Enable sounds">
+          🔇
+        </button>
+        <button id="btn-settings" class="btn btn-icon" type="button" aria-label="Open settings" title="Settings">
+          ⚙️
+        </button>
+        <button id="btn-help" class="btn btn-icon" type="button" aria-label="How to play" title="How to play">
+          ?
+        </button>
+        <button id="btn-recipe-book" class="btn btn-primary" aria-label="Open Recipe Book">
+          📖 Recipe Book
+        </button>
+        <button id="btn-progress-graph" class="btn btn-secondary" aria-label="Open ingredient progress graph">
+          🌳 Progress Map
+        </button>
+        <input type="file" id="save-file-input" accept=".json,application/json" hidden>
+      </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="game-container">
+      
+      <div class="main-stage">
+        <!-- Canvas Workspace -->
+        <section id="workspace" class="workspace-area" aria-label="Cooking Workspace">
+          <div class="workspace-ring" aria-hidden="true"></div>
+          <div class="workspace-glow" aria-hidden="true"></div>
+
+          <!-- Grandmother's Guide Sticky Note -->
+          <div id="grandma-guide" class="grandma-guide animate-pop">
+            <span class="grandma-guide__pin">📌</span>
+            <h4 class="grandma-guide__title">Ledger Guide</h4>
+            <p id="grandma-guide-text" class="grandma-guide__text">Tap berries in the Pantry to place them on the counter, then select the Separate action bar button!</p>
+          </div>
+          <button
+            id="btn-undo-workspace"
+            type="button"
+            class="workspace-undo-btn"
+            aria-label="Undo last counter change"
+            disabled
+            title="Nothing to undo"
+          >
+            <span class="workspace-undo-btn__icon" aria-hidden="true">↩</span>
+            <span class="workspace-undo-btn__flavor" role="tooltip">
+              Put that ingredient back — or take it off the counter.
+            </span>
+          </button>
+          <button
+            id="btn-clear-workspace"
+            type="button"
+            class="workspace-clear-btn"
+            aria-label="Clear counter"
+          >
+            <span class="workspace-clear-btn__icon" aria-hidden="true">🧹</span>
+            <span class="workspace-clear-btn__flavor" role="tooltip">
+              Sweep the counter bare — a clean slate for your next experiment.
+            </span>
+          </button>
+          <div class="workspace-hint">Drag ingredients from the Pantry onto the counter to begin experimenting.</div>
+          <!-- Elements will be spawned dynamically here -->
+          
+          <!-- Technique bar — cozy worn strip -->
+          <div class="action-toolbar-wrap">
+            <div class="technique-strip">
+              <p class="technique-strip__title" aria-hidden="true">Action Bar</p>
+              <div class="cooking-toolbar" id="cooking-toolbar" role="toolbar" aria-label="Action bar"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Full-area progress map (replaces workspace when active) -->
+        <section id="progress-map-view" class="progress-map-view" hidden aria-label="Ingredient progress map">
+          <p class="progress-map-intro">Search for an ingredient to see how it connects — techniques, combinations, and what you can make from it. Click a node to add it to your kitchen.</p>
+          <div id="ingredient-graph-container" class="ingredient-graph-container"></div>
+        </section>
+      </div>
+
+      <!-- Sidebar Cabinet (Inventory) -->
+      <aside id="sidebar" class="sidebar-cabinet" aria-label="Ingredient Cabinet">
+        <div class="sidebar-cabinet__header" aria-hidden="true">
+          <span class="sidebar-cabinet__ornament">❧</span>
+          <span class="sidebar-cabinet__label">Pantry</span>
+          <span class="sidebar-cabinet__ornament">❧</span>
+        </div>
+        <div class="cabinet-tabs" role="tablist" aria-label="Sidebar panels">
+          <button class="tab-btn active" data-sidebar-tab="cabinet" role="tab" aria-selected="true" aria-controls="cabinet-panel">
+            🗄️ Cabinet
+          </button>
+          <button class="tab-btn" data-sidebar-tab="skills" role="tab" aria-selected="false" aria-controls="skills-panel">
+            🎓 Skills
+          </button>
+          <button class="tab-btn" data-sidebar-tab="journal" role="tab" aria-selected="false" aria-controls="journal-panel">
+            📓 Journal
+          </button>
+          <button class="tab-btn" data-sidebar-tab="achievements" role="tab" aria-selected="false" aria-controls="achievements-panel">
+            🏆 Trophies
+          </button>
+        </div>
+
+        <div id="cabinet-panel" class="sidebar-panel active" role="tabpanel">
+        <!-- Search bar -->
+        <div class="search-container">
+          <input type="search" id="cabinet-search" placeholder="Search name or :tags (e.g. :raw, :liquid)..." autocomplete="off">
+        </div>
+
+        <!-- Ingredient filters -->
+        <div class="cabinet-filters">
+          <div class="cabinet-filter-group" role="group" aria-label="Ingredient state">
+            <span class="cabinet-filter-label">State <span class="cabinet-filter-hint">click include · shift exclude</span></span>
+            <div id="ingredient-states" class="subtabs-container">
+              <button type="button" class="subtab-btn active" data-state="all" aria-pressed="true">All</button>
+              <button type="button" class="subtab-btn" data-state="recent">Recent</button>
+              <button type="button" class="subtab-btn" data-state="primal">Primal</button>
+              <button type="button" class="subtab-btn" data-state="raw">Raw</button>
+              <button type="button" class="subtab-btn" data-state="prepared">Prepared</button>
+              <button type="button" class="subtab-btn" data-state="recipe">Recipes</button>
+            </div>
+          </div>
+          <div class="cabinet-filter-group" role="group" aria-label="Ingredient category">
+            <span class="cabinet-filter-label">Category <span class="cabinet-filter-hint">click include · shift exclude</span></span>
+            <div id="ingredient-types" class="subtabs-container">
+              <!-- Populated from ingredient data by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory List -->
+        <div id="cabinet-items" class="cabinet-grid" role="list">
+          <!-- Items populated by JS -->
+        </div>
+
+        <!-- Sidebar Footer Hint -->
+        <footer class="sidebar-footer">
+          Drag something onto the counter to begin.
+        </footer>
+        </div>
+
+        <div id="skills-panel" class="sidebar-panel" role="tabpanel" hidden>
+          <div id="skills-list" class="skills-list" aria-label="Kitchen skills progression">
+            <!-- Populated from progression config by JS -->
+          </div>
+          <footer class="sidebar-footer">
+            Practice techniques to earn exp and unlock new actions.
+          </footer>
+        </div>
+
+        <div id="journal-panel" class="sidebar-panel" role="tabpanel" hidden>
+          <div class="journal-panel__intro">
+            <p class="journal-panel__lead">Kitchen journal</p>
+            <p class="journal-panel__hint">Every new ingredient and recipe you uncover is logged with the time of discovery.</p>
+            <p class="journal-panel__count" aria-live="polite">
+              <span id="discovery-log-count">0</span> entries
+            </p>
+          </div>
+          <div id="discovery-log-list" class="discovery-log-list" aria-label="Discovery log" role="list">
+            <!-- Populated by JS -->
+          </div>
+          <footer class="sidebar-footer">
+            Revisit what you have learned at the hearth.
+          </footer>
+        </div>
+
+        <div id="achievements-panel" class="sidebar-panel" role="tabpanel" hidden>
+          <div class="achievements-panel__intro">
+            <p class="achievements-panel__lead">Trophy shelf</p>
+            <p class="achievements-panel__hint">Milestones from your kitchen journey. Locked trophies show a hint for how to earn them.</p>
+            <div class="achievements-panel__summary" aria-live="polite">
+              <span id="achievements-count">0 / 0</span>
+              <div class="achievements-panel__bar" aria-hidden="true">
+                <span id="achievements-progress-fill" class="achievements-panel__bar-fill"></span>
+              </div>
+            </div>
+          </div>
+          <div id="achievements-list" class="achievements-list" aria-label="Achievements" role="list">
+            <!-- Populated by JS -->
+          </div>
+          <footer class="sidebar-footer">
+            Every hearth has stories worth remembering.
+          </footer>
+        </div>
+      </aside>
+      
+      </main>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="paper-grain" x="-8%" y="-8%" width="116%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="5" seed="17" result="noise"/>
+        <feColorMatrix in="noise" type="matrix"
+          values="0 0 0 0 0.42  0 0 0 0 0.34  0 0 0 0 0.26  0 0 0 0.18 0" result="grain"/>
+        <feBlend in="SourceGraphic" in2="grain" mode="multiply"/>
+      </filter>
+      <filter id="paper-wrinkles" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="turbulence" baseFrequency="0.018 0.065" numOctaves="3" seed="4" result="wrinkle"/>
+        <feDisplacementMap in="SourceGraphic" in2="wrinkle" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="paper-stain" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="9" result="cloud"/>
+        <feColorMatrix in="cloud" type="matrix"
+          values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.22  0 0 0 0.35 0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Dialogs & Modals -->
+
+  <!-- How to Play -->
+  <dialog id="help-modal" closedby="any" aria-labelledby="help-title">
+    <div class="dialog-content">
+      <header class="dialog-header">
+        <h2 id="help-title">❔ How to Play</h2>
+        <button class="close-dialog-btn" aria-label="Close dialog">×</button>
+      </header>
+      <div class="dialog-body help-body">
+        <p class="dialog-intro">Drag ingredients from the <strong>Pantry</strong> onto the counter, then use the <strong>Action Bar</strong> to cook and discover new recipes.</p>
+
+        <section class="help-section">
+          <h3 class="help-section-title">🗄️ Pantry</h3>
+          <ul class="help-list">
+            <li>Drag an ingredient onto the counter, or tap to place it in the center.</li>
+            <li>Filter by <strong>State</strong> (Primal, Raw, Prepared) and <strong>Type</strong> (Produce, Forage, etc.).</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3 class="help-section-title">🍳 Action Bar</h3>
+          <ul class="help-list">
+            <li><strong>Combine</strong> — Select it, then drag one ingredient onto another (or use the Combine sub-action).</li>
+            <li><strong>Separate</strong> — Pick Separate, then click an ingredient on the counter (highlighted targets are valid).</li>
+            <li><strong>Force</strong> — Crush and grind with techniques like Smash and Pound.</li>
+            <li><strong>Heat</strong> — Unlocks at 50 recipe discoveries; apply heat to cook and transform ingredients.</li>
+            <li><strong>Time</strong> — Unlocks at 200 recipe discoveries; steep, rest, or ferment ingredients.</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3 class="help-section-title">🎓 Skills & Progress</h3>
+          <ul class="help-list">
+            <li>Open the <strong>Skills</strong> tab in the pantry to see your unlocked actions and exp.</li>
+            <li>Practicing techniques and discovering recipes earns exp and unlocks new actions.</li>
+            <li>Use the <strong>Progress Map</strong> to explore how ingredients connect.</li>
+            <li>The <strong>Recipe Book</strong> lists everything you have discovered so far.</li>
+            <li>Open <strong>Settings</strong> (<kbd>,</kbd>) to export or import a save, adjust sound, or reset progress.</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3 class="help-section-title">⌨️ Keyboard shortcuts</h3>
+          <ul class="help-list help-shortcuts">
+            <li><kbd>1</kbd>–<kbd>5</kbd> Select method (Combine, Separate, Force, Heat, Time)</li>
+            <li><kbd>[</kbd> <kbd>]</kbd> Previous / next sub-technique</li>
+            <li><kbd>Enter</kbd> Apply active technique to counter</li>
+            <li><kbd>U</kbd> or <kbd>⌘</kbd><kbd>Z</kbd> Undo last counter change</li>
+            <li><kbd>C</kbd> Clear counter</li>
+            <li><kbd>/</kbd> Focus pantry search · <kbd>P</kbd> <kbd>K</kbd> <kbd>J</kbd> Pantry / Skills / Journal</li>
+            <li><kbd>B</kbd> Recipe book · <kbd>M</kbd> Progress map · <kbd>,</kbd> Settings · <kbd>S</kbd> Sound · <kbd>?</kbd> Help</li>
+            <li><kbd>Esc</kbd> Close dialog or leave progress map</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Settings -->
+  <dialog id="settings-modal" closedby="any" aria-labelledby="settings-title">
+    <div class="dialog-content">
+      <header class="dialog-header">
+        <h2 id="settings-title">⚙️ Kitchen Settings</h2>
+        <button class="close-dialog-btn" aria-label="Close dialog">×</button>
+      </header>
+      <div class="dialog-body settings-body">
+        <p class="dialog-intro">Tune the hearth to your taste. Preferences are saved on this device and included in exported saves.</p>
+
+        <section class="settings-section" aria-labelledby="settings-audio-title">
+          <h3 id="settings-audio-title" class="settings-section-title">Audio</h3>
+          <div class="settings-list">
+            <label class="settings-row" for="setting-sound">
+              <span class="settings-row__text">
+                <span class="settings-row__label">Kitchen sounds</span>
+                <span class="settings-row__hint">Chops, bubbles, and discovery chimes while you cook</span>
+              </span>
+              <input
+                id="setting-sound"
+                class="settings-toggle"
+                type="checkbox"
+                role="switch"
+                aria-checked="false"
+              >
+            </label>
+            <label class="settings-row" for="setting-ambience">
+              <span class="settings-row__text">
+                <span class="settings-row__label">Hearth ambience</span>
+                <span class="settings-row__hint">A soft, looping fire crackle to cook by</span>
+              </span>
+              <input
+                id="setting-ambience"
+                class="settings-toggle"
+                type="checkbox"
+                role="switch"
+                aria-checked="false"
+              >
+            </label>
+          </div>
+        </section>
+
+        <section class="settings-section" aria-labelledby="settings-display-title">
+          <h3 id="settings-display-title" class="settings-section-title">Display</h3>
+          <div class="settings-list">
+            <label class="settings-row" for="setting-reduced-motion">
+              <span class="settings-row__text">
+                <span class="settings-row__label">Reduced motion</span>
+                <span class="settings-row__hint">Minimize sparkles, pulses, and other decorative animations</span>
+              </span>
+              <input
+                id="setting-reduced-motion"
+                class="settings-toggle"
+                type="checkbox"
+                role="switch"
+                aria-checked="false"
+              >
+            </label>
+          </div>
+        </section>
+
+        <section class="settings-section" aria-labelledby="settings-data-title">
+          <h3 id="settings-data-title" class="settings-section-title">Save data</h3>
+          <p class="settings-section-lead">Back up discoveries, skills, and journal timestamps — or start a fresh pantry.</p>
+          <div class="settings-actions">
+            <button id="settings-export" class="btn btn-secondary" type="button">💾 Export save</button>
+            <button id="settings-import" class="btn btn-secondary" type="button">📂 Import save</button>
+            <button id="settings-reset" class="btn btn-danger" type="button">⚠️ Reset progress</button>
+          </div>
+          <p class="settings-footnote">Reset removes all discoveries and skill progress on this device. Export first if you want a backup.</p>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Recipe Book Modal -->
+  <dialog id="recipe-book-modal" closedby="any" aria-labelledby="recipe-book-title">
+    <div class="dialog-content">
+      <header class="dialog-header">
+        <h2 id="recipe-book-title">📖 Grandmother's Recipe Ledger</h2>
+        <button class="close-dialog-btn" aria-label="Close dialog">×</button>
+      </header>
+      <div class="dialog-body">
+        <p class="dialog-intro">Here are all the recipes and intermediate ingredients you have discovered. Hover/tap to read the culinary science behind them!</p>
+        <div id="discovered-recipes-list" class="recipe-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Discovery Dialog (New Element Unlocked) -->
+  <dialog id="discovery-dialog" closedby="any" class="discovery-modal" aria-labelledby="discovery-title">
+    <div class="dialog-content discovery-content">
+      <div class="discovery-sparkles" id="discovery-sparkles" aria-hidden="true"></div>
+      <div class="fireworks-glow"></div>
+      <header class="dialog-header discovery-header">
+        <div class="discovery-header-text">
+          <p class="discovery-kicker" id="discovery-kicker">Congratulations!</p>
+          <h2 id="discovery-title" class="discovery-title shine-text">New Ingredient Discovered</h2>
+        </div>
+      </header>
+      <div class="dialog-body discovery-body">
+        <div id="discovery-item-container" class="discovered-item-big">
+          <span class="discovered-emoji">🍳</span>
+          <span class="discovered-name">Dish Name</span>
+        </div>
+        <p id="discovery-description" class="discovered-desc discovery-reveal">Description of the dish goes here.</p>
+
+        <div id="discovery-exp" class="discovery-exp discovery-reveal" hidden>
+          <div class="discovery-exp__header">
+            <span id="discovery-exp-label" class="discovery-exp__label">🥣 Combine</span>
+            <span id="discovery-exp-gain" class="discovery-exp__gain">+1 exp</span>
+          </div>
+          <div class="xp-bar-container discovery-exp__bar">
+            <div id="discovery-exp-fill" class="xp-bar-fill"></div>
+          </div>
+          <span id="discovery-exp-text" class="xp-text discovery-exp__text">0 / 99 exp</span>
+        </div>
+
+        <div class="discovery-blurb-block discovery-reveal">
+          <h3>📜 Did You Know?</h3>
+          <p id="discovery-blurb">A short historical or culinary fact goes here.</p>
+        </div>
+
+        <form method="dialog" class="discovery-dismiss-form">
+          <button id="btn-discovery-ok" type="button" class="btn btn-primary btn-large discovery-ok-btn">Cook Onwards!</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Mechanic Discovery Dialog -->
+  <dialog id="mechanic-discovery-dialog" closedby="any" class="discovery-modal" aria-labelledby="mechanic-title">
+    <div class="dialog-content discovery-content">
+      <div class="discovery-sparkles" id="mechanic-sparkles" aria-hidden="true"></div>
+      <div class="fireworks-glow"></div>
+      <header class="dialog-header discovery-header">
+        <div class="discovery-header-text">
+          <p class="discovery-kicker" id="mechanic-kicker">New Cooking Technique!</p>
+          <h2 id="mechanic-title" class="discovery-title shine-text">Mechanic Unlocked</h2>
+        </div>
+      </header>
+      <div class="dialog-body discovery-body">
+        <div id="mechanic-item-container" class="discovered-item-big">
+          <span class="discovered-emoji" id="mechanic-emoji">🔪</span>
+          <span class="discovered-name" id="mechanic-name">Action Name</span>
+        </div>
+        <p id="mechanic-description" class="discovered-desc discovery-reveal">Description of the mechanic goes here.</p>
+
+        <form method="dialog" class="discovery-dismiss-form">
+          <button id="btn-mechanic-ok" type="button" class="btn btn-primary btn-large discovery-ok-btn">Begin Using!</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/main.ts"></script>
+  <script>
+    window.addEventListener("load", () => {
+      window.setTimeout(() => {
+        if (window.__culinaryGameStarted) return;
+        if (document.querySelector(".boot-error-panel")) return;
+        const panel = document.createElement("div");
+        panel.className = "boot-error-panel";
+        panel.setAttribute("role", "alert");
+        panel.innerHTML = `
+          <h2>Kitchen failed to start</h2>
+          <p>Game scripts did not load. This usually means the page was opened as a file instead of through the dev server.</p>
+          <p class="boot-error-hint">From the project folder run <code>npm run dev</code>, then open <strong>https://localhost:5173</strong>.</p>
+        `;
+        document.body.appendChild(panel);
+      }, 2500);
+    });
+  </script>
+</body>
+</html>

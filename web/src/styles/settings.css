@@ -1,0 +1,136 @@
+/* Culinary Alchemy — settings panel */
+
+#settings-modal {
+  width: min(520px, 94vw);
+}
+
+.settings-body {
+  padding-top: 0.75rem;
+}
+
+.settings-section + .settings-section {
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed hsla(30, 18%, 52%, 0.28);
+}
+
+.settings-section-title {
+  font-family: var(--font-fantasy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--scroll-gold);
+  margin-bottom: 0.65rem;
+}
+
+.settings-section-lead {
+  margin: 0 0 0.85rem;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid hsla(38, 36%, 58%, 0.35);
+  background: hsla(42, 40%, 96%, 0.75);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.settings-row:hover {
+  border-color: hsla(var(--hue-gold), 55%, 52%, 0.55);
+  background: hsla(44, 45%, 97%, 0.95);
+}
+
+.settings-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.settings-row__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--scroll-ink);
+}
+
+.settings-row__hint {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+.settings-toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.65rem;
+  height: 1.45rem;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 999px;
+  border: 1px solid hsla(32, 28%, 42%, 0.35);
+  background: hsla(30, 14%, 72%, 0.55);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.settings-toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0.14rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50%;
+  background: hsl(42, 45%, 98%);
+  box-shadow: 0 1px 3px hsla(24, 20%, 20%, 0.22);
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
+}
+
+.settings-toggle:checked {
+  background: hsla(var(--hue-gold), 62%, 48%, 0.85);
+  border-color: hsla(var(--hue-gold), 58%, 38%, 0.65);
+}
+
+.settings-toggle:checked::after {
+  transform: translate(1.2rem, -50%);
+}
+
+.settings-toggle:focus-visible {
+  outline: 2px solid hsla(var(--hue-gold), 70%, 50%, 0.75);
+  outline-offset: 2px;
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.settings-actions .btn {
+  flex: 1 1 auto;
+  min-width: 8.5rem;
+}
+
+.settings-footnote {
+  margin: 0.85rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--color-text-dim);
+}

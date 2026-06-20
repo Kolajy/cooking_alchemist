@@ -1,0 +1,25 @@
+/* Culinary Alchemy — save export toast */
+
+.save-export-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%) translateY(0.75rem);
+  z-index: 3000;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background: hsla(42, 45%, 97%, 0.96);
+  border: 1px solid hsla(38, 36%, 58%, 0.45);
+  box-shadow: 0 8px 24px hsla(24, 20%, 20%, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.save-export-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

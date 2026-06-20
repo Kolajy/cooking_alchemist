@@ -1,0 +1,56 @@
+/* Culinary Alchemy — notifications */
+
+/* --- Level Up Notification (Slide-in toast) --- */
+.levelup-notification {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%, -40px);
+  background: var(--parchment-bg);
+  background-size: 420px 420px, 100% 100%, 100% 100%, 100% 100%, 280px 280px;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-blend-mode: var(--parchment-blend);
+  border: 2px solid var(--scroll-ember);
+  box-shadow: 0 12px 32px var(--scroll-shadow);
+  border-radius: 8px;
+  padding: 1rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0;
+  animation: levelup-slide-in 5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes levelup-slide-in {
+  0% { transform: translate(-50%, -40px); opacity: 0; }
+  10% { transform: translate(-50%, 0); opacity: 1; }
+  90% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, -40px); opacity: 0; }
+}
+
+.levelup-emoji {
+  font-size: 2.2rem;
+  animation: levelup-bounce 0.8s infinite alternate ease-in-out;
+}
+
+.levelup-text h4 {
+  color: var(--scroll-gold);
+  font-size: 0.92rem;
+  margin-bottom: 0.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-fantasy);
+}
+
+.levelup-text p {
+  color: var(--scroll-ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+@keyframes levelup-bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}

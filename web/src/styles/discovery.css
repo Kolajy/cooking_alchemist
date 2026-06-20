@@ -1,0 +1,337 @@
+/* Culinary Alchemy — discovery */
+
+/* --- Discovery Modal Specifics --- */
+.discovery-modal {
+  width: min(380px, 92vw);
+  border: 2px solid hsl(var(--hue-gold), 72%, 58%);
+  box-shadow:
+    0 24px 48px -12px hsla(20, 28%, 8%, 0.55),
+    0 0 0 1px hsla(var(--hue-gold), 90%, 70%, 0.25),
+    0 0 40px hsla(var(--hue-gold), 95%, 53%, 0.22);
+}
+
+.discovery-modal[open] {
+  animation: discovery-modal-in 0.65s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+
+.discovery-content {
+  position: relative;
+  overflow: hidden;
+}
+
+.discovery-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.discovery-spark {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  font-size: 0.85rem;
+  line-height: 1;
+  pointer-events: none;
+  animation: discovery-spark-burst 1.27s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+}
+
+.fireworks-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, hsla(var(--hue-gold), 95%, 53%, 0.2) 0%, transparent 68%);
+  animation: discovery-glow-swell 1.4s ease-out forwards;
+}
+
+.discovery-header {
+  border-bottom: none;
+  text-align: center;
+  justify-content: center;
+  padding: 1rem 1.25rem 0.35rem;
+  position: relative;
+  z-index: 1;
+}
+
+.discovery-header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.discovery-kicker {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--hue-gold), 85%, 42%);
+  animation: discovery-kicker-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+.discovery-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  animation: discovery-title-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+
+.shine-text {
+  background: linear-gradient(to right, #c9a227, #e8b84a, #f5d06a, #e8b84a, #c9a227);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShine 3s linear infinite;
+}
+
+.discovery-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.35rem 1.25rem 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.discovered-item-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 14px;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-gold);
+  box-shadow: 0 0 28px var(--color-gold-glow);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.32rem;
+  margin: 0.65rem 0 0.85rem;
+  animation: discovery-item-pop 0.8s cubic-bezier(0.34, 1.45, 0.64, 1) 0.22s both;
+}
+
+.discovered-item-big.discovery-replay {
+  animation: discovery-item-pop 0.8s cubic-bezier(0.34, 1.45, 0.64, 1) 0.05s both;
+}
+
+.discovered-emoji {
+  font-size: 1.85rem;
+  animation: discovery-emoji-wiggle 0.8s cubic-bezier(0.34, 1.45, 0.64, 1) 0.45s both;
+}
+
+.discovered-name {
+  line-height: 1.2;
+}
+
+.discovered-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0 0 0.9rem;
+}
+
+.discovery-reveal {
+  animation: discovery-content-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.discovery-reveal.discovery-replay {
+  animation: discovery-content-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.discovery-body .discovery-reveal:nth-of-type(2) { animation-delay: 0.34s; }
+.discovery-body .discovery-reveal:nth-of-type(3) { animation-delay: 0.42s; }
+.discovery-body .discovery-reveal:nth-of-type(4) { animation-delay: 0.5s; }
+.discovery-body .discovery-reveal:nth-of-type(5) { animation-delay: 0.58s; }
+
+.discovery-exp {
+  width: 100%;
+  margin: 0.15rem 0 0.85rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid hsla(var(--hue-gold), 55%, 48%, 0.28);
+  background: linear-gradient(135deg, hsla(42, 44%, 96%, 0.95) 0%, hsla(38, 36%, 90%, 0.75) 100%);
+  text-align: left;
+}
+
+.discovery-exp__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-bottom: 0.45rem;
+}
+
+.discovery-exp__label {
+  font-family: var(--font-rustic);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--scroll-ink);
+}
+
+.discovery-exp__gain {
+  flex-shrink: 0;
+  font-family: var(--font-fantasy);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: hsl(var(--hue-gold), 58%, 36%);
+  background: hsla(var(--hue-gold), 70%, 52%, 0.14);
+  border: 1px solid hsla(var(--hue-gold), 55%, 48%, 0.28);
+  border-radius: 999px;
+  padding: 0.18rem 0.5rem;
+}
+
+.discovery-exp__bar {
+  margin-bottom: 0.35rem;
+}
+
+.discovery-exp__text {
+  text-align: left;
+}
+
+.discovery-blurb-block {
+  width: 100%;
+  background: linear-gradient(135deg, hsla(var(--hue-gold), 78%, 56%, 0.12) 0%, hsla(36, 36%, 90%, 0.45) 100%);
+  border: 1px solid hsla(var(--hue-gold), 70%, 50%, 0.28);
+  border-left: 4px solid var(--color-gold);
+  padding: 0.85rem 0.95rem;
+  border-radius: 0 10px 10px 0;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.discovery-blurb-block h3 {
+  font-size: 0.78rem;
+  color: hsl(var(--hue-gold), 75%, 38%);
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.discovery-blurb-block p {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0;
+  font-style: italic;
+}
+
+.culinary-tip-block {
+  width: 100%;
+  background-color: rgba(253, 184, 19, 0.05);
+  border-left: 4px solid var(--color-gold);
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.culinary-tip-block h3 {
+  font-size: 0.9rem;
+  color: var(--color-gold);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.culinary-tip-block p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.discovery-dismiss-form {
+  width: 100%;
+  margin: 0;
+  position: relative;
+  z-index: 4;
+}
+
+.discovery-ok-btn {
+  width: 100%;
+  padding: 0.75rem;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 10px;
+  position: relative;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+.btn-large {
+  width: 100%;
+  padding: 0.75rem;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+
+@keyframes discovery-modal-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.82) translateY(24px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.04) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes discovery-glow-swell {
+  0% { opacity: 0; transform: scale(0.6); }
+  40% { opacity: 1; }
+  100% { opacity: 0.75; transform: scale(1.15); }
+}
+
+@keyframes discovery-kicker-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes discovery-title-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes discovery-item-pop {
+  0% { opacity: 0; transform: scale(0.55); }
+  70% { transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes discovery-emoji-wiggle {
+  0% { transform: scale(0.4) rotate(-18deg); }
+  60% { transform: scale(1.15) rotate(6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes discovery-content-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes discovery-spark-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(0) scale(0.2);
+  }
+  18% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(-1 * var(--distance, 60px))) scale(1.1);
+  }
+}

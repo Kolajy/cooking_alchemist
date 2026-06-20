@@ -1,0 +1,155 @@
+/* Ingredient Hover Card Tooltip */
+.ingredient-hover-card {
+  position: fixed;
+  z-index: 10000;
+  width: 330px;
+  background: var(--scroll-cream);
+  border: 1px solid hsla(32, 28%, 58%, 0.4);
+  border-radius: 12px;
+  box-shadow:
+    0 10px 25px hsla(28, 25%, 18%, 0.15),
+    inset 0 1px 0 hsla(48, 55%, 98%, 0.8);
+  padding: 1.1rem;
+  font-family: var(--font-body);
+  color: var(--scroll-ink);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.ingredient-hover-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hover-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px dashed hsla(32, 28%, 58%, 0.2);
+  padding-bottom: 0.7rem;
+}
+
+.hover-card__emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.hover-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.hover-card__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+/* State Badge Styles */
+.hover-card__state {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8.5px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.hover-card__state--primal {
+  color: hsl(265, 50%, 36%);
+  background-color: hsla(265, 55%, 92%, 0.9);
+  border: 1px solid hsla(265, 30%, 75%, 0.4);
+}
+
+.hover-card__state--raw {
+  color: hsl(120, 38%, 30%);
+  background-color: hsla(120, 28%, 91%, 0.9);
+  border: 1px solid hsla(120, 24%, 70%, 0.4);
+}
+
+.hover-card__state--prepared {
+  color: hsl(34, 52%, 34%);
+  background-color: hsla(34, 46%, 92%, 0.95);
+  border: 1px solid hsla(34, 30%, 75%, 0.4);
+}
+
+.hover-card__state--recipe {
+  color: hsl(345, 58%, 34%);
+  background-color: hsla(345, 42%, 92%, 0.95);
+  border: 1px solid hsla(345, 35%, 75%, 0.4);
+}
+
+/* Properties Grid */
+.hover-card__props {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
+}
+
+.hover-card__prop-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  color: var(--scroll-ink-muted);
+}
+
+.hover-card__prop-icon {
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.hover-card__prop-value {
+  font-weight: 600;
+  color: var(--scroll-ink);
+}
+
+/* Lore & Descriptions */
+.hover-card__description {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  margin: 0 0 0.85rem;
+  color: var(--scroll-ink);
+}
+
+.hover-card__lore {
+  font-family: var(--font-rustic);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: hsl(26, 28%, 34%);
+  background: hsla(42, 38%, 90%, 0.45);
+  border-left: 3px solid hsla(32, 28%, 58%, 0.4);
+  padding: 0.55rem 0.75rem;
+  margin: 0 0 0.85rem;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Tooltips & Tips */
+.hover-card__tip-box {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  background-color: hsla(var(--hue-sage), 24%, 86%, 0.45);
+  border: 1px solid hsla(var(--hue-sage), 20%, 72%, 0.3);
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  color: var(--color-sage);
+}
+
+.hover-card__tip-icon {
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}

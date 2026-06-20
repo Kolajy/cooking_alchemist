@@ -1,0 +1,149 @@
+/* Culinary Alchemy — animations */
+
+/* Animations — tuned slow & gentle for a calm, relaxing feel */
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.78; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.008); }
+}
+
+@keyframes ember-flicker {
+  0% { opacity: 0.4; filter: brightness(0.95); }
+  50% { opacity: 0.58; filter: brightness(1.06); }
+  100% { opacity: 0.46; filter: brightness(1); }
+}
+
+@keyframes hearth-pulse {
+  0%, 100% { opacity: 0.72; }
+  50% { opacity: 1; }
+}
+
+/* Ambient motes rise and fade as they drift up off the hearth. */
+@keyframes mote-drift {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  12% { opacity: 1; }
+  85% { opacity: 0.9; }
+  100% { transform: translate3d(8px, -90vh, 0); opacity: 0; }
+}
+
+@keyframes dialog-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes textShine {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes workspace-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-5px); }
+  30% { transform: translateX(5px); }
+  45% { transform: translateX(-3.5px); }
+  60% { transform: translateX(2.5px); }
+  75% { transform: translateX(-1.5px); }
+}
+
+@keyframes cabinet-recent-glow {
+  0%, 100% {
+    border-color: hsla(var(--hue-gold), 62%, 52%, 0.55);
+    box-shadow: 0 0 0 0 hsla(var(--hue-gold), 70%, 58%, 0.2);
+  }
+  50% {
+    border-color: hsla(var(--hue-gold), 72%, 48%, 0.85);
+    box-shadow: 0 0 18px var(--color-gold-glow);
+  }
+}
+
+@keyframes float-and-fade {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx, 0), var(--dy, -50px)) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes steam-rise {
+  0% {
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(var(--dx, 0), var(--dy, -90px)) scale(1.8);
+    opacity: 0;
+  }
+}
+
+.animate-pop {
+  animation: bounce-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes bounce-in {
+  from { transform: scale(0.82); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.wobble-anim {
+  animation: wobble 0.5s ease-in-out;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px) rotate(-1.2deg); }
+  75% { transform: translateX(4px) rotate(1.2deg); }
+}
+
+/* Materialize pop for freshly created results. Uses the independent `scale`
+   property so it doesn't fight the `transform: translate3d()` positioning. */
+@keyframes canvas-spawn-in {
+  0% {
+    opacity: 0;
+    scale: 0.4;
+    box-shadow: 0 0 0 0 hsla(var(--hue-gold), 90%, 60%, 0.55);
+  }
+  55% {
+    opacity: 1;
+    scale: 1.1;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    box-shadow: 0 0 22px 3px hsla(var(--hue-gold), 85%, 58%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion="full"]) {
+    scroll-behavior: auto;
+  }
+}
+
+html[data-motion="reduced"],
+html[data-motion="reduced"] * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

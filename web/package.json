@@ -1,0 +1,21 @@
+{
+  "name": "@culinary-alchemy/web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Culinary Alchemy web game (Vite + TypeScript)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "tsx src/engine/cli_test.ts && tsx src/engine/validate_content.ts && tsx src/engine/validate_recipe_dependencies.ts && tsx src/engine/validate_recipe_dependencies.test.ts && tsx src/engine/validate_ingredient_properties.ts && tsx src/game/save-import.test.ts && tsx src/game/security/security.test.ts",
+    "test:packs": "tsx src/data/packs/validate_packs.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "@vitejs/plugin-basic-ssl": "^1.2.0",
+    "playwright": "^1.49.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vite": "^5.2.0"
+  }
+}
