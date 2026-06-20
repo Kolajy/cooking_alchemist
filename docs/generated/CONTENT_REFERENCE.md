@@ -1,6 +1,6 @@
 # Culinary Alchemy — Content Reference
 
-> **Auto-generated** from `content/` on 2026-06-19. Do not edit by hand.
+> **Auto-generated** from `content/` on 2026-06-20. Do not edit by hand.
 > Regenerate with `npm run docs:generate` after content changes.
 
 Human-readable catalogs of **ingredients**, **techniques**, and **transitions** exported from the shared `content/` package.
@@ -18,7 +18,7 @@ Human-readable catalogs of **ingredients**, **techniques**, and **transitions** 
 | Metric | Value |
 |--------|------:|
 | Starters | 4 |
-| Discoverable items | 228 |
+| Discoverable items | 224 |
 | Finalized recipes | 106 |
 | Technique skills | 26 |
 | Technique transitions | 45 |

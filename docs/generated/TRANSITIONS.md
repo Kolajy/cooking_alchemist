@@ -1,6 +1,6 @@
 # Culinary Alchemy — Transitions
 
-> **Auto-generated** from `content/` on 2026-06-19. Do not edit by hand.
+> **Auto-generated** from `content/` on 2026-06-20. Do not edit by hand.
 > Regenerate with `npm run docs:generate` after content changes.
 
 ## Summary
@@ -84,7 +84,7 @@ Grouped by primary tool. `onePerAction` separation chains yield one undiscovered
 
 | Input | Output(s) | All tools | One per action | Tip |
 |-------|-----------|-----------|----------------|-----|
-| 🫐 Berries (`berries`) | 🍓 Strawberry (`strawberry`)<br>🍒 Raspberry (`raspberry`)<br>🫐 Blueberry (`blueberry`)<br>🍇 Blackberry (`blackberry`)<br>🥣 Smashed Berries (`smashed_berries`) | `separate`, `peel`, `tear` | yes | Mixed berry patches ripen unevenly — separate them one at a time to sort each fruit. |
+| 🫐 Berries (`berries`) | 🍓 Strawberry (`strawberry`)<br>🍒 Raspberry (`raspberry`)<br>🫐 Blueberry (`blueberry`)<br>🍇 Blackberry (`blackberry`)<br>🥣 Smashed Berries (`smashed_berries`)<br>🍎 Fruits (`fruits`) | `separate`, `peel`, `tear` | yes | Mixed berry patches ripen unevenly — separate them one at a time to sort each fruit. |
 | 🍗 Chicken (`chicken`) | 🍗 Chicken (`chicken`)<br>🥚 Egg (`egg`) | `separate` | no | Separate the chicken to obtain meat and an egg. |
 | 🐄 Cow (`cow`) | 🥩 Beef (`beef`)<br>🥛 Milk (`milk`) | `separate` | no | Separate the cow to obtain both beef and milk. |
 | 🦆 Duck (`duck`) | 🦆 Duck (`duck`)<br>🥚 Egg (`egg`) | `separate` | no | Separate the duck to obtain meat and an egg. |
@@ -98,10 +98,10 @@ Grouped by primary tool. `onePerAction` separation chains yield one undiscovered
 | 🐖 Pig (`pig`) | 🥩 Pork (`pork`) | `separate` | no | Separate the pig to obtain pork. |
 | 🫚 Roots (`roots`) | 🥕 Carrot (`carrot`)<br>🫚 Ginger (`ginger`)<br>🟣 Beet (`beet`)<br>🔴 Radish (`radish`)<br>🟡 Turnip (`turnip`) | `separate`, `peel`, `tear` | yes | Root patches hide many species — separate them carefully one at a time. |
 | 🌻 Seeds (`seeds`) | 🌻 Sunflower Seed (`sunflower_seed`)<br>🎃 Pumpkin Seed (`pumpkin_seed`)<br>⚪ Sesame (`sesame`)<br>🌿 Flax (`flax`)<br>🫘 Chia (`chia`)<br>🍉 Melon Seed (`melon_seed`)<br>🫘 Beans (`beans`)<br>🫘 Lentils (`lentils`)<br>🫘 Chickpeas (`chickpeas`)<br>🍫 Cocoa (`cocoa`) | `separate`, `peel`, `tear` | yes | Seed sacks hold mixtures — separate them to learn what will sprout or roast. |
-| 🦪 Shellfish (`shellfish`) | 🦐 Shrimp (`shrimp`)<br>🦪 Oyster (`oyster`)<br>🐚 Clam (`clam`)<br>🦪 Mussel (`mussel`)<br>🦀 Crab (`crab`) | `separate`, `peel`, `tear` | yes | Mixed shore harvests need sorting — separate each creature carefully. |
+| 🦪 Shellfish (`shellfish`) | 🦐 Shrimp (`shrimp`)<br>🦪 Oyster (`oyster`)<br>🐚 Clam (`clam`)<br>🦪 Mussel (`mussel`) | `separate`, `peel`, `tear` | yes | Mixed shore harvests need sorting — separate each creature carefully. |
 | 🌱 Shoots (`shoots`) | 🌿 Asparagus (`asparagus`)<br>🎋 Bamboo Shoot (`bamboo_shoot`)<br>🌱 Pea Shoot (`pea_shoot`)<br>🌱 Alfalfa Sprout (`alfalfa_sprout`)<br>💧 Watercress (`watercress`)<br>🌿 Scallions (`scallions`) | `separate`, `peel`, `tear` | yes | Young shoots look alike at a glance — separate them gently one by one. |
 | 🥣 Smashed Berries (`smashed_berries`) | 🥤 Berry Pulp (`berry_pulp`) | `separate` | no | Strain smashed soft fruits to extract pure pulps and juices. |
-| 🥔 Tubers (`tubers`) | 🥔 Potato (`potato`)<br>🍠 Sweet Potato (`sweet_potato`)<br>🟤 Yam (`yam`)<br>🍠 Taro (`taro`)<br>🌿 Cassava (`cassava`) | `separate`, `peel`, `tear` | yes | Tuber piles look alike underground — separate them to sort each variety. |
+| 🥔 Tubers (`tubers`) | 🥔 Potato (`potato`)<br>🍠 Sweet Potato (`sweet_potato`)<br>🫚 Roots (`roots`) | `separate`, `peel`, `tear` | yes | Tuber piles look alike underground — separate them to sort each variety. |
 | 💧 Water (`water`) | ⛲ Spring Water (`spring_water`)<br>🫧 Mineral Water (`mineral_water`)<br>🌧️ Rainwater (`rainwater`)<br>🌊 Seawater (`seawater`) | `separate`, `peel`, `tear` | yes | Water looks uniform until you separate it — spring, mineral, rain, and sea each behave differently in the pot. |
 | 🐝 Wild Hives (`wild_hives`) | 🍯 Honey (`honey`) | `separate`, `peel`, `tear` | yes | Wild hives hold liquid honey — separate them carefully to avoid bee stings. |
 

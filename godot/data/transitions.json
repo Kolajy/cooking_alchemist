@@ -1,0 +1,3663 @@
+[
+  {
+    "id": "strawberry__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "berries",
+    "outputs": [
+      "strawberry",
+      "raspberry",
+      "blueberry",
+      "blackberry",
+      "smashed_berries",
+      "fruits"
+    ],
+    "onePerAction": true,
+    "resultItemId": "strawberry",
+    "recipe": {
+      "input": "berries",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "strawberry",
+        "raspberry",
+        "blueberry",
+        "blackberry",
+        "smashed_berries",
+        "fruits"
+      ],
+      "onePerAction": true,
+      "description": "You plucked a single berry or wild fruit from the cluster.",
+      "tip": "Mixed berry patches ripen unevenly — separate them one at a time to sort each fruit."
+    }
+  },
+  {
+    "id": "berry_pulp__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate"
+    ],
+    "input": "smashed_berries",
+    "outputs": [
+      "berry_pulp"
+    ],
+    "onePerAction": false,
+    "resultItemId": "berry_pulp",
+    "recipe": {
+      "input": "smashed_berries",
+      "tools": [
+        "separate"
+      ],
+      "outputs": [
+        "berry_pulp"
+      ],
+      "onePerAction": false,
+      "description": "You strained the mashed berries to separate the smooth pulp from the seeds and skins.",
+      "tip": "Strain smashed soft fruits to extract pure pulps and juices."
+    }
+  },
+  {
+    "id": "apple__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "fruits",
+    "outputs": [
+      "apple",
+      "banana",
+      "orange",
+      "grape",
+      "pear",
+      "watermelon",
+      "mango",
+      "pineapple",
+      "lemon",
+      "peach"
+    ],
+    "onePerAction": true,
+    "resultItemId": "apple",
+    "recipe": {
+      "input": "fruits",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "apple",
+        "banana",
+        "orange",
+        "grape",
+        "pear",
+        "watermelon",
+        "mango",
+        "pineapple",
+        "lemon",
+        "peach"
+      ],
+      "onePerAction": true,
+      "description": "You sorted a single ripe fruit from the wild harvest.",
+      "tip": "Mixed fruit baskets hide surprises — separate them one at a time to learn what you have."
+    }
+  },
+  {
+    "id": "spring_water__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "water",
+    "outputs": [
+      "spring_water",
+      "mineral_water",
+      "rainwater",
+      "seawater"
+    ],
+    "onePerAction": true,
+    "resultItemId": "spring_water",
+    "recipe": {
+      "input": "water",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "spring_water",
+        "mineral_water",
+        "rainwater",
+        "seawater"
+      ],
+      "onePerAction": true,
+      "description": "You drew off a distinct kind of water from the wild source.",
+      "tip": "Water looks uniform until you separate it — spring, mineral, rain, and sea each behave differently in the pot."
+    }
+  },
+  {
+    "id": "carrot__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "roots",
+    "outputs": [
+      "carrot",
+      "ginger",
+      "beet",
+      "radish",
+      "turnip"
+    ],
+    "onePerAction": true,
+    "resultItemId": "carrot",
+    "recipe": {
+      "input": "roots",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "carrot",
+        "ginger",
+        "beet",
+        "radish",
+        "turnip"
+      ],
+      "onePerAction": true,
+      "description": "You unearthed a single edible root from the tangle below.",
+      "tip": "Root patches hide many species — separate them carefully one at a time."
+    }
+  },
+  {
+    "id": "potato__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "tubers",
+    "outputs": [
+      "potato",
+      "sweet_potato",
+      "roots"
+    ],
+    "onePerAction": true,
+    "resultItemId": "potato",
+    "recipe": {
+      "input": "tubers",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "potato",
+        "sweet_potato",
+        "roots"
+      ],
+      "onePerAction": true,
+      "description": "You dug up one starchy tuber or wild root from the mound.",
+      "tip": "Tuber piles look alike underground — separate them to sort each variety."
+    }
+  },
+  {
+    "id": "almond__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "nuts",
+    "outputs": [
+      "almond",
+      "walnut",
+      "pecan",
+      "hazelnut",
+      "pistachio",
+      "peanuts",
+      "coconuts"
+    ],
+    "onePerAction": true,
+    "resultItemId": "almond",
+    "recipe": {
+      "input": "nuts",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "almond",
+        "walnut",
+        "pecan",
+        "hazelnut",
+        "pistachio",
+        "peanuts",
+        "coconuts"
+      ],
+      "onePerAction": true,
+      "description": "You cracked out a single nut from the wild harvest.",
+      "tip": "Mixed nuts rattle together — separate them one shell at a time."
+    }
+  },
+  {
+    "id": "button_mushroom__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "mushrooms",
+    "outputs": [
+      "button_mushroom",
+      "shiitake",
+      "oyster_mushroom",
+      "portobello",
+      "chanterelle"
+    ],
+    "onePerAction": true,
+    "resultItemId": "button_mushroom",
+    "recipe": {
+      "input": "mushrooms",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "button_mushroom",
+        "shiitake",
+        "oyster_mushroom",
+        "portobello",
+        "chanterelle"
+      ],
+      "onePerAction": true,
+      "description": "You picked out one fungus from the foraged cluster.",
+      "tip": "Never rush a mushroom basket — separate and identify each find one at a time."
+    }
+  },
+  {
+    "id": "wheat__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "grasses",
+    "outputs": [
+      "wheat",
+      "barley",
+      "oats",
+      "rice",
+      "rye",
+      "corn"
+    ],
+    "onePerAction": true,
+    "resultItemId": "wheat",
+    "recipe": {
+      "input": "grasses",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "wheat",
+        "barley",
+        "oats",
+        "rice",
+        "rye",
+        "corn"
+      ],
+      "onePerAction": true,
+      "description": "You threshed out a single grain from the wild grasses.",
+      "tip": "A handful of grasses holds many cereals — separate them stalk by stalk."
+    }
+  },
+  {
+    "id": "asparagus__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "shoots",
+    "outputs": [
+      "asparagus",
+      "bamboo_shoot",
+      "pea_shoot",
+      "alfalfa_sprout",
+      "watercress",
+      "scallions"
+    ],
+    "onePerAction": true,
+    "resultItemId": "asparagus",
+    "recipe": {
+      "input": "shoots",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "asparagus",
+        "bamboo_shoot",
+        "pea_shoot",
+        "alfalfa_sprout",
+        "watercress",
+        "scallions"
+      ],
+      "onePerAction": true,
+      "description": "You clipped a single tender shoot from the bundle.",
+      "tip": "Young shoots look alike at a glance — separate them gently one by one."
+    }
+  },
+  {
+    "id": "sunflower_seed__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "seeds",
+    "outputs": [
+      "sunflower_seed",
+      "pumpkin_seed",
+      "sesame",
+      "flax",
+      "chia",
+      "melon_seed",
+      "beans",
+      "lentils",
+      "chickpeas",
+      "cocoa"
+    ],
+    "onePerAction": true,
+    "resultItemId": "sunflower_seed",
+    "recipe": {
+      "input": "seeds",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "sunflower_seed",
+        "pumpkin_seed",
+        "sesame",
+        "flax",
+        "chia",
+        "melon_seed",
+        "beans",
+        "lentils",
+        "chickpeas",
+        "cocoa"
+      ],
+      "onePerAction": true,
+      "description": "You sorted a single seed type from the dried harvest.",
+      "tip": "Seed sacks hold mixtures — separate them to learn what will sprout or roast."
+    }
+  },
+  {
+    "id": "shrimp__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "shellfish",
+    "outputs": [
+      "shrimp",
+      "oyster",
+      "clam",
+      "mussel"
+    ],
+    "onePerAction": true,
+    "resultItemId": "shrimp",
+    "recipe": {
+      "input": "shellfish",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "shrimp",
+        "oyster",
+        "clam",
+        "mussel"
+      ],
+      "onePerAction": true,
+      "description": "You pulled one shellfish from the tidepool catch.",
+      "tip": "Mixed shore harvests need sorting — separate each creature carefully."
+    }
+  },
+  {
+    "id": "mashed_potato__technique__0",
+    "kind": "technique",
+    "tools": [
+      "smash",
+      "pound"
+    ],
+    "input": "potato",
+    "outputs": [
+      "mashed_potato"
+    ],
+    "onePerAction": false,
+    "resultItemId": "mashed_potato",
+    "recipe": {
+      "input": "potato",
+      "tools": [
+        "smash",
+        "pound"
+      ],
+      "outputs": [
+        "mashed_potato"
+      ],
+      "onePerAction": false,
+      "description": "You crushed the potato into a rough, starchy mash.",
+      "tip": "Smash starchy tubers to break down fibers before mixing or cooking."
+    }
+  },
+  {
+    "id": "charred_apple__technique__0",
+    "kind": "technique",
+    "tools": [
+      "char",
+      "roast"
+    ],
+    "input": "apple",
+    "outputs": [
+      "charred_apple"
+    ],
+    "onePerAction": false,
+    "resultItemId": "charred_apple",
+    "recipe": {
+      "input": "apple",
+      "tools": [
+        "char",
+        "roast"
+      ],
+      "outputs": [
+        "charred_apple"
+      ],
+      "onePerAction": false,
+      "description": "The apple blistered and darkened over open heat.",
+      "tip": "Char fruit over flame to deepen sweetness before finishing a dish."
+    }
+  },
+  {
+    "id": "pit_roasted_sweet_potato__technique__0",
+    "kind": "technique",
+    "tools": [
+      "pit_cook",
+      "bake"
+    ],
+    "input": "sweet_potato",
+    "outputs": [
+      "pit_roasted_sweet_potato"
+    ],
+    "onePerAction": false,
+    "resultItemId": "pit_roasted_sweet_potato",
+    "recipe": {
+      "input": "sweet_potato",
+      "tools": [
+        "pit_cook",
+        "bake"
+      ],
+      "outputs": [
+        "pit_roasted_sweet_potato"
+      ],
+      "onePerAction": false,
+      "description": "Steam and radiant ground heat slow-caramelized the sweet potato inside the earth pit.",
+      "tip": "Pit-cook sweet potatoes in an Earth & Dirt Oven for ultimate tenderness."
+    }
+  },
+  {
+    "id": "smoked_fish__technique__0",
+    "kind": "technique",
+    "tools": [
+      "smoke"
+    ],
+    "input": "cleaned_fish",
+    "outputs": [
+      "smoked_fish"
+    ],
+    "onePerAction": false,
+    "resultItemId": "smoked_fish",
+    "recipe": {
+      "input": "cleaned_fish",
+      "tools": [
+        "smoke"
+      ],
+      "outputs": [
+        "smoked_fish"
+      ],
+      "onePerAction": false,
+      "description": "Aromatic hardwood smoke cured and deeply flavored the fish.",
+      "tip": "Cure and smoke cleaned fish using the Smoke & Cure technique."
+    }
+  },
+  {
+    "id": "earth_baked_shellfish__technique__0",
+    "kind": "technique",
+    "tools": [
+      "pit_cook",
+      "bake"
+    ],
+    "input": "shellfish",
+    "outputs": [
+      "earth_baked_shellfish"
+    ],
+    "onePerAction": false,
+    "resultItemId": "earth_baked_shellfish",
+    "recipe": {
+      "input": "shellfish",
+      "tools": [
+        "pit_cook",
+        "bake"
+      ],
+      "outputs": [
+        "earth_baked_shellfish"
+      ],
+      "onePerAction": false,
+      "description": "The shellfish opened up, tenderly steamed by wet earth and stone heat.",
+      "tip": "Bake shellfish in a dirt fire pit to steam them naturally in their shells."
+    }
+  },
+  {
+    "id": "flour__technique__0",
+    "kind": "technique",
+    "tools": [
+      "grind",
+      "pound",
+      "smash"
+    ],
+    "input": "wheat",
+    "outputs": [
+      "flour"
+    ],
+    "onePerAction": false,
+    "resultItemId": "flour",
+    "recipe": {
+      "input": "wheat",
+      "tools": [
+        "grind",
+        "pound",
+        "smash"
+      ],
+      "outputs": [
+        "flour"
+      ],
+      "onePerAction": false,
+      "description": "You crushed and ground the wheat berries into fine, powdery flour.",
+      "tip": "Grind or pound wheat to make raw flour."
+    }
+  },
+  {
+    "id": "hearth_flatbread__technique__0",
+    "kind": "technique",
+    "tools": [
+      "hearth_bake",
+      "bake"
+    ],
+    "input": "dough",
+    "outputs": [
+      "hearth_flatbread"
+    ],
+    "onePerAction": false,
+    "resultItemId": "hearth_flatbread",
+    "recipe": {
+      "input": "dough",
+      "tools": [
+        "hearth_bake",
+        "bake"
+      ],
+      "outputs": [
+        "hearth_flatbread"
+      ],
+      "onePerAction": false,
+      "description": "The flatbread blistered and puffed rapidly on the scorching stone hearth floor.",
+      "tip": "Bake raw dough directly on the floor of a Hearth & Clay Oven."
+    }
+  },
+  {
+    "id": "ash_cake__technique__0",
+    "kind": "technique",
+    "tools": [
+      "char",
+      "roast"
+    ],
+    "input": "dough",
+    "outputs": [
+      "ash_cake"
+    ],
+    "onePerAction": false,
+    "resultItemId": "ash_cake",
+    "recipe": {
+      "input": "dough",
+      "tools": [
+        "char",
+        "roast"
+      ],
+      "outputs": [
+        "ash_cake"
+      ],
+      "onePerAction": false,
+      "description": "You laid the dough directly onto the glowing wood coals. It puffed up, covered in clean grey ash.",
+      "tip": "Bake dough directly in hot ashes to make a primitive ash cake."
+    }
+  },
+  {
+    "id": "almond_paste__technique__0",
+    "kind": "technique",
+    "tools": [
+      "grind",
+      "pound"
+    ],
+    "input": "almond",
+    "outputs": [
+      "almond_paste"
+    ],
+    "onePerAction": false,
+    "resultItemId": "almond_paste",
+    "recipe": {
+      "input": "almond",
+      "tools": [
+        "grind",
+        "pound"
+      ],
+      "outputs": [
+        "almond_paste"
+      ],
+      "onePerAction": false,
+      "description": "You crushed and ground the almonds until they released their oils, forming a thick paste.",
+      "tip": "Grind or pound almonds to release fats and form almond paste."
+    }
+  },
+  {
+    "id": "roasted_sunflower_seeds__technique__0",
+    "kind": "technique",
+    "tools": [
+      "char",
+      "roast"
+    ],
+    "input": "sunflower_seed",
+    "outputs": [
+      "roasted_sunflower_seeds"
+    ],
+    "onePerAction": false,
+    "resultItemId": "roasted_sunflower_seeds",
+    "recipe": {
+      "input": "sunflower_seed",
+      "tools": [
+        "char",
+        "roast"
+      ],
+      "outputs": [
+        "roasted_sunflower_seeds"
+      ],
+      "onePerAction": false,
+      "description": "The seeds popped and smelled beautifully of roasted oils.",
+      "tip": "Toast sunflower seeds over open flame or coals."
+    }
+  },
+  {
+    "id": "pit_cooked_shrimp__technique__0",
+    "kind": "technique",
+    "tools": [
+      "pit_cook",
+      "bake"
+    ],
+    "input": "shrimp",
+    "outputs": [
+      "pit_cooked_shrimp"
+    ],
+    "onePerAction": false,
+    "resultItemId": "pit_cooked_shrimp",
+    "recipe": {
+      "input": "shrimp",
+      "tools": [
+        "pit_cook",
+        "bake"
+      ],
+      "outputs": [
+        "pit_cooked_shrimp"
+      ],
+      "onePerAction": false,
+      "description": "The shrimp turned a brilliant pink, steamed perfectly by hot rocks in the earth oven.",
+      "tip": "Bake shrimp under hot rocks in an earth pit oven."
+    }
+  },
+  {
+    "id": "stone_boiled_stew__technique__0",
+    "kind": "technique",
+    "tools": [
+      "cook",
+      "simmer",
+      "boil"
+    ],
+    "input": "raw_stew_pot",
+    "outputs": [
+      "stone_boiled_stew"
+    ],
+    "onePerAction": false,
+    "resultItemId": "stone_boiled_stew",
+    "recipe": {
+      "input": "raw_stew_pot",
+      "tools": [
+        "cook",
+        "simmer",
+        "boil"
+      ],
+      "outputs": [
+        "stone_boiled_stew"
+      ],
+      "onePerAction": false,
+      "description": "Sizzling hot stones dropped into the water, bringing the soup to a bubbling boil until the vegetables turned sweet and soft.",
+      "tip": "Boil the raw stew pot with hot stones or stovetop heat."
+    }
+  },
+  {
+    "id": "peeled_ginger__technique__0",
+    "kind": "technique",
+    "tools": [
+      "peel"
+    ],
+    "input": "ginger",
+    "outputs": [
+      "peeled_ginger"
+    ],
+    "onePerAction": false,
+    "resultItemId": "peeled_ginger",
+    "recipe": {
+      "input": "ginger",
+      "tools": [
+        "peel"
+      ],
+      "outputs": [
+        "peeled_ginger"
+      ],
+      "onePerAction": false,
+      "description": "You scraped away the thin outer skin of the ginger.",
+      "tip": "Use the peel technique to prep fibrous roots before cutting."
+    }
+  },
+  {
+    "id": "julienned_ginger__technique__0",
+    "kind": "technique",
+    "tools": [
+      "slice",
+      "dice",
+      "julienne"
+    ],
+    "input": "peeled_ginger",
+    "outputs": [
+      "julienned_ginger"
+    ],
+    "onePerAction": false,
+    "resultItemId": "julienned_ginger",
+    "recipe": {
+      "input": "peeled_ginger",
+      "tools": [
+        "slice",
+        "dice",
+        "julienne"
+      ],
+      "outputs": [
+        "julienned_ginger"
+      ],
+      "onePerAction": false,
+      "description": "You cut the peeled ginger into paper-thin matchstick julienne.",
+      "tip": "Julienne aromatics to release their flavorful oils rapidly."
+    }
+  },
+  {
+    "id": "julienned_scallions__technique__0",
+    "kind": "technique",
+    "tools": [
+      "slice",
+      "dice",
+      "julienne"
+    ],
+    "input": "scallions",
+    "outputs": [
+      "julienned_scallions"
+    ],
+    "onePerAction": false,
+    "resultItemId": "julienned_scallions",
+    "recipe": {
+      "input": "scallions",
+      "tools": [
+        "slice",
+        "dice",
+        "julienne"
+      ],
+      "outputs": [
+        "julienned_scallions"
+      ],
+      "onePerAction": false,
+      "description": "You shredded the green onion shoots into fine julienne curls.",
+      "tip": "Use knife skills on fresh scallions to prep them for flash cooking."
+    }
+  },
+  {
+    "id": "cooking_oil__technique__0",
+    "kind": "technique",
+    "tools": [
+      "press"
+    ],
+    "input": "seeds",
+    "outputs": [
+      "cooking_oil"
+    ],
+    "onePerAction": false,
+    "resultItemId": "cooking_oil",
+    "recipe": {
+      "input": "seeds",
+      "tools": [
+        "press"
+      ],
+      "outputs": [
+        "cooking_oil"
+      ],
+      "onePerAction": false,
+      "description": "You pressed the dry seeds, extracting their pure golden oil.",
+      "tip": "Apply pressure to oilseeds or nuts to extract cooking oil."
+    }
+  },
+  {
+    "id": "cooking_oil__technique__1",
+    "kind": "technique",
+    "tools": [
+      "press"
+    ],
+    "input": "nuts",
+    "outputs": [
+      "cooking_oil"
+    ],
+    "onePerAction": false,
+    "resultItemId": "cooking_oil",
+    "recipe": {
+      "input": "nuts",
+      "tools": [
+        "press"
+      ],
+      "outputs": [
+        "cooking_oil"
+      ],
+      "onePerAction": false,
+      "description": "You crushed and pressed the nuts, extracting a rich oil.",
+      "tip": "Apply pressure to oily nuts to extract cooking oil."
+    }
+  },
+  {
+    "id": "hot_oil__technique__0",
+    "kind": "technique",
+    "tools": [
+      "char",
+      "cook",
+      "precision"
+    ],
+    "input": "cooking_oil",
+    "outputs": [
+      "hot_oil"
+    ],
+    "onePerAction": false,
+    "resultItemId": "hot_oil",
+    "recipe": {
+      "input": "cooking_oil",
+      "tools": [
+        "char",
+        "cook",
+        "precision"
+      ],
+      "outputs": [
+        "hot_oil"
+      ],
+      "onePerAction": false,
+      "description": "The oil heated until it shimmered and sent up faint wisps of smoke.",
+      "tip": "Apply heat to cooking oil to prepare it for high-temperature searing."
+    }
+  },
+  {
+    "id": "cleaned_fish__technique__0",
+    "kind": "technique",
+    "tools": [
+      "fillet"
+    ],
+    "input": "whole_fish",
+    "outputs": [
+      "cleaned_fish"
+    ],
+    "onePerAction": false,
+    "resultItemId": "cleaned_fish",
+    "recipe": {
+      "input": "whole_fish",
+      "tools": [
+        "fillet"
+      ],
+      "outputs": [
+        "cleaned_fish"
+      ],
+      "onePerAction": false,
+      "description": "You cleanly scaled, gutted, and scored the fish.",
+      "tip": "Use the fillet skill to scale and clean whole fish."
+    }
+  },
+  {
+    "id": "cooked_steamed_fish__technique__0",
+    "kind": "technique",
+    "tools": [
+      "cook",
+      "simmer",
+      "boil"
+    ],
+    "input": "prepared_fish",
+    "outputs": [
+      "cooked_steamed_fish"
+    ],
+    "onePerAction": false,
+    "resultItemId": "cooked_steamed_fish",
+    "recipe": {
+      "input": "prepared_fish",
+      "tools": [
+        "cook",
+        "simmer",
+        "boil"
+      ],
+      "outputs": [
+        "cooked_steamed_fish"
+      ],
+      "onePerAction": false,
+      "description": "Steam rose around the fish, cooking it until the flesh turned tender and flaky.",
+      "tip": "Steam prepared fish using a controlled stovetop boil/simmer."
+    }
+  },
+  {
+    "id": "soy_sauce__technique__0",
+    "kind": "technique",
+    "tools": [
+      "ferment"
+    ],
+    "input": "seeds",
+    "outputs": [
+      "soy_sauce"
+    ],
+    "onePerAction": false,
+    "resultItemId": "soy_sauce",
+    "recipe": {
+      "input": "seeds",
+      "tools": [
+        "ferment"
+      ],
+      "outputs": [
+        "soy_sauce"
+      ],
+      "onePerAction": false,
+      "description": "You fermented the seeds, brewing a dark, savory liquid.",
+      "tip": "Ferment seeds to brew soy sauce."
+    }
+  },
+  {
+    "id": "rice_flour__technique__0",
+    "kind": "technique",
+    "tools": [
+      "grind",
+      "pound"
+    ],
+    "input": "rice",
+    "outputs": [
+      "rice_flour"
+    ],
+    "onePerAction": false,
+    "resultItemId": "rice_flour",
+    "recipe": {
+      "input": "rice",
+      "tools": [
+        "grind",
+        "pound"
+      ],
+      "outputs": [
+        "rice_flour"
+      ],
+      "onePerAction": false
+    }
+  },
+  {
+    "id": "cream__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate"
+    ],
+    "input": "milk",
+    "outputs": [
+      "cream"
+    ],
+    "onePerAction": false,
+    "resultItemId": "cream",
+    "recipe": {
+      "input": "milk",
+      "tools": [
+        "separate"
+      ],
+      "outputs": [
+        "cream"
+      ],
+      "onePerAction": false
+    }
+  },
+  {
+    "id": "yogurt__technique__0",
+    "kind": "technique",
+    "tools": [
+      "ferment"
+    ],
+    "input": "milk",
+    "outputs": [
+      "yogurt"
+    ],
+    "onePerAction": false,
+    "resultItemId": "yogurt",
+    "recipe": {
+      "input": "milk",
+      "tools": [
+        "ferment"
+      ],
+      "outputs": [
+        "yogurt"
+      ],
+      "onePerAction": false
+    }
+  },
+  {
+    "id": "yeast__technique__0",
+    "kind": "technique",
+    "tools": [
+      "ferment"
+    ],
+    "input": "fruits",
+    "outputs": [
+      "yeast"
+    ],
+    "onePerAction": false,
+    "resultItemId": "yeast",
+    "recipe": {
+      "input": "fruits",
+      "tools": [
+        "ferment"
+      ],
+      "outputs": [
+        "yeast"
+      ],
+      "onePerAction": false
+    }
+  },
+  {
+    "id": "salt__technique__0",
+    "kind": "technique",
+    "tools": [
+      "cook",
+      "boil"
+    ],
+    "input": "water",
+    "outputs": [
+      "salt"
+    ],
+    "onePerAction": false,
+    "resultItemId": "salt",
+    "recipe": {
+      "input": "water",
+      "tools": [
+        "cook",
+        "boil"
+      ],
+      "outputs": [
+        "salt"
+      ],
+      "onePerAction": false
+    }
+  },
+  {
+    "id": "cow__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "livestock",
+    "outputs": [
+      "cow",
+      "pig",
+      "chicken",
+      "duck"
+    ],
+    "onePerAction": true,
+    "resultItemId": "cow",
+    "recipe": {
+      "input": "livestock",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "cow",
+        "pig",
+        "chicken",
+        "duck"
+      ],
+      "onePerAction": true,
+      "description": "You led one animal out of the herd.",
+      "tip": "Herds gather together — separate them to milk, shear, or butcher each animal."
+    }
+  },
+  {
+    "id": "chicken__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate"
+    ],
+    "input": "chicken",
+    "outputs": [
+      "chicken",
+      "egg"
+    ],
+    "onePerAction": false,
+    "resultItemId": "chicken",
+    "recipe": {
+      "input": "chicken",
+      "tools": [
+        "separate"
+      ],
+      "outputs": [
+        "chicken",
+        "egg"
+      ],
+      "onePerAction": false,
+      "description": "You obtained chicken meat and a fresh egg.",
+      "tip": "Separate the chicken to obtain meat and an egg."
+    }
+  },
+  {
+    "id": "duck__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate"
+    ],
+    "input": "duck",
+    "outputs": [
+      "duck",
+      "egg"
+    ],
+    "onePerAction": false,
+    "resultItemId": "duck",
+    "recipe": {
+      "input": "duck",
+      "tools": [
+        "separate"
+      ],
+      "outputs": [
+        "duck",
+        "egg"
+      ],
+      "onePerAction": false,
+      "description": "You obtained duck meat and a fresh egg.",
+      "tip": "Separate the duck to obtain meat and an egg."
+    }
+  },
+  {
+    "id": "beef__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate"
+    ],
+    "input": "cow",
+    "outputs": [
+      "beef",
+      "milk"
+    ],
+    "onePerAction": false,
+    "resultItemId": "beef",
+    "recipe": {
+      "input": "cow",
+      "tools": [
+        "separate"
+      ],
+      "outputs": [
+        "beef",
+        "milk"
+      ],
+      "onePerAction": false,
+      "description": "You obtained fresh beef and a pail of milk from the cow.",
+      "tip": "Separate the cow to obtain both beef and milk."
+    }
+  },
+  {
+    "id": "pork__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate"
+    ],
+    "input": "pig",
+    "outputs": [
+      "pork"
+    ],
+    "onePerAction": false,
+    "resultItemId": "pork",
+    "recipe": {
+      "input": "pig",
+      "tools": [
+        "separate"
+      ],
+      "outputs": [
+        "pork"
+      ],
+      "onePerAction": false,
+      "description": "You obtained pork from the pig.",
+      "tip": "Separate the pig to obtain pork."
+    }
+  },
+  {
+    "id": "cabbage__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "garden_produce",
+    "outputs": [
+      "cabbage",
+      "tomato",
+      "onion",
+      "eggplant",
+      "chili",
+      "citrus",
+      "basil"
+    ],
+    "onePerAction": true,
+    "resultItemId": "cabbage",
+    "recipe": {
+      "input": "garden_produce",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "cabbage",
+        "tomato",
+        "onion",
+        "eggplant",
+        "chili",
+        "citrus",
+        "basil"
+      ],
+      "onePerAction": true,
+      "description": "You gathered one ripe item from the wild patch.",
+      "tip": "Wild flora patches hold various herbs and crops — separate them to sort cabbage, tomato, onion, eggplant, chili, citrus, and basil."
+    }
+  },
+  {
+    "id": "honey__technique__0",
+    "kind": "technique",
+    "tools": [
+      "separate",
+      "peel",
+      "tear"
+    ],
+    "input": "wild_hives",
+    "outputs": [
+      "honey"
+    ],
+    "onePerAction": true,
+    "resultItemId": "honey",
+    "recipe": {
+      "input": "wild_hives",
+      "tools": [
+        "separate",
+        "peel",
+        "tear"
+      ],
+      "outputs": [
+        "honey"
+      ],
+      "onePerAction": true,
+      "description": "You carefully extracted sweet honey from the nest.",
+      "tip": "Wild hives hold liquid honey — separate them carefully to avoid bee stings."
+    }
+  },
+  {
+    "id": "dough__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "water"
+    ],
+    "outputs": [
+      "dough"
+    ],
+    "resultItemId": "dough",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "water"
+      ],
+      "description": "You mixed flour and water, kneading them into a smooth, elastic dough ball.",
+      "tip": "Combine flour and water to form dough, then knead it to strengthen structure."
+    }
+  },
+  {
+    "id": "raw_stew_pot__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "water",
+      "carrot",
+      "button_mushroom"
+    ],
+    "outputs": [
+      "raw_stew_pot"
+    ],
+    "resultItemId": "raw_stew_pot",
+    "recipe": {
+      "inputs": [
+        "water",
+        "carrot",
+        "button_mushroom"
+      ],
+      "description": "You placed the roots, wild mushrooms, and water together in a cooking vessel.",
+      "tip": "Combine water, carrots, and mushrooms to prepare a raw stew pot."
+    }
+  },
+  {
+    "id": "sprouted_seeds__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "seeds",
+      "water"
+    ],
+    "outputs": [
+      "sprouted_seeds"
+    ],
+    "resultItemId": "sprouted_seeds",
+    "recipe": {
+      "inputs": [
+        "seeds",
+        "water"
+      ],
+      "description": "The seeds swelled and split, sending out pale shoots.",
+      "tip": "Soak seeds in fresh water to coax them into sprouting."
+    }
+  },
+  {
+    "id": "berry_brew__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "strawberry",
+      "spring_water"
+    ],
+    "outputs": [
+      "berry_brew"
+    ],
+    "resultItemId": "berry_brew",
+    "recipe": {
+      "inputs": [
+        "strawberry",
+        "spring_water"
+      ],
+      "description": "Berries and spring water mingled into a fragrant brew.",
+      "tip": "Combine ripe berries with clean spring water for a simple restorative drink."
+    }
+  },
+  {
+    "id": "seed_tonic__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "sprouted_seeds",
+      "spring_water"
+    ],
+    "outputs": [
+      "seed_tonic"
+    ],
+    "resultItemId": "seed_tonic",
+    "recipe": {
+      "inputs": [
+        "sprouted_seeds",
+        "spring_water"
+      ],
+      "description": "Sprouted seeds broke down into a mellow, drinkable tonic.",
+      "tip": "Blend sprouted seeds with spring water for a filling camp drink."
+    }
+  },
+  {
+    "id": "hearth_mash__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "mashed_potato",
+      "charred_apple"
+    ],
+    "outputs": [
+      "hearth_mash"
+    ],
+    "resultItemId": "hearth_mash",
+    "recipe": {
+      "inputs": [
+        "mashed_potato",
+        "charred_apple"
+      ],
+      "description": "Mash and charred fruit came together into a smoky-sweet hearth dish.",
+      "tip": "Fold charred fruit into mash for a finished fireside plate."
+    }
+  },
+  {
+    "id": "carrot_broth__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "carrot",
+      "spring_water"
+    ],
+    "outputs": [
+      "carrot_broth"
+    ],
+    "resultItemId": "carrot_broth",
+    "recipe": {
+      "inputs": [
+        "carrot",
+        "spring_water"
+      ],
+      "description": "Carrot and water simmered into a clear, sweet broth.",
+      "tip": "Steep a root vegetable in spring water for a quick broth."
+    }
+  },
+  {
+    "id": "tuber_stew__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "mashed_potato",
+      "spring_water"
+    ],
+    "outputs": [
+      "tuber_stew"
+    ],
+    "resultItemId": "tuber_stew",
+    "recipe": {
+      "inputs": [
+        "mashed_potato",
+        "spring_water"
+      ],
+      "description": "Mash and water loosened into a simple, filling stew.",
+      "tip": "Thin mashed tubers with spring water for a quick stew."
+    }
+  },
+  {
+    "id": "prepared_fish__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cleaned_fish",
+      "julienned_ginger",
+      "julienned_scallions"
+    ],
+    "outputs": [
+      "prepared_fish"
+    ],
+    "resultItemId": "prepared_fish",
+    "recipe": {
+      "inputs": [
+        "cleaned_fish",
+        "julienned_ginger",
+        "julienned_scallions"
+      ],
+      "description": "You arranged the cleaned fish on a platter with ginger and scallions.",
+      "tip": "Combine prepped fish with julienned aromatics before cooking."
+    }
+  },
+  {
+    "id": "cantonese_steamed_fish__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cooked_steamed_fish",
+      "soy_sauce",
+      "hot_oil"
+    ],
+    "outputs": [
+      "cantonese_steamed_fish"
+    ],
+    "resultItemId": "cantonese_steamed_fish",
+    "recipe": {
+      "inputs": [
+        "cooked_steamed_fish",
+        "soy_sauce",
+        "hot_oil"
+      ],
+      "description": "You splashed the shimmering hot oil over the fish, followed by soy sauce. The kitchen filled with a magnificent aroma.",
+      "tip": "Splash hot oil and soy sauce onto cooked steamed fish for a spectacular finish."
+    }
+  },
+  {
+    "id": "tofu__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "seeds",
+      "water",
+      "salt"
+    ],
+    "outputs": [
+      "tofu"
+    ],
+    "resultItemId": "tofu",
+    "recipe": {
+      "inputs": [
+        "seeds",
+        "water",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "gochujang__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chili",
+      "rice_flour",
+      "yeast"
+    ],
+    "outputs": [
+      "gochujang"
+    ],
+    "resultItemId": "gochujang",
+    "recipe": {
+      "inputs": [
+        "chili",
+        "rice_flour",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "soy_paste__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "seeds",
+      "yeast"
+    ],
+    "outputs": [
+      "soy_paste"
+    ],
+    "resultItemId": "soy_paste",
+    "recipe": {
+      "inputs": [
+        "seeds",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "tahini__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "sesame",
+      "salt"
+    ],
+    "outputs": [
+      "tahini"
+    ],
+    "resultItemId": "tahini",
+    "recipe": {
+      "inputs": [
+        "sesame",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "shrimp_paste__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "shrimp",
+      "yeast"
+    ],
+    "outputs": [
+      "shrimp_paste"
+    ],
+    "resultItemId": "shrimp_paste",
+    "recipe": {
+      "inputs": [
+        "shrimp",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "butter__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cream",
+      "salt"
+    ],
+    "outputs": [
+      "butter"
+    ],
+    "resultItemId": "butter",
+    "recipe": {
+      "inputs": [
+        "cream",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "cheese__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "milk",
+      "citrus"
+    ],
+    "outputs": [
+      "cheese"
+    ],
+    "resultItemId": "cheese",
+    "recipe": {
+      "inputs": [
+        "milk",
+        "citrus"
+      ]
+    }
+  },
+  {
+    "id": "baguette__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "dough",
+      "yeast"
+    ],
+    "outputs": [
+      "baguette"
+    ],
+    "resultItemId": "baguette",
+    "recipe": {
+      "inputs": [
+        "dough",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "cured_pork__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "pork",
+      "salt"
+    ],
+    "outputs": [
+      "cured_pork"
+    ],
+    "resultItemId": "cured_pork",
+    "recipe": {
+      "inputs": [
+        "pork",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "tonkotsu_ramen__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "pork",
+      "water",
+      "rice_flour"
+    ],
+    "outputs": [
+      "tonkotsu_ramen"
+    ],
+    "resultItemId": "tonkotsu_ramen",
+    "recipe": {
+      "inputs": [
+        "pork",
+        "water",
+        "rice_flour"
+      ]
+    }
+  },
+  {
+    "id": "mapo_tofu__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "tofu",
+      "chili",
+      "pork"
+    ],
+    "outputs": [
+      "mapo_tofu"
+    ],
+    "resultItemId": "mapo_tofu",
+    "recipe": {
+      "inputs": [
+        "tofu",
+        "chili",
+        "pork"
+      ]
+    }
+  },
+  {
+    "id": "bibimbap__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "roots",
+      "egg",
+      "gochujang"
+    ],
+    "outputs": [
+      "bibimbap"
+    ],
+    "resultItemId": "bibimbap",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "roots",
+        "egg",
+        "gochujang"
+      ]
+    }
+  },
+  {
+    "id": "kimchi__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cabbage",
+      "chili",
+      "salt"
+    ],
+    "outputs": [
+      "kimchi"
+    ],
+    "resultItemId": "kimchi",
+    "recipe": {
+      "inputs": [
+        "cabbage",
+        "chili",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "char_siu__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "pork",
+      "honey",
+      "soy_sauce"
+    ],
+    "outputs": [
+      "char_siu"
+    ],
+    "resultItemId": "char_siu",
+    "recipe": {
+      "inputs": [
+        "pork",
+        "honey",
+        "soy_sauce"
+      ]
+    }
+  },
+  {
+    "id": "sukiyaki__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "soy_sauce",
+      "water"
+    ],
+    "outputs": [
+      "sukiyaki"
+    ],
+    "resultItemId": "sukiyaki",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "soy_sauce",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "peking_duck__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "duck",
+      "honey",
+      "soy_sauce"
+    ],
+    "outputs": [
+      "peking_duck"
+    ],
+    "resultItemId": "peking_duck",
+    "recipe": {
+      "inputs": [
+        "duck",
+        "honey",
+        "soy_sauce"
+      ]
+    }
+  },
+  {
+    "id": "japchae__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "sweet_potato",
+      "roots",
+      "soy_sauce"
+    ],
+    "outputs": [
+      "japchae"
+    ],
+    "resultItemId": "japchae",
+    "recipe": {
+      "inputs": [
+        "sweet_potato",
+        "roots",
+        "soy_sauce"
+      ]
+    }
+  },
+  {
+    "id": "congee__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "water"
+    ],
+    "outputs": [
+      "congee"
+    ],
+    "resultItemId": "congee",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "miso_soup__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "soy_paste",
+      "water"
+    ],
+    "outputs": [
+      "miso_soup"
+    ],
+    "resultItemId": "miso_soup",
+    "recipe": {
+      "inputs": [
+        "soy_paste",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "xiaolongbao__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "pork",
+      "water"
+    ],
+    "outputs": [
+      "xiaolongbao"
+    ],
+    "resultItemId": "xiaolongbao",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "pork",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "tteokbokki__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "gochujang",
+      "water"
+    ],
+    "outputs": [
+      "tteokbokki"
+    ],
+    "resultItemId": "tteokbokki",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "gochujang",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "okonomiyaki__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "cabbage",
+      "egg",
+      "pork"
+    ],
+    "outputs": [
+      "okonomiyaki"
+    ],
+    "resultItemId": "okonomiyaki",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "cabbage",
+        "egg",
+        "pork"
+      ]
+    }
+  },
+  {
+    "id": "hot_pot__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "water",
+      "beef",
+      "cabbage",
+      "chili"
+    ],
+    "outputs": [
+      "hot_pot"
+    ],
+    "resultItemId": "hot_pot",
+    "recipe": {
+      "inputs": [
+        "water",
+        "beef",
+        "cabbage",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "tempura__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "egg",
+      "shrimp"
+    ],
+    "outputs": [
+      "tempura"
+    ],
+    "resultItemId": "tempura",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "egg",
+        "shrimp"
+      ]
+    }
+  },
+  {
+    "id": "pho_bo__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "water",
+      "ginger",
+      "rice"
+    ],
+    "outputs": [
+      "pho_bo"
+    ],
+    "resultItemId": "pho_bo",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "water",
+        "ginger",
+        "rice"
+      ]
+    }
+  },
+  {
+    "id": "tom_yum_goong__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "shrimp",
+      "water",
+      "chili",
+      "citrus"
+    ],
+    "outputs": [
+      "tom_yum_goong"
+    ],
+    "resultItemId": "tom_yum_goong",
+    "recipe": {
+      "inputs": [
+        "shrimp",
+        "water",
+        "chili",
+        "citrus"
+      ]
+    }
+  },
+  {
+    "id": "rendang__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "coconuts",
+      "chili"
+    ],
+    "outputs": [
+      "rendang"
+    ],
+    "resultItemId": "rendang",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "coconuts",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "pad_thai__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "egg",
+      "peanuts",
+      "shrimp"
+    ],
+    "outputs": [
+      "pad_thai"
+    ],
+    "resultItemId": "pad_thai",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "egg",
+        "peanuts",
+        "shrimp"
+      ]
+    }
+  },
+  {
+    "id": "banh_mi__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "baguette",
+      "pork",
+      "carrot"
+    ],
+    "outputs": [
+      "banh_mi"
+    ],
+    "resultItemId": "banh_mi",
+    "recipe": {
+      "inputs": [
+        "baguette",
+        "pork",
+        "carrot"
+      ]
+    }
+  },
+  {
+    "id": "satay__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chicken",
+      "peanuts"
+    ],
+    "outputs": [
+      "satay"
+    ],
+    "resultItemId": "satay",
+    "recipe": {
+      "inputs": [
+        "chicken",
+        "peanuts"
+      ]
+    }
+  },
+  {
+    "id": "laksa__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "coconuts",
+      "shrimp",
+      "chili"
+    ],
+    "outputs": [
+      "laksa"
+    ],
+    "resultItemId": "laksa",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "coconuts",
+        "shrimp",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "green_papaya_salad__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "fruits",
+      "chili",
+      "peanuts",
+      "citrus"
+    ],
+    "outputs": [
+      "green_papaya_salad"
+    ],
+    "resultItemId": "green_papaya_salad",
+    "recipe": {
+      "inputs": [
+        "fruits",
+        "chili",
+        "peanuts",
+        "citrus"
+      ]
+    }
+  },
+  {
+    "id": "nasi_goreng__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "shrimp_paste",
+      "chili"
+    ],
+    "outputs": [
+      "nasi_goreng"
+    ],
+    "resultItemId": "nasi_goreng",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "shrimp_paste",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "spring_rolls__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "shrimp",
+      "shoots"
+    ],
+    "outputs": [
+      "spring_rolls"
+    ],
+    "resultItemId": "spring_rolls",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "shrimp",
+        "shoots"
+      ]
+    }
+  },
+  {
+    "id": "butter_chicken__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chicken",
+      "tomato",
+      "cream"
+    ],
+    "outputs": [
+      "butter_chicken"
+    ],
+    "resultItemId": "butter_chicken",
+    "recipe": {
+      "inputs": [
+        "chicken",
+        "tomato",
+        "cream"
+      ]
+    }
+  },
+  {
+    "id": "biryani__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "chicken",
+      "seeds"
+    ],
+    "outputs": [
+      "biryani"
+    ],
+    "resultItemId": "biryani",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "chicken",
+        "seeds"
+      ]
+    }
+  },
+  {
+    "id": "dal__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "lentils",
+      "water"
+    ],
+    "outputs": [
+      "dal"
+    ],
+    "resultItemId": "dal",
+    "recipe": {
+      "inputs": [
+        "lentils",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "tandoori_chicken__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chicken",
+      "yogurt"
+    ],
+    "outputs": [
+      "tandoori_chicken"
+    ],
+    "resultItemId": "tandoori_chicken",
+    "recipe": {
+      "inputs": [
+        "chicken",
+        "yogurt"
+      ]
+    }
+  },
+  {
+    "id": "samosa__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "potato",
+      "seeds"
+    ],
+    "outputs": [
+      "samosa"
+    ],
+    "resultItemId": "samosa",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "potato",
+        "seeds"
+      ]
+    }
+  },
+  {
+    "id": "naan__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "water",
+      "yeast"
+    ],
+    "outputs": [
+      "naan"
+    ],
+    "resultItemId": "naan",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "water",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "saag__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cabbage",
+      "water"
+    ],
+    "outputs": [
+      "saag"
+    ],
+    "resultItemId": "saag",
+    "recipe": {
+      "inputs": [
+        "cabbage",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "chana_masala__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chickpeas",
+      "tomato",
+      "water"
+    ],
+    "outputs": [
+      "chana_masala"
+    ],
+    "resultItemId": "chana_masala",
+    "recipe": {
+      "inputs": [
+        "chickpeas",
+        "tomato",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "vindaloo__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "pork",
+      "citrus",
+      "chili"
+    ],
+    "outputs": [
+      "vindaloo"
+    ],
+    "resultItemId": "vindaloo",
+    "recipe": {
+      "inputs": [
+        "pork",
+        "citrus",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "dosa__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "lentils",
+      "water"
+    ],
+    "outputs": [
+      "dosa"
+    ],
+    "resultItemId": "dosa",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "lentils",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "hummus__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chickpeas",
+      "tahini",
+      "citrus"
+    ],
+    "outputs": [
+      "hummus"
+    ],
+    "resultItemId": "hummus",
+    "recipe": {
+      "inputs": [
+        "chickpeas",
+        "tahini",
+        "citrus"
+      ]
+    }
+  },
+  {
+    "id": "shawarma__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "flatbread"
+    ],
+    "outputs": [
+      "shawarma"
+    ],
+    "resultItemId": "shawarma",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "flatbread"
+      ]
+    }
+  },
+  {
+    "id": "falafel__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chickpeas",
+      "flour"
+    ],
+    "outputs": [
+      "falafel"
+    ],
+    "resultItemId": "falafel",
+    "recipe": {
+      "inputs": [
+        "chickpeas",
+        "flour"
+      ]
+    }
+  },
+  {
+    "id": "kebab__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "salt"
+    ],
+    "outputs": [
+      "kebab"
+    ],
+    "resultItemId": "kebab",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "tabbouleh__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "basil",
+      "tomato",
+      "wheat"
+    ],
+    "outputs": [
+      "tabbouleh"
+    ],
+    "resultItemId": "tabbouleh",
+    "recipe": {
+      "inputs": [
+        "basil",
+        "tomato",
+        "wheat"
+      ]
+    }
+  },
+  {
+    "id": "baklava__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "nuts",
+      "honey"
+    ],
+    "outputs": [
+      "baklava"
+    ],
+    "resultItemId": "baklava",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "nuts",
+        "honey"
+      ]
+    }
+  },
+  {
+    "id": "shakshuka__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "egg",
+      "tomato",
+      "chili"
+    ],
+    "outputs": [
+      "shakshuka"
+    ],
+    "resultItemId": "shakshuka",
+    "recipe": {
+      "inputs": [
+        "egg",
+        "tomato",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "manakish__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "dough",
+      "basil"
+    ],
+    "outputs": [
+      "manakish"
+    ],
+    "resultItemId": "manakish",
+    "recipe": {
+      "inputs": [
+        "dough",
+        "basil"
+      ]
+    }
+  },
+  {
+    "id": "kibbeh__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "wheat",
+      "beef",
+      "nuts"
+    ],
+    "outputs": [
+      "kibbeh"
+    ],
+    "resultItemId": "kibbeh",
+    "recipe": {
+      "inputs": [
+        "wheat",
+        "beef",
+        "nuts"
+      ]
+    }
+  },
+  {
+    "id": "coq_au_vin__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chicken",
+      "mushrooms"
+    ],
+    "outputs": [
+      "coq_au_vin"
+    ],
+    "resultItemId": "coq_au_vin",
+    "recipe": {
+      "inputs": [
+        "chicken",
+        "mushrooms"
+      ]
+    }
+  },
+  {
+    "id": "bouillabaisse__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "whole_fish",
+      "shellfish",
+      "water"
+    ],
+    "outputs": [
+      "bouillabaisse"
+    ],
+    "resultItemId": "bouillabaisse",
+    "recipe": {
+      "inputs": [
+        "whole_fish",
+        "shellfish",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "risotto__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "water"
+    ],
+    "outputs": [
+      "risotto"
+    ],
+    "resultItemId": "risotto",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "pasta_carbonara__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "egg",
+      "cured_pork",
+      "cheese"
+    ],
+    "outputs": [
+      "pasta_carbonara"
+    ],
+    "resultItemId": "pasta_carbonara",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "egg",
+        "cured_pork",
+        "cheese"
+      ]
+    }
+  },
+  {
+    "id": "paella__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "shrimp",
+      "shellfish"
+    ],
+    "outputs": [
+      "paella"
+    ],
+    "resultItemId": "paella",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "shrimp",
+        "shellfish"
+      ]
+    }
+  },
+  {
+    "id": "moussaka__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "eggplant",
+      "beef",
+      "milk"
+    ],
+    "outputs": [
+      "moussaka"
+    ],
+    "resultItemId": "moussaka",
+    "recipe": {
+      "inputs": [
+        "eggplant",
+        "beef",
+        "milk"
+      ]
+    }
+  },
+  {
+    "id": "tzatziki__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "yogurt",
+      "roots"
+    ],
+    "outputs": [
+      "tzatziki"
+    ],
+    "resultItemId": "tzatziki",
+    "recipe": {
+      "inputs": [
+        "yogurt",
+        "roots"
+      ]
+    }
+  },
+  {
+    "id": "gazpacho__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "tomato",
+      "roots"
+    ],
+    "outputs": [
+      "gazpacho"
+    ],
+    "resultItemId": "gazpacho",
+    "recipe": {
+      "inputs": [
+        "tomato",
+        "roots"
+      ]
+    }
+  },
+  {
+    "id": "caprese__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "tomato",
+      "cheese",
+      "basil"
+    ],
+    "outputs": [
+      "caprese"
+    ],
+    "resultItemId": "caprese",
+    "recipe": {
+      "inputs": [
+        "tomato",
+        "cheese",
+        "basil"
+      ]
+    }
+  },
+  {
+    "id": "tortilla_espanola__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "egg",
+      "potato"
+    ],
+    "outputs": [
+      "tortilla_espanola"
+    ],
+    "resultItemId": "tortilla_espanola",
+    "recipe": {
+      "inputs": [
+        "egg",
+        "potato"
+      ]
+    }
+  },
+  {
+    "id": "ratatouille__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "eggplant",
+      "tomato"
+    ],
+    "outputs": [
+      "ratatouille"
+    ],
+    "resultItemId": "ratatouille",
+    "recipe": {
+      "inputs": [
+        "eggplant",
+        "tomato"
+      ]
+    }
+  },
+  {
+    "id": "pesto__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "basil",
+      "nuts",
+      "cheese"
+    ],
+    "outputs": [
+      "pesto"
+    ],
+    "resultItemId": "pesto",
+    "recipe": {
+      "inputs": [
+        "basil",
+        "nuts",
+        "cheese"
+      ]
+    }
+  },
+  {
+    "id": "cassoulet__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beans",
+      "duck",
+      "water"
+    ],
+    "outputs": [
+      "cassoulet"
+    ],
+    "resultItemId": "cassoulet",
+    "recipe": {
+      "inputs": [
+        "beans",
+        "duck",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "croissant__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "butter",
+      "yeast"
+    ],
+    "outputs": [
+      "croissant"
+    ],
+    "resultItemId": "croissant",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "butter",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "onion_soup__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "onion",
+      "water",
+      "cheese"
+    ],
+    "outputs": [
+      "onion_soup"
+    ],
+    "resultItemId": "onion_soup",
+    "recipe": {
+      "inputs": [
+        "onion",
+        "water",
+        "cheese"
+      ]
+    }
+  },
+  {
+    "id": "beef_bourguignon__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "water",
+      "mushrooms"
+    ],
+    "outputs": [
+      "beef_bourguignon"
+    ],
+    "resultItemId": "beef_bourguignon",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "water",
+        "mushrooms"
+      ]
+    }
+  },
+  {
+    "id": "quiche__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "egg",
+      "cream",
+      "flour"
+    ],
+    "outputs": [
+      "quiche"
+    ],
+    "resultItemId": "quiche",
+    "recipe": {
+      "inputs": [
+        "egg",
+        "cream",
+        "flour"
+      ]
+    }
+  },
+  {
+    "id": "creme_brulee__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "egg",
+      "cream",
+      "honey"
+    ],
+    "outputs": [
+      "creme_brulee"
+    ],
+    "resultItemId": "creme_brulee",
+    "recipe": {
+      "inputs": [
+        "egg",
+        "cream",
+        "honey"
+      ]
+    }
+  },
+  {
+    "id": "confit__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "duck",
+      "butter"
+    ],
+    "outputs": [
+      "confit"
+    ],
+    "resultItemId": "confit",
+    "recipe": {
+      "inputs": [
+        "duck",
+        "butter"
+      ]
+    }
+  },
+  {
+    "id": "hollandaise__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "egg",
+      "butter",
+      "citrus"
+    ],
+    "outputs": [
+      "hollandaise"
+    ],
+    "resultItemId": "hollandaise",
+    "recipe": {
+      "inputs": [
+        "egg",
+        "butter",
+        "citrus"
+      ]
+    }
+  },
+  {
+    "id": "jollof_rice__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "rice",
+      "tomato",
+      "water"
+    ],
+    "outputs": [
+      "jollof_rice"
+    ],
+    "resultItemId": "jollof_rice",
+    "recipe": {
+      "inputs": [
+        "rice",
+        "tomato",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "injera__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "water",
+      "yeast"
+    ],
+    "outputs": [
+      "injera"
+    ],
+    "resultItemId": "injera",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "water",
+        "yeast"
+      ]
+    }
+  },
+  {
+    "id": "berbere_stew__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "chili",
+      "water"
+    ],
+    "outputs": [
+      "berbere_stew"
+    ],
+    "resultItemId": "berbere_stew",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "chili",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "egusi_soup__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "melon_seed",
+      "water",
+      "cabbage"
+    ],
+    "outputs": [
+      "egusi_soup"
+    ],
+    "resultItemId": "egusi_soup",
+    "recipe": {
+      "inputs": [
+        "melon_seed",
+        "water",
+        "cabbage"
+      ]
+    }
+  },
+  {
+    "id": "bobotie__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "egg",
+      "milk"
+    ],
+    "outputs": [
+      "bobotie"
+    ],
+    "resultItemId": "bobotie",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "egg",
+        "milk"
+      ]
+    }
+  },
+  {
+    "id": "tagine__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "fruits",
+      "water"
+    ],
+    "outputs": [
+      "tagine"
+    ],
+    "resultItemId": "tagine",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "fruits",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "couscous__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "water"
+    ],
+    "outputs": [
+      "couscous"
+    ],
+    "resultItemId": "couscous",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "suya__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "peanuts",
+      "chili"
+    ],
+    "outputs": [
+      "suya"
+    ],
+    "resultItemId": "suya",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "peanuts",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "corn_tortilla__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "corn",
+      "water"
+    ],
+    "outputs": [
+      "corn_tortilla"
+    ],
+    "resultItemId": "corn_tortilla",
+    "recipe": {
+      "inputs": [
+        "corn",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "mole_poblano__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "chili",
+      "cocoa",
+      "seeds"
+    ],
+    "outputs": [
+      "mole_poblano"
+    ],
+    "resultItemId": "mole_poblano",
+    "recipe": {
+      "inputs": [
+        "chili",
+        "cocoa",
+        "seeds"
+      ]
+    }
+  },
+  {
+    "id": "ceviche__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "whole_fish",
+      "citrus",
+      "chili"
+    ],
+    "outputs": [
+      "ceviche"
+    ],
+    "resultItemId": "ceviche",
+    "recipe": {
+      "inputs": [
+        "whole_fish",
+        "citrus",
+        "chili"
+      ]
+    }
+  },
+  {
+    "id": "tamale__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "corn",
+      "pork",
+      "water"
+    ],
+    "outputs": [
+      "tamale"
+    ],
+    "resultItemId": "tamale",
+    "recipe": {
+      "inputs": [
+        "corn",
+        "pork",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "feijoada__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beans",
+      "pork",
+      "water"
+    ],
+    "outputs": [
+      "feijoada"
+    ],
+    "resultItemId": "feijoada",
+    "recipe": {
+      "inputs": [
+        "beans",
+        "pork",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "pupusa__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "corn",
+      "cheese",
+      "beans"
+    ],
+    "outputs": [
+      "pupusa"
+    ],
+    "resultItemId": "pupusa",
+    "recipe": {
+      "inputs": [
+        "corn",
+        "cheese",
+        "beans"
+      ]
+    }
+  },
+  {
+    "id": "empanada__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "beef"
+    ],
+    "outputs": [
+      "empanada"
+    ],
+    "resultItemId": "empanada",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "beef"
+      ]
+    }
+  },
+  {
+    "id": "asado__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "salt"
+    ],
+    "outputs": [
+      "asado"
+    ],
+    "resultItemId": "asado",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "mofongo__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "fruits",
+      "pork"
+    ],
+    "outputs": [
+      "mofongo"
+    ],
+    "resultItemId": "mofongo",
+    "recipe": {
+      "inputs": [
+        "fruits",
+        "pork"
+      ]
+    }
+  },
+  {
+    "id": "chimichurri__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "basil",
+      "citrus"
+    ],
+    "outputs": [
+      "chimichurri"
+    ],
+    "resultItemId": "chimichurri",
+    "recipe": {
+      "inputs": [
+        "basil",
+        "citrus"
+      ]
+    }
+  },
+  {
+    "id": "borscht__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beet",
+      "cabbage",
+      "beef"
+    ],
+    "outputs": [
+      "borscht"
+    ],
+    "resultItemId": "borscht",
+    "recipe": {
+      "inputs": [
+        "beet",
+        "cabbage",
+        "beef"
+      ]
+    }
+  },
+  {
+    "id": "pierogi__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "potato",
+      "cheese"
+    ],
+    "outputs": [
+      "pierogi"
+    ],
+    "resultItemId": "pierogi",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "potato",
+        "cheese"
+      ]
+    }
+  },
+  {
+    "id": "goulash__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "tomato",
+      "water"
+    ],
+    "outputs": [
+      "goulash"
+    ],
+    "resultItemId": "goulash",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "tomato",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "sauerkraut__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cabbage",
+      "salt"
+    ],
+    "outputs": [
+      "sauerkraut"
+    ],
+    "resultItemId": "sauerkraut",
+    "recipe": {
+      "inputs": [
+        "cabbage",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "pelmeni__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "beef",
+      "pork"
+    ],
+    "outputs": [
+      "pelmeni"
+    ],
+    "resultItemId": "pelmeni",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "beef",
+        "pork"
+      ]
+    }
+  },
+  {
+    "id": "stroganoff__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "mushrooms",
+      "cream"
+    ],
+    "outputs": [
+      "stroganoff"
+    ],
+    "resultItemId": "stroganoff",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "mushrooms",
+        "cream"
+      ]
+    }
+  },
+  {
+    "id": "cabbage_rolls__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "cabbage",
+      "beef",
+      "rice"
+    ],
+    "outputs": [
+      "cabbage_rolls"
+    ],
+    "resultItemId": "cabbage_rolls",
+    "recipe": {
+      "inputs": [
+        "cabbage",
+        "beef",
+        "rice"
+      ]
+    }
+  },
+  {
+    "id": "smoked_brisket__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "salt"
+    ],
+    "outputs": [
+      "smoked_brisket"
+    ],
+    "resultItemId": "smoked_brisket",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "gumbo__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "shrimp",
+      "flour",
+      "water"
+    ],
+    "outputs": [
+      "gumbo"
+    ],
+    "resultItemId": "gumbo",
+    "recipe": {
+      "inputs": [
+        "shrimp",
+        "flour",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "cornbread__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "corn",
+      "egg",
+      "milk"
+    ],
+    "outputs": [
+      "cornbread"
+    ],
+    "resultItemId": "cornbread",
+    "recipe": {
+      "inputs": [
+        "corn",
+        "egg",
+        "milk"
+      ]
+    }
+  },
+  {
+    "id": "clam_chowder__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "shellfish",
+      "potato",
+      "cream",
+      "water"
+    ],
+    "outputs": [
+      "clam_chowder"
+    ],
+    "resultItemId": "clam_chowder",
+    "recipe": {
+      "inputs": [
+        "shellfish",
+        "potato",
+        "cream",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "bannock__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "water"
+    ],
+    "outputs": [
+      "bannock"
+    ],
+    "resultItemId": "bannock",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "flatbread__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "flour",
+      "water"
+    ],
+    "outputs": [
+      "flatbread"
+    ],
+    "resultItemId": "flatbread",
+    "recipe": {
+      "inputs": [
+        "flour",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "bone_broth__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "water"
+    ],
+    "outputs": [
+      "bone_broth"
+    ],
+    "resultItemId": "bone_broth",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "cured_meat__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "beef",
+      "salt"
+    ],
+    "outputs": [
+      "cured_meat"
+    ],
+    "resultItemId": "cured_meat",
+    "recipe": {
+      "inputs": [
+        "beef",
+        "salt"
+      ]
+    }
+  },
+  {
+    "id": "fermented_drink__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "fruits",
+      "water"
+    ],
+    "outputs": [
+      "fermented_drink"
+    ],
+    "resultItemId": "fermented_drink",
+    "recipe": {
+      "inputs": [
+        "fruits",
+        "water"
+      ]
+    }
+  },
+  {
+    "id": "pickled_vegetables__combine__0",
+    "kind": "combine",
+    "inputs": [
+      "roots",
+      "citrus"
+    ],
+    "outputs": [
+      "pickled_vegetables"
+    ],
+    "resultItemId": "pickled_vegetables",
+    "recipe": {
+      "inputs": [
+        "roots",
+        "citrus"
+      ]
+    }
+  }
+]

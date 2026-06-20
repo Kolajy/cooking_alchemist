@@ -1,6 +1,6 @@
 # Culinary Alchemy — Ingredients
 
-> **Auto-generated** from `content/` on 2026-06-19. Do not edit by hand.
+> **Auto-generated** from `content/` on 2026-06-20. Do not edit by hand.
 > Regenerate with `npm run docs:generate` after content changes.
 
 ## Summary
@@ -9,7 +9,7 @@
 |----------|------:|
 | Starters (primal) | 4 |
 | Unlockables | 11 |
-| Discoverable | 228 |
+| Discoverable | 224 |
 | Finalized recipes | 106 |
 
 ## Starters
@@ -20,7 +20,7 @@ Available at game start. All have `origin: primitive`.
 |----|---|------|----------|-------------|
 | `water` | 💧 | Water | Liquids | Fresh water for drinking, boiling, and mixing. |
 | `berries` | 🫐 | Berries | Produce | Small sweet or tart berries gathered in clusters. |
-| `roots` | 🫚 | Roots | Forage | Edible roots and rhizomes dug from the soil. |
+| `tubers` | 🥔 | Tubers | Forage | Starchy tubers — dense energy stored underground. |
 | `shellfish` | 🦪 | Shellfish | Proteins | Mollusks and crustaceans harvested from shore or shallows. |
 
 ## Unlockables
@@ -28,7 +28,7 @@ Available at game start. All have `origin: primitive`.
 | ID | | Name | Category | Description |
 |----|---|------|----------|-------------|
 | `fruits` | 🍎 | Fruits | Produce | Tree and vine fruits picked ripe from the wild or grove. |
-| `tubers` | 🥔 | Tubers | Forage | Starchy tubers — dense energy stored underground. |
+| `roots` | 🫚 | Roots | Forage | Edible roots and rhizomes dug from the soil. |
 | `nuts` | 🥜 | Nuts | Forage | Hard-shelled nuts and kernels rich in fat and protein. |
 | `whole_fish` | 🐟 | Whole Fish | Proteins | Freshly caught whole scale fish. |
 | `mushrooms` | 🍄 | Mushrooms | Forage | Wild fungi foraged from forest floor and decaying wood. |
@@ -102,7 +102,6 @@ Grouped by cabinet category. `origin` is `raw`, `processed`, or omitted for fina
 | `button_mushroom` | 🍄 | Button Mushroom | raw | ingredient | Pale, mild cultivated mushroom with firm cap. |
 | `carrot` | 🥕 | Carrot | raw | ingredient | Sweet, crunchy orange taproot. |
 | `carrot_broth` | 🥕 | Carrot Broth | processed | recipe | A golden broth steeped from carrot and spring water. |
-| `cassava` | 🌿 | Cassava | raw | ingredient | Tropical root that must be processed to remove bitterness. |
 | `chanterelle` | 🌼 | Chanterelle | raw | ingredient | Golden trumpet mushroom with fruity, peppery perfume. |
 | `coconuts` | 🥥 | Coconuts | raw | ingredient | Hard tropical nut containing sweet water and flesh. |
 | `cow` | 🐄 | Cow | raw | ingredient | A domestic dairy cow, yielding beef and fresh milk. |
@@ -129,13 +128,11 @@ Grouped by cabinet category. `origin` is `raw`, `processed`, or omitted for fina
 | `scallions` | 🌿 | Scallions | raw | ingredient | Mild, hollow green shoots with a white bulb. |
 | `shiitake` | 🍄‍🟫 | Shiitake | raw | ingredient | Umami-rich cap with a smoky, savory aroma. |
 | `sweet_potato` | 🍠 | Sweet Potato | raw | ingredient | Orange flesh with caramel sweetness when roasted. |
-| `taro` | 🍠 | Taro | raw | ingredient | Starchy corm with nutty flavor when properly cooked. |
 | `tuber_stew` | 🍲 | Tuber Stew | processed | recipe | Hearty mash thinned with spring water into a warming stew. |
 | `turnip` | 🟡 | Turnip | raw | ingredient | Sturdy pale root with mild cabbage notes. |
 | `walnut` | 🥜 | Walnut | raw | ingredient | Rich, tannic nut with a lobed brain-like shape. |
 | `watercress` | 💧 | Watercress | raw | ingredient | Peppery aquatic green with bright bite. |
 | `wheat` | 🌾 | Wheat | raw | ingredient | Golden grain that forms the backbone of bread. |
-| `yam` | 🟤 | Yam | raw | ingredient | Large, starchy tuber with dry, dense flesh. |
 
 ### French
 
@@ -299,7 +296,6 @@ Grouped by cabinet category. `origin` is `raw`, `processed`, or omitted for fina
 | `clam` | 🐚 | Clam | raw | ingredient | Burrowing bivalve with sweet, tender meat. |
 | `cleaned_fish` | 🐟 | Cleaned Fish | processed | ingredient | Scaled, gutted, and prepared fish ready for cooking. |
 | `cooked_steamed_fish` | 🐟 | Cooked Steamed Fish | processed | ingredient | Flaky fish steamed to perfection with aromatics. |
-| `crab` | 🦀 | Crab | raw | ingredient | Sweet claw and body meat behind a hard carapace. |
 | `duck` | 🦆 | Duck | processed | ingredient | Raw duck meat. |
 | `earth_baked_shellfish` | 🦪 | Earth-Baked Shellfish | processed | ingredient | Sweet, ocean-fresh shellfish steamed under hot stones and damp greenery. |
 | `egg` | 🥚 | Egg | raw | ingredient | Fresh whole egg. |
