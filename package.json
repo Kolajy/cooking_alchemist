@@ -8,6 +8,10 @@
     "content",
     "electron"
   ],
+  "devDependencies": {
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
   "scripts": {
     "dev": "npm run dev --workspace @culinary-alchemy/web",
     "build": "npm run export-native && npm run build --workspace @culinary-alchemy/web",
