@@ -6,6 +6,8 @@ extends Node2D
 @onready var token_container = $TokenContainer
 @onready var action_label = $UI/ActionBar/ActiveActionLabel
 
+var undo_entry: Dictionary = {}
+
 func _ready():
 	GameState.connect("discovery_changed", Callable(self, "_on_discovery_changed"))
 	
@@ -22,9 +24,14 @@ func _ready():
 		get_node("UI/ActionBar/BtnTime").pressed.connect(set_active_action.bind("time"))
 	if has_node("UI/HeaderBar/BtnLedgerBook"):
 		get_node("UI/HeaderBar/BtnLedgerBook").pressed.connect(_on_ledger_book_pressed)
+	if has_node("UI/HeaderBar/BtnUndo"):
+		get_node("UI/HeaderBar/BtnUndo").pressed.connect(apply_undo)
 		
 	update_action_ui()
 	update_progress_ui()
+	update_action_locks()
+	update_guide_note()
+	update_undo_button()
 	# Spawn starters to begin
 	spawn_starter_tokens()
 
@@ -40,9 +47,9 @@ func spawn_starter_tokens():
 	for i in range(starters_to_spawn.size()):
 		var id = starters_to_spawn[i]
 		var pos = spawn_points[i]
-		spawn_token(id, pos)
+		spawn_token(id, pos, false)
 
-func spawn_token(id: String, pos: Vector2):
+func spawn_token(id: String, pos: Vector2, push_undo: bool = true):
 	if not token_scene:
 		return
 	var token = token_scene.instantiate()
@@ -50,10 +57,15 @@ func spawn_token(id: String, pos: Vector2):
 	token.global_position = pos
 	token.setup(id)
 	update_highlights()
+	
+	if push_undo:
+		push_undo_spawn(id, pos)
 
 func _on_discovery_changed():
 	update_highlights()
 	update_progress_ui()
+	update_action_locks()
+	update_guide_note()
 
 func update_progress_ui():
 	if has_node("UI/HeaderBar/LedgerProgressLabel"):
@@ -188,6 +200,7 @@ func apply_technique(token):
 						next_output = outputs[0]
 						
 					var old_pos = token.global_position
+					var old_id = token.item_id
 					token.queue_free()
 					
 					# Play SFX and Particle effects based on action
@@ -206,7 +219,8 @@ func apply_technique(token):
 					
 					# Spawn result at the same position
 					GameState.discover_ingredient(next_output)
-					spawn_token(next_output, old_pos)
+					spawn_token(next_output, old_pos, false)
+					push_undo_technique(old_id, next_output, old_pos)
 					return
 
 func on_token_released(dragged_token):
@@ -227,7 +241,9 @@ func on_token_released(dragged_token):
 				
 	if target_token:
 		# Check if they can combine
-		var inputs = [dragged_token.item_id, target_token.item_id]
+		var id1 = dragged_token.item_id
+		var id2 = target_token.item_id
+		var inputs = [id1, id2]
 		var result = get_combine_result(inputs)
 		if result != "":
 			var spawn_pos = target_token.global_position
@@ -239,7 +255,8 @@ func on_token_released(dragged_token):
 			spawn_particles("Sparkles", spawn_pos)
 			
 			GameState.discover_ingredient(result)
-			spawn_token(result, spawn_pos)
+			spawn_token(result, spawn_pos, false)
+			push_undo_combine(id1, id2, result, spawn_pos)
 		else:
 			# Bounce back if invalid
 			dragged_token.target_position = dragged_token.global_position - dragged_token.velocity * 0.1
@@ -264,7 +281,7 @@ func get_combine_result(inputs: Array) -> String:
 
 func spawn_token_at_mouse(id: String):
 	var pos = get_global_mouse_position()
-	spawn_token(id, pos)
+	spawn_token(id, pos, true)
 	# Find the newly spawned token to start dragging immediately
 	var tokens = token_container.get_children()
 	if tokens.size() > 0:
@@ -278,3 +295,130 @@ func spawn_particles(type: String, pos: Vector2):
 		add_child(node)
 		node.global_position = pos
 		node.play_effect(type)
+
+func push_undo_spawn(item_id: String, pos: Vector2):
+	undo_entry = {
+		"type": "spawn",
+		"item_id": item_id,
+		"pos": pos
+	}
+	update_undo_button()
+
+func push_undo_technique(input_id: String, output_id: String, pos: Vector2):
+	undo_entry = {
+		"type": "technique",
+		"input_id": input_id,
+		"output_id": output_id,
+		"pos": pos
+	}
+	update_undo_button()
+
+func push_undo_combine(input1_id: String, input2_id: String, output_id: String, pos: Vector2):
+	undo_entry = {
+		"type": "combine",
+		"input1_id": input1_id,
+		"input2_id": input2_id,
+		"output_id": output_id,
+		"pos": pos
+	}
+	update_undo_button()
+
+func update_undo_button():
+	if has_node("UI/HeaderBar/BtnUndo"):
+		var btn = get_node("UI/HeaderBar/BtnUndo")
+		btn.disabled = undo_entry.is_empty()
+
+func apply_undo():
+	if undo_entry.is_empty():
+		return
+	
+	var type = undo_entry.get("type", "")
+	if type == "spawn":
+		var match_token = null
+		for token in token_container.get_children():
+			if token.item_id == undo_entry.get("item_id"):
+				match_token = token
+				break
+		if match_token:
+			match_token.queue_free()
+	elif type == "technique":
+		var match_token = null
+		for token in token_container.get_children():
+			if token.item_id == undo_entry.get("output_id") and token.global_position.distance_to(undo_entry.get("pos")) < 10.0:
+				match_token = token
+				break
+		if not match_token:
+			for token in token_container.get_children():
+				if token.item_id == undo_entry.get("output_id"):
+					match_token = token
+					break
+		if match_token:
+			match_token.queue_free()
+			spawn_token(undo_entry.get("input_id"), undo_entry.get("pos"), false)
+	elif type == "combine":
+		var match_token = null
+		for token in token_container.get_children():
+			if token.item_id == undo_entry.get("output_id") and token.global_position.distance_to(undo_entry.get("pos")) < 10.0:
+				match_token = token
+				break
+		if not match_token:
+			for token in token_container.get_children():
+				if token.item_id == undo_entry.get("output_id"):
+					match_token = token
+					break
+		if match_token:
+			match_token.queue_free()
+			var spawn_pos = undo_entry.get("pos")
+			spawn_token(undo_entry.get("input1_id"), spawn_pos - Vector2(40, 0), false)
+			spawn_token(undo_entry.get("input2_id"), spawn_pos + Vector2(40, 0), false)
+			
+	SoundManager.play_sfx("ui_select")
+	undo_entry.clear()
+	update_undo_button()
+
+func update_action_locks():
+	var count = GameState.get_unlocked_recipes_count()
+	if has_node("UI/ActionBar/BtnCombine"):
+		var btn = get_node("UI/ActionBar/BtnCombine")
+		btn.disabled = count < 15
+		btn.text = "Combine (🥣)" if count >= 15 else "🥣 Combine (15)"
+	if has_node("UI/ActionBar/BtnHeat"):
+		var btn = get_node("UI/ActionBar/BtnHeat")
+		btn.disabled = count < 40
+		btn.text = "Heat (🍳)" if count >= 40 else "🍳 Heat (40)"
+	if has_node("UI/ActionBar/BtnTime"):
+		var btn = get_node("UI/ActionBar/BtnTime")
+		btn.disabled = count < 200
+		btn.text = "Time (⏳)" if count >= 200 else "⏳ Time (200)"
+
+func update_guide_note():
+	if not has_node("UI/GuideNote/GuideText"):
+		return
+	
+	var label = get_node("UI/GuideNote/GuideText")
+	var count = GameState.get_unlocked_recipes_count()
+	var hint = ""
+	
+	var has_smashed_berries = GameState.is_discovered("smashed_berries")
+	var has_potato = GameState.is_discovered("potato")
+	var has_mashed_potato = GameState.is_discovered("mashed_potato")
+	var has_sprouted_seeds = GameState.is_discovered("sprouted_seeds")
+	
+	if not has_smashed_berries:
+		hint = "📌 Ledger Guide: Separate 🫐 Berries on the counter to find fresh fruit and smashable pulp!"
+	elif not has_potato:
+		hint = "📌 Ledger Guide: Separate 🥔 Tubers on the counter to find a fresh Potato!"
+	elif not has_mashed_potato:
+		hint = "📌 Ledger Guide: Use your new ✊ Force action to smash the 🥔 Potato into a fluffy mash!"
+	elif count < 15:
+		hint = "📌 Ledger Guide: Restore 15 recipes in your Ledger to unlock the 🥣 Combine action (Current: " + str(count) + "/15)."
+	elif not has_sprouted_seeds:
+		hint = "📌 Ledger Guide: Combine 🌻 Seeds and 💧 Water on the counter using the 🥣 Combine action to grow sprouted greens!"
+	elif count < 40:
+		hint = "📌 Ledger Guide: Continue combining and discovering dishes. Reach 40 recipes to unlock 🍳 Heat (Current: " + str(count) + "/40)."
+	elif count < 200 or not GameState.is_discovered("berry_pulp"):
+		hint = "📌 Ledger Guide: Work towards restoring 200 recipes and finding Berry Pulp to master ⏳ Time (Current: " + str(count) + "/200)."
+	else:
+		hint = "📌 Ledger Guide: Grandmother's ledger is nearly restored! Search for remaining secrets in the Ledger Book."
+		
+	label.text = hint

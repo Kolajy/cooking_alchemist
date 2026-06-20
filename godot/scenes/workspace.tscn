@@ -31,6 +31,31 @@ text = "📖 Ledger Restored: 0%"
 layout_mode = 2
 text = "📖 Ledger Book"
 
+[node name="BtnUndo" type="Button" parent="UI/HeaderBar"]
+layout_mode = 2
+text = "↩ Undo"
+disabled = true
+
+[node name="GuideNote" type="Panel" parent="UI"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 516.0
+offset_bottom = 154.0
+
+[node name="GuideText" type="Label" parent="UI/GuideNote"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "📌 Ledger Guide: Separate berries..."
+autowrap_mode = 2
+
 [node name="ActionBar" type="HBoxContainer" parent="UI"]
 anchors_preset = 12
 anchor_top = 1.0
