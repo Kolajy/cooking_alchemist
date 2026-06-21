@@ -23,6 +23,7 @@ import { setupKeyboardShortcuts } from "./keyboard-shortcuts";
 import { loadSettings } from "../settings";
 import { setupSettingsPanel } from "./settings";
 import { loadAchievements, checkAchievements } from "../progression/achievements";
+import { initStartMenu } from "./start-menu";
 
 let cabinetSearchTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -105,11 +106,7 @@ export function setupEventListeners() {
 
 export function initGame() {
   const ctx = getCtx();
-  const { state, data, dom } = ctx;
-
-  data.Progression.load();
-  loadProgress();
-  loadAchievements();
+  const { state, dom } = ctx;
 
   loadSoundPreference();
   loadAmbiencePreference();
@@ -118,29 +115,13 @@ export function initGame() {
   unlockAudioOnGesture();
   refreshUndoButton();
 
-  if (isPlayerActionUnlocked("force")) {
-    state.notifiedForceUnlock = true;
-  }
-  if (isPlayerActionUnlocked("combine")) {
-    state.notifiedCombineUnlock = true;
-  }
-  if (isPlayerActionUnlocked("change")) {
-    state.notifiedChangeUnlock = true;
-  }
-  if (isPlayerActionUnlocked("time")) {
-    state.notifiedTimeUnlock = true;
-  }
-
   setupEventListeners();
   setupDiscoveryDialog();
-  buildCabinetFilterButtons();
-  updateSkillsUI();
-  renderCabinet();
-  updateStats();
-  checkAchievements({ silent: true });
   setupDialogFallbacks();
-  setToolbarMode("separate");
   document.body.dataset.mainView = state.activeMainView;
+
+  // Initialize and display the start menu overlay
+  initStartMenu();
 
   if (!localStorage.getItem("culinary_seen_help")) {
     localStorage.setItem("culinary_seen_help", "true");

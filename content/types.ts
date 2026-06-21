@@ -182,6 +182,7 @@ export interface DiscoverySaveData {
   recent: string[];
   highlights: string[];
   discoveryLog: DiscoveryLogEntry[];
+  lastSaved?: number;
 }
 
 export interface GameSaveFile {

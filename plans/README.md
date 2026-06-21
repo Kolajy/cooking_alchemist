@@ -55,6 +55,8 @@ This directory contains the historic and active implementation plans for the pro
 | 2026-06-20 | [electron-port.md](archive/2026-06-20-electron-port.md) | Electron desktop shell wrapping the Vite web game with dev hot-reload and electron-builder packaging. | Completed |
 | 2026-06-20 | [archive-godot-and-mobile.md](archive/2026-06-20-archive-godot-and-mobile.md) | Archived the Godot project, Godot web build distribution, iOS submodule, and Android submodule to archive/. | Completed |
 | 2026-06-20 | [archive-rust-and-merge-web-content.md](archive/2026-06-20-archive-rust-and-merge-web-content.md) | Archived Rust core, native desktop, and wasm, and ingested web and content submodules into the main monorepo. | Completed |
+| 2026-06-21 | [start-menu-and-save-slots.md](archive/2026-06-21-start-menu-and-save-slots.md) | Cozy Start Menu overlay with Continue, Save Slot select/delete, and dynamic Slot storage adapter. | Completed |
+
 
 
 

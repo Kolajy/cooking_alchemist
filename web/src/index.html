@@ -22,6 +22,74 @@
     <div class="fantasy-backdrop__vignette"></div>
   </div>
 
+  <!-- Start Menu Overlay -->
+  <div id="start-menu-overlay" class="start-menu">
+    <div class="start-menu__container animate-unfurl">
+      <div class="start-menu__scroll">
+        <div class="start-menu__parchment">
+          <div class="start-menu__inner-frame" aria-hidden="true"></div>
+          <div class="start-menu__warm-wash" aria-hidden="true"></div>
+          <div class="start-menu__crinkles" aria-hidden="true"></div>
+
+          <!-- Main Screen -->
+          <div id="start-menu-main" class="start-menu__view">
+            <div class="start-menu__header">
+              <span class="start-menu__logo-emoji" aria-hidden="true">🍳</span>
+              <h1 class="start-menu__title">Culinary Alchemy</h1>
+              <p class="start-menu__subtitle">A Cozy Hearth of Discoveries</p>
+            </div>
+            <div class="start-menu__actions">
+              <button id="menu-btn-continue" class="btn btn-primary btn-lg" disabled type="button">Continue Game</button>
+              <button id="menu-btn-play" class="btn btn-secondary btn-lg" type="button">Play / Save Slots</button>
+              <button id="menu-btn-settings" class="btn btn-secondary btn-lg" type="button">Settings</button>
+            </div>
+          </div>
+
+          <!-- Slots Screen -->
+          <div id="start-menu-slots" class="start-menu__view" hidden>
+            <h2 class="start-menu__view-title">Select a Save Slot</h2>
+            <div class="start-menu__slots-grid">
+              <!-- Slot 1 -->
+              <div class="slot-card" data-slot="slot1">
+                <div class="slot-card__info">
+                  <h3 class="slot-card__name">Save Slot 1</h3>
+                  <div class="slot-card__status">Empty Slot</div>
+                </div>
+                <div class="slot-card__actions">
+                  <button class="btn btn-primary slot-btn-play" type="button">New Game</button>
+                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 1">🗑️</button>
+                </div>
+              </div>
+              <!-- Slot 2 -->
+              <div class="slot-card" data-slot="slot2">
+                <div class="slot-card__info">
+                  <h3 class="slot-card__name">Save Slot 2</h3>
+                  <div class="slot-card__status">Empty Slot</div>
+                </div>
+                <div class="slot-card__actions">
+                  <button class="btn btn-primary slot-btn-play" type="button">New Game</button>
+                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 2">🗑️</button>
+                </div>
+              </div>
+              <!-- Slot 3 -->
+              <div class="slot-card" data-slot="slot3">
+                <div class="slot-card__info">
+                  <h3 class="slot-card__name">Save Slot 3</h3>
+                  <div class="slot-card__status">Empty Slot</div>
+                </div>
+                <div class="slot-card__actions">
+                  <button class="btn btn-primary slot-btn-play" type="button">New Game</button>
+                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 3">🗑️</button>
+                </div>
+              </div>
+            </div>
+            <button id="menu-btn-back" class="btn btn-secondary start-menu__back-btn" type="button">Back to Menu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- App Shell — parchment unfurling top to bottom -->
   <div id="app-shell" class="grand-scroll">
     <div class="grand-scroll__assembly">
@@ -385,6 +453,7 @@
           <div class="settings-actions">
             <button id="settings-export" class="btn btn-secondary" type="button">💾 Export save</button>
             <button id="settings-import" class="btn btn-secondary" type="button">📂 Import save</button>
+            <button id="settings-to-menu" class="btn btn-secondary" type="button">🏠 Main Menu</button>
             <button id="settings-reset" class="btn btn-danger" type="button">⚠️ Reset progress</button>
           </div>
           <p class="settings-footnote">Reset removes all discoveries and skill progress on this device. Export first if you want a backup.</p>

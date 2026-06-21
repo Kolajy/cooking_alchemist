@@ -3,6 +3,7 @@ import { invalidateIngredientCatalog } from "./ingredients";
 import { emitGameplayEvent } from "./events";
 import { isValidSaveId, SAVE_MAX_DISCOVERED, SAVE_MAX_LOG_ENTRIES } from "./security/save-validation";
 import type { DiscoveryLogEntry, DiscoverySaveData } from "../types";
+import { getActiveSlot, getSlotKeys } from "./slots";
 
 export const MAX_RECENT_DISCOVERIES = 5;
 
@@ -131,7 +132,8 @@ export function recordRecentDiscoveries(ids: string[]) {
 export function loadProgress() {
   const { state } = getCtx();
   try {
-    const saved = localStorage.getItem("culinary_discovered");
+    const keys = getSlotKeys(getActiveSlot());
+    const saved = localStorage.getItem(keys.discovered);
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
@@ -199,7 +201,8 @@ export function getDiscoverySaveData(): DiscoverySaveData {
     discovered: Array.from(state.discoveredIds),
     recent: state.recentlyDiscoveredIds,
     highlights: Array.from(state.recentHighlightIds),
-    discoveryLog: state.discoveryLog
+    discoveryLog: state.discoveryLog,
+    lastSaved: Date.now()
   };
 }
 
@@ -231,7 +234,8 @@ export function applyDiscoverySaveData(data: DiscoverySaveData): void {
 export function saveProgress() {
   const { state } = getCtx();
   try {
-    localStorage.setItem("culinary_discovered", JSON.stringify(getDiscoverySaveData()));
+    const keys = getSlotKeys(getActiveSlot());
+    localStorage.setItem(keys.discovered, JSON.stringify(getDiscoverySaveData()));
     emitGameplayEvent("discoveryChanged", {});
   } catch (e) {
     console.error("Failed to save progress to localStorage", e);

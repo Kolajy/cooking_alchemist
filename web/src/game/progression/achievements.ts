@@ -9,8 +9,7 @@ import { getCtx } from "../context";
 import { isPlayerActionUnlocked } from "./skills";
 import { triggerAchievementNotification } from "./notifications";
 import type { AchievementsSaveData } from "../../types";
-
-const STORAGE_KEY = "culinary_achievements";
+import { getActiveSlot, getSlotKeys } from "../slots";
 
 export type AchievementFlag = AchievementFlagId;
 
@@ -54,7 +53,8 @@ export function applyAchievementsSaveData(data: AchievementsSaveData): void {
 export function loadAchievements(): void {
   const { state } = getCtx();
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const keys = getSlotKeys(getActiveSlot());
+    const saved = localStorage.getItem(keys.achievements);
     if (!saved) {
       state.achievementUnlocks = new Map();
       state.achievementFlags = new Set();
@@ -71,7 +71,8 @@ export function loadAchievements(): void {
 
 export function saveAchievements(): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(getAchievementsSaveData()));
+    const keys = getSlotKeys(getActiveSlot());
+    localStorage.setItem(keys.achievements, JSON.stringify(getAchievementsSaveData()));
   } catch (error) {
     console.error("Failed to save achievements", error);
   }

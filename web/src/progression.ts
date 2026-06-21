@@ -7,6 +7,7 @@ import { ProgressionEngine } from "./engine/progression_engine";
 import { PROGRESSION_CONFIG } from "./progression_config";
 import { parseBoundedXpMap } from "./game/security/save-validation";
 import type { ProgressionApi, ProgressionState } from "./types";
+import { getActiveSlot, getSlotKeys } from "./game/slots";
 
 function createProgressionApi(): ProgressionApi {
   return {
@@ -14,7 +15,8 @@ function createProgressionApi(): ProgressionApi {
 
     load() {
       try {
-        const saved = localStorage.getItem("culinary_progression");
+        const keys = getSlotKeys(getActiveSlot());
+        const saved = localStorage.getItem(keys.progression);
         let initialState: ProgressionState | null = null;
         if (saved) {
           const parsed = JSON.parse(saved) as ProgressionState;
@@ -40,7 +42,8 @@ function createProgressionApi(): ProgressionApi {
     save() {
       try {
         if (this.engine) {
-          localStorage.setItem("culinary_progression", JSON.stringify(this.engine.getState()));
+          const keys = getSlotKeys(getActiveSlot());
+          localStorage.setItem(keys.progression, JSON.stringify(this.engine.getState()));
         }
       } catch (e) {
         console.error("Failed to save progression state", e);
