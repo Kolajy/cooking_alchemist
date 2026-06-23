@@ -1,6 +1,6 @@
 # Culinary Alchemy — Transitions
 
-> **Auto-generated** from `content/` on 2026-06-20. Do not edit by hand.
+> **Auto-generated** from `content/` on 2026-06-23. Do not edit by hand.
 > Regenerate with `npm run docs:generate` after content changes.
 
 ## Summary

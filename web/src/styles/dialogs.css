@@ -208,7 +208,34 @@ dialog[open] {
   margin-bottom: 0.25rem;
 }
 
-.recipe-card:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
+/* Custom Confirmation Dialog */
+.confirm-dialog-content {
+  width: 480px;
+  max-width: 95vw;
 }
+
+.confirm-dialog-body {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--scroll-ink);
+  padding: 1.5rem 1.65rem;
+}
+
+.confirm-dialog-footer {
+  padding: 1.1rem 1.4rem;
+  border-top: 1px dashed hsla(30, 18%, 52%, 0.25);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  background: linear-gradient(0deg, hsla(40, 38%, 90%, 0.3) 0%, transparent 100%);
+}
+
+.btn-danger-action {
+  background-color: var(--color-danger);
+  border-color: hsla(0, 70%, 40%, 0.4);
+}
+.btn-danger-action:hover {
+  background-color: hsl(0, 75%, 42%);
+  box-shadow: 0 0 10px hsla(0, 80%, 60%, 0.25);
+}
+

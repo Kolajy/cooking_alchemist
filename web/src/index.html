@@ -470,6 +470,23 @@
     </div>
   </dialog>
 
+  <!-- Custom Confirmation Dialog -->
+  <dialog id="confirm-modal" closedby="any" aria-labelledby="confirm-title">
+    <div class="dialog-content confirm-dialog-content">
+      <header class="dialog-header">
+        <h2 id="confirm-title">⚠️ Confirmation Required</h2>
+        <button class="close-dialog-btn" aria-label="Close dialog">×</button>
+      </header>
+      <div class="dialog-body confirm-dialog-body">
+        <p id="confirm-message">Are you sure you want to proceed?</p>
+      </div>
+      <footer class="confirm-dialog-footer">
+        <button id="confirm-btn-cancel" class="btn btn-secondary" type="button">Cancel</button>
+        <button id="confirm-btn-ok" class="btn btn-primary btn-danger-action" type="button">Confirm</button>
+      </footer>
+    </div>
+  </dialog>
+
   <!-- Recipe Book Modal -->
   <dialog id="recipe-book-modal" closedby="any" aria-labelledby="recipe-book-title">
     <div class="dialog-content">

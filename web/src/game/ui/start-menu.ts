@@ -2,9 +2,10 @@ import { getCtx } from "../context";
 import { getActiveSlot, setActiveSlot, getSlotInfo, deleteSlot, migrateLegacySave, getSlotKeys } from "../slots";
 import { loadProgress, resetToStarters, updateStats } from "../persistence";
 import { loadAchievements } from "../progression/achievements";
-import { openDialog } from "./dialogs";
+import { openDialog, showCustomConfirm } from "./dialogs";
 import { refreshGameSessionUi } from "../save-repository";
 import { playSound } from "../feedback/sounds";
+
 
 export function initStartMenu(): void {
   // Ensure legacy saves are migrated to Slot 1 if they exist
@@ -109,13 +110,19 @@ function renderSlotsGrid(): void {
 
     deleteBtn?.replaceWith(deleteBtn.cloneNode(true));
     const newDeleteBtn = card.querySelector(".slot-btn-delete") as HTMLButtonElement | null;
-    newDeleteBtn?.addEventListener("click", () => {
+    newDeleteBtn?.addEventListener("click", async () => {
       playSound("ui_click");
-      if (confirm(`Are you sure you want to permanently delete Save Slot ${slotId.replace("slot", "")}? All progress will be lost.`)) {
+      const confirmed = await showCustomConfirm(
+        "Delete Save Slot",
+        `Are you sure you want to permanently delete Save Slot ${slotId.replace("slot", "")}? All progress will be lost.`,
+        true
+      );
+      if (confirmed) {
         deleteSlot(slotId);
         renderSlotsGrid();
       }
     });
+
   });
 }
 

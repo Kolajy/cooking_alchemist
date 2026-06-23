@@ -1,4 +1,5 @@
 import { getCtx } from "./context";
+import { showCustomConfirm, showCustomAlert } from "./ui/dialogs";
 import { renderCabinet } from "./cabinet";
 import { clearWorkspace } from "./canvas/workspace";
 import { resetToStarters } from "./persistence";
@@ -7,8 +8,14 @@ import { setToolbarMode } from "./actions/toolbar";
 import { updateSkillsUI } from "./ui/skills-panel";
 import { updateStats } from "./persistence";
 
-export function resetGameProgress(): boolean {
-  if (!confirm("Are you sure you want to delete all unlocked recipes and progress? This cannot be undone!")) {
+
+export async function resetGameProgress(): Promise<boolean> {
+  const confirmed = await showCustomConfirm(
+    "Reset Progress",
+    "Are you sure you want to delete all unlocked recipes and progress? This cannot be undone!",
+    true
+  );
+  if (!confirmed) {
     return false;
   }
 
@@ -26,6 +33,7 @@ export function resetGameProgress(): boolean {
   updateSkillsUI();
   renderCabinet();
   clearWorkspace();
-  alert("Game reset successfully!");
+  await showCustomAlert("Reset Complete", "Game reset successfully!");
   return true;
 }
+

@@ -43,9 +43,11 @@ export function wireSaveDataControls(): void {
     if (saveFileInput) void importSaveFromInput(saveFileInput);
   });
 
-  settingsReset?.addEventListener("click", () => {
-    if (resetGameProgress()) {
+  settingsReset?.addEventListener("click", async () => {
+    const success = await resetGameProgress();
+    if (success) {
       settingsModal?.close();
     }
   });
+
 }

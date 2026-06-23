@@ -11,6 +11,118 @@ export function openDialog(dialog) {
   }
 }
 
+export function showCustomConfirm(title: string, message: string, dangerAction = false): Promise<boolean> {
+  return new Promise((resolve) => {
+    const dialog = document.getElementById("confirm-modal") as HTMLDialogElement | null;
+    if (!dialog) {
+      resolve(confirm(message));
+      return;
+    }
+
+    const titleEl = dialog.querySelector("#confirm-title") as HTMLElement | null;
+    const msgEl = dialog.querySelector("#confirm-message") as HTMLElement | null;
+    const cancelBtn = dialog.querySelector("#confirm-btn-cancel") as HTMLButtonElement | null;
+    const okBtn = dialog.querySelector("#confirm-btn-ok") as HTMLButtonElement | null;
+    const closeBtn = dialog.querySelector(".close-dialog-btn") as HTMLButtonElement | null;
+
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = message;
+
+    if (okBtn) {
+      okBtn.textContent = dangerAction ? "Delete / Reset" : "Confirm";
+      if (dangerAction) {
+        okBtn.className = "btn btn-primary btn-danger-action";
+      } else {
+        okBtn.className = "btn btn-primary";
+      }
+    }
+
+    const cleanUp = () => {
+      cancelBtn?.removeEventListener("click", onCancel);
+      okBtn?.removeEventListener("click", onConfirm);
+      closeBtn?.removeEventListener("click", onCancel);
+      dialog.removeEventListener("close", onClose);
+    };
+
+    const onCancel = () => {
+      cleanUp();
+      dialog.close();
+      resolve(false);
+    };
+
+    const onConfirm = () => {
+      cleanUp();
+      dialog.close();
+      resolve(true);
+    };
+
+    const onClose = () => {
+      cleanUp();
+      resolve(false);
+    };
+
+    cancelBtn?.addEventListener("click", onCancel);
+    closeBtn?.addEventListener("click", onCancel);
+    okBtn?.addEventListener("click", onConfirm);
+    dialog.addEventListener("close", onClose);
+
+    openDialog(dialog);
+  });
+}
+
+export function showCustomAlert(title: string, message: string): Promise<void> {
+  return new Promise((resolve) => {
+    const dialog = document.getElementById("confirm-modal") as HTMLDialogElement | null;
+    if (!dialog) {
+      alert(message);
+      resolve();
+      return;
+    }
+
+    const titleEl = dialog.querySelector("#confirm-title") as HTMLElement | null;
+    const msgEl = dialog.querySelector("#confirm-message") as HTMLElement | null;
+    const cancelBtn = dialog.querySelector("#confirm-btn-cancel") as HTMLButtonElement | null;
+    const okBtn = dialog.querySelector("#confirm-btn-ok") as HTMLButtonElement | null;
+    const closeBtn = dialog.querySelector(".close-dialog-btn") as HTMLButtonElement | null;
+
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = message;
+
+    if (cancelBtn) cancelBtn.style.display = "none";
+    if (okBtn) {
+      okBtn.textContent = "OK";
+      okBtn.className = "btn btn-primary";
+    }
+
+    const cleanUp = () => {
+      cancelBtn?.removeEventListener("click", onCloseAlert);
+      okBtn?.removeEventListener("click", onCloseAlert);
+      closeBtn?.removeEventListener("click", onCloseAlert);
+      dialog.removeEventListener("close", onClose);
+    };
+
+    const onCloseAlert = () => {
+      cleanUp();
+      dialog.close();
+      if (cancelBtn) cancelBtn.style.display = "";
+      resolve();
+    };
+
+    const onClose = () => {
+      cleanUp();
+      if (cancelBtn) cancelBtn.style.display = "";
+      resolve();
+    };
+
+    okBtn?.addEventListener("click", onCloseAlert);
+    closeBtn?.addEventListener("click", onCloseAlert);
+    dialog.addEventListener("close", onClose);
+
+    openDialog(dialog);
+  });
+}
+
+
 export function setupDialogFallbacks() {
   const { dom } = getCtx();
   const dialogs = [dom.recipeBookModal, dom.helpModal, dom.settingsModal, dom.discoveryDialog];
