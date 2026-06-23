@@ -57,6 +57,8 @@ This directory contains the historic and active implementation plans for the pro
 | 2026-06-20 | [archive-rust-and-merge-web-content.md](archive/2026-06-20-archive-rust-and-merge-web-content.md) | Archived Rust core, native desktop, and wasm, and ingested web and content submodules into the main monorepo. | Completed |
 | 2026-06-21 | [start-menu-and-save-slots.md](archive/2026-06-21-start-menu-and-save-slots.md) | Cozy Start Menu overlay with Continue, Save Slot select/delete, and dynamic Slot storage adapter. | Completed |
 | 2026-06-21 | [start-menu-ux-polish.md](archive/2026-06-21-start-menu-ux-polish.md) | polished Start Menu size, simplified buttons, and routed slot card actions based on load/new context. | Completed |
+| 2026-06-23 | [simplified-slots-menu-and-header-bar.md](archive/2026-06-23-simplified-slots-menu-and-header-bar.md) | Collapsed Start Menu into a unified Slots Grid and polished top header into a glassmorphic menu bar. | Completed |
+
 
 
 

@@ -31,24 +31,16 @@
           <div class="start-menu__warm-wash" aria-hidden="true"></div>
           <div class="start-menu__crinkles" aria-hidden="true"></div>
 
-          <!-- Main Screen -->
-          <div id="start-menu-main" class="start-menu__view">
+          <!-- Single Start Menu Screen -->
+          <div class="start-menu__view">
             <div class="start-menu__header">
               <span class="start-menu__logo-emoji" aria-hidden="true">🍳</span>
               <h1 class="start-menu__title">Culinary Alchemy</h1>
               <p class="start-menu__subtitle">A Cozy Hearth of Discoveries</p>
             </div>
-            <div class="start-menu__actions">
-              <button id="menu-btn-continue" class="btn btn-primary btn-lg" disabled type="button">Continue</button>
-              <button id="menu-btn-new-game" class="btn btn-secondary btn-lg" type="button">New Game</button>
-              <button id="menu-btn-load-game" class="btn btn-secondary btn-lg" type="button" hidden>Load Game</button>
-              <button id="menu-btn-settings" class="btn btn-secondary btn-lg" type="button">Settings</button>
-            </div>
-          </div>
-
-          <!-- Slots Screen -->
-          <div id="start-menu-slots" class="start-menu__view" hidden>
-            <h2 class="start-menu__view-title">Select a Save Slot</h2>
+            
+            <h2 class="start-menu__view-title">Select a Save Profile</h2>
+            
             <div class="start-menu__slots-grid">
               <!-- Slot 1 -->
               <div class="slot-card" data-slot="slot1">
@@ -57,7 +49,7 @@
                   <div class="slot-card__status">Empty Slot</div>
                 </div>
                 <div class="slot-card__actions">
-                  <button class="btn btn-primary slot-btn-play" type="button">New Game</button>
+                  <button class="btn btn-primary slot-btn-play" type="button">Start New</button>
                   <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 1">🗑️</button>
                 </div>
               </div>
@@ -68,7 +60,7 @@
                   <div class="slot-card__status">Empty Slot</div>
                 </div>
                 <div class="slot-card__actions">
-                  <button class="btn btn-primary slot-btn-play" type="button">New Game</button>
+                  <button class="btn btn-primary slot-btn-play" type="button">Start New</button>
                   <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 2">🗑️</button>
                 </div>
               </div>
@@ -79,12 +71,15 @@
                   <div class="slot-card__status">Empty Slot</div>
                 </div>
                 <div class="slot-card__actions">
-                  <button class="btn btn-primary slot-btn-play" type="button">New Game</button>
+                  <button class="btn btn-primary slot-btn-play" type="button">Start New</button>
                   <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 3">🗑️</button>
                 </div>
               </div>
             </div>
-            <button id="menu-btn-back" class="btn btn-secondary start-menu__back-btn" type="button">← Back</button>
+
+            <div class="start-menu__footer-actions">
+              <button id="menu-btn-settings" class="btn btn-secondary" type="button">⚙️ Settings</button>
+            </div>
           </div>
         </div>
       </div>
@@ -116,25 +111,37 @@
         </div>
       </div>
       <div class="stats-and-actions">
-        <div class="stats-counter" aria-live="polite">
-          <span class="stats-label">📖 Ledger Restored:</span>
-          <span id="unlocked-count" class="stats-value">0%</span>
+        <div class="app-menu-bar">
+          <div class="stats-counter" aria-live="polite">
+            <span class="stats-label">📖 Ledger Restored:</span>
+            <span id="unlocked-count" class="stats-value">0%</span>
+          </div>
+          
+          <div class="menu-bar-divider" aria-hidden="true"></div>
+
+          <div class="menu-bar-actions">
+            <button id="btn-progress-graph" class="btn btn-secondary" aria-label="Open ingredient progress graph">
+              🌳 Progress Map
+            </button>
+            <button id="btn-recipe-book" class="btn btn-primary" aria-label="Open Recipe Book">
+              📖 Recipe Book
+            </button>
+          </div>
+
+          <div class="menu-bar-divider" aria-hidden="true"></div>
+
+          <div class="menu-bar-utilities">
+            <button id="btn-sound" class="btn btn-icon" type="button" aria-pressed="false" aria-label="Enable kitchen sounds" title="Enable sounds">
+              🔇
+            </button>
+            <button id="btn-settings" class="btn btn-icon" type="button" aria-label="Open settings" title="Settings">
+              ⚙️
+            </button>
+            <button id="btn-help" class="btn btn-icon" type="button" aria-label="How to play" title="How to play">
+              ?
+            </button>
+          </div>
         </div>
-        <button id="btn-sound" class="btn btn-icon" type="button" aria-pressed="false" aria-label="Enable kitchen sounds" title="Enable sounds">
-          🔇
-        </button>
-        <button id="btn-settings" class="btn btn-icon" type="button" aria-label="Open settings" title="Settings">
-          ⚙️
-        </button>
-        <button id="btn-help" class="btn btn-icon" type="button" aria-label="How to play" title="How to play">
-          ?
-        </button>
-        <button id="btn-recipe-book" class="btn btn-primary" aria-label="Open Recipe Book">
-          📖 Recipe Book
-        </button>
-        <button id="btn-progress-graph" class="btn btn-secondary" aria-label="Open ingredient progress graph">
-          🌳 Progress Map
-        </button>
         <input type="file" id="save-file-input" accept=".json,application/json" hidden>
       </div>
     </header>
