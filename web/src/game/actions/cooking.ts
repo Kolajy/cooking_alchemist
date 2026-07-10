@@ -276,10 +276,32 @@ export function applyToolToElement(el: HTMLElement, skillIdOverride: string | nu
   }
 
   if (foundRecipe) {
-    const particleType = ["tear", "peel", "smash", "separate"].includes(state.activeAction)
-      ? "steam"
-      : "success";
-    createParticles(midX, midY, 15, particleType);
+    let particleType = "success";
+    let count = 15;
+
+    if (["tear", "peel", "smash", "separate"].includes(state.activeAction)) {
+      particleType = "steam";
+      count = 8;
+    } else if (state.activeAction === "heat") {
+      particleType = "steam";
+      count = 12;
+    } else if (state.activeAction === "fry") {
+      particleType = "sizzle";
+      count = 20;
+    } else if (state.activeAction === "mix") {
+      particleType = "boil";
+      count = 12;
+    }
+
+    if (state.activeAction === "fry" || state.activeAction === "heat") {
+        el.classList.add("sizzle-anim");
+        setTimeout(() => el.classList.remove("sizzle-anim"), 400);
+    }
+
+    createParticles(midX, midY, count, particleType);
+    if (state.activeAction === "heat" || state.activeAction === "fry") {
+        createParticles(midX, midY, 4, "smoke");
+    }
 
     // Lay results out in a tidy grid centered on where the action happened,
     // clamped to the counter so nothing lands in an unreadable spot.
