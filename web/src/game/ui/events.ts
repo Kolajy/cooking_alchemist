@@ -1,7 +1,7 @@
 import { getCtx } from "../context";
 import { renderCabinet } from "../cabinet";
 import { buildCabinetFilterButtons, toggleCabinetStateFilter, toggleCabinetTypeFilter, syncCabinetFilterButtons } from "../ingredients";
-import { loadProgress, updateStats } from "../persistence";
+import { updateStats } from "../persistence";
 import { isPlayerActionUnlocked } from "../progression/skills";
 import { updateSkillsUI } from "./skills-panel";
 import { setToolbarMode } from "../actions/toolbar";
