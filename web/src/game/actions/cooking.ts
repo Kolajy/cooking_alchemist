@@ -1,5 +1,4 @@
 import { getCtx } from "../context";
-import { saveProgress, recordRecentDiscoveries } from "../persistence";
 import {
   createParticles,
   removeCanvasElement,
