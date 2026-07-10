@@ -29,7 +29,8 @@
     },
     "files": [
       "main.js",
-      "preload.js"
+      "preload.js",
+      "package.json"
     ],
     "extraResources": [
       {
@@ -45,20 +46,38 @@
       "target": [
         "dmg",
         "zip"
+      ],
+      "files": [
+        "!**/node_modules/steamworks.js/dist/win32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/win64{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux64{,/**/*}"
       ]
     },
     "win": {
       "target": [
         "nsis",
         "portable"
+      ],
+      "files": [
+        "!**/node_modules/steamworks.js/dist/osx{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux64{,/**/*}"
       ]
     },
     "linux": {
       "target": [
         "AppImage",
         "deb"
+      ],
+      "files": [
+        "!**/node_modules/steamworks.js/dist/win32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/win64{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/osx{,/**/*}"
       ]
-    }
+    },
+    "compression": "maximum",
+    "npmRebuild": false
   },
   "dependencies": {
     "steamworks.js": "^0.4.0"
