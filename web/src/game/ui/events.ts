@@ -22,7 +22,7 @@ import { applyUndo, refreshUndoButton } from "../feedback/undo";
 import { setupKeyboardShortcuts } from "./keyboard-shortcuts";
 import { loadSettings } from "../settings";
 import { setupSettingsPanel } from "./settings";
-import { loadAchievements, checkAchievements } from "../progression/achievements";
+import { loadAchievements } from "../progression/achievements";
 import { initStartMenu } from "./start-menu";
 
 let cabinetSearchTimer: ReturnType<typeof setTimeout> | null = null;
