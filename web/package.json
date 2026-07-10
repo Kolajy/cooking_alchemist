@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "tsx src/engine/cli_test.ts && tsx src/engine/validate_content.ts && tsx src/engine/validate_recipe_dependencies.ts && tsx src/engine/validate_recipe_dependencies.test.ts && tsx src/engine/validate_ingredient_properties.ts && tsx src/game/save-import.test.ts && tsx src/game/security/security.test.ts && tsx src/engine/combination_engine.test.ts",
+    "test": "tsx src/engine/cli_test.ts && tsx src/engine/validate_content.ts && tsx src/engine/validate_recipe_dependencies.ts && tsx src/engine/validate_recipe_dependencies.test.ts && tsx src/engine/validate_ingredient_properties.ts && tsx src/game/save-import.test.ts && tsx src/game/security/security.test.ts && tsx src/engine/combination_engine.test.ts && tsx src/game/state.test.ts && tsx src/engine/progression_engine.test.ts && tsx src/game/save-io.test.ts  && tsx src/game/security/html.test.ts",
     "test:packs": "tsx src/data/packs/validate_packs.ts"
   },
   "devDependencies": {
