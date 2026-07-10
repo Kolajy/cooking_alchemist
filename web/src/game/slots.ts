@@ -1,4 +1,3 @@
-import { getCtx } from "./context";
 import { isValidSaveId } from "./security/save-validation";
 
 export type SlotInfo = {
