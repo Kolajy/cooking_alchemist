@@ -1,5 +1,3 @@
-import { getCtx } from "./context";
-
 declare global {
   interface Window {
     dataLayer: any[];
