@@ -7,6 +7,19 @@ import "./engine/progression_engine";
 import "./engine/combination_engine";
 import { bootstrapProgression } from "./progression";
 
+// Initialize PWA service worker for offline support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(registration => {
+        console.log('SW registered: ', registration);
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+
 function showBootError(error: unknown): void {
   console.error("[Culinary Alchemy] Boot failed:", error);
   const panel = document.createElement("div");
@@ -34,7 +47,18 @@ function showBootError(error: unknown): void {
 
   hint.appendChild(document.createTextNode(" (do not open the HTML file directly)."));
 
-  panel.append(heading, detail, hint);
+  const resetBtn = document.createElement("button");
+  resetBtn.textContent = "Reset Game Data (Graceful Recovery)";
+  resetBtn.className = "btn-danger";
+  resetBtn.style.marginTop = "20px";
+  resetBtn.onclick = () => {
+    if (confirm("Are you sure you want to reset all data to recover from crash?")) {
+      localStorage.clear();
+      location.reload();
+    }
+  };
+
+  panel.append(heading, detail, hint, resetBtn);
   document.body.appendChild(panel);
 }
 
