@@ -378,10 +378,34 @@ export function validateRecipeDependencies(
       ]
     : [];
 
-  const finalizedRecipes = Object.values(discoverable).filter(item => item.type === "recipe");
-  const unreachable = Object.keys(discoverable).filter(id => !craftable.has(id));
-  const unreachableRecipes = finalizedRecipes.filter(item => !craftable.has(item.id)).length;
-  const unusedIntermediates = warnings.filter(w => w.code === "UNUSED_INTERMEDIATE").length;
+  const discoverableValues = Object.values(discoverable);
+  const discoverableKeys = Object.keys(discoverable);
+
+  let finalizedRecipesCount = 0;
+  let unreachableRecipes = 0;
+  for (const item of discoverableValues) {
+    if (item.type === "recipe") {
+      finalizedRecipesCount++;
+      if (!craftable.has(item.id)) {
+        unreachableRecipes++;
+      }
+    }
+  }
+
+  let unreachableCount = 0;
+  for (const id of discoverableKeys) {
+    if (!craftable.has(id)) unreachableCount++;
+  }
+
+  let unusedIntermediates = 0;
+  for (const w of warnings) {
+    if (w.code === "UNUSED_INTERMEDIATE") unusedIntermediates++;
+  }
+
+  let craftableCount = 0;
+  for (const id of craftable) {
+    if (discoverable[id] || primitiveIds.has(id)) craftableCount++;
+  }
 
   return {
     ok: errors.length === 0,
@@ -389,10 +413,10 @@ export function validateRecipeDependencies(
     warnings,
     stats: {
       primitives: primitiveIds.size,
-      discoverable: Object.keys(discoverable).length,
-      craftable: [...craftable].filter(id => discoverable[id] || primitiveIds.has(id)).length,
-      unreachable: unreachable.length,
-      finalizedRecipes: finalizedRecipes.length,
+      discoverable: discoverableKeys.length,
+      craftable: craftableCount,
+      unreachable: unreachableCount,
+      finalizedRecipes: finalizedRecipesCount,
       unreachableRecipes,
       unusedIntermediates
     }

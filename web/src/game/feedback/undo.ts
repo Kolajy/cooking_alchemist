@@ -57,12 +57,22 @@ export function applyUndo() {
   if (!entry) return false;
 
   if (entry.type === "spawn") {
-    const match = state.activeElements.find(el => {
+    let match = state.activeElements.find(el => {
       const pos = getCanvasPosition(el);
       return el.dataset.id === entry.itemId
         && pos.x === entry.x
         && pos.y === entry.y;
-    }) || [...state.activeElements].reverse().find(el => el.dataset.id === entry.itemId);
+    });
+
+    if (!match) {
+      for (let i = state.activeElements.length - 1; i >= 0; i--) {
+        const el = state.activeElements[i];
+        if (el.dataset.id === entry.itemId) {
+          match = el;
+          break;
+        }
+      }
+    }
 
     if (match) {
       removeCanvasElement(match);

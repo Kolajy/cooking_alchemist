@@ -42,11 +42,19 @@ export function getUnlockedSkills(skills: Array<{ id: string }>) {
 
 export function getSkillsInCategory(category: string) {
   const { data } = getCtx();
-  const skills = Object.keys(data.PROGRESSION_TIERS)
-    .map(id => ({ id, ...data.PROGRESSION_TIERS[id] }))
-    .filter(skill => skill.category === category);
+  const skills: Array<{ id: string } & (typeof data.PROGRESSION_TIERS)[string]> = [];
+  const roots: typeof skills = [];
+  for (const id in data.PROGRESSION_TIERS) {
+    const tier = data.PROGRESSION_TIERS[id];
+    if (tier && tier.category === category) {
+      const skill = { id, ...tier };
+      skills.push(skill);
+      if (!skill.dependsOn || skill.dependsOn.length === 0) {
+        roots.push(skill);
+      }
+    }
+  }
 
-  const roots = skills.filter(skill => !skill.dependsOn || skill.dependsOn.length === 0);
   if (roots.length === 0) return skills;
 
   const ordered: typeof skills = [];
@@ -85,9 +93,13 @@ export function getUnlockedSkillsForMethod(methodId: string) {
 
 function getNextSkillInChain(skillId: string) {
   const { data } = getCtx();
-  return Object.keys(data.PROGRESSION_TIERS)
-    .map(id => ({ id, ...data.PROGRESSION_TIERS[id] }))
-    .find(skill => skill.dependsOn && skill.dependsOn.includes(skillId));
+  for (const id in data.PROGRESSION_TIERS) {
+    const tier = data.PROGRESSION_TIERS[id];
+    if (tier && tier.dependsOn && tier.dependsOn.includes(skillId)) {
+      return { id, ...tier };
+    }
+  }
+  return undefined;
 }
 
 function getTrackLabel(trackId: string): string {

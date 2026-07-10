@@ -86,7 +86,10 @@ export function getSlotInfo(slotId: string): SlotInfo {
         // Calculate ledger completion percentage
         const discoverableMap = (globalThis as any).DISCOVERABLE_ITEMS || {};
         const discoverableTotal = Object.keys(discoverableMap).length;
-        const discoveredRecipesCount = discoveredArr.filter(id => discoverableMap[id]).length;
+        let discoveredRecipesCount = 0;
+        for (let i = 0; i < discoveredArr.length; i++) {
+          if (discoverableMap[discoveredArr[i]]) discoveredRecipesCount++;
+        }
         info.percent = discoverableTotal > 0 ? Math.round((discoveredRecipesCount / discoverableTotal) * 100) : 0;
 
         // Try getting last saved timestamp (we will add this when saving)

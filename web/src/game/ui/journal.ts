@@ -36,9 +36,13 @@ export function renderDiscoveryJournal(): void {
 
   discoveryLogList.replaceChildren();
 
-  const entries = state.discoveryLog
-    .map(entry => ({ entry, item: resolveLogEntry(entry) }))
-    .filter((row): row is { entry: DiscoveryLogEntry; item: NonNullable<ReturnType<typeof resolveLogEntry>> } => Boolean(row.item));
+  const entries: Array<{ entry: DiscoveryLogEntry; item: NonNullable<ReturnType<typeof resolveLogEntry>> }> = [];
+  for (const entry of state.discoveryLog) {
+    const item = resolveLogEntry(entry);
+    if (item) {
+      entries.push({ entry, item });
+    }
+  }
 
   if (discoveryLogCountEl) {
     discoveryLogCountEl.textContent = String(entries.length);
