@@ -1,6 +1,6 @@
 import { getCtx } from "../context";
 import { getActiveSlot, setActiveSlot, getSlotInfo, deleteSlot, migrateLegacySave, getSlotKeys } from "../slots";
-import { loadProgress, resetToStarters, updateStats } from "../persistence";
+import { loadProgress, resetToStarters } from "../persistence";
 import { loadAchievements } from "../progression/achievements";
 import { openDialog, showCustomConfirm } from "./dialogs";
 import { refreshGameSessionUi } from "../save-repository";
