@@ -205,3 +205,29 @@ html[data-motion="reduced"] .fantasy-backdrop__motes {
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
 }
+
+/* General accessible focus styles */
+:focus-visible {
+  outline: 3px solid var(--accent-amber);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 170, 0, 0.3);
+}
+
+/* For specific elements that might override it */
+.alchemy-element:focus-visible {
+  outline: 3px solid var(--accent-amber);
+  outline-offset: 2px;
+}
+
+/* Screen reader only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

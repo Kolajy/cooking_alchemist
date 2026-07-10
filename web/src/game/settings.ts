@@ -3,10 +3,14 @@
  */
 
 const REDUCED_MOTION_KEY = "culinary_reduced_motion";
+const HIGH_CONTRAST_KEY = "culinary_high_contrast";
+
+let highContrast = false;
 
 let reducedMotion = false;
 
 export interface GameSettingsSnapshot {
+  highContrast: boolean;
   soundEnabled: boolean;
   reducedMotion: boolean;
 }
@@ -14,6 +18,52 @@ export interface GameSettingsSnapshot {
 export function prefersReducedMotionSystem(): boolean {
   if (typeof window === "undefined" || !window.matchMedia) return false;
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function readHighContrastPref(): boolean | null {
+  try {
+    const stored = localStorage.getItem(HIGH_CONTRAST_KEY);
+    if (stored === null) return null;
+    return stored === "true";
+  } catch {
+    return null;
+  }
+}
+
+function writeHighContrastPref(enabled: boolean): void {
+  try {
+    localStorage.setItem(HIGH_CONTRAST_KEY, enabled ? "true" : "false");
+  } catch {
+    // Ignore storage failures.
+  }
+}
+
+export function isHighContrastEnabled(): boolean {
+  return highContrast;
+}
+
+export function setHighContrast(enabled: boolean): void {
+  highContrast = Boolean(enabled);
+  writeHighContrastPref(highContrast);
+  applyHighContrastAttribute();
+}
+
+export function loadHighContrastPreference(): boolean {
+  const stored = readHighContrastPref();
+  // Check system pref for high contrast
+  const prefersHighContrast = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-contrast: more)").matches;
+  highContrast = stored !== null ? stored : prefersHighContrast;
+  applyHighContrastAttribute();
+  return highContrast;
+}
+
+function applyHighContrastAttribute(): void {
+  document.documentElement.dataset.contrast = highContrast ? "high" : "normal";
+  if (highContrast) {
+    document.documentElement.classList.add("high-contrast");
+  } else {
+    document.documentElement.classList.remove("high-contrast");
+  }
 }
 
 function readReducedMotionPref(): boolean | null {
@@ -57,11 +107,13 @@ function applyReducedMotionAttribute(): void {
 
 export function loadSettings(): void {
   loadReducedMotionPreference();
+  loadHighContrastPreference();
 }
 
 export function getSettingsSnapshot(soundEnabled: boolean): GameSettingsSnapshot {
   return {
     soundEnabled,
-    reducedMotion: isReducedMotionEnabled()
+    reducedMotion: isReducedMotionEnabled(),
+    highContrast: isHighContrastEnabled()
   };
 }
