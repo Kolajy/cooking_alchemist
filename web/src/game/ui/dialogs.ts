@@ -1,8 +1,10 @@
 import { getCtx } from "../context";
 import { enrichItem, isFinalizedRecipe, getStateLabel, getIngredientState } from "../ingredients";
 import { escapeHtml } from "../security/html";
+import { playSound } from "../feedback/sounds";
 
 export function openDialog(dialog) {
+  playSound("ui_click");
   if (!dialog) return;
   if (typeof dialog.showModal === "function") {
     dialog.showModal();
