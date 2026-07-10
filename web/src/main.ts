@@ -20,7 +20,21 @@ function showBootError(error: unknown): void {
   detail.textContent = message;
   const hint = document.createElement("p");
   hint.className = "boot-error-hint";
-  hint.innerHTML = `Run <code>npm run dev</code> in the project folder, then open <strong>https://localhost:5173</strong> (do not open the HTML file directly).`;
+
+  hint.appendChild(document.createTextNode("Run "));
+
+  const codeEl = document.createElement("code");
+  codeEl.textContent = "npm run dev";
+  hint.appendChild(codeEl);
+
+  hint.appendChild(document.createTextNode(" in the project folder, then open "));
+
+  const strongEl = document.createElement("strong");
+  strongEl.textContent = "https://localhost:5173";
+  hint.appendChild(strongEl);
+
+  hint.appendChild(document.createTextNode(" (do not open the HTML file directly)."));
+
   panel.append(heading, detail, hint);
   document.body.appendChild(panel);
 }
