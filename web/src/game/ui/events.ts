@@ -3,7 +3,6 @@ import { renderCabinet } from "../cabinet";
 import { buildCabinetFilterButtons, toggleCabinetStateFilter, toggleCabinetTypeFilter, syncCabinetFilterButtons } from "../ingredients";
 import { loadProgress, updateStats } from "../persistence";
 import { isPlayerActionUnlocked } from "../progression/skills";
-import { updateSkillsUI } from "./skills-panel";
 import { setToolbarMode } from "../actions/toolbar";
 import { openDialog, renderRecipeBook, setupDialogFallbacks } from "./dialogs";
 import { setupDiscoveryDialog } from "./discovery";
