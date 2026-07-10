@@ -1,3 +1,4 @@
+import { secureRandom } from "../security/math";
 import { getCtx } from "../context";
 import { DRAG_THRESHOLD } from "../constants";
 import { enrichItem, buildIngredientMarkup } from "../ingredients";
@@ -92,16 +93,16 @@ export function createParticles(x, y, count, type) {
     const particle = document.createElement("div");
     particle.className = isSteam ? "particle particle--steam" : "particle";
 
-    let size = Math.random() * 8 + 4;
+    let size = secureRandom() * 8 + 4;
     let color = "var(--color-fire)";
 
     if (type === "success") {
       color = i % 2 === 0 ? "var(--color-gold)" : "var(--color-success)";
     } else if (type === "fail") {
-      color = `hsla(220, 12%, 55%, ${0.55 + Math.random() * 0.25})`;
+      color = `hsla(220, 12%, 55%, ${0.55 + secureRandom() * 0.25})`;
     } else if (isSteam) {
-      color = `hsla(40, 30%, 96%, ${0.28 + Math.random() * 0.22})`;
-      size = Math.random() * 16 + 10;
+      color = `hsla(40, 30%, 96%, ${0.28 + secureRandom() * 0.22})`;
+      size = secureRandom() * 16 + 10;
     }
 
     particle.style.width = `${size}px`;
@@ -112,14 +113,14 @@ export function createParticles(x, y, count, type) {
 
     if (isSteam) {
       // Steam drifts gently upward with a slight horizontal waver, then blooms.
-      const driftX = Math.random() * 36 - 18;
-      const rise = Math.random() * 40 + 70;
+      const driftX = secureRandom() * 36 - 18;
+      const rise = secureRandom() * 40 + 70;
       particle.style.setProperty("--dx", `${driftX}px`);
       particle.style.setProperty("--dy", `${-rise}px`);
-      particle.style.setProperty("--dur", `${1.3 + Math.random() * 0.6}s`);
+      particle.style.setProperty("--dur", `${1.3 + secureRandom() * 0.6}s`);
     } else {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 70 + 20;
+      const angle = secureRandom() * Math.PI * 2;
+      const speed = secureRandom() * 70 + 20;
       particle.style.setProperty("--dx", `${Math.cos(angle) * speed}px`);
       particle.style.setProperty("--dy", `${Math.sin(angle) * speed - 15}px`);
     }
@@ -264,8 +265,8 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
 
   if (x === null || y === null) {
     const rect = dom.workspace.getBoundingClientRect();
-    x = rect.width / 2 + (Math.random() * 80 - 40);
-    y = rect.height / 2 + (Math.random() * 80 - 40);
+    x = rect.width / 2 + (secureRandom() * 80 - 40);
+    y = rect.height / 2 + (secureRandom() * 80 - 40);
   }
 
   setCanvasPosition(el, x, y);
