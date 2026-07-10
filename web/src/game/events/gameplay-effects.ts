@@ -1,4 +1,4 @@
-import { recordRecentDiscoveries, saveProgress } from "../persistence";
+import { recordRecentDiscoveries, saveProgress } from "../save/persistence";
 import { checkMilestones } from "../progression/milestones";
 import { recordDiscoveryAchievements, checkAchievements } from "../progression/achievements";
 import { refreshAfterGameplay } from "../ui/refresh";

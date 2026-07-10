@@ -258,7 +258,7 @@ Recipe builders:
 | `web/src/game/save-import.test.ts` | Portable save JSON parsing |
 | `web/src/data/packs/validate_packs.ts` | Cultural pack validation (`npm run test:packs`) |
 
-Run: `npm test` (web) · `cargo test -p culinary-core` (Rust). `validate_content.ts` only runs its CLI output when executed directly (not when imported by pack validation).
+Run: `npm test` (web). `validate_content.ts` only runs its CLI output when executed directly (not when imported by pack validation).
 
 ---
 

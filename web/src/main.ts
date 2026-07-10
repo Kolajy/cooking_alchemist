@@ -6,7 +6,6 @@ import { bootstrapSharedData } from "./core";
 import "./engine/progression_engine";
 import "./engine/combination_engine";
 import { bootstrapProgression } from "./progression";
-import "./ingredient_graph";
 
 function showBootError(error: unknown): void {
   console.error("[Culinary Alchemy] Boot failed:", error);

@@ -20,6 +20,10 @@
   "build": {
     "appId": "com.culinaryalchemy.app",
     "productName": "Culinary Alchemy",
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/steamworks.js/**/*"
+    ],
     "directories": {
       "output": "out"
     },
@@ -31,18 +35,32 @@
       {
         "from": "../web/dist",
         "to": "web",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "mac": {
       "category": "public.app-category.games",
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
-      "target": ["nsis", "portable"]
+      "target": [
+        "nsis",
+        "portable"
+      ]
     },
     "linux": {
-      "target": ["AppImage", "deb"]
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     }
+  },
+  "dependencies": {
+    "steamworks.js": "^0.4.0"
   }
 }

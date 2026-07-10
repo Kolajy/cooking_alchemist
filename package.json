@@ -2,7 +2,7 @@
   "name": "culinary-alchemy",
   "version": "1.0.0",
   "private": true,
-  "description": "Culinary Alchemy monorepo — web dev client, Electron shell, native Steam (egui)",
+  "description": "Culinary Alchemy monorepo — web dev client, Electron shell",
   "workspaces": [
     "web",
     "content",

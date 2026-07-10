@@ -33,6 +33,21 @@ export function syncSettingsControls(): void {
       dom.settingReducedMotion.checked ? "true" : "false"
     );
   }
+
+  const steamSection = document.getElementById("settings-steam-section");
+  const steamUsername = document.getElementById("settings-steam-username");
+  if ((window as any).culinaryDesktop?.isElectron) {
+    if (steamSection) steamSection.style.display = "block";
+    if (steamUsername) {
+      (window as any).culinaryDesktop.getSteamUsername().then((name: string) => {
+        steamUsername.textContent = name;
+      }).catch((err: any) => {
+        console.error("Failed to fetch steam username:", err);
+      });
+    }
+  } else {
+    if (steamSection) steamSection.style.display = "none";
+  }
 }
 
 export function openSettingsDialog(): void {

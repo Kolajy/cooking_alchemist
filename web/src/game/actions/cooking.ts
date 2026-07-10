@@ -1,4 +1,5 @@
 import { getCtx } from "../context";
+
 import {
   createParticles,
   removeCanvasElement,

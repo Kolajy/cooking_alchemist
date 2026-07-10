@@ -4,44 +4,45 @@
  * Nodes = ingredients. Edges = transitions (technique or combine) between them.
  */
 
-(function () {
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>"']/g, ch => (
-      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch] || ch
-    ));
+import { registry } from "./core/bundle_registry";
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, ch => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch] || ch
+  ));
+}
+
+const NODE_W = 108;
+const NODE_H = 72;
+const GAP_X = 20;
+const GAP_Y = 110;
+const PADDING = 48;
+
+function getItemById(id) {
+  const starter = registry.STARTER_ELEMENTS.find(item => item.id === id);
+  if (starter) return starter;
+
+  const unlockable = registry.UNLOCKABLE_ELEMENTS.find(item => item.id === id);
+  if (unlockable) return unlockable;
+
+  const discovered = registry.DISCOVERABLE_ITEMS[id];
+  if (discovered) return { id, ...discovered };
+
+  return { id, name: id, emoji: "❓", origin: "raw" };
+}
+
+function isIngredientUnlocked(id, context) {
+  if (registry.STARTER_ELEMENTS.some(item => item.id === id)) return true;
+
+  if (context.discoveredIds.has(id)) return true;
+
+  const isMilestonePrimitive = registry.UNLOCKABLE_ELEMENTS.some(item => item.id === id);
+  if (isMilestonePrimitive && context.milestoneIngredientIds.includes(id)) {
+    return true;
   }
 
-  const NODE_W = 108;
-  const NODE_H = 72;
-  const GAP_X = 20;
-  const GAP_Y = 110;
-  const PADDING = 48;
-
-  function getItemById(id) {
-    const starter = window.STARTER_ELEMENTS.find(item => item.id === id);
-    if (starter) return starter;
-
-    const unlockable = window.UNLOCKABLE_ELEMENTS.find(item => item.id === id);
-    if (unlockable) return unlockable;
-
-    const discovered = window.DISCOVERABLE_ITEMS[id];
-    if (discovered) return { id, ...discovered };
-
-    return { id, name: id, emoji: "❓", origin: "raw" };
-  }
-
-  function isIngredientUnlocked(id, context) {
-    if (window.STARTER_ELEMENTS.some(item => item.id === id)) return true;
-
-    if (context.discoveredIds.has(id)) return true;
-
-    const isMilestonePrimitive = window.UNLOCKABLE_ELEMENTS.some(item => item.id === id);
-    if (isMilestonePrimitive && context.milestoneIngredientIds.includes(id)) {
-      return true;
-    }
-
-    return false;
-  }
+  return false;
+}
 
   function getDisplayItem(id, context) {
     const item = getItemById(id);
@@ -57,29 +58,29 @@
     };
   }
 
-  function buildRecipeTransitions() {
-    return window.TRANSITION_INDEX?.graphEdges || window.TRANSITION_INDEX?.toGraphEdges?.() || [];
-  }
+function buildRecipeTransitions() {
+  return registry.TRANSITION_INDEX?.graphEdges || registry.TRANSITION_INDEX?.toGraphEdges?.() || [];
+}
 
-  function collectIngredientIds(transitions) {
-    const ids = new Set();
+function collectIngredientIds(transitions) {
+  const ids = new Set();
 
-    [...window.STARTER_ELEMENTS, ...window.UNLOCKABLE_ELEMENTS].forEach(item => {
-      ids.add(item.id);
-    });
+  [...registry.STARTER_ELEMENTS, ...registry.UNLOCKABLE_ELEMENTS].forEach(item => {
+    ids.add(item.id);
+  });
 
-    Object.keys(window.DISCOVERABLE_ITEMS).forEach(id => ids.add(id));
-    transitions.forEach(transition => {
-      transition.inputs.forEach(inputId => ids.add(inputId));
-      ids.add(transition.output);
-    });
+  Object.keys(registry.DISCOVERABLE_ITEMS).forEach(id => ids.add(id));
+  transitions.forEach(transition => {
+    transition.inputs.forEach(inputId => ids.add(inputId));
+    ids.add(transition.output);
+  });
 
-    return ids;
-  }
+  return ids;
+}
 
-  function isUnlockablePrimitive(id) {
-    return window.UNLOCKABLE_ELEMENTS.some(item => item.id === id);
-  }
+function isUnlockablePrimitive(id) {
+  return registry.UNLOCKABLE_ELEMENTS.some(item => item.id === id);
+}
 
   function collectAncestorIds(id, transitions, maxDepth = Infinity) {
     const ancestors = new Set();
@@ -221,8 +222,8 @@
   function computeDepths(ingredientIds, transitions) {
     const depths = new Map();
 
-    window.STARTER_ELEMENTS.forEach(item => depths.set(item.id, 0));
-    window.UNLOCKABLE_ELEMENTS.forEach(item => depths.set(item.id, -1));
+    registry.STARTER_ELEMENTS.forEach(item => depths.set(item.id, 0));
+    registry.UNLOCKABLE_ELEMENTS.forEach(item => depths.set(item.id, -1));
 
     let changed = true;
     let guard = 0;
@@ -357,9 +358,9 @@
 
   function getTechniqueName(toolId) {
     if (!toolId) return "Process";
-    const skill = window.PROGRESSION_TIERS && window.PROGRESSION_TIERS[toolId];
+    const skill = registry.PROGRESSION_TIERS && registry.PROGRESSION_TIERS[toolId];
     if (skill) return skill.name;
-    const playerActions = window.PROGRESSION_CONFIG?.playerActions || {};
+    const playerActions = registry.PROGRESSION_CONFIG?.playerActions || {};
     const action = Object.values(playerActions).find(entry => entry.mode === toolId);
     if (action) return action.name;
     return toolId.replace(/_/g, " ");
@@ -367,9 +368,9 @@
 
   function getTechniqueEmoji(toolId) {
     if (!toolId) return "⚗️";
-    const skill = window.PROGRESSION_TIERS && window.PROGRESSION_TIERS[toolId];
+    const skill = registry.PROGRESSION_TIERS && registry.PROGRESSION_TIERS[toolId];
     if (skill?.emoji) return skill.emoji;
-    const playerActions = window.PROGRESSION_CONFIG?.playerActions || {};
+    const playerActions = registry.PROGRESSION_CONFIG?.playerActions || {};
     const action = Object.values(playerActions).find(entry => entry.mode === toolId);
     if (action?.emoji) return action.emoji;
     return "⚗️";
@@ -820,7 +821,7 @@
       const pos = layout.positions.get(id);
       if (!pos) return;
 
-      const origin = window.getIngredientOrigin(id);
+      const origin = registry.getIngredientOrigin(id);
       const isFocus = focusId === id;
       const group = createSvgEl("g", {
         class: `graph-node graph-node--${origin}${unlocked ? " is-unlocked" : " is-locked"}${isFocus ? " graph-node--focus" : ""}`,
@@ -982,24 +983,21 @@
     });
   }
 
-  window.IngredientGraph = {
-    render(container, options) {
-      if (!container) return;
+export function renderIngredientGraph(container, options) {
+  if (!container) return;
 
-      const context = {
-        discoveredIds: options.discoveredIds || new Set(),
-        milestoneIngredientIds: options.milestoneIngredientIds || [],
-        showLocked: options.showLocked !== false,
-        focusIngredientId: options.focusIngredientId || null,
-        focusDepth: options.focusDepth == null ? 2 : options.focusDepth,
-        searchTerm: options.searchTerm || "",
-        onFocusChange: options.onFocusChange || null,
-        onDepthChange: options.onDepthChange || null,
-        onSearchChange: options.onSearchChange || null,
-        onIngredientActivate: options.onIngredientActivate || null
-      };
-
-      renderGraph(container, context);
-    }
+  const context = {
+    discoveredIds: options.discoveredIds || new Set(),
+    milestoneIngredientIds: options.milestoneIngredientIds || [],
+    showLocked: options.showLocked !== false,
+    focusIngredientId: options.focusIngredientId || null,
+    focusDepth: options.focusDepth == null ? 2 : options.focusDepth,
+    searchTerm: options.searchTerm || "",
+    onFocusChange: options.onFocusChange || null,
+    onDepthChange: options.onDepthChange || null,
+    onSearchChange: options.onSearchChange || null,
+    onIngredientActivate: options.onIngredientActivate || null
   };
-})();
+
+  renderGraph(container, context);
+}
