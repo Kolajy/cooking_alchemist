@@ -1,3 +1,4 @@
+import { secureRandom } from "../security/math";
 const SOUND_PREF_KEY = "culinary_sound_enabled";
 
 type OscType = OscillatorType;
@@ -110,7 +111,7 @@ function getContext(): AudioContext | null {
 }
 
 function jitterHz(base: number, spread = 0.06): number {
-  return base * (1 + (Math.random() - 0.5) * spread);
+  return base * (1 + (secureRandom() - 0.5) * spread);
 }
 
 function ensureAudioReady(): AudioContext | null {
@@ -185,7 +186,7 @@ function playNoise({
   const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const data = buffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i += 1) {
-    data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+    data[i] = (secureRandom() * 2 - 1) * (1 - i / bufferSize);
   }
 
   const source = ctx.createBufferSource();

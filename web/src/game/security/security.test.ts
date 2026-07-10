@@ -1,3 +1,4 @@
+import { secureRandom } from "./math";
 import { escapeHtml } from "./html";
 import {
   SAVE_MAX_FILE_BYTES,
@@ -32,5 +33,12 @@ assert(Boolean(xp && xp.smash === 3), "xp map parse failed");
 assert(parseBoundedXpMap(JSON.parse('{"__proto__": 1}')) === null, "prototype pollution in xp map should be rejected");
 
 assert(SAVE_MAX_FILE_BYTES >= 10_000, "SAVE_MAX_FILE_BYTES unreasonably small");
+
+
+// Test secureRandom
+for (let i = 0; i < 100; i++) {
+  const r = secureRandom();
+  assert(r >= 0 && r < 1, "secureRandom should return a value between 0 and 1");
+}
 
 console.log("=== SECURITY TESTS PASSED ===");
