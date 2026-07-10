@@ -194,6 +194,10 @@ function onPointerDown(e) {
   el.addEventListener("pointerup", onPointerUp);
 }
 
+let moveRaf = null;
+let movePendingX = 0;
+let movePendingY = 0;
+
 function onPointerMove(e) {
   const { state } = getCtx();
   if (!state.draggedElement) return;
@@ -210,12 +214,29 @@ function onPointerMove(e) {
     playSound("ui_pickup");
   }
 
-  moveDraggedElement(el, e.clientX, e.clientY, state.dragGrabOffset);
+  movePendingX = e.clientX;
+  movePendingY = e.clientY;
+
+  if (!moveRaf) {
+    moveRaf = requestAnimationFrame(() => {
+      moveRaf = null;
+      if (state.draggedElement === el) {
+        moveDraggedElement(el, movePendingX, movePendingY, state.dragGrabOffset);
+      }
+    });
+  }
 }
 
 function onPointerUp(e) {
   const { state } = getCtx();
   if (!state.draggedElement) return;
+
+  if (moveRaf) {
+    cancelAnimationFrame(moveRaf);
+    moveRaf = null;
+    // ensure final position updates
+    moveDraggedElement(state.draggedElement, movePendingX, movePendingY, state.dragGrabOffset);
+  }
 
   const el = state.draggedElement;
   const wasClick = !state.dragMoved;

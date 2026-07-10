@@ -102,6 +102,8 @@ export function renderCabinet(): void {
     return a.name.localeCompare(b.name);
   });
 
+  const fragment = document.createDocumentFragment();
+
   filtered.forEach(item => {
     const el = document.createElement("div");
     el.className = "alchemy-element";
@@ -119,8 +121,10 @@ export function renderCabinet(): void {
     el.title = item.description ? `${item.name} — ${item.description}` : `Drag or click to add ${item.name}`;
     el.addEventListener("pointerdown", onCabinetPointerDown);
     bindHoverPanelEvents(el, item.id);
-    cabinetItems.appendChild(el);
+    fragment.appendChild(el);
   });
+
+  cabinetItems.appendChild(fragment);
 
   if (filtered.length === 0) {
     const empty = document.createElement("p");
