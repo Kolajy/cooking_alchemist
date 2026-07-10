@@ -8,13 +8,13 @@
   --font-fantasy-title: 'Cinzel', 'Lora', serif;
   --font-charm: 'Caveat', 'Segoe Print', cursive;
 
-  --hue-fire: 16;
-  --hue-gold: 32;
-  --hue-sage: 128;
+  --hue-fire: 20;
+  --hue-gold: 40;
+  --hue-sage: 135;
   --hue-earth: 42;
   --hue-ember: 12;
 
-  --color-bg-deep: hsl(38, 36%, 91%);
+  --color-bg-deep: hsl(40, 42%, 88%);
   --color-bg-dark: hsl(34, 28%, 87%);
   --color-bg-card: hsl(44, 45%, 97%);
   --color-bg-glass: hsla(40, 40%, 96%, 0.94);
@@ -77,9 +77,9 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='4' seed='14' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.36 0 0 0 0 0.26 0 0 0 0 0.14 0 0 0 -1.15 0.52'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23m)'/%3E%3C/svg%3E");
   --parchment-bg:
     var(--parchment-mottle),
-    radial-gradient(ellipse 130% 70% at 50% -10%, hsla(46, 60%, 95%, 0.55), transparent 55%),
-    radial-gradient(ellipse 120% 80% at 50% 110%, hsla(28, 32%, 40%, 0.18), transparent 55%),
-    linear-gradient(172deg, var(--scroll-parchment-light) 0%, var(--scroll-parchment) 42%, var(--scroll-parchment-deep) 100%),
+    radial-gradient(ellipse 120% 90% at 50% -10%, hsla(46, 60%, 98%, 0.65), transparent 60%),
+    radial-gradient(ellipse 120% 80% at 50% 110%, hsla(28, 45%, 35%, 0.22), transparent 65%),
+    linear-gradient(175deg, hsl(42, 55%, 92%) 0%, hsl(40, 48%, 86%) 45%, hsl(36, 45%, 78%) 100%),
     var(--parchment-fiber);
   --parchment-blend: multiply, soft-light, multiply, normal, normal;
   /* Pre-rasterized grain (baked once as an image — cheap, unlike a live SVG filter). */
