@@ -11,9 +11,9 @@ Four top-level methods shown on the counter. Sub-skills come from linked techniq
 |----|---|------|-------------------|--------|-------------|
 | `separate` | 🔪 | Separate | `separate` | Always available | Split, peel, and pull ingredients apart. |
 | `force` | ✊ | Force | `smash` (default: `smash`) | Always available | Crush, grind, and break ingredients down. |
-| `combine` | 🥣 | Combine | `combine` | 15 recipes discovered | Merge ingredients together and mix them into unified blends. |
-| `change` | 🔥 | Heat | `thermal` (default: `char`) | 40 recipes discovered | Heat, cook, and transform ingredients. |
-| `time` | ⏳ | Time | `time` (default: `rest`) | 200 recipes discovered | Steep, rest, ferment, or age ingredients. |
+| `combine` | 🥣 | Combine | `combine` | 10 recipes discovered | Merge ingredients together and mix them into unified blends. |
+| `change` | 🔥 | Heat | `thermal` (default: `char`) | 25 recipes discovered | Heat, cook, and transform ingredients. |
+| `time` | ⏳ | Time | `time` (default: `rest`) | 60 recipes discovered | Steep, rest, ferment, or age ingredients. |
 
 ## Technique categories
 
@@ -65,7 +65,7 @@ Grind or chop grains, seeds, and vegetables into fine textures.
 | Toolbar actions | `press` |
 | Depends on | `grind` |
 | Leads to | `knead` |
-| Unlock | grind ≥ 4 |
+| Unlock | grind ≥ 3 |
 
 Extract liquids and oils by applying continuous pressure.
 
@@ -77,7 +77,7 @@ Extract liquids and oils by applying continuous pressure.
 | Toolbar actions | `knead` |
 | Depends on | `press` |
 | Leads to | `emulsify` |
-| Unlock | press ≥ 4 |
+| Unlock | press ≥ 3 |
 
 Stagger, fold, and knead dough to develop gluten structures.
 
@@ -89,7 +89,7 @@ Stagger, fold, and knead dough to develop gluten structures.
 | Toolbar actions | `emulsify`, `blend` |
 | Depends on | `knead` |
 | Leads to | — |
-| Unlock | knead ≥ 5 |
+| Unlock | knead ≥ 4 |
 
 Emulsify oils and liquids into unified sauces and dressings.
 
@@ -103,7 +103,7 @@ Emulsify oils and liquids into unified sauces and dressings.
 | Toolbar actions | `tear` |
 | Depends on | — |
 | Leads to | `cutting` |
-| Unlock | separate ≥ 4 |
+| Unlock | separate ≥ 2 |
 
 Tear leafy herbs, greens, or cooked meats by hand.
 
@@ -115,7 +115,7 @@ Tear leafy herbs, greens, or cooked meats by hand.
 | Toolbar actions | `cut`, `chop` |
 | Depends on | `tear` |
 | Leads to | `slicing` |
-| Unlock | tear ≥ 3 |
+| Unlock | tear ≥ 2 |
 
 Cut foods cleanly using basic knife strokes.
 
@@ -127,7 +127,7 @@ Cut foods cleanly using basic knife strokes.
 | Toolbar actions | `slice` |
 | Depends on | `cutting` |
 | Leads to | `dicing` |
-| Unlock | cutting ≥ 4 |
+| Unlock | cutting ≥ 3 |
 
 Slice meats and vegetables into thin, even strips.
 
@@ -177,7 +177,7 @@ Strip tough outer layers from roots, tubers, or fruits.
 | Toolbar actions | `core`, `seed` |
 | Depends on | `peel` |
 | Leads to | `fillet_debone` |
-| Unlock | peel ≥ 3 |
+| Unlock | peel ≥ 2 |
 
 Remove tough cores, seeds, or pits from produce.
 
@@ -189,7 +189,7 @@ Remove tough cores, seeds, or pits from produce.
 | Toolbar actions | `fillet`, `debone`, `zest` |
 | Depends on | `core_seed` |
 | Leads to | — |
-| Unlock | core_seed ≥ 4 |
+| Unlock | core_seed ≥ 3 |
 
 Cleanly separate fish meat from bones and debone red meats.
 
@@ -215,7 +215,7 @@ Cooking directly on open fire, coals, or hot ash.
 | Toolbar actions | `pit_cook`, `bake` |
 | Depends on | `char` |
 | Leads to | `hearth_bake` |
-| Unlock | char ≥ 3 |
+| Unlock | char ≥ 2 |
 
 Slow roasting underground using heated stone pits.
 
@@ -227,7 +227,7 @@ Slow roasting underground using heated stone pits.
 | Toolbar actions | `hearth_bake`, `bake` |
 | Depends on | `pit_cook` |
 | Leads to | `cook` |
-| Unlock | pit_cook ≥ 3 |
+| Unlock | pit_cook ≥ 2 |
 
 Baking bread and roasting in clay tandoors or stone hearths.
 
@@ -239,7 +239,7 @@ Baking bread and roasting in clay tandoors or stone hearths.
 | Toolbar actions | `cook`, `fry`, `boil`, `simmer`, `steam` |
 | Depends on | `hearth_bake` |
 | Leads to | `smoke` |
-| Unlock | hearth_bake ≥ 4 |
+| Unlock | hearth_bake ≥ 3 |
 
 Stovetop cooking: boiling, simmering, steaming, and pan-frying.
 
@@ -251,7 +251,7 @@ Stovetop cooking: boiling, simmering, steaming, and pan-frying.
 | Toolbar actions | `smoke` |
 | Depends on | `cook` |
 | Leads to | `precision` |
-| Unlock | cook ≥ 4 |
+| Unlock | cook ≥ 3 |
 
 Exposing ingredients to aromatic hardwood smoke for flavor.
 
@@ -263,7 +263,7 @@ Exposing ingredients to aromatic hardwood smoke for flavor.
 | Toolbar actions | `precision`, `sous_vide`, `reduce` |
 | Depends on | `smoke` |
 | Leads to | — |
-| Unlock | smoke ≥ 5 |
+| Unlock | smoke ≥ 4 |
 
 Oven baking, temperature-controlled sous-vide, and precise reductions.
 
@@ -277,7 +277,7 @@ Oven baking, temperature-controlled sous-vide, and precise reductions.
 | Toolbar actions | `hand_mix`, `stir` |
 | Depends on | — |
 | Leads to | `whisk_churn` |
-| Unlock | combine ≥ 3 |
+| Unlock | combine ≥ 2 |
 
 Stirring, blending, and combining ingredients by hand.
 
@@ -289,7 +289,7 @@ Stirring, blending, and combining ingredients by hand.
 | Toolbar actions | `whisk`, `churn` |
 | Depends on | `hand_mix` |
 | Leads to | `gel_foam` |
-| Unlock | hand_mix ≥ 3 |
+| Unlock | hand_mix ≥ 2 |
 
 Incorporate air or butter fat clump formation.
 
@@ -301,7 +301,7 @@ Incorporate air or butter fat clump formation.
 | Toolbar actions | `gel`, `foam` |
 | Depends on | `whisk_churn` |
 | Leads to | — |
-| Unlock | whisk_churn ≥ 4 |
+| Unlock | whisk_churn ≥ 3 |
 
 Chemical gelification and culinary foam stabilization.
 
@@ -327,7 +327,7 @@ Let dough relax, tea steep, or marinades settle.
 | Toolbar actions | `ferment`, `culture` |
 | Depends on | `rest` |
 | Leads to | `age` |
-| Unlock | rest ≥ 3 |
+| Unlock | rest ≥ 2 |
 
 Cultivate yeast or bacteria to ferment doughs, brews, or batters.
 
@@ -339,7 +339,7 @@ Cultivate yeast or bacteria to ferment doughs, brews, or batters.
 | Toolbar actions | `age`, `cure` |
 | Depends on | `ferment` |
 | Leads to | — |
-| Unlock | ferment ≥ 4 |
+| Unlock | ferment ≥ 3 |
 
 Cure or age ingredients over longer time spans.
 
