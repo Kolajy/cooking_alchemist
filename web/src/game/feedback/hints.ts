@@ -81,11 +81,11 @@ function findTechniqueToolsForInput(inputId: string): string[] {
   const index = data.transitionIndex;
   if (!index) return [];
 
-  const tools: string[] = [];
+  const tools = new Set<string>();
   for (const [toolId, byInput] of Object.entries(index.byTechnique)) {
-    if (byInput[inputId]) tools.push(toolId);
+    if (byInput[inputId]) tools.add(toolId);
   }
-  return tools;
+  return [...tools];
 }
 
 function findUnlockedAlternateTool(inputId: string, activeSkillId: string): string | null {
@@ -98,14 +98,14 @@ function findUnlockedAlternateTool(inputId: string, activeSkillId: string): stri
   }) ?? null;
 }
 
-function findCombinePartners(itemId: string, excludePartnerId?: string): Array<{ partnerId: string; resultId: string }> {
+function findCombinePartners(itemId: string): Array<{ partnerId: string; resultId: string }> {
   const { data } = getCtx();
   const partners: Array<{ partnerId: string; resultId: string }> = [];
 
   for (const transition of data.transitionIndex?.combineTransitions ?? []) {
     if (!transition.inputs.includes(itemId)) continue;
     for (const partnerId of transition.inputs) {
-      if (partnerId === itemId || partnerId === excludePartnerId) continue;
+      if (partnerId === itemId) continue;
       partners.push({ partnerId, resultId: transition.resultItemId });
     }
   }
@@ -186,8 +186,8 @@ export function getCombineFailureHint(id1: string, id2: string): string | null {
   const direct = data.combinationEngine?.matchCombinationRecipe([id1, id2]);
   if (direct?.success) return null;
 
-  const partners1 = findCombinePartners(id1, id2);
-  const partners2 = findCombinePartners(id2, id1);
+  const partners1 = findCombinePartners(id1).filter(entry => entry.partnerId !== id2);
+  const partners2 = findCombinePartners(id2).filter(entry => entry.partnerId !== id1);
 
   const suggested = partners1.find(entry => isDiscovered(entry.partnerId))
     ?? partners2.find(entry => isDiscovered(entry.partnerId));
@@ -213,11 +213,7 @@ export function getToolbarFailureHint(): string | null {
   if (!engine || state.activeElements.length === 0) return null;
 
   if (state.activeAction === "combine") {
-    const ids: string[] = [];
-    for (const el of state.activeElements) {
-      const id = el.dataset.id;
-      if (id) ids.push(id);
-    }
+    const ids = state.activeElements.map(el => el.dataset.id!).filter(Boolean);
     for (let i = 0; i < ids.length; i += 1) {
       for (let j = i + 1; j < ids.length; j += 1) {
         const match = data.combinationEngine?.matchCombinationRecipe([ids[i], ids[j]]);

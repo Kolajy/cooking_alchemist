@@ -51,10 +51,7 @@ function sanitizeDiscoveryLog(): void {
 
 function migrateDiscoveryLog(): void {
   const { state } = getCtx();
-  const logged = new Set<string>();
-  for (let i = 0; i < state.discoveryLog.length; i++) {
-    logged.add(state.discoveryLog[i].id);
-  }
+  const logged = new Set(state.discoveryLog.map(entry => entry.id));
   let changed = false;
 
   for (const id of state.discoveredIds) {
@@ -73,10 +70,7 @@ export function recordDiscoveryTimestamps(ids: string[]): void {
   const { state } = getCtx();
   if (!ids.length) return;
 
-  const logged = new Set<string>();
-  for (let i = 0; i < state.discoveryLog.length; i++) {
-    logged.add(state.discoveryLog[i].id);
-  }
+  const logged = new Set(state.discoveryLog.map(entry => entry.id));
   const now = Date.now();
   let changed = false;
 
@@ -251,10 +245,7 @@ export function saveProgress() {
 export function updateStats() {
   const { state, dom, data } = getCtx();
   const discoverableTotal = Object.keys(data.DISCOVERABLE_ITEMS).length;
-  let discoveredCount = 0;
-  for (const id of state.discoveredIds) {
-    if (data.DISCOVERABLE_ITEMS[id]) discoveredCount++;
-  }
+  const discoveredCount = [...state.discoveredIds].filter(id => data.DISCOVERABLE_ITEMS[id]).length;
 
   if (dom.unlockedCountEl) {
     const percent = discoverableTotal > 0 ? Math.round((discoveredCount / discoverableTotal) * 100) : 0;
@@ -268,6 +259,7 @@ export function updateStats() {
     const hasPotato = state.discoveredIds.has("potato");
     const hasMashedPotato = state.discoveredIds.has("mashed_potato");
     const hasSproutedSeeds = state.discoveredIds.has("sprouted_seeds");
+    const discoveredRecipesCount = [...state.discoveredIds].filter(id => data.DISCOVERABLE_ITEMS[id]).length;
 
     if (!hasSmashedBerries) {
       hint = "Separate 🫐 <strong>Berries</strong> on the counter to find fresh fruit and smashable pulp!";
@@ -275,14 +267,14 @@ export function updateStats() {
       hint = "Separate 🥔 <strong>Tubers</strong> on the counter to find a fresh Potato!";
     } else if (!hasMashedPotato) {
       hint = "Use your new ✊ <strong>Force</strong> action to smash the 🥔 <strong>Potato</strong> into a fluffy mash!";
-    } else if (discoveredCount < 15) {
-      hint = `Keep exploring and separating! Restore <strong>15 recipes</strong> in your Ledger to unlock the 🥣 <strong>Combine</strong> action (Current: <strong>${discoveredCount}</strong>/15).`;
+    } else if (discoveredRecipesCount < 15) {
+      hint = `Keep exploring and separating! Restore <strong>15 recipes</strong> in your Ledger to unlock the 🥣 <strong>Combine</strong> action (Current: <strong>${discoveredRecipesCount}</strong>/15).`;
     } else if (!hasSproutedSeeds) {
       hint = "Combine 🌻 <strong>Seeds</strong> and 💧 <strong>Water</strong> on the counter using the 🥣 <strong>Combine</strong> action to grow sprouted greens!";
-    } else if (discoveredCount < 40) {
-      hint = `Excellent! Continue combining and discovering dishes. Reach <strong>40 recipes</strong> to unlock 🍳 <strong>Heat</strong> (Current: <strong>${discoveredCount}</strong>/40).`;
-    } else if (discoveredCount < 200 || !state.discoveredIds.has("berry_pulp")) {
-      hint = `You're a true alchemist. Work towards restoring <strong>200 recipes</strong> and finding <strong>Berry Pulp</strong> to master ⏳ <strong>Time</strong> (Current: <strong>${discoveredCount}</strong>/200).`;
+    } else if (discoveredRecipesCount < 40) {
+      hint = `Excellent! Continue combining and discovering dishes. Reach <strong>40 recipes</strong> to unlock 🍳 <strong>Heat</strong> (Current: <strong>${discoveredRecipesCount}</strong>/40).`;
+    } else if (discoveredRecipesCount < 200 || !state.discoveredIds.has("berry_pulp")) {
+      hint = `You're a true alchemist. Work towards restoring <strong>200 recipes</strong> and finding <strong>Berry Pulp</strong> to master ⏳ <strong>Time</strong> (Current: <strong>${discoveredRecipesCount}</strong>/200).`;
     } else {
       hint = "Grandmother's ledger is nearly restored! Search for remaining rare secrets in the Progress Map.";
     }

@@ -92,10 +92,7 @@ function finalizeNewDiscovery(
   discoveredResults: IngredientItem[] = [],
   actionContext: DiscoveryActionContext | null = null
 ): void {
-  const discoveredIds: string[] = [];
-  for (const result of discoveredResults) {
-    if (result.id) discoveredIds.push(result.id);
-  }
+  const discoveredIds = discoveredResults.map(result => result.id).filter(Boolean);
   emitGameplayEvent("discovery", {
     recipe,
     discoveredResults,
@@ -136,7 +133,7 @@ export function applyCombineToCanvas(): boolean {
 
   while (combined) {
     combined = false;
-    const elements = state.activeElements.slice();
+    const elements = [...state.activeElements];
     for (let i = 0; i < elements.length; i++) {
       for (let j = i + 1; j < elements.length; j++) {
         const el1 = elements[i];

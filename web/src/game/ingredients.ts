@@ -226,16 +226,8 @@ export function matchesCabinetStateFilter(item: CabinetItem): boolean {
     return false;
   }
 
-  let hasOtherState = false;
-  let matchesOtherState = false;
-  for (const key of state.stateFilterIncludes) {
-    if (key !== "recent") {
-      hasOtherState = true;
-      if (key === item.stateKey) matchesOtherState = true;
-    }
-  }
-
-  if (hasOtherState && !matchesOtherState) return false;
+  const stateIncludes = [...state.stateFilterIncludes].filter(key => key !== "recent");
+  if (stateIncludes.length > 0 && !stateIncludes.includes(item.stateKey)) return false;
 
   return true;
 }
@@ -338,10 +330,8 @@ export function resolvePlayableIngredient(itemId: string): IngredientItem | unde
 
 export function getProcessedDiscoveryCount(): number {
   const { state, data } = getCtx();
-  let count = 0;
-  for (const id of state.discoveredIds) {
+  return Array.from(state.discoveredIds).filter(id => {
     const item = data.DISCOVERABLE_ITEMS[id];
-    if (item && isFinalizedRecipe(item)) count++;
-  }
-  return count;
+    return item && isFinalizedRecipe(item);
+  }).length;
 }

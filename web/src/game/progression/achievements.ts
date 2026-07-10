@@ -31,17 +31,10 @@ function buildAchievementContext(): AchievementEvaluationContext {
 
 export function getAchievementsSaveData(): AchievementsSaveData {
   const { state } = getCtx();
-  const unlocked: Array<{ id: string; unlockedAt: number }> = [];
-  for (const [id, unlockedAt] of state.achievementUnlocks.entries()) {
-    unlocked.push({ id, unlockedAt });
-  }
-
-  const flags: AchievementFlag[] = [];
-  for (const flag of state.achievementFlags) {
-    flags.push(flag);
-  }
-
-  return { unlocked, flags };
+  return {
+    unlocked: [...state.achievementUnlocks.entries()].map(([id, unlockedAt]) => ({ id, unlockedAt })),
+    flags: [...state.achievementFlags]
+  };
 }
 
 export function applyAchievementsSaveData(data: AchievementsSaveData): void {
