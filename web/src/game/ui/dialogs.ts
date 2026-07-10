@@ -165,15 +165,22 @@ export function renderRecipeBook() {
   discoveredRecipesList.innerHTML = "";
 
   const uniqueRecipes = [];
+
+  // Include all discovered items in the encyclopedia, not just finalized recipes
   Object.keys(data.DISCOVERABLE_ITEMS).forEach(id => {
     const item = data.DISCOVERABLE_ITEMS[id];
-    if (state.discoveredIds.has(id) && isFinalizedRecipe(item)) {
+    if (state.discoveredIds.has(id)) {
       uniqueRecipes.push({ id, ...item });
     }
   });
 
+  // Also include starters if they are considered "discovered" (they are usually default)
+  data.STARTER_ELEMENTS.forEach(starter => {
+    uniqueRecipes.push({ id: starter.id, ...starter });
+  });
+
   if (uniqueRecipes.length === 0) {
-    discoveredRecipesList.innerHTML = `<p class="dialog-intro" style="grid-column: 1/-1; text-align: center;">No finalized recipes yet. Separate primal ingredients, then combine and cook what you discover.</p>`;
+    discoveredRecipesList.innerHTML = `<p class="dialog-intro" style="grid-column: 1/-1; text-align: center;">Your encyclopedia is empty. Start experimenting with ingredients to learn more about them!</p>`;
     return;
   }
 
@@ -187,12 +194,18 @@ export function renderRecipeBook() {
 
     const stateKey = getIngredientState(itemData);
 
+    // Apply specific badges based on ingredient state for visual variety
+    let badgeClass = "origin-badge--recipe";
+    if (stateKey === "primal") badgeClass = "origin-badge--primitive";
+    else if (stateKey === "raw") badgeClass = "origin-badge--raw";
+    else if (stateKey === "prepared") badgeClass = "origin-badge--processed";
+
     card.innerHTML = `
       <span class="recipe-card-emoji">${escapeHtml(itemData.emoji)}</span>
       <span class="recipe-card-name">${escapeHtml(itemData.name)}</span>
       <span class="recipe-card-meta">
         <span class="recipe-card-category">${escapeHtml(itemData.category || "")}</span>
-        <span class="origin-badge origin-badge--recipe">${escapeHtml(getStateLabel(stateKey))}</span>
+        <span class="origin-badge ${badgeClass}">${escapeHtml(getStateLabel(stateKey))}</span>
       </span>
       <div class="tooltip" role="tooltip">
         <h4>📜 Did You Know?</h4>
