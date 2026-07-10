@@ -42,27 +42,47 @@ export function getUnlockedSkills(skills: Array<{ id: string }>) {
 
 export function getSkillsInCategory(category: string) {
   const { data } = getCtx();
-  const skills = Object.keys(data.PROGRESSION_TIERS)
-    .map(id => ({ id, ...data.PROGRESSION_TIERS[id] }))
-    .filter(skill => skill.category === category);
+  const skills: Array<{ id: string } & (typeof data.PROGRESSION_TIERS)[string]> = [];
+  const roots: typeof skills = [];
 
-  const roots = skills.filter(skill => !skill.dependsOn || skill.dependsOn.length === 0);
+  for (const id in data.PROGRESSION_TIERS) {
+    const tier = data.PROGRESSION_TIERS[id];
+    if (tier.category === category) {
+      const skillObj = { id, ...tier };
+      skills.push(skillObj);
+      if (!tier.dependsOn || tier.dependsOn.length === 0) {
+        roots.push(skillObj);
+      }
+    }
+  }
+
   if (roots.length === 0) return skills;
 
   const ordered: typeof skills = [];
-  let current = roots[0];
+  let current: typeof skills[0] | undefined = roots[0];
   const visited = new Set<string>();
 
   while (current && !visited.has(current.id)) {
     ordered.push(current);
     visited.add(current.id);
     const nextId = current.leadsTo && current.leadsTo[0];
-    current = nextId ? skills.find(skill => skill.id === nextId) : undefined;
+    if (nextId) {
+      current = undefined;
+      for (let i = 0; i < skills.length; i++) {
+        if (skills[i].id === nextId) {
+          current = skills[i];
+          break;
+        }
+      }
+    } else {
+      current = undefined;
+    }
   }
 
-  skills.forEach(skill => {
+  for (let i = 0; i < skills.length; i++) {
+    const skill = skills[i];
     if (!visited.has(skill.id)) ordered.push(skill);
-  });
+  }
 
   return ordered;
 }
@@ -85,9 +105,13 @@ export function getUnlockedSkillsForMethod(methodId: string) {
 
 function getNextSkillInChain(skillId: string) {
   const { data } = getCtx();
-  return Object.keys(data.PROGRESSION_TIERS)
-    .map(id => ({ id, ...data.PROGRESSION_TIERS[id] }))
-    .find(skill => skill.dependsOn && skill.dependsOn.includes(skillId));
+  for (const id in data.PROGRESSION_TIERS) {
+    const tier = data.PROGRESSION_TIERS[id];
+    if (tier.dependsOn && tier.dependsOn.includes(skillId)) {
+      return { id, ...tier };
+    }
+  }
+  return undefined;
 }
 
 function getTrackLabel(trackId: string): string {

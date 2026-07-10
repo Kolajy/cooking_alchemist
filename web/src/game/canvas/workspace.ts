@@ -133,25 +133,29 @@ export function createParticles(x, y, count, type) {
 export function updateCollisionHighlight(draggedEl) {
   const { state } = getCtx();
   const previousTarget = state.mergeTarget;
-  state.activeElements.forEach(otherEl => {
-    otherEl.classList.remove("hover-merge");
-    otherEl.classList.remove("combine-valid-target");
-  });
 
   if (state.activeAction !== "combine" || !draggedEl) {
+    for (let i = 0; i < state.activeElements.length; i++) {
+      const otherEl = state.activeElements[i];
+      otherEl.classList.remove("hover-merge");
+      otherEl.classList.remove("combine-valid-target");
+    }
     state.mergeTarget = null;
     return;
   }
 
   const draggedId = draggedEl.dataset.id;
-  if (draggedId) {
-    state.activeElements.forEach(otherEl => {
-      if (otherEl === draggedEl) return;
+  for (let i = 0; i < state.activeElements.length; i++) {
+    const otherEl = state.activeElements[i];
+    otherEl.classList.remove("hover-merge");
+    otherEl.classList.remove("combine-valid-target");
+
+    if (draggedId && otherEl !== draggedEl) {
       const otherId = otherEl.dataset.id;
       if (otherId && canCombineIngredients(draggedId, otherId)) {
         otherEl.classList.add("combine-valid-target");
       }
-    });
+    }
   }
 
   const closestEl = findMergeTarget(draggedEl);

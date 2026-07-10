@@ -27,21 +27,21 @@ export function getActiveTechniqueToolIds() {
       toolIds.push(cfg.mode);
     }
 
-    (cfg.categories || []).forEach(category => {
-      const skills = Object.keys(data.PROGRESSION_TIERS)
-        .map(id => ({ id, ...data.PROGRESSION_TIERS[id] }))
-        .filter(skill => skill.category === category);
-
-      skills.forEach(skill => {
-        if (data.Progression.isUnlocked(skill.id)) {
-          if (skill.actions?.length) {
-            toolIds.push(...skill.actions);
-          } else {
-            toolIds.push(skill.id);
+    if (cfg.categories) {
+      for (let i = 0; i < cfg.categories.length; i++) {
+        const category = cfg.categories[i];
+        for (const id in data.PROGRESSION_TIERS) {
+          const tier = data.PROGRESSION_TIERS[id];
+          if (tier.category === category && data.Progression.isUnlocked(id)) {
+            if (tier.actions?.length) {
+              toolIds.push(...tier.actions);
+            } else {
+              toolIds.push(id);
+            }
           }
         }
-      });
-    });
+      }
+    }
 
     return toolIds;
   }
@@ -75,10 +75,11 @@ export function updateTechniqueTargetHighlights() {
   const toolIds = getActiveTechniqueToolIds();
   const active = isTechniqueApplicationMode();
 
-  state.activeElements.forEach(el => {
+  for (let i = 0; i < state.activeElements.length; i++) {
+    const el = state.activeElements[i];
     const valid = active && canTechniqueAffectElement(el, toolIds);
     el.classList.toggle("technique-valid-target", valid);
-  });
+  }
 }
 
 export function findMergeTarget(draggedEl) {
@@ -90,21 +91,23 @@ export function findMergeTarget(draggedEl) {
   const center1Y = rect1.top + rect1.height / 2;
 
   let closestEl = null;
-  let minDistance = 70;
 
-  state.activeElements.forEach(otherEl => {
-    if (otherEl === draggedEl) return;
+
+  let minDistanceSq = 70 * 70;
+  for (let i = 0; i < state.activeElements.length; i++) {
+    const otherEl = state.activeElements[i];
+    if (otherEl === draggedEl) continue;
 
     const rect2 = otherEl.getBoundingClientRect();
     const dx = center1X - (rect2.left + rect2.width / 2);
     const dy = center1Y - (rect2.top + rect2.height / 2);
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    const distSq = dx * dx + dy * dy;
 
-    if (dist < minDistance) {
-      minDistance = dist;
+    if (distSq < minDistanceSq) {
+      minDistanceSq = distSq;
       closestEl = otherEl;
     }
-  });
+  }
 
   return closestEl;
 }
