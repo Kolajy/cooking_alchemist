@@ -6,7 +6,7 @@ import {
   playSound,
   isAmbienceEnabled,
   setAmbienceEnabled
-} from "../feedback/sounds";
+} from "../feedback/audio";
 import {
   isReducedMotionEnabled,
   setReducedMotion

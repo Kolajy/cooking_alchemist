@@ -5,7 +5,7 @@ import { gameStorage } from "../save/storage";
 import { loadAchievements } from "../progression/achievements";
 import { openDialog, showCustomConfirm } from "./dialogs";
 import { refreshGameSessionUi } from "../save/save-repository";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 
 
 export function initStartMenu(): void {

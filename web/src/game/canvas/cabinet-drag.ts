@@ -4,7 +4,7 @@ import { enrichItem, buildIngredientMarkup, resolvePlayableIngredient } from "..
 import { spawnElementOnCanvas, getCanvasPosition } from "./workspace";
 import { switchMainView } from "../ui/views";
 import { pushUndoEntry } from "../feedback/undo";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 
 function recordSpawnUndo(item, element) {
   const pos = getCanvasPosition(element);

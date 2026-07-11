@@ -5,7 +5,7 @@ import {
   removeCanvasElement,
   spawnElementOnCanvas
 } from "../canvas/workspace";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 import { setAchievementFlag } from "../progression/achievements";
 
 export function pushUndoEntry(entry) {

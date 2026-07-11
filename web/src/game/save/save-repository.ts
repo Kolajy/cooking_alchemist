@@ -7,7 +7,7 @@ import {
   saveAchievements
 } from "../progression/achievements";
 import { isPlayerActionUnlocked } from "../progression/skills";
-import { setSoundEnabled } from "../feedback/sounds";
+import { setSoundEnabled } from "../feedback/audio";
 import { getSettingsSnapshot, setReducedMotion } from "../settings";
 import { syncSettingsControls } from "../ui/settings";
 import { clearWorkspace } from "../canvas/workspace";

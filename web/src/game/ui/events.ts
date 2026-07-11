@@ -17,7 +17,7 @@ import {
   unlockAudioOnGesture,
   syncSoundUi,
   playSound
-} from "../feedback/sounds";
+} from "../feedback/audio";
 import { applyUndo, refreshUndoButton } from "../feedback/undo";
 import { setupKeyboardShortcuts } from "./keyboard-shortcuts";
 import { loadSettings } from "../settings";

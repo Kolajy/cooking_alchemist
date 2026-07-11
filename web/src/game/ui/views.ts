@@ -5,7 +5,7 @@ import { spawnElementOnCanvas } from "../canvas/workspace";
 import { updateSkillsUI } from "./skills-panel";
 import { renderDiscoveryJournal } from "./journal";
 import { renderAchievementsPanel } from "./achievements";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 import { setAchievementFlag } from "../progression/achievements";
 
 export function switchMainView(viewName) {

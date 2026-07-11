@@ -3,7 +3,7 @@ import { getCtx } from "../context";
 import { DRAG_THRESHOLD } from "../constants";
 import { enrichItem, buildIngredientMarkup } from "../ingredients";
 import { pushUndoEntry, clearUndoEntry } from "../feedback/undo";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 import {
   canTechniqueAffectElement,
   findMergeTarget,

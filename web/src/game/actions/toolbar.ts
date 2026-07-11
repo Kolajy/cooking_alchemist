@@ -11,7 +11,7 @@ import {
   playSound,
   playActionSelectSound,
   playTechniqueSound
-} from "../feedback/sounds";
+} from "../feedback/audio";
 import { showWorkspaceHint } from "../progression/notifications";
 import { escapeHtml } from "../security/html";
 import { getToolbarFailureHint } from "../feedback/hints";

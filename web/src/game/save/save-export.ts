@@ -1,4 +1,4 @@
-import { isSoundEnabled } from "../feedback/sounds";
+import { isSoundEnabled } from "../feedback/audio";
 import { buildPortableSave } from "./save-repository";
 import { formatExportDate, showSaveToast } from "./save-io";
 

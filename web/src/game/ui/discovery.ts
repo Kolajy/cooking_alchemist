@@ -1,5 +1,5 @@
 import { getCtx } from "../context";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 import { isFinalizedRecipe } from "../ingredients";
 import { isReducedMotionEnabled } from "../settings";
 import { getTrackExpSummary } from "../progression/skills";

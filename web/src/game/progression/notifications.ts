@@ -1,6 +1,6 @@
 import { getCtx } from "../context";
 import { isPlayerActionUnlocked } from "./skills";
-import { playSound } from "../feedback/sounds";
+import { playSound } from "../feedback/audio";
 import { emitGameplayEvent } from "../events";
 import { escapeHtml } from "../security/html";
 import { queueMechanicDiscovery } from "../ui/discovery";

@@ -12,7 +12,7 @@ import {
   setSoundEnabled,
   syncSoundUi,
   playSound
-} from "../feedback/sounds";
+} from "../feedback/audio";
 import { openDialog, renderRecipeBook } from "./dialogs";
 import { switchMainView, switchSidebarTab } from "./views";
 import { toggleSettingsDialog } from "./settings";

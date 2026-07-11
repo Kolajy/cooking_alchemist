@@ -24,7 +24,7 @@ import {
 } from "../feedback/hints";
 import { setAchievementFlag } from "../progression/achievements";
 import { flashWorkspace, shakeWorkspace } from "../feedback/workspace-effects";
-import { playSound, playTechniqueSound } from "../feedback/sounds";
+import { playSound, playTechniqueSound } from "../feedback/audio";
 import { emitGameplayEvent } from "../events";
 import { getProgressionEngine } from "../data";
 import type { DiscoveryActionContext, IngredientItem, MatchRecipeResult, MatchedRecipe } from "../../types";
