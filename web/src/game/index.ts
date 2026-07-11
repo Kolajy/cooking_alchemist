@@ -8,6 +8,7 @@ import { registerGameplayEffects } from "./events";
 import { initGame } from "./ui/events";
 import { setupHoverPanel } from "./ui/hover-panel";
 import { initGoogleAnalytics } from "./analytics";
+import { startAutoSave } from "./save/auto-save";
 
 function startGame() {
   if (window.__culinaryGameStarted) return;
@@ -28,6 +29,7 @@ function startGame() {
   ctx.actions.combineElements = combineElements;
   ctx.actions.applyToolToElement = applyToolToElement;
   initGame();
+  startAutoSave();
 }
 
 if (document.readyState === "loading") {

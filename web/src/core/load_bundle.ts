@@ -1,6 +1,7 @@
 import type { DiscoverableMap, ProgressionConfig } from "../types";
 import { buildIndexFromExported } from "./build_index";
 import type { ExportedGameBundle, RawTransition } from "./types";
+import { updateRegistry } from "./bundle_registry";
 
 const BUNDLE_URL = "/game/game_bundle.json";
 const TRANSITIONS_URL = "/game/transitions.json";
@@ -33,6 +34,7 @@ export function applyExportedBundle(bundle: ExportedGameBundle, transitions: Raw
   const discoverable = bundle.discoverable as DiscoverableMap;
   const progression = bundle.progression as ProgressionConfig;
 
+  // Set globalThis for validation/tooling compatibility
   globalThis.STARTER_ELEMENTS = bundle.starters;
   globalThis.UNLOCKABLE_ELEMENTS = bundle.unlockables;
   globalThis.DISCOVERABLE_ITEMS = discoverable;
@@ -57,6 +59,23 @@ export function applyExportedBundle(bundle: ExportedGameBundle, transitions: Raw
 
   globalThis.ACHIEVEMENTS = bundle.achievements || [];
   globalThis.ACHIEVEMENT_RULES = bundle.achievementRules || {};
+
+  // Update central modular bundle registry
+  updateRegistry({
+    STARTER_ELEMENTS: globalThis.STARTER_ELEMENTS,
+    UNLOCKABLE_ELEMENTS: globalThis.UNLOCKABLE_ELEMENTS,
+    DISCOVERABLE_ITEMS: globalThis.DISCOVERABLE_ITEMS,
+    TRANSITION_INDEX: globalThis.TRANSITION_INDEX,
+    PRIMITIVE_INGREDIENT_IDS: globalThis.PRIMITIVE_INGREDIENT_IDS,
+    PROGRESSION_CONFIG: globalThis.PROGRESSION_CONFIG,
+    PROGRESSION_TECHNIQUE_CATEGORIES: globalThis.PROGRESSION_TECHNIQUE_CATEGORIES,
+    PROGRESSION_TIERS: globalThis.PROGRESSION_TIERS,
+    PLAYER_ACTIONS: globalThis.PLAYER_ACTIONS,
+    INGREDIENT_MILESTONES: globalThis.INGREDIENT_MILESTONES,
+    getIngredientOrigin: globalThis.getIngredientOrigin,
+    ACHIEVEMENTS: globalThis.ACHIEVEMENTS,
+    ACHIEVEMENT_RULES: globalThis.ACHIEVEMENT_RULES
+  });
 }
 
 /**
@@ -72,6 +91,23 @@ export async function bootstrapSharedData(): Promise<"shared" | "compiled"> {
     console.warn("[Culinary Alchemy] Using compiled TS data modules:", error);
     await import("../data/index");
     await import("../progression_config");
+
+    // Copy the loaded globals to registry
+    updateRegistry({
+      STARTER_ELEMENTS: globalThis.STARTER_ELEMENTS,
+      UNLOCKABLE_ELEMENTS: globalThis.UNLOCKABLE_ELEMENTS,
+      DISCOVERABLE_ITEMS: globalThis.DISCOVERABLE_ITEMS,
+      TRANSITION_INDEX: globalThis.TRANSITION_INDEX,
+      PRIMITIVE_INGREDIENT_IDS: globalThis.PRIMITIVE_INGREDIENT_IDS,
+      PROGRESSION_CONFIG: globalThis.PROGRESSION_CONFIG,
+      PROGRESSION_TECHNIQUE_CATEGORIES: globalThis.PROGRESSION_TECHNIQUE_CATEGORIES || {},
+      PROGRESSION_TIERS: globalThis.PROGRESSION_TIERS || {},
+      PLAYER_ACTIONS: globalThis.PLAYER_ACTIONS || {},
+      INGREDIENT_MILESTONES: globalThis.INGREDIENT_MILESTONES || [],
+      getIngredientOrigin: globalThis.getIngredientOrigin,
+      ACHIEVEMENTS: globalThis.ACHIEVEMENTS,
+      ACHIEVEMENT_RULES: globalThis.ACHIEVEMENT_RULES
+    });
     return "compiled";
   }
 }

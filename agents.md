@@ -12,7 +12,7 @@ graph TD
     GD -->|Delivers playable web game| QA[QA & Playtester Agent]
     QA -->|Reports bugs & performance| GD
     GD -->|Assets & builds| SI[Steam Integration Agent]
-    SI -->|Native egui desktop + Steamworks| Steam[Steam Release]
+    SI -->|Electron desktop packaging + Steam| Steam[Steam Release]
 ```
 
 ### 1. Game Architect Agent
@@ -22,7 +22,7 @@ graph TD
     *   Standardizes save-game JSON formats and settings schema.
     *   Defines technical requirements for game engines (e.g., HTML5 Canvas API, Pixi.js, or Phaser).
 *   **Default Prompt Focus**:
-    *   *System instructions focus on performance optimization, clean state decoupling, and forward-compatibility with native Rust/Swift clients.*
+    *   *System instructions focus on performance optimization, clean state decoupling, and compatibility with the Electron/Web runtime.*
 
 ### 2. Gameplay & UI Developer Agent
 *   **Role**: Creative Implementer & Frontend Engineer.
@@ -36,11 +36,11 @@ graph TD
 ### 3. Steam Integration & Packaging Agent
 *   **Role**: Build & Platform Engineer.
 *   **Responsibilities**:
-    *   Maintains the native desktop client (`desktop/` egui + `culinary-core` Rust).
-    *   Integrates Steamworks via the Rust `steamworks` crate (achievements, cloud saves, overlay).
-    *   Maintains multi-platform release builds (macOS, Windows, Linux) and native save paths.
+    *   Maintains the Electron desktop shell (`electron/`).
+    *   Handles desktop integration, packaging (electron-builder), and configuring native builds.
+    *   Integrates achievements, cloud saves, and offline support for the desktop runtime.
 *   **Default Prompt Focus**:
-    *   *System instructions focus on desktop packaging, platform-native filesystem storage paths for game saves, offline support, and proper handling of Steam client callbacks.*
+    *   *System instructions focus on desktop packaging, platform-native filesystem storage paths for game saves, offline support, and proper configuration of Electron-based apps.*
 
 ### 4. QA & Automated Testing Agent
 *   **Role**: Playtester & Performance Analyst.
@@ -109,12 +109,10 @@ cooking/
 │   ├── game_design/
 │   │   └── SKILL.md      # Game mechanics, state flow architecture guidance
 │   └── steam_porting/
-│       └── SKILL.md      # Native desktop packaging & Steamworks guidance
+│       └── SKILL.md      # Electron desktop packaging & Steamworks guidance
 ├── web/                  # Vite web game (@culinary-alchemy/web) — dev client
-├── core/                 # Rust culinary-core — GameRuntime, engines, tests
-├── desktop/              # Native egui Steam desktop client
-├── ios/                  # Native SwiftUI iOS client
-├── android/              # Native Compose Android client
+├── electron/             # Electron desktop shell
+├── archive/              # Archived platforms (core, desktop, wasm, android, ios, godot)
 └── docs/                 # ARCHITECTURE, DATA_LAYER, DATA_SCHEMA, ROADMAP, …
 ```
 
@@ -138,16 +136,16 @@ When starting a new feature or debugging an issue, follow this multi-agent loop:
 
 1.  **Draft Design**: Ask the **Game Architect** to draft the specification or state machine for the feature.
 2.  **Implementation**: Pass the specification to the **Gameplay & UI Developer** to generate the HTML, CSS, or JS changes. Content changes go in `content/`; run `npm run export-native` before native testing.
-3.  **Local Testing**: Have the **QA Agent** review the code, suggest test cases, or inspect it for bottlenecks (like redundant redraw calls). Run `npm test` and `cargo test -p culinary-core`.
-4.  **Packaging/Porting**: For build validation, use the **Steam Integration Agent** to run `npm run steam:dev` and verify native desktop builds.
+3.  **Local Testing**: Have the **QA Agent** review the code, suggest test cases, or inspect it for bottlenecks (like redundant redraw calls). Run `npm test` to validate code and content.
+4.  **Packaging/Porting**: For build validation, use the **Steam Integration Agent** to run `npm run electron:dev` and verify Electron desktop builds.
 
 ---
 
 ## Token Optimization & Project Scoping Rules
 
 To minimize token costs and maintain optimal context efficiency:
-- **Default Modification Target**: All code edits and enhancements target the `web/` client subdirectory and data structures/recipes in the `core/` repository by default.
-- **Search Scoping**: Do NOT search, grep, or read source files in native platforms (`desktop/`, `ios/`, `android/`, `core/` Rust code) unless explicitly requested by the user.
+- **Default Modification Target**: All code edits and enhancements target the `web/` client subdirectory and data structures/recipes in `content/` by default.
+- **Search Scoping**: Do NOT search, grep, or read source files in legacy or archived platforms (`archive/`) unless explicitly requested by the user.
 - **Context Preservation**: Avoid running workspace-wide searches (e.g. searching the root directory) unless targeting a specific file. Limit tool searches to the narrowest directory target possible.
 - **Decoupled Validation**: Run tests locally in isolated modules (like `node src/engine/cli_test.js`) rather than processing full visual app rendering loops to keep validation steps quick and lightweight.
 - **Git-Persisted Planning**: Always create or update `plans/active_plan.md` before starting code changes or execution commands. Upon completion of a task, archive the plan as `plans/archive/YYYY-MM-DD-feature-name.md` and document it in the index of `plans/README.md`.

@@ -1,6 +1,6 @@
 import { getCtx } from "../context";
-import { exportGameSave } from "../save-export";
-import { importGameSaveFromFile } from "../save-import";
+import { exportGameSave } from "../save/save-export";
+import { importGameSaveFromFile } from "../save/save-import";
 import { resetGameProgress } from "../reset-progress";
 
 function exportSaveWithFeedback(): void {

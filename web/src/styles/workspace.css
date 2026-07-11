@@ -349,11 +349,15 @@ body[data-main-view="map"] #btn-progress-graph.active {
 .alchemy-element.canvas-element.dragging {
   z-index: 1002;
   cursor: grabbing;
-  border-color: hsla(var(--hue-gold), 70%, 48%, 0.75) !important;
+  border-color: hsla(var(--hue-gold), 80%, 55%, 0.85) !important;
   box-shadow:
-    0 0 0 2px hsla(var(--hue-gold), 80%, 52%, 0.55),
-    0 4px 10px hsla(28, 22%, 22%, 0.18);
+    0 0 0 3px hsla(var(--hue-gold), 85%, 60%, 0.65),
+    0 12px 24px hsla(28, 30%, 15%, 0.35);
   transition: none;
+}
+.alchemy-element.canvas-element.dragging .element-emoji {
+  transform: scale(1.15) translateY(-4px);
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25)) contrast(1.15) brightness(1.1);
 }
 
 /* --- Active Tool Workspace Cursors --- */
@@ -405,8 +409,8 @@ body[data-active-tool="freeze"] #workspace {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  width: 240px;
-  background: hsl(44, 85%, 92%);
+  width: 220px;
+  background: linear-gradient(145deg, hsl(44, 90%, 94%) 0%, hsl(42, 80%, 88%) 100%);
   border: 1px solid hsla(38, 30%, 50%, 0.35);
   border-radius: 6px;
   padding: 0.85rem;

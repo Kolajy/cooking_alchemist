@@ -282,6 +282,9 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   el.className = "alchemy-element canvas-element";
   el.dataset.id = item.id;
   el.dataset.origin = item.origin;
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.setAttribute("aria-label", `${item.name}`);
   el.innerHTML = buildIngredientMarkup(item, false);
 
   if (x === null || y === null) {
@@ -293,6 +296,38 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   setCanvasPosition(el, x, y);
   el.title = "Drag to move · click to apply technique or remove";
   el.addEventListener("pointerdown", onPointerDown);
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      // Use the actual apply technique if we hit enter, as that is the standard action
+      import("../actions/toolbar").then(toolbar => {
+        const wasApplied = toolbar.applyActiveTechniqueToCounter();
+        if (!wasApplied) {
+           // If we didn't apply technique, toggle selection maybe? The game relies on dragging,
+           // but `applyActiveTechniqueToCounter` acts on ALL elements.
+           // To keep it simple, space/enter applies the technique just like the global shortcut.
+        }
+      });
+    } else if (e.key === "Backspace" || e.key === "Delete") {
+      e.preventDefault();
+      import("../feedback/undo").then(undo => {
+        const pos = getCanvasPosition(el);
+        undo.pushUndoEntry({
+          type: "remove",
+          itemId: item.id,
+          x: pos.x,
+          y: pos.y
+        });
+        removeCanvasElement(el);
+      });
+    } else if (e.key === "ArrowRight") {
+       e.preventDefault();
+       focusNextCanvasElement(el, 1);
+    } else if (e.key === "ArrowLeft") {
+       e.preventDefault();
+       focusNextCanvasElement(el, -1);
+    }
+  });
   bindHoverPanelEvents(el, item.id);
 
   dom.workspace.appendChild(el);
@@ -312,3 +347,18 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
 }
 
 export { updateTechniqueTargetHighlights };
+
+export function focusNextCanvasElement(currentEl, dir) {
+  const { state } = getCtx();
+  const els = state.activeElements;
+  if (!els || els.length === 0) return;
+
+  const idx = els.indexOf(currentEl);
+  if (idx === -1) return;
+
+  let nextIdx = idx + dir;
+  if (nextIdx >= els.length) nextIdx = 0;
+  if (nextIdx < 0) nextIdx = els.length - 1;
+
+  els[nextIdx].focus();
+}

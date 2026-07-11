@@ -1,5 +1,6 @@
 import { getCtx } from "../context";
 import { resolvePlayableIngredient } from "../ingredients";
+import { renderIngredientGraph } from "../../ingredient_graph";
 import { spawnElementOnCanvas } from "../canvas/workspace";
 import { updateSkillsUI } from "./skills-panel";
 import { renderDiscoveryJournal } from "./journal";
@@ -93,14 +94,9 @@ export function renderProgressGraph() {
     return;
   }
 
-  if (!window.IngredientGraph) {
-    ingredientGraphContainer.innerHTML = '<p class="progress-map-intro">Progress map failed to load. Refresh the page.</p>';
-    return;
-  }
-
   const draw = () => {
     try {
-      window.IngredientGraph.render(ingredientGraphContainer, {
+      renderIngredientGraph(ingredientGraphContainer, {
         discoveredIds: state.discoveredIds,
         milestoneIngredientIds: data.Progression.getUnlockedIngredients(),
         showLocked: true,
