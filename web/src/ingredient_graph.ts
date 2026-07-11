@@ -5,12 +5,6 @@
  */
 
 (function () {
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>"']/g, ch => (
-      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch] || ch
-    ));
-  }
-
   const NODE_W = 108;
   const NODE_H = 72;
   const GAP_X = 20;
@@ -454,11 +448,20 @@
         const path = formatTransitionPath(transition, context);
         const item = document.createElement("li");
         item.className = `graph-transitions-list__item graph-transitions-list__item--${transition.kind}`;
-        item.innerHTML = `
-          <span class="graph-path-from">${escapeHtml(path.from)}</span>
-          <span class="graph-path-via">${escapeHtml(path.via)}</span>
-          <span class="graph-path-to">${escapeHtml(path.to)}</span>
-        `;
+
+        const fromSpan = document.createElement("span");
+        fromSpan.className = "graph-path-from";
+        fromSpan.textContent = path.from;
+
+        const viaSpan = document.createElement("span");
+        viaSpan.className = "graph-path-via";
+        viaSpan.textContent = path.via;
+
+        const toSpan = document.createElement("span");
+        toSpan.className = "graph-path-to";
+        toSpan.textContent = path.to;
+
+        item.append(fromSpan, viaSpan, toSpan);
         list.appendChild(item);
       });
 
@@ -553,22 +556,23 @@
 
     const label = document.createElement("label");
     label.className = "graph-focus-control graph-search-control";
-    label.innerHTML = `
-      <span class="graph-focus-label">Search</span>
-      <input
-        type="search"
-        id="graph-ingredient-search"
-        class="graph-search-input"
-        placeholder="Find an ingredient…"
-        autocomplete="off"
-        spellcheck="false"
-        aria-label="Search ingredients to show on the progress map"
-        aria-controls="graph-search-results"
-        aria-expanded="false"
-      />
-    `;
 
-    const input = label.querySelector("#graph-ingredient-search");
+    const labelSpan = document.createElement("span");
+    labelSpan.className = "graph-focus-label";
+    labelSpan.textContent = "Search";
+
+    const input = document.createElement("input");
+    input.type = "search";
+    input.id = "graph-ingredient-search";
+    input.className = "graph-search-input";
+    input.placeholder = "Find an ingredient…";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.setAttribute("aria-label", "Search ingredients to show on the progress map");
+    input.setAttribute("aria-controls", "graph-search-results");
+    input.setAttribute("aria-expanded", "false");
+
+    label.append(labelSpan, input);
     input.value = context.searchTerm || "";
 
     const results = document.createElement("ul");
@@ -584,7 +588,7 @@
     }
 
     function paintResults() {
-      results.innerHTML = "";
+      results.textContent = "";
       const matches = filterSearchResults(filterOptions, input.value);
 
       if (matches.length === 0) {
@@ -644,14 +648,25 @@
 
       const chip = document.createElement("div");
       chip.className = "graph-focus-chip";
-      chip.innerHTML = `
-        <span class="graph-focus-chip__label">Showing</span>
-        <span class="graph-focus-chip__value">${escapeHtml(focused.emoji)} ${escapeHtml(focused.name)}</span>
-        <button type="button" class="graph-focus-chip__clear" aria-label="Clear ingredient selection">×</button>
-      `;
-      chip.querySelector(".graph-focus-chip__clear").addEventListener("click", () => {
+
+      const lblSpan = document.createElement("span");
+      lblSpan.className = "graph-focus-chip__label";
+      lblSpan.textContent = "Showing";
+
+      const valSpan = document.createElement("span");
+      valSpan.className = "graph-focus-chip__value";
+      valSpan.textContent = `${focused.emoji} ${focused.name}`;
+
+      const clearBtn = document.createElement("button");
+      clearBtn.type = "button";
+      clearBtn.className = "graph-focus-chip__clear";
+      clearBtn.setAttribute("aria-label", "Clear ingredient selection");
+      clearBtn.textContent = "×";
+      clearBtn.addEventListener("click", () => {
         rerenderWithContext({ focusIngredientId: null });
       });
+
+      chip.append(lblSpan, valSpan, clearBtn);
       wrap.appendChild(chip);
     }
 
@@ -660,7 +675,7 @@
   }
 
   function renderGraph(container, context) {
-    container.innerHTML = "";
+    container.textContent = "";
 
     const allTransitions = buildRecipeTransitions();
     const allIngredientIds = collectIngredientIds(allTransitions);
@@ -696,34 +711,73 @@
     if (focusId) {
       depthControl = document.createElement("label");
       depthControl.className = "graph-focus-control";
-      depthControl.innerHTML = `
-        <span class="graph-focus-label">Connections</span>
-        <select id="graph-focus-depth" class="graph-focus-select" aria-label="How many degrees of connection to show">
-          <option value="1">1 degree</option>
-          <option value="2">2 degrees</option>
-          <option value="all">Everything</option>
-        </select>
-      `;
-      depthControl.querySelector("#graph-focus-depth").value = String(focusDepth);
+
+      const depthLabelSpan = document.createElement("span");
+      depthLabelSpan.className = "graph-focus-label";
+      depthLabelSpan.textContent = "Connections";
+
+      const select = document.createElement("select");
+      select.id = "graph-focus-depth";
+      select.className = "graph-focus-select";
+      select.setAttribute("aria-label", "How many degrees of connection to show");
+
+      const opt1 = document.createElement("option");
+      opt1.value = "1";
+      opt1.textContent = "1 degree";
+
+      const opt2 = document.createElement("option");
+      opt2.value = "2";
+      opt2.textContent = "2 degrees";
+
+      const optAll = document.createElement("option");
+      optAll.value = "all";
+      optAll.textContent = "Everything";
+
+      select.append(opt1, opt2, optAll);
+      select.value = String(focusDepth);
+
+      depthControl.append(depthLabelSpan, select);
     }
 
     const toggles = document.createElement("div");
     toggles.className = "graph-toolbar-toggles";
-    toggles.innerHTML = `
-      <label class="graph-toggle">
-        <input type="checkbox" id="graph-show-locked" ${showLocked ? "checked" : ""}>
-        Show undiscovered
-      </label>
-    `;
+
+    const labelToggle = document.createElement("label");
+    labelToggle.className = "graph-toggle";
+
+    const lockedToggleCheckbox = document.createElement("input");
+    lockedToggleCheckbox.type = "checkbox";
+    lockedToggleCheckbox.id = "graph-show-locked";
+    lockedToggleCheckbox.checked = showLocked;
+
+    labelToggle.append(lockedToggleCheckbox, document.createTextNode(" Show undiscovered"));
+    toggles.appendChild(labelToggle);
 
     const zoomControls = document.createElement("div");
     zoomControls.className = "graph-zoom-controls";
     if (focusId) {
-      zoomControls.innerHTML = `
-        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="out" aria-label="Zoom out">−</button>
-        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="in" aria-label="Zoom in">+</button>
-        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="reset" aria-label="Reset view">Reset</button>
-      `;
+      const btnOut = document.createElement("button");
+      btnOut.type = "button";
+      btnOut.className = "btn btn-secondary graph-zoom-btn";
+      btnOut.dataset.zoom = "out";
+      btnOut.setAttribute("aria-label", "Zoom out");
+      btnOut.textContent = "−";
+
+      const btnIn = document.createElement("button");
+      btnIn.type = "button";
+      btnIn.className = "btn btn-secondary graph-zoom-btn";
+      btnIn.dataset.zoom = "in";
+      btnIn.setAttribute("aria-label", "Zoom in");
+      btnIn.textContent = "+";
+
+      const btnReset = document.createElement("button");
+      btnReset.type = "button";
+      btnReset.className = "btn btn-secondary graph-zoom-btn";
+      btnReset.dataset.zoom = "reset";
+      btnReset.setAttribute("aria-label", "Reset view");
+      btnReset.textContent = "Reset";
+
+      zoomControls.append(btnOut, btnIn, btnReset);
     }
 
     if (depthControl) toolbar.appendChild(depthControl);
@@ -735,12 +789,14 @@
     if (!focusId) {
       const empty = document.createElement("div");
       empty.className = "graph-viewport graph-viewport--empty";
-      empty.innerHTML = `<p class="graph-empty-message">Search for an ingredient above to explore its recipes and connections.</p>`;
+      const emptyMsg = document.createElement("p");
+      emptyMsg.className = "graph-empty-message";
+      emptyMsg.textContent = "Search for an ingredient above to explore its recipes and connections.";
+      empty.appendChild(emptyMsg);
       container.appendChild(empty);
 
-      const lockedToggle = toolbar.querySelector("#graph-show-locked");
-      lockedToggle.addEventListener("change", () => {
-        rerenderWithContext({ showLocked: lockedToggle.checked });
+      lockedToggleCheckbox.addEventListener("change", () => {
+        rerenderWithContext({ showLocked: lockedToggleCheckbox.checked });
       });
       return;
     }
@@ -759,14 +815,26 @@
 
     const legend = document.createElement("div");
     legend.className = "graph-legend";
-    legend.innerHTML = `
-      <span><i class="legend-swatch legend-swatch--primitive"></i> Primal ingredient</span>
-      <span><i class="legend-swatch legend-swatch--raw"></i> Raw ingredient</span>
-      <span><i class="legend-swatch legend-swatch--processed"></i> Prepared ingredient</span>
-      <span><i class="legend-line legend-line--technique"></i> Technique</span>
-      <span><i class="legend-line legend-line--combine"></i> Combine</span>
-      <span class="graph-legend-hint">Edge icons mark known paths — details listed below</span>
-    `;
+
+    const createLegendItem = (className: string, text: string) => {
+      const span = document.createElement("span");
+      const i = document.createElement("i");
+      i.className = className;
+      span.appendChild(i);
+      span.appendChild(document.createTextNode(` ${text}`));
+      return span;
+    };
+
+    legend.appendChild(createLegendItem("legend-swatch legend-swatch--primitive", "Primal ingredient"));
+    legend.appendChild(createLegendItem("legend-swatch legend-swatch--raw", "Raw ingredient"));
+    legend.appendChild(createLegendItem("legend-swatch legend-swatch--processed", "Prepared ingredient"));
+    legend.appendChild(createLegendItem("legend-line legend-line--technique", "Technique"));
+    legend.appendChild(createLegendItem("legend-line legend-line--combine", "Combine"));
+
+    const hintSpan = document.createElement("span");
+    hintSpan.className = "graph-legend-hint";
+    hintSpan.textContent = "Edge icons mark known paths — details listed below";
+    legend.appendChild(hintSpan);
 
     const svg = createSvgEl("svg", {
       class: "ingredient-graph-svg",
@@ -777,14 +845,39 @@
     });
 
     const defs = createSvgEl("defs");
-    defs.innerHTML = `
-      <marker id="graph-arrow-technique" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="hsl(20, 90%, 58%)"></path>
-      </marker>
-      <marker id="graph-arrow-combine" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="hsl(200, 75%, 62%)"></path>
-      </marker>
-    `;
+
+    const markerTech = createSvgEl("marker", {
+      id: "graph-arrow-technique",
+      viewBox: "0 0 10 10",
+      refX: "9",
+      refY: "5",
+      markerWidth: "6",
+      markerHeight: "6",
+      orient: "auto-start-reverse"
+    });
+    const pathTech = createSvgEl("path", {
+      d: "M 0 0 L 10 5 L 0 10 z",
+      fill: "hsl(20, 90%, 58%)"
+    });
+    markerTech.appendChild(pathTech);
+
+    const markerComb = createSvgEl("marker", {
+      id: "graph-arrow-combine",
+      viewBox: "0 0 10 10",
+      refX: "9",
+      refY: "5",
+      markerWidth: "6",
+      markerHeight: "6",
+      orient: "auto-start-reverse"
+    });
+    const pathComb = createSvgEl("path", {
+      d: "M 0 0 L 10 5 L 0 10 z",
+      fill: "hsl(200, 75%, 62%)"
+    });
+    markerComb.appendChild(pathComb);
+
+    defs.appendChild(markerTech);
+    defs.appendChild(markerComb);
     svg.appendChild(defs);
 
     const rootGroup = createSvgEl("g", { class: "graph-root" });

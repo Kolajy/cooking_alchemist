@@ -261,24 +261,40 @@ export function updateStats() {
     const hasSproutedSeeds = state.discoveredIds.has("sprouted_seeds");
     const discoveredRecipesCount = [...state.discoveredIds].filter(id => data.DISCOVERABLE_ITEMS[id]).length;
 
-    if (!hasSmashedBerries) {
-      hint = "Separate 🫐 <strong>Berries</strong> on the counter to find fresh fruit and smashable pulp!";
-    } else if (!hasPotato) {
-      hint = "Separate 🥔 <strong>Tubers</strong> on the counter to find a fresh Potato!";
-    } else if (!hasMashedPotato) {
-      hint = "Use your new ✊ <strong>Force</strong> action to smash the 🥔 <strong>Potato</strong> into a fluffy mash!";
-    } else if (discoveredRecipesCount < 15) {
-      hint = `Keep exploring and separating! Restore <strong>15 recipes</strong> in your Ledger to unlock the 🥣 <strong>Combine</strong> action (Current: <strong>${discoveredRecipesCount}</strong>/15).`;
-    } else if (!hasSproutedSeeds) {
-      hint = "Combine 🌻 <strong>Seeds</strong> and 💧 <strong>Water</strong> on the counter using the 🥣 <strong>Combine</strong> action to grow sprouted greens!";
-    } else if (discoveredRecipesCount < 40) {
-      hint = `Excellent! Continue combining and discovering dishes. Reach <strong>40 recipes</strong> to unlock 🍳 <strong>Heat</strong> (Current: <strong>${discoveredRecipesCount}</strong>/40).`;
-    } else if (discoveredRecipesCount < 200 || !state.discoveredIds.has("berry_pulp")) {
-      hint = `You're a true alchemist. Work towards restoring <strong>200 recipes</strong> and finding <strong>Berry Pulp</strong> to master ⏳ <strong>Time</strong> (Current: <strong>${discoveredRecipesCount}</strong>/200).`;
-    } else {
-      hint = "Grandmother's ledger is nearly restored! Search for remaining rare secrets in the Progress Map.";
-    }
+    guideTextEl.textContent = "";
 
-    guideTextEl.innerHTML = hint;
+    const appendHintParts = (...parts: (string | HTMLElement)[]) => {
+      for (const part of parts) {
+        if (typeof part === "string") {
+          guideTextEl.appendChild(document.createTextNode(part));
+        } else {
+          guideTextEl.appendChild(part);
+        }
+      }
+    };
+
+    const strong = (text: string) => {
+      const el = document.createElement("strong");
+      el.textContent = text;
+      return el;
+    };
+
+    if (!hasSmashedBerries) {
+      appendHintParts("Separate 🫐 ", strong("Berries"), " on the counter to find fresh fruit and smashable pulp!");
+    } else if (!hasPotato) {
+      appendHintParts("Separate 🥔 ", strong("Tubers"), " on the counter to find a fresh Potato!");
+    } else if (!hasMashedPotato) {
+      appendHintParts("Use your new ✊ ", strong("Force"), " action to smash the 🥔 ", strong("Potato"), " into a fluffy mash!");
+    } else if (discoveredRecipesCount < 15) {
+      appendHintParts("Keep exploring and separating! Restore ", strong("15 recipes"), " in your Ledger to unlock the 🥣 ", strong("Combine"), ` action (Current: `, strong(`${discoveredRecipesCount}`), "/15).");
+    } else if (!hasSproutedSeeds) {
+      appendHintParts("Combine 🌻 ", strong("Seeds"), " and 💧 ", strong("Water"), " on the counter using the 🥣 ", strong("Combine"), " action to grow sprouted greens!");
+    } else if (discoveredRecipesCount < 40) {
+      appendHintParts("Excellent! Continue combining and discovering dishes. Reach ", strong("40 recipes"), " to unlock 🍳 ", strong("Heat"), ` (Current: `, strong(`${discoveredRecipesCount}`), "/40).");
+    } else if (discoveredRecipesCount < 200 || !state.discoveredIds.has("berry_pulp")) {
+      appendHintParts("You're a true alchemist. Work towards restoring ", strong("200 recipes"), " and finding ", strong("Berry Pulp"), " to master ⏳ ", strong("Time"), ` (Current: `, strong(`${discoveredRecipesCount}`), "/200).");
+    } else {
+      appendHintParts("Grandmother's ledger is nearly restored! Search for remaining rare secrets in the Progress Map.");
+    }
   }
 }

@@ -228,7 +228,7 @@ export function updateSkillsUI(): void {
   const { skillsList } = dom;
   if (!skillsList) return;
 
-  skillsList.innerHTML = "";
+  skillsList.textContent = "";
 
   METHOD_ORDER.forEach(methodId => {
     const cfg = data.PLAYER_ACTIONS[methodId];

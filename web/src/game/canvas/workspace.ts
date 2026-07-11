@@ -9,6 +9,7 @@ import {
   updateTechniqueTargetHighlights,
   canCombineIngredients
 } from "./technique-target";
+import { enrichItem, appendIngredientMarkup } from "../ingredients";
 import { bindHoverPanelEvents } from "../ui/hover-panel";
 
 export function getCanvasPosition(el) {
@@ -260,7 +261,7 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   el.className = "alchemy-element canvas-element";
   el.dataset.id = item.id;
   el.dataset.origin = item.origin;
-  el.innerHTML = buildIngredientMarkup(item, false);
+  appendIngredientMarkup(el, item, false);
 
   if (x === null || y === null) {
     const rect = dom.workspace.getBoundingClientRect();

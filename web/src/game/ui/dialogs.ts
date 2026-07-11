@@ -1,6 +1,5 @@
 import { getCtx } from "../context";
 import { enrichItem, isFinalizedRecipe, getStateLabel, getIngredientState } from "../ingredients";
-import { escapeHtml } from "../security/html";
 
 export function openDialog(dialog) {
   if (!dialog) return;
@@ -160,7 +159,7 @@ export function renderRecipeBook() {
   const { discoveredRecipesList } = dom;
   if (!discoveredRecipesList) return;
 
-  discoveredRecipesList.innerHTML = "";
+  discoveredRecipesList.textContent = "";
 
   const uniqueRecipes = [];
   Object.keys(data.DISCOVERABLE_ITEMS).forEach(id => {
@@ -171,7 +170,12 @@ export function renderRecipeBook() {
   });
 
   if (uniqueRecipes.length === 0) {
-    discoveredRecipesList.innerHTML = `<p class="dialog-intro" style="grid-column: 1/-1; text-align: center;">No finalized recipes yet. Separate primal ingredients, then combine and cook what you discover.</p>`;
+    const emptyP = document.createElement("p");
+    emptyP.className = "dialog-intro";
+    emptyP.style.gridColumn = "1/-1";
+    emptyP.style.textAlign = "center";
+    emptyP.textContent = "No finalized recipes yet. Separate primal ingredients, then combine and cook what you discover.";
+    discoveredRecipesList.appendChild(emptyP);
     return;
   }
 
@@ -185,18 +189,39 @@ export function renderRecipeBook() {
 
     const stateKey = getIngredientState(itemData);
 
-    card.innerHTML = `
-      <span class="recipe-card-emoji">${escapeHtml(itemData.emoji)}</span>
-      <span class="recipe-card-name">${escapeHtml(itemData.name)}</span>
-      <span class="recipe-card-meta">
-        <span class="recipe-card-category">${escapeHtml(itemData.category || "")}</span>
-        <span class="origin-badge origin-badge--recipe">${escapeHtml(getStateLabel(stateKey))}</span>
-      </span>
-      <div class="tooltip" role="tooltip">
-        <h4>📜 Did You Know?</h4>
-        <p>${escapeHtml(itemData.blurb || itemData.tip || itemData.description || "Keep experimenting to learn more.")}</p>
-      </div>
-    `;
+    const emojiSpan = document.createElement("span");
+    emojiSpan.className = "recipe-card-emoji";
+    emojiSpan.textContent = itemData.emoji;
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "recipe-card-name";
+    nameSpan.textContent = itemData.name;
+
+    const metaSpan = document.createElement("span");
+    metaSpan.className = "recipe-card-meta";
+
+    const catSpan = document.createElement("span");
+    catSpan.className = "recipe-card-category";
+    catSpan.textContent = itemData.category || "";
+
+    const badgeSpan = document.createElement("span");
+    badgeSpan.className = "origin-badge origin-badge--recipe";
+    badgeSpan.textContent = getStateLabel(stateKey);
+    metaSpan.append(catSpan, badgeSpan);
+
+    const tooltipDiv = document.createElement("div");
+    tooltipDiv.className = "tooltip";
+    tooltipDiv.setAttribute("role", "tooltip");
+
+    const h4 = document.createElement("h4");
+    h4.textContent = "📜 Did You Know?";
+
+    const p = document.createElement("p");
+    p.textContent = itemData.blurb || itemData.tip || itemData.description || "Keep experimenting to learn more.";
+
+    tooltipDiv.append(h4, p);
+
+    card.append(emojiSpan, nameSpan, metaSpan, tooltipDiv);
 
     discoveredRecipesList.appendChild(card);
   });

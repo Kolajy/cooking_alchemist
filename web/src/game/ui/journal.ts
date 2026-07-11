@@ -5,7 +5,6 @@ import {
   getStateLabel,
   isFinalizedRecipe
 } from "../ingredients";
-import { escapeHtml, escapeHtmlAttr } from "../security/html";
 import type { DiscoveryLogEntry } from "../../types";
 
 const timestampFormatter = new Intl.DateTimeFormat(undefined, {
@@ -61,19 +60,48 @@ export function renderDiscoveryJournal(): void {
     }
 
     const stateKey = getIngredientState(item);
-    row.innerHTML = `
-      <div class="discovery-log-entry__main">
-        <span class="discovery-log-entry__emoji" aria-hidden="true">${escapeHtml(item.emoji)}</span>
-        <div class="discovery-log-entry__text">
-          <span class="discovery-log-entry__name">${escapeHtml(item.name)}</span>
-          <span class="discovery-log-entry__meta">
-            <span class="origin-badge ${stateKey === "recipe" ? "origin-badge--recipe" : stateKey === "raw" ? "origin-badge--raw" : stateKey === "primal" ? "origin-badge--primitive" : "origin-badge--processed"}">${escapeHtml(getStateLabel(stateKey))}</span>
-            ${item.category ? `<span class="discovery-log-entry__category">${escapeHtml(item.category)}</span>` : ""}
-          </span>
-        </div>
-      </div>
-      <time class="discovery-log-entry__time" datetime="${entry.discoveredAt ? escapeHtmlAttr(new Date(entry.discoveredAt).toISOString()) : ""}">${escapeHtml(formatDiscoveredAt(entry.discoveredAt))}</time>
-    `;
+
+    const mainDiv = document.createElement("div");
+    mainDiv.className = "discovery-log-entry__main";
+
+    const emojiSpan = document.createElement("span");
+    emojiSpan.className = "discovery-log-entry__emoji";
+    emojiSpan.setAttribute("aria-hidden", "true");
+    emojiSpan.textContent = item.emoji;
+
+    const textDiv = document.createElement("div");
+    textDiv.className = "discovery-log-entry__text";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "discovery-log-entry__name";
+    nameSpan.textContent = item.name;
+
+    const metaSpan = document.createElement("span");
+    metaSpan.className = "discovery-log-entry__meta";
+
+    const badgeSpan = document.createElement("span");
+    badgeSpan.className = `origin-badge ${stateKey === "recipe" ? "origin-badge--recipe" : stateKey === "raw" ? "origin-badge--raw" : stateKey === "primal" ? "origin-badge--primitive" : "origin-badge--processed"}`;
+    badgeSpan.textContent = getStateLabel(stateKey);
+    metaSpan.appendChild(badgeSpan);
+
+    if (item.category) {
+      const catSpan = document.createElement("span");
+      catSpan.className = "discovery-log-entry__category";
+      catSpan.textContent = item.category;
+      metaSpan.appendChild(catSpan);
+    }
+
+    textDiv.append(nameSpan, metaSpan);
+    mainDiv.append(emojiSpan, textDiv);
+
+    const timeEl = document.createElement("time");
+    timeEl.className = "discovery-log-entry__time";
+    if (entry.discoveredAt) {
+      timeEl.setAttribute("datetime", new Date(entry.discoveredAt).toISOString());
+    }
+    timeEl.textContent = formatDiscoveredAt(entry.discoveredAt);
+
+    row.append(mainDiv, timeEl);
 
     discoveryLogList.appendChild(row);
   });

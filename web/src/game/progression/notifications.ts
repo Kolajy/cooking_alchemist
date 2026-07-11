@@ -2,7 +2,6 @@ import { getCtx } from "../context";
 import { isPlayerActionUnlocked } from "./skills";
 import { playSound } from "../feedback/sounds";
 import { emitGameplayEvent } from "../events";
-import { escapeHtml } from "../security/html";
 import { queueMechanicDiscovery } from "../ui/discovery";
 
 let lastHintText = "";
@@ -167,10 +166,15 @@ export function triggerIngredientUnlockNotification(milestone: { emoji: string; 
 
   const text = document.createElement("div");
   text.className = "levelup-text";
-  text.innerHTML = `
-    <h4 style="color: var(--color-success);">📦 Ingredients Shipment! 📦</h4>
-    <p>${escapeHtml(milestone.msg)}</p>
-  `;
+
+  const h4 = document.createElement("h4");
+  h4.style.color = "var(--color-success)";
+  h4.textContent = "📦 Ingredients Shipment! 📦";
+
+  const p = document.createElement("p");
+  p.textContent = milestone.msg;
+
+  text.append(h4, p);
 
   notif.append(emoji, text);
   dom.workspace?.appendChild(notif);

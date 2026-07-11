@@ -578,11 +578,25 @@
         const panel = document.createElement("div");
         panel.className = "boot-error-panel";
         panel.setAttribute("role", "alert");
-        panel.innerHTML = `
-          <h2>Kitchen failed to start</h2>
-          <p>Game scripts did not load. This usually means the page was opened as a file instead of through the dev server.</p>
-          <p class="boot-error-hint">From the project folder run <code>npm run dev</code>, then open <strong>https://localhost:5173</strong>.</p>
-        `;
+        const h2 = document.createElement("h2");
+        h2.textContent = "Kitchen failed to start";
+
+        const p1 = document.createElement("p");
+        p1.textContent = "Game scripts did not load. This usually means the page was opened as a file instead of through the dev server.";
+
+        const p2 = document.createElement("p");
+        p2.className = "boot-error-hint";
+        p2.appendChild(document.createTextNode("From the project folder run "));
+        const code = document.createElement("code");
+        code.textContent = "npm run dev";
+        p2.appendChild(code);
+        p2.appendChild(document.createTextNode(", then open "));
+        const strong = document.createElement("strong");
+        strong.textContent = "https://localhost:5173";
+        p2.appendChild(strong);
+        p2.appendChild(document.createTextNode("."));
+
+        panel.append(h2, p1, p2);
         document.body.appendChild(panel);
       }, 2500);
     });

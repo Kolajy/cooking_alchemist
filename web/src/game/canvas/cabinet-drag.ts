@@ -1,6 +1,6 @@
 import { getCtx } from "../context";
 import { DRAG_THRESHOLD } from "../constants";
-import { enrichItem, buildIngredientMarkup, resolvePlayableIngredient } from "../ingredients";
+import { enrichItem, appendIngredientMarkup, resolvePlayableIngredient } from "../ingredients";
 import { spawnElementOnCanvas, getCanvasPosition } from "./workspace";
 import { switchMainView } from "../ui/views";
 import { pushUndoEntry } from "../feedback/undo";
@@ -19,7 +19,7 @@ function recordSpawnUndo(item, element) {
 function createCabinetDragGhost(item, sourceEl) {
   const ghost = document.createElement("div");
   ghost.className = "alchemy-element cabinet-drag-ghost";
-  ghost.innerHTML = buildIngredientMarkup(enrichItem(item), false);
+  appendIngredientMarkup(ghost, enrichItem(item), false);
   ghost.style.position = "fixed";
   ghost.style.left = "0";
   ghost.style.top = "0";

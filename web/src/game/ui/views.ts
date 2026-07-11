@@ -94,7 +94,11 @@ export function renderProgressGraph() {
   }
 
   if (!window.IngredientGraph) {
-    ingredientGraphContainer.innerHTML = '<p class="progress-map-intro">Progress map failed to load. Refresh the page.</p>';
+    ingredientGraphContainer.textContent = "";
+    const p = document.createElement("p");
+    p.className = "progress-map-intro";
+    p.textContent = "Progress map failed to load. Refresh the page.";
+    ingredientGraphContainer.appendChild(p);
     return;
   }
 
@@ -114,7 +118,11 @@ export function renderProgressGraph() {
       });
     } catch (error) {
       console.error("Failed to render progress map", error);
-      ingredientGraphContainer.innerHTML = '<p class="progress-map-intro">Could not draw the progress map. Try refreshing.</p>';
+      ingredientGraphContainer.textContent = "";
+      const p = document.createElement("p");
+      p.className = "progress-map-intro";
+      p.textContent = "Could not draw the progress map. Try refreshing.";
+      ingredientGraphContainer.appendChild(p);
     }
   };
 

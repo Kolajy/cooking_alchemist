@@ -1,7 +1,7 @@
 import { getCtx } from "./context";
 import {
   getPlayableIngredientCatalog,
-  buildCabinetItemMarkup,
+  appendCabinetItemMarkup,
   matchesCabinetStateFilter,
   matchesCabinetTypeFilter
 } from "./ingredients";
@@ -32,7 +32,7 @@ export function renderCabinet(): void {
   const { cabinetItems } = dom;
   if (!cabinetItems) return;
 
-  cabinetItems.innerHTML = "";
+  cabinetItems.textContent = "";
   const term = state.searchTerm.toLowerCase();
 
   // Parse special tags/type queries from search input (e.g. ":raw", ":liquid", ":protein")
@@ -115,7 +115,7 @@ export function renderCabinet(): void {
       scheduleRecentHighlightClear(item.id);
     }
 
-    el.innerHTML = buildCabinetItemMarkup(item);
+    appendCabinetItemMarkup(el, item);
     el.title = item.description ? `${item.name} — ${item.description}` : `Drag or click to add ${item.name}`;
     el.addEventListener("pointerdown", onCabinetPointerDown);
     bindHoverPanelEvents(el, item.id);

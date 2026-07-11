@@ -1,5 +1,4 @@
 import { getCtx } from "../context";
-import { escapeHtml } from "../security/html";
 import type { IngredientItem } from "../../types";
 import { INGREDIENT_PROPERTIES } from "../../data/ingredients/properties";
 
@@ -108,118 +107,116 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   const stateClass = `hover-card__state hover-card__state--${stateKey}`;
   const stateLabel = getFriendlyStateLabel(stateKey);
 
-  // Build properties list
-  const propList: string[] = [];
-  const isPrimal = stateKey === "primal";
+  const historicalText = stateKey === "primal" ? PRIMAL_HISTORICAL_INFO[itemId] : null;
 
-  if (!isPrimal) {
-    // Edible raw
-    if (props.edibleRaw !== undefined) {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">🥦</span>
-          <span>Raw: <span class="hover-card__prop-value">${props.edibleRaw ? "Edible" : "Need Cook"}</span></span>
-        </div>
-      `);
-    }
+  hoverCardEl.textContent = "";
 
-    // Moisture
-    if (props.moisture && props.moisture !== "none") {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">💧</span>
-          <span>Moisture: <span class="hover-card__prop-value" style="text-transform: capitalize;">${props.moisture}</span></span>
-        </div>
-      `);
-    }
+  const headerDiv = document.createElement("div");
+  headerDiv.className = "hover-card__header";
 
-    // Fat
-    if (props.fat && props.fat !== "none") {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">🧈</span>
-          <span>Fat: <span class="hover-card__prop-value" style="text-transform: capitalize;">${props.fat}</span></span>
-        </div>
-      `);
-    }
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "hover-card__emoji";
+  emojiSpan.textContent = item.emoji;
 
-    // Structure
-    if (props.structure) {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">🪵</span>
-          <span>Structure: <span class="hover-card__prop-value" style="text-transform: capitalize;">${props.structure}</span></span>
-        </div>
-      `);
-    }
+  const metaDiv = document.createElement("div");
+  metaDiv.className = "hover-card__meta";
 
-    // Outer Layer / Peel
-    if (props.hasOuterLayer) {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">🍊</span>
-          <span>Has Peel</span>
-        </div>
-      `);
-    }
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "hover-card__name";
+  nameSpan.textContent = item.name;
 
-    // Seeds
-    if (props.hasSeeds) {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">🌱</span>
-          <span>Has Seeds</span>
-        </div>
-      `);
-    }
+  const stateSpan = document.createElement("span");
+  stateSpan.className = stateClass;
+  stateSpan.textContent = stateLabel;
 
-    // Bones
-    if (props.hasBones) {
-      propList.push(`
-        <div class="hover-card__prop-item">
-          <span class="hover-card__prop-icon">🦴</span>
-          <span>Has Bones</span>
-        </div>
-      `);
-    }
+  metaDiv.append(nameSpan, stateSpan);
+  headerDiv.append(emojiSpan, metaDiv);
+  hoverCardEl.appendChild(headerDiv);
 
-    // Toxic check
-    if (props.toxic) {
-      propList.push(`
-        <div class="hover-card__prop-item" style="grid-column: span 2; color: var(--color-danger); font-weight: bold;">
-          <span class="hover-card__prop-icon">⚠️</span>
-          <span>Toxic if raw!</span>
-        </div>
-      `);
-    }
+  if (item.description) {
+    const descP = document.createElement("p");
+    descP.className = "hover-card__description";
+    descP.textContent = item.description;
+    hoverCardEl.appendChild(descP);
   }
 
-  const historicalText = isPrimal ? PRIMAL_HISTORICAL_INFO[itemId] : null;
+  if (historicalText) {
+    const loreDiv = document.createElement("div");
+    loreDiv.className = "hover-card__lore";
+    loreDiv.style.borderLeftColor = "hsl(265, 40%, 65%)";
+    loreDiv.style.background = "hsla(265, 30%, 93%, 0.45)";
+    loreDiv.style.color = "hsl(265, 25%, 36%)";
+    loreDiv.style.marginTop = "0.85rem";
+    loreDiv.textContent = historicalText;
+    hoverCardEl.appendChild(loreDiv);
+  }
 
-  // Construct HTML
-  hoverCardEl.innerHTML = `
-    <div class="hover-card__header">
-      <span class="hover-card__emoji">${escapeHtml(item.emoji)}</span>
-      <div class="hover-card__meta">
-        <span class="hover-card__name">${escapeHtml(item.name)}</span>
-        <span class="${stateClass}">${escapeHtml(stateLabel)}</span>
-      </div>
-    </div>
-    ${item.description ? `<p class="hover-card__description">${escapeHtml(item.description)}</p>` : ""}
-    ${historicalText ? `
-      <div class="hover-card__lore" style="border-left-color: hsl(265, 40%, 65%); background: hsla(265, 30%, 93%, 0.45); color: hsl(265, 25%, 36%); margin-top: 0.85rem;">
-        ${escapeHtml(historicalText)}
-      </div>
-    ` : ""}
-    ${propList.length ? `<div class="hover-card__props">${propList.join("")}</div>` : ""}
-    ${item.blurb ? `<div class="hover-card__lore">${escapeHtml(item.blurb)}</div>` : ""}
-    ${item.tip ? `
-      <div class="hover-card__tip-box">
-        <span class="hover-card__tip-icon">💡</span>
-        <span>${escapeHtml(item.tip)}</span>
-      </div>
-    ` : ""}
-  `;
+  const propsDiv = document.createElement("div");
+  propsDiv.className = "hover-card__props";
+  let hasProps = false;
+
+  const isPrimal = stateKey === "primal";
+  if (!isPrimal) {
+    const createProp = (iconStr: string, label: string, valText?: string, extraStyle?: string) => {
+      const pItem = document.createElement("div");
+      pItem.className = "hover-card__prop-item";
+      if (extraStyle) pItem.setAttribute("style", extraStyle);
+
+      const pIcon = document.createElement("span");
+      pIcon.className = "hover-card__prop-icon";
+      pIcon.textContent = iconStr;
+      pItem.appendChild(pIcon);
+
+      const pText = document.createElement("span");
+      if (valText) {
+        pText.textContent = `${label}: `;
+        const pVal = document.createElement("span");
+        pVal.className = "hover-card__prop-value";
+        if (label === "Moisture" || label === "Fat" || label === "Structure") {
+          pVal.style.textTransform = "capitalize";
+        }
+        pVal.textContent = valText;
+        pText.appendChild(pVal);
+      } else {
+        pText.textContent = label;
+      }
+      pItem.appendChild(pText);
+      propsDiv.appendChild(pItem);
+      hasProps = true;
+    };
+
+    if (props.edibleRaw !== undefined) createProp("🥦", "Raw", props.edibleRaw ? "Edible" : "Need Cook");
+    if (props.moisture && props.moisture !== "none") createProp("💧", "Moisture", props.moisture);
+    if (props.fat && props.fat !== "none") createProp("🧈", "Fat", props.fat);
+    if (props.structure) createProp("🪵", "Structure", props.structure);
+    if (props.hasOuterLayer) createProp("🍊", "Has Peel");
+    if (props.hasSeeds) createProp("🌱", "Has Seeds");
+    if (props.hasBones) createProp("🦴", "Has Bones");
+    if (props.toxic) createProp("⚠️", "Toxic if raw!", undefined, "grid-column: span 2; color: var(--color-danger); font-weight: bold;");
+  }
+
+  if (hasProps) {
+    hoverCardEl.appendChild(propsDiv);
+  }
+
+  if (item.blurb) {
+    const blurbDiv = document.createElement("div");
+    blurbDiv.className = "hover-card__lore";
+    blurbDiv.textContent = item.blurb;
+    hoverCardEl.appendChild(blurbDiv);
+  }
+
+  if (item.tip) {
+    const tipDiv = document.createElement("div");
+    tipDiv.className = "hover-card__tip-box";
+    const tipIconSpan = document.createElement("span");
+    tipIconSpan.className = "hover-card__tip-icon";
+    tipIconSpan.textContent = "💡";
+    const tipTextSpan = document.createElement("span");
+    tipTextSpan.textContent = item.tip;
+    tipDiv.append(tipIconSpan, tipTextSpan);
+    hoverCardEl.appendChild(tipDiv);
+  }
 
   hoverCardEl.classList.add("visible");
   updateHoverPanelPosition(e);

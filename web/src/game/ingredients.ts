@@ -1,5 +1,4 @@
 import { getCtx } from "./context";
-import { escapeHtml, escapeHtmlAttr } from "./security/html";
 import type { IngredientItem } from "../types";
 
 export interface CabinetItem extends IngredientItem {
@@ -280,7 +279,7 @@ export function buildCabinetFilterButtons(): void {
   const { ingredientTypesContainer } = dom;
 
   if (ingredientTypesContainer) {
-    ingredientTypesContainer.innerHTML = "";
+    ingredientTypesContainer.textContent = "";
     const allTypeBtn = document.createElement("button");
     allTypeBtn.type = "button";
     allTypeBtn.className = "subtab-btn";
@@ -301,27 +300,63 @@ export function buildCabinetFilterButtons(): void {
   syncCabinetFilterButtons();
 }
 
-export function buildIngredientMarkup(item: IngredientItem, showBadge = true): string {
+export function appendIngredientMarkup(el: HTMLElement, item: IngredientItem, showBadge = true): void {
   const itemData = enrichItem(item);
   const stateKey = getIngredientState(itemData);
-  const badge = showBadge
-    ? `<span class="origin-badge ${getStateBadgeClass(stateKey)}" title="${escapeHtmlAttr(getStateBadgeTitle(stateKey))}">${escapeHtml(getStateLabel(stateKey))}</span>`
-    : "";
 
-  return `<span class="element-emoji">${escapeHtml(itemData.emoji)}</span><span class="element-name">${escapeHtml(itemData.name)}</span>${badge}`;
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "element-emoji";
+  emojiSpan.textContent = itemData.emoji;
+
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "element-name";
+  nameSpan.textContent = itemData.name;
+
+  el.appendChild(emojiSpan);
+  el.appendChild(nameSpan);
+
+  if (showBadge) {
+    const badgeSpan = document.createElement("span");
+    badgeSpan.className = `origin-badge ${getStateBadgeClass(stateKey)}`;
+    badgeSpan.title = getStateBadgeTitle(stateKey);
+    badgeSpan.textContent = getStateLabel(stateKey);
+    el.appendChild(badgeSpan);
+  }
 }
 
-export function buildCabinetItemMarkup(item: CabinetItem): string {
-  return `
-    <div class="cabinet-item__head">
-      <span class="element-emoji">${escapeHtml(item.emoji)}</span>
-      <div class="cabinet-item__meta">
-        <span class="element-name">${escapeHtml(item.name)}</span>
-        <span class="origin-badge ${getStateBadgeClass(item.stateKey)}" title="${escapeHtmlAttr(getStateBadgeTitle(item.stateKey))}">${escapeHtml(getStateLabel(item.stateKey))}</span>
-      </div>
-    </div>
-    ${item.description ? `<p class="element-desc">${escapeHtml(item.description)}</p>` : ""}
-  `;
+export function appendCabinetItemMarkup(el: HTMLElement, item: CabinetItem): void {
+  const headDiv = document.createElement("div");
+  headDiv.className = "cabinet-item__head";
+
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "element-emoji";
+  emojiSpan.textContent = item.emoji;
+
+  const metaDiv = document.createElement("div");
+  metaDiv.className = "cabinet-item__meta";
+
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "element-name";
+  nameSpan.textContent = item.name;
+
+  const badgeSpan = document.createElement("span");
+  badgeSpan.className = `origin-badge ${getStateBadgeClass(item.stateKey)}`;
+  badgeSpan.title = getStateBadgeTitle(item.stateKey);
+  badgeSpan.textContent = getStateLabel(item.stateKey);
+
+  metaDiv.appendChild(nameSpan);
+  metaDiv.appendChild(badgeSpan);
+  headDiv.appendChild(emojiSpan);
+  headDiv.appendChild(metaDiv);
+
+  el.appendChild(headDiv);
+
+  if (item.description) {
+    const descP = document.createElement("p");
+    descP.className = "element-desc";
+    descP.textContent = item.description;
+    el.appendChild(descP);
+  }
 }
 
 export function resolvePlayableIngredient(itemId: string): IngredientItem | undefined {

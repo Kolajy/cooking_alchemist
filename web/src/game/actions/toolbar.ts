@@ -13,7 +13,6 @@ import {
   playTechniqueSound
 } from "../feedback/sounds";
 import { showWorkspaceHint } from "../progression/notifications";
-import { escapeHtml } from "../security/html";
 import { getToolbarFailureHint } from "../feedback/hints";
 import { updateTechniqueTargetHighlights } from "../canvas/technique-target";
 import { getActiveToolId, isTechniqueCategory } from "./mode";
@@ -221,7 +220,7 @@ export function renderCookingToolbar() {
   const { cookingToolbar } = dom;
   if (!cookingToolbar) return;
 
-  cookingToolbar.innerHTML = "";
+  cookingToolbar.textContent = "";
   cookingToolbar.className = "cooking-toolbar";
 
   const appendBtn = ({
@@ -239,7 +238,16 @@ export function renderCookingToolbar() {
     if (isActive) btn.classList.add("active");
     if (disabled) btn.disabled = true;
     if (title) btn.title = title;
-    btn.innerHTML = `<span class="tool-emoji">${escapeHtml(emoji)}</span><span class="tool-name">${escapeHtml(label)}</span>`;
+
+    const emojiSpan = document.createElement("span");
+    emojiSpan.className = "tool-emoji";
+    emojiSpan.textContent = emoji;
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "tool-name";
+    nameSpan.textContent = label;
+
+    btn.append(emojiSpan, nameSpan);
     btn.addEventListener("click", onClick);
     return btn;
   };
