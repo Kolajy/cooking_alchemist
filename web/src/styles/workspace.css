@@ -50,20 +50,35 @@
 
 .workspace-hint {
   position: absolute;
-  color: var(--scroll-ink-muted);
+  color: hsl(28, 25%, 45%);
   font-family: var(--font-charm);
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   pointer-events: none;
   user-select: none;
   text-align: center;
-  animation: pulse-slow 7s infinite ease-in-out;
-  max-width: 400px;
+  max-width: 450px;
   line-height: 1.35;
   opacity: 0.88;
   text-shadow: 0 1px 0 hsla(44, 50%, 96%, 0.6);
   z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  background: hsla(44, 48%, 97%, 0.85);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 1px dashed hsla(30, 22%, 52%, 0.25);
+  box-shadow: 0 4px 12px hsla(28, 20%, 24%, 0.05);
+  backdrop-filter: blur(4px);
+  animation: hint-pulse 4s infinite ease-in-out;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
 }
 
 .workspace-area.workspace-shake {
@@ -390,28 +405,37 @@ body[data-active-tool="freeze"] #workspace {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  width: 220px;
+  width: 240px;
   background: hsl(44, 85%, 92%);
   border: 1px solid hsla(38, 30%, 50%, 0.35);
   border-radius: 6px;
-  padding: 0.75rem;
+  padding: 0.85rem;
   box-shadow: 
     0 6px 14px hsla(28, 25%, 15%, 0.12),
     0 2px 5px hsla(28, 25%, 15%, 0.08);
   font-family: var(--font-rustic);
-  font-size: 0.85rem;
-  line-height: 1.4;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: hsl(22, 22%, 24%);
   z-index: 1003;
   transform: rotate(-1.5deg);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: float-note 4s ease-in-out infinite;
+  cursor: default;
+}
+
+@keyframes float-note {
+  0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+  50% { transform: rotate(-1deg) translateY(-2px); }
 }
 
 .grandma-guide:hover {
+  animation: none;
   transform: rotate(0deg) scale(1.02);
   box-shadow: 
     0 8px 18px hsla(28, 25%, 15%, 0.15),
     0 3px 7px hsla(28, 25%, 15%, 0.1);
+  border-color: hsla(var(--hue-gold), 50%, 50%, 0.5);
 }
 
 .grandma-guide__pin {
@@ -421,6 +445,12 @@ body[data-active-tool="freeze"] #workspace {
   transform: translateX(-50%);
   font-size: 1.25rem;
   pointer-events: none;
+  animation: bounce-pin 2s ease-in-out infinite;
+}
+
+@keyframes bounce-pin {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
 }
 
 .grandma-guide__title {
