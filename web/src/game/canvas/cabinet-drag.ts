@@ -19,7 +19,7 @@ function recordSpawnUndo(item, element) {
 function createCabinetDragGhost(item, sourceEl) {
   const ghost = document.createElement("div");
   ghost.className = "alchemy-element cabinet-drag-ghost";
-  ghost.innerHTML = buildIngredientMarkup(enrichItem(item), false);
+  ghost.appendChild(buildIngredientMarkup(enrichItem(item), false));
   ghost.style.position = "fixed";
   ghost.style.left = "0";
   ghost.style.top = "0";

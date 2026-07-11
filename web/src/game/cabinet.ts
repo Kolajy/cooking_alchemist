@@ -117,7 +117,7 @@ export function renderCabinet(): void {
       scheduleRecentHighlightClear(item.id);
     }
 
-    el.innerHTML = buildCabinetItemMarkup(item);
+    el.appendChild(buildCabinetItemMarkup(item));
     el.title = item.description ? `${item.name} — ${item.description}` : `Drag or click to add ${item.name}`;
     el.addEventListener("pointerdown", onCabinetPointerDown);
     bindHoverPanelEvents(el, item.id);

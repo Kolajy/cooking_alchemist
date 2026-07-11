@@ -282,7 +282,7 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   el.className = "alchemy-element canvas-element";
   el.dataset.id = item.id;
   el.dataset.origin = item.origin;
-  el.innerHTML = buildIngredientMarkup(item, false);
+  el.appendChild(buildIngredientMarkup(item, false));
 
   if (x === null || y === null) {
     const rect = dom.workspace.getBoundingClientRect();

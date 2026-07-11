@@ -239,7 +239,16 @@ export function renderCookingToolbar() {
     if (isActive) btn.classList.add("active");
     if (disabled) btn.disabled = true;
     if (title) btn.title = title;
-    btn.innerHTML = `<span class="tool-emoji">${escapeHtml(emoji)}</span><span class="tool-name">${escapeHtml(label)}</span>`;
+
+    const emojiSpan = document.createElement("span");
+    emojiSpan.className = "tool-emoji";
+    emojiSpan.textContent = emoji;
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "tool-name";
+    nameSpan.textContent = label;
+
+    btn.append(emojiSpan, nameSpan);
     btn.addEventListener("click", onClick);
     return btn;
   };
