@@ -548,3 +548,28 @@ body.is-cabinet-dragging .alchemy-element {
 .sidebar-panel.active {
   display: flex;
 }
+
+.search-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.search-suggestion-btn {
+  background: hsla(38, 36%, 58%, 0.15);
+  border: 1px solid hsla(38, 36%, 58%, 0.3);
+  color: var(--scroll-ink);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.search-suggestion-btn:hover, .search-suggestion-btn:focus-visible {
+  background: hsla(38, 36%, 58%, 0.3);
+  border-color: var(--scroll-gold);
+  outline: none;
+}
