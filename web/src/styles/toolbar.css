@@ -172,6 +172,11 @@
   box-sizing: border-box;
 }
 
+.toolbar-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cozy-focus-ring);
+}
+
 .toolbar-btn:hover:not(:disabled):not(.active) {
   color: var(--scroll-ink);
   background: hsla(42, 42%, 95%, 0.98);

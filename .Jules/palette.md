@@ -1,0 +1,3 @@
+## 2024-05-24 - Initial Observations
+**Learning:** Found several buttons missing `focus-visible` states which makes keyboard navigation difficult. The UI features `tab-btn` and `subtab-btn` elements in the cabinet and filter panel that lacked explicit focus styles. Also `close-dialog-btn` buttons in dialogs, and `toolbar-btn` in the cooking action bar. The repository has an established `--cozy-focus-ring` custom property which can be applied.
+**Action:** Adding `:focus-visible` support to `.tab-btn`, `.subtab-btn`, `.toolbar-btn`, and `.close-dialog-btn` to ensure robust accessibility when using keyboard navigation, standardizing with the existing focus ring.
