@@ -64,6 +64,13 @@ This directory contains the historic and active implementation plans for the pro
 | 2026-07-03 | [codebase-ergonomics-polish.md](archive/2026-07-03-codebase-ergonomics-polish.md) | Refactored save files into save/, dismantled globalThis bridge using bundle_registry.ts, and modularized ingredient_graph.ts. | Completed |
 | 2026-07-03 | platform-native-saves | Implemented gameStorage abstraction routing saves to Electron filesystem (userData/saves/) with localStorage fallback for web. | Completed |
 | 2026-07-10 | [ui-ux-enhancements.md](archive/2026-07-10-ui-ux-enhancements.md) | Enhanced visual feedback, transitions, active press offsets, and warm glows for profile slot cards and action buttons. | Completed |
+| 2026-07-12 | [create-jules-cleanup-task.md](archive/2026-07-12-create-jules-cleanup-task.md) | Created a new Jules task for repository cleanup and updated AGENTS.md with instructions to prevent CLI hangs. | Completed |
+| 2026-07-12 | [stricter-search-scoping.md](archive/2026-07-12-stricter-search-scoping.md) | Enforced stricter search scoping rules in AGENTS.md regarding the archive/ directory. | Completed |
+| 2026-07-12 | [exclude-node-modules-and-git-history.md](archive/2026-07-12-exclude-node-modules-and-git-history.md) | Prevented agents from scanning node_modules/ and running git history/logs casually in AGENTS.md. | Completed |
+| 2026-07-12 | [exclude-large-file-reads.md](archive/2026-07-12-exclude-large-file-reads.md) | Prevented agents from casually reading large files (>50KB) like package-lock.json or data bundles in AGENTS.md. | Completed |
+| 2026-07-12 | [dynamic-test-runner.md](archive/2026-07-12-dynamic-test-runner.md) | Resolved package.json merge conflicts by introducing a dynamic test runner script. | Completed |
+| 2026-07-12 | [resolve-suggestions-pwa-conflict.md](archive/2026-07-12-resolve-suggestions-pwa-conflict.md) | Resolved sw.js merge conflict in feat-cabinet-search-suggestions-15271044867407367762. | Completed |
+| 2026-07-12 | [create-jules-workflows-doc.md](archive/2026-07-12-create-jules-workflows-doc.md) | Created JULES_WORKFLOWS.md documenting parallelization, session cancellation, and CLI details. | Completed |
 
 
 

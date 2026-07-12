@@ -141,11 +141,27 @@ When starting a new feature or debugging an issue, follow this multi-agent loop:
 
 ---
 
+## Running Jules Tasks Autonomously
+
+When invoking the `jules` CLI tool (e.g., `jules new`) inside an automated or agentic sandbox environment, there are two common pitfalls that will cause the task creation command to hang or get stuck:
+1. **Missing Repository Specification**: If run without the `--repo` flag, the CLI may fail to resolve the current repository context and block waiting for credentials or confirmation. Always explicitly pass the target repository, e.g., `--repo Kolajy/cooking_alchemist`.
+2. **Standard Input (stdin) Block**: The `jules new` command checks standard input to support piped task descriptions (e.g., `cat TODO.md | jules new`). If standard input is left open in a non-interactive background process, the CLI will block indefinitely waiting for EOF. Always close standard input by redirecting from `/dev/null`, e.g., `< /dev/null`.
+
+**Correct Command Template:**
+```bash
+jules new --repo Kolajy/cooking_alchemist "Task Description Here" < /dev/null
+```
+
+---
+
 ## Token Optimization & Project Scoping Rules
 
 To minimize token costs and maintain optimal context efficiency:
 - **Default Modification Target**: All code edits and enhancements target the `web/` client subdirectory and data structures/recipes in `content/` by default.
-- **Search Scoping**: Do NOT search, grep, or read source files in legacy or archived platforms (`archive/`) unless explicitly requested by the user.
+- **Search Scoping**: NEVER search, grep, or read source files or directories in legacy or archived platforms (`archive/`) unless explicitly specified by the user.
 - **Context Preservation**: Avoid running workspace-wide searches (e.g. searching the root directory) unless targeting a specific file. Limit tool searches to the narrowest directory target possible.
+- **Dependency Exclusions**: NEVER search, grep, list, or read files under `node_modules/` or `.git/` directories.
+- **Git History Scoping**: NEVER run git history/log commands (e.g. `git log`, `git reflog`) casually. Only run git history commands when explicitly required to debug a commit/versioning issue.
+- **Large File Exclusions**: NEVER read or view large files (e.g., `package-lock.json`, `transitions.json`, `game_bundle.json`, or any file > 50KB) casually. Only read or view them if a specific user request or code change explicitly requires it, and always prefer reading specific line ranges or using CLI tools (like `grep` or `jq`) instead of reading the entire file.
 - **Decoupled Validation**: Run tests locally in isolated modules (like `node src/engine/cli_test.js`) rather than processing full visual app rendering loops to keep validation steps quick and lightweight.
 - **Git-Persisted Planning**: Always create or update `plans/active_plan.md` before starting code changes or execution commands. Upon completion of a task, archive the plan as `plans/archive/YYYY-MM-DD-feature-name.md` and document it in the index of `plans/README.md`.

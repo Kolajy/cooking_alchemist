@@ -230,4 +230,5 @@ gantt
 | [ART_DIRECTION.md](./ART_DIRECTION.md) | Art, UI, marketing |
 | [RECIPES_REFERENCE.md](./RECIPES_REFERENCE.md) | Content inspiration |
 | [generated/CONTENT_REFERENCE.md](./generated/CONTENT_REFERENCE.md) | Shipped ingredients, techniques, transitions |
+| [JULES_WORKFLOWS.md](./JULES_WORKFLOWS.md) | Everyone — Jules CLI/API workflows & parallelization |
 | [content/README.md](../content/README.md) | Content authoring |
