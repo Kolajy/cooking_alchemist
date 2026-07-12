@@ -246,7 +246,12 @@ export function saveProgress() {
 export function updateStats() {
   const { state, dom, data } = getCtx();
   const discoverableTotal = Object.keys(data.DISCOVERABLE_ITEMS).length;
-  const discoveredCount = [...state.discoveredIds].filter(id => data.DISCOVERABLE_ITEMS[id]).length;
+  let discoveredCount = 0;
+  for (const id of state.discoveredIds) {
+    if (data.DISCOVERABLE_ITEMS[id]) {
+      discoveredCount++;
+    }
+  }
 
   if (dom.unlockedCountEl) {
     const percent = discoverableTotal > 0 ? Math.round((discoveredCount / discoverableTotal) * 100) : 0;
@@ -261,7 +266,7 @@ export function updateStats() {
     const hasPotato = state.discoveredIds.has("potato");
     const hasMashedPotato = state.discoveredIds.has("mashed_potato");
     const hasSproutedSeeds = state.discoveredIds.has("sprouted_seeds");
-    const discoveredRecipesCount = [...state.discoveredIds].filter(id => data.DISCOVERABLE_ITEMS[id]).length;
+    const discoveredRecipesCount = discoveredCount;
 
     const buildHint = (parts: Array<string | { strong: string }>) => {
       parts.forEach(part => {
