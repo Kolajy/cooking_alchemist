@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
+  <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
   <div class="fantasy-backdrop" aria-hidden="true">
     <div class="fantasy-backdrop__warmth"></div>
     <div class="fantasy-backdrop__embers"></div>
@@ -185,7 +186,7 @@
               Sweep the counter bare — a clean slate for your next experiment.
             </span>
           </button>
-          <div class="workspace-hint">Drag ingredients from the Pantry onto the counter to begin experimenting.</div>
+          <div id="workspace-hint" class="workspace-hint" aria-live="polite">Drag ingredients from the Pantry onto the counter to begin experimenting.</div>
           <!-- Elements will be spawned dynamically here -->
           
           <!-- Technique bar — cozy worn strip -->
@@ -439,6 +440,19 @@
         <section class="settings-section" aria-labelledby="settings-display-title">
           <h3 id="settings-display-title" class="settings-section-title">Display</h3>
           <div class="settings-list">
+            <label class="settings-row" for="setting-high-contrast">
+              <span class="settings-row__text">
+                <span class="settings-row__label">High contrast</span>
+                <span class="settings-row__hint">Increase contrast and visibility of text and elements</span>
+              </span>
+              <input
+                id="setting-high-contrast"
+                class="settings-toggle"
+                type="checkbox"
+                role="switch"
+                aria-checked="false"
+              >
+            </label>
             <label class="settings-row" for="setting-reduced-motion">
               <span class="settings-row__text">
                 <span class="settings-row__label">Reduced motion</span>
@@ -452,6 +466,18 @@
                 aria-checked="false"
               >
             </label>
+          </div>
+        </section>
+
+        <section id="settings-steam-section" class="settings-section" aria-labelledby="settings-steam-title" style="display: none;">
+          <h3 id="settings-steam-title" class="settings-section-title">Steam Integration</h3>
+          <div class="settings-list">
+            <div class="settings-row">
+              <span class="settings-row__text">
+                <span class="settings-row__label">Steam Status</span>
+                <span class="settings-row__hint">Connected as <strong id="settings-steam-username">Chef (Offline)</strong></span>
+              </span>
+            </div>
           </div>
         </section>
 

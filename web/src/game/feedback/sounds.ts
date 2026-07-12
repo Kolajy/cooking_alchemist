@@ -1,3 +1,4 @@
+import { secureRandom } from "../security/math";
 const SOUND_PREF_KEY = "culinary_sound_enabled";
 
 type OscType = OscillatorType;
@@ -77,6 +78,7 @@ const SOUND_COOLDOWN_MS: Partial<Record<SoundId, number>> = {
 };
 
 let audioContext: AudioContext | null = null;
+let masterGainNode: GainNode | null = null;
 let soundEnabled = false;
 let unlockBound = false;
 const lastPlayedAt = new Map<string, number>();
@@ -105,12 +107,17 @@ function getContext(): AudioContext | null {
       || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!Ctx) return null;
     audioContext = new Ctx();
+
+    // Set up master volume for SFX
+    masterGainNode = audioContext.createGain();
+    masterGainNode.gain.value = 0.6; // Base volume for all SFX
+    masterGainNode.connect(audioContext.destination);
   }
   return audioContext;
 }
 
 function jitterHz(base: number, spread = 0.06): number {
-  return base * (1 + (Math.random() - 0.5) * spread);
+  return base * (1 + (secureRandom() - 0.5) * spread);
 }
 
 function ensureAudioReady(): AudioContext | null {
@@ -165,7 +172,7 @@ function playTone({
   amp.gain.exponentialRampToValueAtTime(gain, start + 0.01);
   amp.gain.exponentialRampToValueAtTime(0.0001, start + duration);
   osc.connect(amp);
-  amp.connect(ctx.destination);
+  amp.connect(masterGainNode || ctx.destination);
   osc.start(start);
   osc.stop(start + duration + 0.02);
 }
@@ -185,7 +192,7 @@ function playNoise({
   const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const data = buffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i += 1) {
-    data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+    data[i] = (secureRandom() * 2 - 1) * (1 - i / bufferSize);
   }
 
   const source = ctx.createBufferSource();
@@ -207,7 +214,7 @@ function playNoise({
   }
 
   output.connect(amp);
-  amp.connect(ctx.destination);
+  amp.connect(masterGainNode || ctx.destination);
   source.start(start);
 }
 
@@ -229,13 +236,15 @@ function playChime(notes: number[], spacing = 0.09, gain = 0.028): void {
 }
 
 function sfxSuccess(): void {
-  playTone({ frequency: 392, duration: 0.08, type: "sine", gain: 0.03 });
-  playTone({ frequency: 523, duration: 0.1, type: "sine", gain: 0.025, when: 0.06 });
+  playTone({ frequency: 392, duration: 0.1, type: "sine", gain: 0.04 });
+  playTone({ frequency: 523, duration: 0.15, type: "sine", gain: 0.03, when: 0.08 });
+  playTone({ frequency: 784, duration: 0.2, type: "triangle", gain: 0.02, when: 0.12 });
 }
 
 function sfxFail(): void {
-  playTone({ frequency: 140, duration: 0.1, type: "triangle", gain: 0.04 });
-  playTone({ frequency: 98, duration: 0.12, type: "triangle", gain: 0.03, when: 0.08 });
+  playTone({ frequency: 140, duration: 0.15, type: "sawtooth", gain: 0.05, freqEnd: 80 });
+  playNoise({ duration: 0.1, gain: 0.03, filterFreq: 400, filterType: "lowpass", when: 0.05 });
+  playTone({ frequency: 98, duration: 0.2, type: "triangle", gain: 0.04, when: 0.08, freqEnd: 50 });
 }
 
 function sfxFailSoft(): void {
@@ -243,12 +252,15 @@ function sfxFailSoft(): void {
 }
 
 function sfxDiscovery(): void {
-  playChime([523, 659, 784, 988], 0.1, 0.03);
-  playNoise({ duration: 0.08, gain: 0.012, filterFreq: 1800, filterType: "highpass", when: 0.28 });
+  playChime([523, 659, 784, 988, 1046], 0.08, 0.04);
+  playTone({ frequency: 523, duration: 0.4, type: "sine", gain: 0.02, when: 0.0 });
+  playNoise({ duration: 0.2, gain: 0.02, filterFreq: 2200, filterType: "highpass", when: 0.25 });
 }
 
 function sfxRecipeComplete(): void {
-  playChime([440, 554, 659, 880], 0.08, 0.028);
+  playChime([440, 554, 659, 880, 1108], 0.1, 0.035);
+  playTone({ frequency: 440, duration: 0.5, type: "triangle", gain: 0.02, when: 0.0 });
+  playTone({ frequency: 220, duration: 0.5, type: "sine", gain: 0.03, when: 0.0 });
 }
 
 function sfxLevelUp(): void {
@@ -271,16 +283,18 @@ function sfxHint(): void {
 }
 
 function sfxUiClick(): void {
-  playTone({ frequency: 720, duration: 0.03, type: "sine", gain: 0.012 });
+  playTone({ frequency: 720, duration: 0.04, type: "sine", gain: 0.018, freqEnd: 900 });
+  playTone({ frequency: 1440, duration: 0.02, type: "triangle", gain: 0.01 });
 }
 
 function sfxUiPickup(): void {
-  playTone({ frequency: 280, duration: 0.04, type: "triangle", gain: 0.018, freqEnd: 420 });
+  playTone({ frequency: 280, duration: 0.06, type: "triangle", gain: 0.025, freqEnd: 460 });
+  playNoise({ duration: 0.04, gain: 0.015, filterFreq: 1200, filterType: "bandpass" });
 }
 
 function sfxUiPlace(): void {
-  playTone({ frequency: 180, duration: 0.05, type: "triangle", gain: 0.022 });
-  playNoise({ duration: 0.03, gain: 0.01, filterFreq: 900, filterType: "lowpass" });
+  playTone({ frequency: 220, duration: 0.06, type: "triangle", gain: 0.03, freqEnd: 160 });
+  playNoise({ duration: 0.05, gain: 0.02, filterFreq: 800, filterType: "lowpass" });
 }
 
 function sfxUiRemove(): void {
@@ -288,7 +302,7 @@ function sfxUiRemove(): void {
 }
 
 function sfxUiHover(): void {
-  playTone({ frequency: 880, duration: 0.02, type: "sine", gain: 0.008 });
+  playTone({ frequency: 880, duration: 0.03, type: "sine", gain: 0.012, freqEnd: 1200 });
 }
 
 function sfxUiUndo(): void {
@@ -582,7 +596,7 @@ function startHearthAmbience(): void {
   }
 
   hearthAudio.play().then(() => {
-    // Fade in
+    // Smoother fade in with smaller steps
     const targetVolume = 0.25;
     fadeInterval = window.setInterval(() => {
       if (!hearthAudio) {
@@ -593,12 +607,16 @@ function startHearthAmbience(): void {
         return;
       }
       if (hearthAudio.volume < targetVolume) {
-        hearthAudio.volume = Math.min(targetVolume, hearthAudio.volume + 0.02);
+        // Linear fade that prevents volume popping
+        let nextVol = hearthAudio.volume + 0.01;
+        // Clamp explicitly to avoid float math overshooting
+        if (nextVol > targetVolume) nextVol = targetVolume;
+        hearthAudio.volume = nextVol;
       } else {
         clearInterval(fadeInterval!);
         fadeInterval = null;
       }
-    }, 30);
+    }, 50);
   }).catch(err => {
     console.warn("Failed to play hearth audio:", err);
   });
@@ -612,10 +630,12 @@ function stopHearthAmbience(): void {
   if (!hearthAudio) return;
 
   const audio = hearthAudio;
-  // Fade out
+  // Smoother fade out
   fadeInterval = window.setInterval(() => {
-    if (audio.volume > 0.02) {
-      audio.volume = Math.max(0, audio.volume - 0.02);
+    if (audio.volume > 0.01) {
+      let nextVol = audio.volume - 0.01;
+      if (nextVol < 0) nextVol = 0;
+      audio.volume = nextVol;
     } else {
       clearInterval(fadeInterval!);
       fadeInterval = null;
@@ -624,7 +644,7 @@ function stopHearthAmbience(): void {
         hearthAudio = null;
       }
     }
-  }, 30);
+  }, 50);
 }
 
 export function isAmbienceEnabled(): boolean {

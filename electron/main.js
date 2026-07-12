@@ -7,9 +7,138 @@ if (typeof electron !== "object" || !electron.app) {
   process.exit(1);
 }
 
-const { app, BrowserWindow, Menu, shell } = electron;
+const { app, BrowserWindow, Menu, shell, ipcMain } = electron;
 const path = require("node:path");
 const fs = require("node:fs");
+
+let steamClient = null;
+try {
+  const steamworks = require("steamworks.js");
+  steamClient = steamworks.init(480);
+  console.log(`[steam] Initialized Steamworks successfully. App ID: 480. User: ${steamClient.localplayer.getName()}`);
+
+  steamworks.electronEnableSteamOverlay();
+
+  setInterval(() => {
+    try {
+      steamClient.core.runCallbacks();
+    } catch (e) {
+      console.error("[steam] Error running callbacks:", e);
+    }
+  }, 100);
+} catch (err) {
+  console.warn("[steam] Failed to initialize Steamworks (Steam client might not be running). Running in offline mode.");
+}
+
+ipcMain.on("steam-unlock-achievement", (event, achievementId) => {
+  if (steamClient) {
+    try {
+      if (!steamClient.achievement.isActivated(achievementId)) {
+        steamClient.achievement.activate(achievementId);
+        steamClient.core.runCallbacks();
+        console.log(`[steam] Unlocked achievement: ${achievementId}`);
+      }
+    } catch (err) {
+      console.error(`[steam] Failed to unlock achievement ${achievementId}:`, err);
+    }
+  } else {
+    console.log(`[steam-mock] Unlock achievement: ${achievementId}`);
+  }
+});
+
+ipcMain.handle("steam-get-username", async () => {
+  if (steamClient) {
+    try {
+      return steamClient.localplayer.getName();
+    } catch (err) {
+      console.error("[steam] Failed to get username:", err);
+    }
+  }
+  return "Chef (Offline)";
+});
+
+const savesDir = path.join(app.getPath("userData"), "saves");
+try {
+  fs.mkdirSync(savesDir, { recursive: true });
+} catch (err) {
+  console.error("[saves] Failed to create saves directory:", err);
+}
+
+function getSaveFilePath(key) {
+  const safeKey = key.replace(/[^a-zA-Z0-9_-]/g, "_");
+  return path.join(savesDir, `${safeKey}.json`);
+}
+
+ipcMain.on("save-get-item", (event, key) => {
+  try {
+    if (steamClient && steamClient.cloud && steamClient.cloud.isEnabledForApp()) {
+      try {
+        const data = steamClient.cloud.readFile(key);
+        if (data) {
+          event.returnValue = data;
+          return;
+        }
+      } catch (cloudErr) {
+        console.warn(`[steam-cloud] Failed to read ${key} from Cloud, falling back to local:`, cloudErr);
+      }
+    }
+    const filePath = getSaveFilePath(key);
+    if (fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath, "utf8");
+      event.returnValue = data;
+    } else {
+      event.returnValue = null;
+    }
+  } catch (err) {
+    console.error(`[saves] Error reading key ${key}:`, err);
+    event.returnValue = null;
+  }
+});
+
+ipcMain.on("save-set-item", (event, key, value) => {
+  try {
+    let cloudSuccess = false;
+    if (steamClient && steamClient.cloud && steamClient.cloud.isEnabledForApp()) {
+      try {
+        cloudSuccess = steamClient.cloud.writeFile(key, value);
+        if (cloudSuccess) console.log(`[steam-cloud] Saved key: ${key}`);
+      } catch (cloudErr) {
+        console.error(`[steam-cloud] Error writing key ${key}:`, cloudErr);
+      }
+    }
+
+    const filePath = getSaveFilePath(key);
+    fs.writeFileSync(filePath, value, "utf8");
+    if (!cloudSuccess) console.log(`[saves] Saved key (local only): ${key}`);
+    event.returnValue = true;
+  } catch (err) {
+    console.error(`[saves] Error writing key ${key}:`, err);
+    event.returnValue = false;
+  }
+});
+
+ipcMain.on("save-remove-item", (event, key) => {
+  try {
+    if (steamClient && steamClient.cloud && steamClient.cloud.isEnabledForApp()) {
+      try {
+        steamClient.cloud.deleteFile(key);
+        console.log(`[steam-cloud] Removed key: ${key}`);
+      } catch (cloudErr) {
+        console.error(`[steam-cloud] Error deleting key ${key}:`, cloudErr);
+      }
+    }
+
+    const filePath = getSaveFilePath(key);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      console.log(`[saves] Removed key: ${key}`);
+    }
+    event.returnValue = true;
+  } catch (err) {
+    console.error(`[saves] Error deleting key ${key}:`, err);
+    event.returnValue = false;
+  }
+});
 
 const DEV_SERVER_URL = process.env.ELECTRON_DEV_URL || "https://localhost:5273";
 const isDev = process.argv.includes("--dev") || !app.isPackaged;

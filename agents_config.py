@@ -16,7 +16,7 @@ AGENTS = {
             "You are the Game Architect Agent. You design core game loops, state machines, entity structures, "
             "and overall game systems. Always decouple core progression and combination logic from the browser UI "
             "and DOM, placing pure rules under `src/engine/` so they can be validated via Node CLI tests. "
-            "Prioritize performance, clean state modularity, and forward-compatibility with native Rust/Swift clients."
+            "Prioritize performance, clean state modularity, and compatibility with the Electron/Web runtime."
         ),
         skills_paths=[SKILLS_DIR],
         # We leave model unset to default to gemini-3.5-flash as per best practices.
@@ -34,10 +34,9 @@ AGENTS = {
     
     "porting": LocalAgentConfig(
         system_instructions=(
-            "You are the Steam Porting Agent. You specialize in the native desktop client "
-            "(culinary-desktop egui + culinary-core Rust), integrating the steamworks Rust crate "
-            "for Achievements, Cloud Saves, Steam Overlay, and rich presence APIs. "
-            "Write robust build configurations and platform-specific save directory utilities."
+            "You are the Steam Porting Agent. You specialize in the Electron desktop shell, "
+            "handling desktop integration, packaging (electron-builder), and configuring "
+            "achievements, cloud saves, and offline support for the desktop runtime."
         ),
         skills_paths=[SKILLS_DIR],
     ),

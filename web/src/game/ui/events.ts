@@ -1,7 +1,8 @@
 import { getCtx } from "../context";
 import { renderCabinet } from "../cabinet";
 import { buildCabinetFilterButtons, toggleCabinetStateFilter, toggleCabinetTypeFilter, syncCabinetFilterButtons } from "../ingredients";
-import { loadProgress } from "../persistence";
+import { loadProgress, updateStats } from "../save/persistence";
+import { gameStorage } from "../save/storage";
 import { isPlayerActionUnlocked } from "../progression/skills";
 import { setToolbarMode } from "../actions/toolbar";
 import { openDialog, renderRecipeBook, setupDialogFallbacks } from "./dialogs";
@@ -122,8 +123,8 @@ export function initGame() {
   // Initialize and display the start menu overlay
   initStartMenu();
 
-  if (!localStorage.getItem("culinary_seen_help")) {
-    localStorage.setItem("culinary_seen_help", "true");
+  if (!gameStorage.getItem("culinary_seen_help")) {
+    gameStorage.setItem("culinary_seen_help", "true");
     openDialog(dom.helpModal);
   }
 }

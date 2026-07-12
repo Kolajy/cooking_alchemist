@@ -1,3 +1,4 @@
+import { secureRandom } from "../security/math";
 import { getCtx } from "../context";
 import { DRAG_THRESHOLD } from "../constants";
 import { enrichItem, buildIngredientMarkup } from "../ingredients";
@@ -92,16 +93,16 @@ export function createParticles(x, y, count, type) {
     const particle = document.createElement("div");
     particle.className = isSteam ? "particle particle--steam" : "particle";
 
-    let size = Math.random() * 8 + 4;
+    let size = secureRandom() * 8 + 4;
     let color = "var(--color-fire)";
 
     if (type === "success") {
       color = i % 2 === 0 ? "var(--color-gold)" : "var(--color-success)";
     } else if (type === "fail") {
-      color = `hsla(220, 12%, 55%, ${0.55 + Math.random() * 0.25})`;
+      color = `hsla(220, 12%, 55%, ${0.55 + secureRandom() * 0.25})`;
     } else if (isSteam) {
-      color = `hsla(40, 30%, 96%, ${0.28 + Math.random() * 0.22})`;
-      size = Math.random() * 16 + 10;
+      color = `hsla(40, 30%, 96%, ${0.28 + secureRandom() * 0.22})`;
+      size = secureRandom() * 16 + 10;
     }
 
     particle.style.width = `${size}px`;
@@ -112,14 +113,14 @@ export function createParticles(x, y, count, type) {
 
     if (isSteam) {
       // Steam drifts gently upward with a slight horizontal waver, then blooms.
-      const driftX = Math.random() * 36 - 18;
-      const rise = Math.random() * 40 + 70;
+      const driftX = secureRandom() * 36 - 18;
+      const rise = secureRandom() * 40 + 70;
       particle.style.setProperty("--dx", `${driftX}px`);
       particle.style.setProperty("--dy", `${-rise}px`);
-      particle.style.setProperty("--dur", `${1.3 + Math.random() * 0.6}s`);
+      particle.style.setProperty("--dur", `${1.3 + secureRandom() * 0.6}s`);
     } else {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 70 + 20;
+      const angle = secureRandom() * Math.PI * 2;
+      const speed = secureRandom() * 70 + 20;
       particle.style.setProperty("--dx", `${Math.cos(angle) * speed}px`);
       particle.style.setProperty("--dy", `${Math.sin(angle) * speed - 15}px`);
     }
@@ -194,6 +195,10 @@ function onPointerDown(e) {
   el.addEventListener("pointerup", onPointerUp);
 }
 
+let moveRaf = null;
+let movePendingX = 0;
+let movePendingY = 0;
+
 function onPointerMove(e) {
   const { state } = getCtx();
   if (!state.draggedElement) return;
@@ -210,12 +215,29 @@ function onPointerMove(e) {
     playSound("ui_pickup");
   }
 
-  moveDraggedElement(el, e.clientX, e.clientY, state.dragGrabOffset);
+  movePendingX = e.clientX;
+  movePendingY = e.clientY;
+
+  if (!moveRaf) {
+    moveRaf = requestAnimationFrame(() => {
+      moveRaf = null;
+      if (state.draggedElement === el) {
+        moveDraggedElement(el, movePendingX, movePendingY, state.dragGrabOffset);
+      }
+    });
+  }
 }
 
 function onPointerUp(e) {
   const { state } = getCtx();
   if (!state.draggedElement) return;
+
+  if (moveRaf) {
+    cancelAnimationFrame(moveRaf);
+    moveRaf = null;
+    // ensure final position updates
+    moveDraggedElement(state.draggedElement, movePendingX, movePendingY, state.dragGrabOffset);
+  }
 
   const el = state.draggedElement;
   const wasClick = !state.dragMoved;
@@ -260,17 +282,52 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   el.className = "alchemy-element canvas-element";
   el.dataset.id = item.id;
   el.dataset.origin = item.origin;
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.setAttribute("aria-label", `${item.name}`);
   el.innerHTML = buildIngredientMarkup(item, false);
 
   if (x === null || y === null) {
     const rect = dom.workspace.getBoundingClientRect();
-    x = rect.width / 2 + (Math.random() * 80 - 40);
-    y = rect.height / 2 + (Math.random() * 80 - 40);
+    x = rect.width / 2 + (secureRandom() * 80 - 40);
+    y = rect.height / 2 + (secureRandom() * 80 - 40);
   }
 
   setCanvasPosition(el, x, y);
   el.title = "Drag to move · click to apply technique or remove";
   el.addEventListener("pointerdown", onPointerDown);
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      // Use the actual apply technique if we hit enter, as that is the standard action
+      import("../actions/toolbar").then(toolbar => {
+        const wasApplied = toolbar.applyActiveTechniqueToCounter();
+        if (!wasApplied) {
+           // If we didn't apply technique, toggle selection maybe? The game relies on dragging,
+           // but `applyActiveTechniqueToCounter` acts on ALL elements.
+           // To keep it simple, space/enter applies the technique just like the global shortcut.
+        }
+      });
+    } else if (e.key === "Backspace" || e.key === "Delete") {
+      e.preventDefault();
+      import("../feedback/undo").then(undo => {
+        const pos = getCanvasPosition(el);
+        undo.pushUndoEntry({
+          type: "remove",
+          itemId: item.id,
+          x: pos.x,
+          y: pos.y
+        });
+        removeCanvasElement(el);
+      });
+    } else if (e.key === "ArrowRight") {
+       e.preventDefault();
+       focusNextCanvasElement(el, 1);
+    } else if (e.key === "ArrowLeft") {
+       e.preventDefault();
+       focusNextCanvasElement(el, -1);
+    }
+  });
   bindHoverPanelEvents(el, item.id);
 
   dom.workspace.appendChild(el);
@@ -290,3 +347,18 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
 }
 
 export { updateTechniqueTargetHighlights };
+
+export function focusNextCanvasElement(currentEl, dir) {
+  const { state } = getCtx();
+  const els = state.activeElements;
+  if (!els || els.length === 0) return;
+
+  const idx = els.indexOf(currentEl);
+  if (idx === -1) return;
+
+  let nextIdx = idx + dir;
+  if (nextIdx >= els.length) nextIdx = 0;
+  if (nextIdx < 0) nextIdx = els.length - 1;
+
+  els[nextIdx].focus();
+}

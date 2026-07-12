@@ -58,6 +58,12 @@ This directory contains the historic and active implementation plans for the pro
 | 2026-06-21 | [start-menu-and-save-slots.md](archive/2026-06-21-start-menu-and-save-slots.md) | Cozy Start Menu overlay with Continue, Save Slot select/delete, and dynamic Slot storage adapter. | Completed |
 | 2026-06-21 | [start-menu-ux-polish.md](archive/2026-06-21-start-menu-ux-polish.md) | polished Start Menu size, simplified buttons, and routed slot card actions based on load/new context. | Completed |
 | 2026-06-23 | [simplified-slots-menu-and-header-bar.md](archive/2026-06-23-simplified-slots-menu-and-header-bar.md) | Collapsed Start Menu into a unified Slots Grid and polished top header into a glassmorphic menu bar. | Completed |
+| 2026-07-03 | [remove-rust-infrastructure.md](archive/2026-07-03-remove-rust-infrastructure.md) | Removed root Rust assets/configurations and legacy archived Rust code in favor of Electron. | Completed |
+| 2026-07-03 | [electrify-roadmap.md](archive/2026-07-03-electrify-roadmap.md) | Updated roadmap doc to reflect Electron desktop shell. | Completed |
+| 2026-07-03 | [steamworks-electron-integration.md](archive/2026-07-03-steamworks-electron-integration.md) | Integrated steamworks.js in the Electron shell, enabling Steam achievement unlocking and overlay callbacks. | Completed |
+| 2026-07-03 | [codebase-ergonomics-polish.md](archive/2026-07-03-codebase-ergonomics-polish.md) | Refactored save files into save/, dismantled globalThis bridge using bundle_registry.ts, and modularized ingredient_graph.ts. | Completed |
+| 2026-07-03 | platform-native-saves | Implemented gameStorage abstraction routing saves to Electron filesystem (userData/saves/) with localStorage fallback for web. | Completed |
+| 2026-07-10 | [ui-ux-enhancements.md](archive/2026-07-10-ui-ux-enhancements.md) | Enhanced visual feedback, transitions, active press offsets, and warm glows for profile slot cards and action buttons. | Completed |
 
 
 

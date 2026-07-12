@@ -129,20 +129,18 @@ Planned work organized by phase. Status reflects the codebase as of the TypeScri
 
 ---
 
-## Phase 5 — Platform & Steam ⬜
+## Phase 5 — Platform & Steam 🟡
 
-*Goal: Shippable **native** desktop build with Steamworks (no webview).*
+*Goal: Shippable Electron desktop build with Steamworks.*
 
-- [x] Rust `culinary-core` shared engines + export pipeline
-- [x] Native egui desktop client (`desktop/`, `npm run steam:dev`)
-- [ ] File-based save paths
-- [ ] `steamworks` Rust crate integration (AppID, overlay, init)
-- [ ] Achievements mapped to discoveries and skill unlocks
+- [x] Electron shell wrapper (`electron/`)
+- [x] Dev hot-reload and build/pack script configuration (`npm run electron:dev`)
+- [ ] File-based save paths native to desktop runtime
+- [ ] Steamworks integration (using `steamworks.js` or similar JS bindings)
+- [ ] Achievements mapped to Steam client stats and trophies
 - [ ] Steam Cloud sync for save JSON
 - [ ] Offline-first validation
-- [ ] macOS / Windows / Linux build CI
-
-Legacy `steam/` Tauri webview shell has been removed; use `desktop/`.
+- [ ] macOS / Windows / Linux build configuration and CI packaging
 
 **Suggested achievements:**
 

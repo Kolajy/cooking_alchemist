@@ -9,7 +9,9 @@ import {
 } from "../feedback/sounds";
 import {
   isReducedMotionEnabled,
-  setReducedMotion
+  setReducedMotion,
+  isHighContrastEnabled,
+  setHighContrast
 } from "../settings";
 import { openDialog } from "./dialogs";
 import { wireSaveDataControls } from "./save-controls";
@@ -26,12 +28,35 @@ export function syncSettingsControls(): void {
     );
   }
 
+  if (dom.settingHighContrast) {
+    dom.settingHighContrast.checked = isHighContrastEnabled();
+    dom.settingHighContrast.setAttribute(
+      "aria-checked",
+      dom.settingHighContrast.checked ? "true" : "false"
+    );
+  }
+
   if (dom.settingReducedMotion) {
     dom.settingReducedMotion.checked = isReducedMotionEnabled();
     dom.settingReducedMotion.setAttribute(
       "aria-checked",
       dom.settingReducedMotion.checked ? "true" : "false"
     );
+  }
+
+  const steamSection = document.getElementById("settings-steam-section");
+  const steamUsername = document.getElementById("settings-steam-username");
+  if ((window as any).culinaryDesktop?.isElectron) {
+    if (steamSection) steamSection.style.display = "block";
+    if (steamUsername) {
+      (window as any).culinaryDesktop.getSteamUsername().then((name: string) => {
+        steamUsername.textContent = name;
+      }).catch((err: any) => {
+        console.error("Failed to fetch steam username:", err);
+      });
+    }
+  } else {
+    if (steamSection) steamSection.style.display = "none";
   }
 }
 
@@ -56,7 +81,7 @@ export function toggleSettingsDialog(): void {
 
 export function setupSettingsPanel(): void {
   const { dom } = getCtx();
-  const { btnSettings, settingSound, settingAmbience, settingReducedMotion } = dom;
+  const { btnSettings, settingSound, settingAmbience, settingReducedMotion, settingHighContrast } = dom;
 
   btnSettings?.addEventListener("click", () => openSettingsDialog());
 
@@ -71,6 +96,12 @@ export function setupSettingsPanel(): void {
     const enabled = settingAmbience.checked;
     setAmbienceEnabled(enabled);
     settingAmbience.setAttribute("aria-checked", enabled ? "true" : "false");
+  });
+
+  settingHighContrast?.addEventListener("change", () => {
+    const enabled = settingHighContrast.checked;
+    setHighContrast(enabled);
+    settingHighContrast.setAttribute("aria-checked", enabled ? "true" : "false");
   });
 
   settingReducedMotion?.addEventListener("change", () => {
