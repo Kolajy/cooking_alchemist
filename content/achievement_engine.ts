@@ -67,8 +67,15 @@ export function evaluateAchievementRule(
       return countNonPrimitiveDiscoveries(ctx) >= rule.min;
     case "map_complete": {
       const total = Object.keys(ctx.discoverable).length;
-      const allDiscovered = [...ctx.discoveredIds].filter(id => ctx.discoverable[id]).length;
-      return total > 0 && allDiscovered >= total;
+      if (total === 0) return false;
+      let allDiscovered = 0;
+      for (const id of ctx.discoveredIds) {
+        if (ctx.discoverable[id]) {
+          allDiscovered++;
+          if (allDiscovered >= total) return true;
+        }
+      }
+      return false;
     }
     case "skill_unlocked":
       return ctx.isSkillUnlocked(rule.skillId);

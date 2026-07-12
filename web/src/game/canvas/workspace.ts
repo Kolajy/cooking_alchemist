@@ -27,11 +27,11 @@ export function setCanvasPosition(el, x, y) {
   el.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
 }
 
-export function clampCanvasPosition(el, x, y) {
+export function clampCanvasPosition(el, x, y, cachedWsRect = null, cachedElSize = null) {
   const { dom } = getCtx();
-  const ws = dom.workspace.getBoundingClientRect();
-  const w = el.offsetWidth;
-  const h = el.offsetHeight;
+  const ws = cachedWsRect || dom.workspace.getBoundingClientRect();
+  const w = cachedElSize ? cachedElSize.w : el.offsetWidth;
+  const h = cachedElSize ? cachedElSize.h : el.offsetHeight;
   return {
     x: Math.round(Math.max(0, Math.min(x, ws.width - w))),
     y: Math.round(Math.max(0, Math.min(y, ws.height - h)))
@@ -191,18 +191,20 @@ export function updateCollisionHighlight(draggedEl) {
 
 function moveDraggedElement(el, clientX, clientY, grabOffset) {
   const { dom } = getCtx();
-  const ws = dom.workspace.getBoundingClientRect();
+  const ws = cachedWorkspaceRect || dom.workspace.getBoundingClientRect();
   const pos = clampCanvasPosition(
     el,
     clientX - ws.left - grabOffset.x,
-    clientY - ws.top - grabOffset.y
+    clientY - ws.top - grabOffset.y,
+    ws,
+    cachedDragElSize
   );
   setCanvasPosition(el, pos.x, pos.y);
   updateCollisionHighlight(el);
 }
 
 function onPointerDown(e) {
-  const { state } = getCtx();
+  const { state, dom } = getCtx();
   e.preventDefault();
   const el = e.currentTarget;
   const rect = el.getBoundingClientRect();
@@ -215,6 +217,9 @@ function onPointerDown(e) {
     y: e.clientY - rect.top
   };
 
+  cachedWorkspaceRect = dom.workspace.getBoundingClientRect();
+  cachedDragElSize = { w: el.offsetWidth, h: el.offsetHeight };
+
   el.setPointerCapture(e.pointerId);
   el.addEventListener("pointermove", onPointerMove);
   el.addEventListener("pointerup", onPointerUp);
@@ -223,6 +228,8 @@ function onPointerDown(e) {
 let moveRaf = null;
 let movePendingX = 0;
 let movePendingY = 0;
+let cachedWorkspaceRect = null;
+let cachedDragElSize = null;
 
 function onPointerMove(e) {
   const { state } = getCtx();
@@ -273,6 +280,9 @@ function onPointerUp(e) {
   el.removeEventListener("pointermove", onPointerMove);
   el.removeEventListener("pointerup", onPointerUp);
 
+  cachedWorkspaceRect = null;
+  cachedDragElSize = null;
+
   state.draggedElement = null;
   state.mergeTarget = null;
   state.activeElements.forEach(item => item.classList.remove("hover-merge"));
@@ -317,6 +327,8 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
     x = rect.width / 2 + (secureRandom() * 80 - 40);
     y = rect.height / 2 + (secureRandom() * 80 - 40);
   }
+
+
 
   setCanvasPosition(el, x, y);
   el.title = "Drag to move · click to apply technique or remove";

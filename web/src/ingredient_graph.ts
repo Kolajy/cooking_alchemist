@@ -139,7 +139,17 @@ function isUnlockablePrimitive(id) {
     collectAncestorIds(focusId, transitions, maxDepth).forEach(id => focused.add(id));
     collectDescendantIds(focusId, transitions, maxDepth).forEach(id => focused.add(id));
 
-    return new Set([...allIds].filter(id => focused.has(id)));
+    const result = new Set();
+    if (allIds.size < focused.size) {
+      allIds.forEach(id => {
+        if (focused.has(id)) result.add(id);
+      });
+    } else {
+      focused.forEach(id => {
+        if (allIds.has(id)) result.add(id);
+      });
+    }
+    return result;
   }
 
   function filterTransitionsByIngredients(transitions, ingredientIds) {
@@ -752,11 +762,12 @@ function isUnlockablePrimitive(id) {
     const depths = computeDepthsFromFocus(focusId, ingredientIds, transitions);
     const layout = computePositions(ingredientIds, depths);
 
-    const visibleIngredientIds = [...ingredientIds].filter(id => {
-      if (showLocked) return true;
-      return isIngredientUnlocked(id, context);
-    });
-    const visibleSet = new Set(visibleIngredientIds);
+    const visibleSet = new Set();
+    for (const id of ingredientIds) {
+      if (showLocked || isIngredientUnlocked(id, context)) {
+        visibleSet.add(id);
+      }
+    }
 
     const legend = document.createElement("div");
     legend.className = "graph-legend";
@@ -815,7 +826,7 @@ function isUnlockablePrimitive(id) {
       transitionsGroup.appendChild(group);
     });
 
-    visibleIngredientIds.forEach(id => {
+    visibleSet.forEach(id => {
       const unlocked = isIngredientUnlocked(id, context);
       const display = getDisplayItem(id, context);
       const pos = layout.positions.get(id);
