@@ -89,12 +89,12 @@ body {
   inset: 0;
   opacity: 0.6;
   background-image:
-    radial-gradient(1.5px 1.5px at 10% 70%, hsla(32, 90%, 62%, 0.9), transparent),
-    radial-gradient(1px 1px at 22% 82%, hsla(28, 85%, 58%, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 35% 75%, hsla(36, 88%, 65%, 0.8), transparent),
-    radial-gradient(1px 1px at 48% 88%, hsla(30, 80%, 55%, 0.6), transparent),
-    radial-gradient(2px 2px at 8% 55%, hsla(32, 90%, 60%, 0.5), transparent),
-    radial-gradient(1px 1px at 18% 92%, hsla(34, 85%, 62%, 0.65), transparent);
+    radial-gradient(2px 2px at 10% 70%, hsla(32, 95%, 68%, 0.95), transparent),
+    radial-gradient(1.5px 1.5px at 22% 82%, hsla(28, 90%, 62%, 0.85), transparent),
+    radial-gradient(2px 2px at 35% 75%, hsla(36, 92%, 70%, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 48% 88%, hsla(30, 85%, 60%, 0.75), transparent),
+    radial-gradient(3px 3px at 8% 55%, hsla(32, 95%, 65%, 0.65), transparent),
+    radial-gradient(1.5px 1.5px at 18% 92%, hsla(34, 90%, 68%, 0.8), transparent);
   background-size: 100% 100%;
   animation: ember-flicker 10s ease-in-out infinite alternate;
 }
@@ -204,4 +204,30 @@ html[data-motion="reduced"] .fantasy-backdrop__motes {
   background: hsla(32, 20%, 22%, 0.8);
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
+}
+
+/* General accessible focus styles */
+:focus-visible {
+  outline: 3px solid var(--accent-amber);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 170, 0, 0.3);
+}
+
+/* For specific elements that might override it */
+.alchemy-element:focus-visible {
+  outline: 3px solid var(--accent-amber);
+  outline-offset: 2px;
+}
+
+/* Screen reader only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

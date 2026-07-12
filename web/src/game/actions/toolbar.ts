@@ -235,7 +235,12 @@ export function renderCookingToolbar() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = `toolbar-btn ${extraClass}`.trim();
-    if (isActive) btn.classList.add("active");
+    if (isActive) {
+      btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
+    } else {
+      btn.setAttribute("aria-pressed", "false");
+    }
     if (disabled) btn.disabled = true;
     if (title) btn.title = title;
 

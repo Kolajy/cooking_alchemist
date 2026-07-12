@@ -1,7 +1,9 @@
 import { getCtx } from "../context";
 import { enrichItem, isFinalizedRecipe, getStateLabel, getIngredientState } from "../ingredients";
+import { playSound } from "../feedback/sounds";
 
 export function openDialog(dialog) {
+  playSound("ui_click");
   if (!dialog) return;
   if (typeof dialog.showModal === "function") {
     dialog.showModal();
@@ -162,11 +164,18 @@ export function renderRecipeBook() {
   discoveredRecipesList.textContent = "";
 
   const uniqueRecipes = [];
+
+  // Include all discovered items in the encyclopedia, not just finalized recipes
   Object.keys(data.DISCOVERABLE_ITEMS).forEach(id => {
     const item = data.DISCOVERABLE_ITEMS[id];
-    if (state.discoveredIds.has(id) && isFinalizedRecipe(item)) {
+    if (state.discoveredIds.has(id)) {
       uniqueRecipes.push({ id, ...item });
     }
+  });
+
+  // Also include starters if they are considered "discovered" (they are usually default)
+  data.STARTER_ELEMENTS.forEach(starter => {
+    uniqueRecipes.push({ id: starter.id, ...starter });
   });
 
   if (uniqueRecipes.length === 0) {
@@ -174,7 +183,7 @@ export function renderRecipeBook() {
     emptyP.className = "dialog-intro";
     emptyP.style.gridColumn = "1/-1";
     emptyP.style.textAlign = "center";
-    emptyP.textContent = "No finalized recipes yet. Separate primal ingredients, then combine and cook what you discover.";
+    emptyP.textContent = "Your encyclopedia is empty. Start experimenting with ingredients to learn more about them!";
     discoveredRecipesList.appendChild(emptyP);
     return;
   }
@@ -188,6 +197,7 @@ export function renderRecipeBook() {
     card.dataset.origin = itemData.origin;
 
     const stateKey = getIngredientState(itemData);
+
 
     const emojiSpan = document.createElement("span");
     emojiSpan.className = "recipe-card-emoji";
@@ -222,6 +232,7 @@ export function renderRecipeBook() {
     tooltipDiv.append(h4, p);
 
     card.append(emojiSpan, nameSpan, metaSpan, tooltipDiv);
+
 
     discoveredRecipesList.appendChild(card);
   });

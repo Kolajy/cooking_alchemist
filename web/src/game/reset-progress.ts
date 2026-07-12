@@ -2,11 +2,10 @@ import { getCtx } from "./context";
 import { showCustomConfirm, showCustomAlert } from "./ui/dialogs";
 import { renderCabinet } from "./cabinet";
 import { clearWorkspace } from "./canvas/workspace";
-import { resetToStarters } from "./persistence";
+import { resetToStarters, updateStats } from "./save/persistence";
 import { resetAchievements } from "./progression/achievements";
 import { setToolbarMode } from "./actions/toolbar";
 import { updateSkillsUI } from "./ui/skills-panel";
-import { updateStats } from "./persistence";
 
 
 export async function resetGameProgress(): Promise<boolean> {

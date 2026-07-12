@@ -1,28 +1,28 @@
-import { getCtx } from "./context";
+import { getCtx } from "../context";
 import { getDiscoverySaveData } from "./persistence";
 import {
   applyAchievementsSaveData,
   checkAchievements,
   getAchievementsSaveData,
   saveAchievements
-} from "./progression/achievements";
-import { isPlayerActionUnlocked } from "./progression/skills";
-import { setSoundEnabled } from "./feedback/sounds";
-import { getSettingsSnapshot, setReducedMotion } from "./settings";
-import { syncSettingsControls } from "./ui/settings";
-import { clearWorkspace } from "./canvas/workspace";
-import { clearUndoEntry } from "./feedback/undo";
+} from "../progression/achievements";
+import { isPlayerActionUnlocked } from "../progression/skills";
+import { setSoundEnabled } from "../feedback/sounds";
+import { getSettingsSnapshot, setReducedMotion } from "../settings";
+import { syncSettingsControls } from "../ui/settings";
+import { clearWorkspace } from "../canvas/workspace";
+import { clearUndoEntry } from "../feedback/undo";
 import {
   renderCookingToolbar,
   setToolbarMode,
   updateBodyToolAttribute
-} from "./actions/toolbar";
+} from "../actions/toolbar";
 import { updateStats } from "./persistence";
-import { updateSkillsUI } from "./ui/skills-panel";
-import { renderCabinet } from "./cabinet";
-import { refreshProgressGraphIfOpen } from "./ui/views";
+import { updateSkillsUI } from "../ui/skills-panel";
+import { renderCabinet } from "../cabinet";
+import { refreshProgressGraphIfOpen } from "../ui/views";
 import { SAVE_FILE_VERSION } from "./save-io";
-import type { GameSaveFile } from "../types";
+import type { GameSaveFile } from "../../types";
 
 export type SessionRefreshOptions = {
   clearWorkspace?: boolean;

@@ -1,9 +1,10 @@
 import { getCtx } from "../context";
-import { getActiveSlot, setActiveSlot, getSlotInfo, deleteSlot, migrateLegacySave, getSlotKeys } from "../slots";
-import { loadProgress, resetToStarters } from "../persistence";
+import { getActiveSlot, setActiveSlot, getSlotInfo, deleteSlot, migrateLegacySave, getSlotKeys } from "../save/slots";
+import { loadProgress, resetToStarters, updateStats } from "../save/persistence";
+import { gameStorage } from "../save/storage";
 import { loadAchievements } from "../progression/achievements";
 import { openDialog, showCustomConfirm } from "./dialogs";
-import { refreshGameSessionUi } from "../save-repository";
+import { refreshGameSessionUi } from "../save/save-repository";
 import { playSound } from "../feedback/sounds";
 
 
@@ -166,7 +167,7 @@ function bootNewSlot(): void {
   // Reset engine states
   data.Progression.reset();
   resetToStarters();
-  localStorage.setItem(getSlotKeys(getActiveSlot()).achievements, JSON.stringify({ unlocked: [], flags: [] }));
+  gameStorage.setItem(getSlotKeys(getActiveSlot()).achievements, JSON.stringify({ unlocked: [], flags: [] }));
   loadAchievements();
 
   // Refresh UI

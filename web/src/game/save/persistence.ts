@@ -1,9 +1,10 @@
-import { getCtx } from "./context";
-import { invalidateIngredientCatalog } from "./ingredients";
-import { emitGameplayEvent } from "./events";
-import { isValidSaveId, SAVE_MAX_DISCOVERED, SAVE_MAX_LOG_ENTRIES } from "./security/save-validation";
-import type { DiscoveryLogEntry, DiscoverySaveData } from "../types";
+import { getCtx } from "../context";
+import { invalidateIngredientCatalog } from "../ingredients";
+import { emitGameplayEvent } from "../events";
+import { isValidSaveId, SAVE_MAX_DISCOVERED, SAVE_MAX_LOG_ENTRIES } from "../security/save-validation";
+import type { DiscoveryLogEntry, DiscoverySaveData } from "../../types";
 import { getActiveSlot, getSlotKeys } from "./slots";
+import { gameStorage } from "./storage";
 
 export const MAX_RECENT_DISCOVERIES = 5;
 
@@ -133,7 +134,7 @@ export function loadProgress() {
   const { state } = getCtx();
   try {
     const keys = getSlotKeys(getActiveSlot());
-    const saved = localStorage.getItem(keys.discovered);
+    const saved = gameStorage.getItem(keys.discovered);
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
@@ -169,7 +170,7 @@ export function loadProgress() {
       resetToStarters();
     }
   } catch (e) {
-    console.error("Failed to load progress from localStorage", e);
+    console.error("Failed to load progress", e);
     resetToStarters();
   }
 }
@@ -235,10 +236,10 @@ export function saveProgress() {
   const { state } = getCtx();
   try {
     const keys = getSlotKeys(getActiveSlot());
-    localStorage.setItem(keys.discovered, JSON.stringify(getDiscoverySaveData()));
+    gameStorage.setItem(keys.discovered, JSON.stringify(getDiscoverySaveData()));
     emitGameplayEvent("discoveryChanged", {});
   } catch (e) {
-    console.error("Failed to save progress to localStorage", e);
+    console.error("Failed to save progress", e);
   }
 }
 

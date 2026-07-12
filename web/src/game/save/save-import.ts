@@ -11,14 +11,14 @@ import {
   SAVE_MAX_HIGHLIGHTS,
   SAVE_MAX_ACHIEVEMENTS,
   SAVE_MAX_FLAGS
-} from "./security/save-validation";
+} from "../security/save-validation";
 import type {
   DiscoveryLogEntry,
   DiscoverySaveData,
   GameSaveFile,
   ProgressionState,
   AchievementsSaveData
-} from "../types";
+} from "../../types";
 
 export type ParseSaveResult =
   | { ok: true; save: GameSaveFile }

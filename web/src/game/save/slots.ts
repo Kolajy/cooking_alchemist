@@ -1,4 +1,6 @@
-import { isValidSaveId } from "./security/save-validation";
+import { getCtx } from "../context";
+import { isValidSaveId } from "../security/save-validation";
+import { gameStorage } from "./storage";
 
 export type SlotInfo = {
   id: string;
@@ -15,7 +17,7 @@ const LEGACY_ACHIEVEMENTS_KEY = "culinary_achievements";
 
 export function getActiveSlot(): string {
   try {
-    return localStorage.getItem("culinary_active_slot") || "slot1";
+    return gameStorage.getItem("culinary_active_slot") || "slot1";
   } catch {
     return "slot1";
   }
@@ -23,7 +25,7 @@ export function getActiveSlot(): string {
 
 export function setActiveSlot(slotId: string): void {
   try {
-    localStorage.setItem("culinary_active_slot", slotId);
+    gameStorage.setItem("culinary_active_slot", slotId);
   } catch (e) {
     console.error("Failed to set active slot", e);
   }
@@ -39,20 +41,20 @@ export function getSlotKeys(slotId: string) {
 
 export function migrateLegacySave(): void {
   try {
-    const legacyDiscovered = localStorage.getItem(LEGACY_DISCOVERED_KEY);
+    const legacyDiscovered = gameStorage.getItem(LEGACY_DISCOVERED_KEY);
     const slot1Keys = getSlotKeys("slot1");
-    const slot1Exists = localStorage.getItem(slot1Keys.discovered);
+    const slot1Exists = gameStorage.getItem(slot1Keys.discovered);
 
     if (legacyDiscovered && !slot1Exists) {
       console.log("[Culinary Alchemy] Migrating legacy save to Slot 1");
       // Copy to Slot 1
-      localStorage.setItem(slot1Keys.discovered, legacyDiscovered);
+      gameStorage.setItem(slot1Keys.discovered, legacyDiscovered);
       
-      const legacyProg = localStorage.getItem(LEGACY_PROGRESSION_KEY);
-      if (legacyProg) localStorage.setItem(slot1Keys.progression, legacyProg);
+      const legacyProg = gameStorage.getItem(LEGACY_PROGRESSION_KEY);
+      if (legacyProg) gameStorage.setItem(slot1Keys.progression, legacyProg);
 
-      const legacyAch = localStorage.getItem(LEGACY_ACHIEVEMENTS_KEY);
-      if (legacyAch) localStorage.setItem(slot1Keys.achievements, legacyAch);
+      const legacyAch = gameStorage.getItem(LEGACY_ACHIEVEMENTS_KEY);
+      if (legacyAch) gameStorage.setItem(slot1Keys.achievements, legacyAch);
     }
   } catch (e) {
     console.error("Failed to migrate legacy save", e);
@@ -71,7 +73,7 @@ export function getSlotInfo(slotId: string): SlotInfo {
   };
 
   try {
-    const discoveredRaw = localStorage.getItem(keys.discovered);
+    const discoveredRaw = gameStorage.getItem(keys.discovered);
     if (discoveredRaw) {
       const parsed = JSON.parse(discoveredRaw);
       const discoveredArr: string[] = Array.isArray(parsed)
@@ -94,7 +96,7 @@ export function getSlotInfo(slotId: string): SlotInfo {
       }
     }
 
-    const achievementsRaw = localStorage.getItem(keys.achievements);
+    const achievementsRaw = gameStorage.getItem(keys.achievements);
     if (achievementsRaw) {
       const parsed = JSON.parse(achievementsRaw);
       if (parsed && Array.isArray(parsed.unlocked)) {
@@ -111,9 +113,9 @@ export function getSlotInfo(slotId: string): SlotInfo {
 export function deleteSlot(slotId: string): void {
   const keys = getSlotKeys(slotId);
   try {
-    localStorage.removeItem(keys.discovered);
-    localStorage.removeItem(keys.progression);
-    localStorage.removeItem(keys.achievements);
+    gameStorage.removeItem(keys.discovered);
+    gameStorage.removeItem(keys.progression);
+    gameStorage.removeItem(keys.achievements);
     console.log(`[Culinary Alchemy] Deleted ${slotId}`);
   } catch (e) {
     console.error(`Failed to delete slot ${slotId}`, e);

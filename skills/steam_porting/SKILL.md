@@ -1,11 +1,11 @@
 ---
 name: steam-porting
-description: "Expert skill in native desktop builds (egui/Rust), compiling for Steam, and integrating Steamworks."
+description: "Expert skill in Electron-based desktop packaging, building for Steam, and configuring desktop integration."
 ---
 
-# Steam Porting & Native Packaging Skill
+# Steam Porting & Electron Packaging Skill
 
-This skill covers shipping **Culinary Alchemy** as a native desktop game on Steam — no webview wrapper.
+This skill covers shipping **Culinary Alchemy** as a native desktop game on Steam using an Electron-based wrapper.
 
 ---
 
@@ -14,89 +14,50 @@ This skill covers shipping **Culinary Alchemy** as a native desktop game on Stea
 | Component | Path | Role |
 |-----------|------|------|
 | Shared content | `content/` | Ingredients, recipes, progression, achievements (authoring) |
-| Shared runtime | `core/` | `GameRuntime`, `AchievementEngine`, JSON assets |
-| Desktop UI | `desktop/` | egui/winit native kitchen |
-| Data export | `scripts/export_native_bundle.ts` | `content/` → `game_bundle.json` + `transitions.json` |
-| Web dev client | `web/` | Vite browser client for rapid iteration only |
+| Web app | `web/` | Vite frontend game client |
+| Electron shell | `electron/` | Electron desktop wrapper |
+| Data export | `scripts/export_native_bundle.ts` | Exports content/ to web assets (`web/src/public/game/`) |
 
 **Build commands:**
 
 ```bash
-npm run export-native    # refresh core/assets + web/ios/android bundles
-npm run steam:dev        # export + run egui app
-npm run steam:build      # release binary → target/release/culinary-alchemy
-npm test                 # TypeScript engine + content validation
-cargo test -p culinary-core
+npm run export-native    # refresh web public assets from content/
+npm run electron:dev     # run Electron app with dev hot-reload
+npm run electron:pack    # package Electron app for current platform
+npm run electron:build   # build release binaries for all configured targets
+npm test                 # run vitest engine + content validation suite
 ```
 
 ---
 
-## 2. Asset pipeline
+## 2. Asset Pipeline
 
-Native clients do **not** bundle `web/dist`. They load exported JSON:
+The desktop client runs the built web assets located in the app's resources folder. These assets load:
 
-- `game_bundle.json` — starters, discoverable, progression, **achievements**, **achievementRules**
-- `transitions.json` — flat technique + combine transitions
+- `game_bundle.json` — starters, unlockables, discoverable, progression config, achievements, and rules.
+- `transitions.json` — compiled flat transitions.
 
-Run `npm run export-native` after changing anything under `content/`.
-
-Asset locations after export:
-
-| Platform | Path |
-|----------|------|
-| Rust / desktop | `core/assets/` |
-| Web | `web/src/public/game/` |
-| iOS | `ios/CulinaryAlchemy/Resources/game/` |
-| Android | `android/app/src/main/assets/game/` |
+Run `npm run export-native` after modifying raw files in `content/` to update both the web client and the packaged assets.
 
 ---
 
-## 3. Achievements
+## 3. Saves & Persistence
 
-18 trophies are defined in `content/data/achievements.ts` with rules in `achievement_rules.ts`. Each definition may include a `steamId` for Steam partner mapping.
-
-Rust runtime:
-
-```rust
-let mut rt = GameRuntime::load(&assets_dir)?;
-let result = rt.apply_combine("seeds", "water");
-// result.new_achievement_ids may contain "first_combine"
-```
-
-Steamworks integration should call `SteamUserStats().setAchievement(steam_id)` when `new_achievement_ids` is non-empty.
+- **Save Location**: Electron uses standard platform-specific app data directories for persistent local storage, isolated from regular web browser cache.
+- **Saves Format**: JSON format version 1 containing `discovery`, `progression`, `achievements`, and `settings` (refer to `docs/DATA_SCHEMA.md`).
 
 ---
 
-## 4. Steamworks integration (Rust)
+## 4. Steamworks Integration
 
-Use the [`steamworks`](https://crates.io/crates/steamworks) crate in `desktop/` (not JS bindings).
-
-Planned hooks:
-
-- Initialize Steam API at app startup
-- Map `steamId` from achievement definitions → Steam partner achievements
-- Cloud sync for portable save JSON (`docs/DATA_SCHEMA.md`)
-- Overlay-friendly window (egui/winit)
-
-Place `steam_appid.txt` beside the binary during local dev (e.g. `desktop/steam_appid.txt`).
+For Electron apps, Steamworks integration (Steam Overlay, Achievements, Cloud Saves) can be implemented using node bindings like [`steamworks.js`](https://github.com/ceifa/steamworks.js) or similar JavaScript modules running in the main Electron process and exposed to the renderer via `preload.js`.
 
 ---
 
-## 5. Saves
+## 5. Release Checklist
 
-- Web dev client: `localStorage` + portable JSON export
-- Native desktop: platform-specific app data directory (TBD — wire in `desktop/`)
-- Format: version 1 JSON with `discovery`, `progression`, `achievements`, `settings` — see `docs/DATA_SCHEMA.md`
-
-Saves are designed to be interchangeable across web export and native clients once file I/O is wired.
-
----
-
-## 6. Release checklist
-
-- [ ] `npm run export-native` run and assets committed or bundled in CI
-- [ ] `npm test` and `cargo test -p culinary-core` pass
-- [ ] `npm run steam:build` produces binaries for target OSes
-- [ ] Achievements defined in Steamworks partner site match `steamId` fields in content
-- [ ] Steam depots configured per platform
-- [ ] Cloud save path tested (upload/download portable JSON)
+- [ ] Run `npm run export-native` and commit/verify generated JSON bundles.
+- [ ] Ensure all tests pass via `npm test`.
+- [ ] Run `npm run electron:build` to produce production binaries (`out/` directory).
+- [ ] Verify window sizes, layout scaling, and fullscreen toggles.
+- [ ] Ensure local filesystem storage adapter functions correctly under Electron.

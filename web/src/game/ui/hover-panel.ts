@@ -82,11 +82,8 @@ function updateHoverPanelPosition(e: MouseEvent): void {
   hoverCardEl.style.top = `${y}px`;
 }
 
-export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: MouseEvent): void {
+function resolveHoverItem(itemId: string): IngredientItem | null {
   const { data } = getCtx();
-  if (!hoverCardEl || activeHoverTarget === el) return;
-
-  // Look up item
   let item = data.DISCOVERABLE_ITEMS[itemId] || null;
   if (!item) {
     item = (data.STARTER_ELEMENTS.find(i => i.id === itemId) as IngredientItem) || null;
@@ -94,68 +91,12 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   if (!item) {
     item = (data.UNLOCKABLE_ELEMENTS.find(i => i.id === itemId) as IngredientItem) || null;
   }
-  if (!item) return;
+  return item;
+}
 
-  // Enrich it with global lookup
-  const origin = item.origin || data.getIngredientOrigin(itemId);
-  const stateKey = getIngredientStateKey({ ...item, origin });
-  const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
-
-  activeHoverTarget = el;
-
-  // Build the state badge class & label
-  const stateClass = `hover-card__state hover-card__state--${stateKey}`;
-  const stateLabel = getFriendlyStateLabel(stateKey);
-
-  const historicalText = stateKey === "primal" ? PRIMAL_HISTORICAL_INFO[itemId] : null;
-
-  hoverCardEl.textContent = "";
-
-  const headerDiv = document.createElement("div");
-  headerDiv.className = "hover-card__header";
-
-  const emojiSpan = document.createElement("span");
-  emojiSpan.className = "hover-card__emoji";
-  emojiSpan.textContent = item.emoji;
-
-  const metaDiv = document.createElement("div");
-  metaDiv.className = "hover-card__meta";
-
-  const nameSpan = document.createElement("span");
-  nameSpan.className = "hover-card__name";
-  nameSpan.textContent = item.name;
-
-  const stateSpan = document.createElement("span");
-  stateSpan.className = stateClass;
-  stateSpan.textContent = stateLabel;
-
-  metaDiv.append(nameSpan, stateSpan);
-  headerDiv.append(emojiSpan, metaDiv);
-  hoverCardEl.appendChild(headerDiv);
-
-  if (item.description) {
-    const descP = document.createElement("p");
-    descP.className = "hover-card__description";
-    descP.textContent = item.description;
-    hoverCardEl.appendChild(descP);
-  }
-
-  if (historicalText) {
-    const loreDiv = document.createElement("div");
-    loreDiv.className = "hover-card__lore";
-    loreDiv.style.borderLeftColor = "hsl(265, 40%, 65%)";
-    loreDiv.style.background = "hsla(265, 30%, 93%, 0.45)";
-    loreDiv.style.color = "hsl(265, 25%, 36%)";
-    loreDiv.style.marginTop = "0.85rem";
-    loreDiv.textContent = historicalText;
-    hoverCardEl.appendChild(loreDiv);
-  }
-
-  const propsDiv = document.createElement("div");
-  propsDiv.className = "hover-card__props";
+function buildHoverProperties(propsDiv: HTMLElement, props: Record<string, any>, isPrimal: boolean): boolean {
   let hasProps = false;
 
-  const isPrimal = stateKey === "primal";
   if (!isPrimal) {
     const createProp = (iconStr: string, label: string, valText?: string, extraStyle?: string) => {
       const pItem = document.createElement("div");
@@ -195,15 +136,69 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
     if (props.toxic) createProp("⚠️", "Toxic if raw!", undefined, "grid-column: span 2; color: var(--color-danger); font-weight: bold;");
   }
 
+  return hasProps;
+}
+
+function renderHoverCardContent(el: HTMLElement, item: IngredientItem, itemId: string, stateKey: string, props: Record<string, any>) {
+  const isPrimal = stateKey === "primal";
+  const stateClass = `hover-card__state hover-card__state--${stateKey}`;
+  const stateLabel = getFriendlyStateLabel(stateKey);
+  const historicalText = isPrimal ? PRIMAL_HISTORICAL_INFO[itemId] : null;
+
+  el.textContent = "";
+
+  const headerDiv = document.createElement("div");
+  headerDiv.className = "hover-card__header";
+
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "hover-card__emoji";
+  emojiSpan.textContent = item.emoji;
+
+  const metaDiv = document.createElement("div");
+  metaDiv.className = "hover-card__meta";
+
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "hover-card__name";
+  nameSpan.textContent = item.name;
+
+  const stateSpan = document.createElement("span");
+  stateSpan.className = stateClass;
+  stateSpan.textContent = stateLabel;
+
+  metaDiv.append(nameSpan, stateSpan);
+  headerDiv.append(emojiSpan, metaDiv);
+  el.appendChild(headerDiv);
+
+  if (item.description) {
+    const descP = document.createElement("p");
+    descP.className = "hover-card__description";
+    descP.textContent = item.description;
+    el.appendChild(descP);
+  }
+
+  if (historicalText) {
+    const loreDiv = document.createElement("div");
+    loreDiv.className = "hover-card__lore";
+    loreDiv.style.borderLeftColor = "hsl(265, 40%, 65%)";
+    loreDiv.style.background = "hsla(265, 30%, 93%, 0.45)";
+    loreDiv.style.color = "hsl(265, 25%, 36%)";
+    loreDiv.style.marginTop = "0.85rem";
+    loreDiv.textContent = historicalText;
+    el.appendChild(loreDiv);
+  }
+
+  const propsDiv = document.createElement("div");
+  propsDiv.className = "hover-card__props";
+  const hasProps = buildHoverProperties(propsDiv, props, isPrimal);
   if (hasProps) {
-    hoverCardEl.appendChild(propsDiv);
+    el.appendChild(propsDiv);
   }
 
   if (item.blurb) {
     const blurbDiv = document.createElement("div");
     blurbDiv.className = "hover-card__lore";
     blurbDiv.textContent = item.blurb;
-    hoverCardEl.appendChild(blurbDiv);
+    el.appendChild(blurbDiv);
   }
 
   if (item.tip) {
@@ -215,9 +210,23 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
     const tipTextSpan = document.createElement("span");
     tipTextSpan.textContent = item.tip;
     tipDiv.append(tipIconSpan, tipTextSpan);
-    hoverCardEl.appendChild(tipDiv);
+    el.appendChild(tipDiv);
   }
+}
 
+export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: MouseEvent): void {
+  if (!hoverCardEl || activeHoverTarget === el) return;
+
+  const item = resolveHoverItem(itemId);
+  if (!item) return;
+
+  const { data } = getCtx();
+  const origin = item.origin || data.getIngredientOrigin(itemId);
+  const stateKey = getIngredientStateKey({ ...item, origin });
+  const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
+
+  activeHoverTarget = el;
+  hoverCardEl.innerHTML = renderHoverCardContent(item, itemId, stateKey, props);
   hoverCardEl.classList.add("visible");
   updateHoverPanelPosition(e);
 }

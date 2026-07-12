@@ -115,10 +115,9 @@ Saves are interchangeable across web export, desktop, iOS, and Android (when nat
 ```bash
 npm test                              # cli_test + content + dependency + properties + save-import
 npm run test:packs                    # optional cultural pack content
-cargo test -p culinary-core           # Rust cli_test
 ```
 
-When changing game data or rules, update authoring in `content/`, run `npm run export-native`, then run both test suites.
+When changing game data or rules, update authoring in `content/`, run `npm run export-native`, then run the test suite.
 
 ## Related documentation
 

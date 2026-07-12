@@ -7,42 +7,79 @@
   "scripts": {
     "dev": "concurrently -k -n vite,electron -c cyan,magenta \"ELECTRON_DEV=1 VITE_DEV_PORT=5273 npm run dev -w @culinary-alchemy/web\" \"wait-on -t 90000 tcp:5273 && env -u ELECTRON_RUN_AS_NODE ELECTRON_DEV_URL=https://localhost:5273 electron . --dev\"",
     "start": "env -u ELECTRON_RUN_AS_NODE electron .",
-    "build:web": "npm run export-native && vite build --base ./ --config ../web/vite.config.ts",
+    "build:web": "npm run export-native --prefix .. && cd ../web && vite build --base ./",
     "pack": "npm run build:web && electron-builder --dir",
     "build": "npm run build:web && electron-builder"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "electron": "^35.7.5",
+    "electron": "35.7.5",
     "electron-builder": "^25.1.8",
     "wait-on": "^8.0.3"
   },
   "build": {
     "appId": "com.culinaryalchemy.app",
     "productName": "Culinary Alchemy",
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/steamworks.js/**/*"
+    ],
     "directories": {
       "output": "out"
     },
     "files": [
       "main.js",
-      "preload.js"
+      "preload.js",
+      "package.json"
     ],
     "extraResources": [
       {
         "from": "../web/dist",
         "to": "web",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "mac": {
       "category": "public.app-category.games",
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "files": [
+        "!**/node_modules/steamworks.js/dist/win32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/win64{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux64{,/**/*}"
+      ]
     },
     "win": {
-      "target": ["nsis", "portable"]
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "files": [
+        "!**/node_modules/steamworks.js/dist/osx{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/linux64{,/**/*}"
+      ]
     },
     "linux": {
-      "target": ["AppImage", "deb"]
-    }
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "files": [
+        "!**/node_modules/steamworks.js/dist/win32{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/win64{,/**/*}",
+        "!**/node_modules/steamworks.js/dist/osx{,/**/*}"
+      ]
+    },
+    "compression": "maximum",
+    "npmRebuild": false
+  },
+  "dependencies": {
+    "steamworks.js": "^0.4.0"
   }
 }

@@ -133,9 +133,10 @@ function runTests(): void {
   assert(rootsMatch.success === true, "Roots separate one at a time.");
   assert(rootsMatch.recipe?.result.id === "carrot", "First root separation yields carrot.");
 
-  const milestones = progression.checkMilestoneUnlocks(4);
-  assert(milestones.length === 1, "First milestone unlocks at 3 discoveries.");
+  const milestones = progression.checkMilestoneUnlocks(2);
+  assert(milestones.length === 1, "First milestone unlocks at 2 discoveries.");
   assert(milestones[0].unlocks.includes("seeds"), "First milestone unlocks seeds.");
+  assert(milestones[0].unlocks.includes("roots"), "First milestone unlocks roots.");
 
   console.log("=== ALL CULINARY ENGINE TESTS PASSED SUCCESSFULLY ===");
 }

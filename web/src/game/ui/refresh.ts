@@ -2,7 +2,7 @@ import { renderCabinet } from "../cabinet";
 import { invalidateIngredientCatalog } from "../ingredients";
 import { updateSkillsUI } from "./skills-panel";
 import { renderCookingToolbar, updateBodyToolAttribute } from "../actions/toolbar";
-import { updateStats } from "../persistence";
+import { updateStats } from "../save/persistence";
 
 export interface GameplayRefreshOptions {
   skills?: boolean;

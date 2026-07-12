@@ -1,40 +1,33 @@
-/** Bridges browser globals (engines, ingredient data) into the game layer. */
+/** Bridges registry (engines, ingredient data) into the game layer. */
 
+import { registry } from "../core/bundle_registry";
 import { CombinationEngine } from "../engine/combination_engine";
 import { ProgressionEngine } from "../engine/progression_engine";
-import type { DataLayer, DiscoverableMap, ProgressionApi } from "../types";
-
-function readGlobal<K extends keyof typeof globalThis>(key: K, fallback: unknown): unknown {
-  const value = globalThis[key];
-  if (value === undefined || value === null) {
-    console.warn(`[Culinary Alchemy] Missing global ${String(key)}`);
-    return fallback;
-  }
-  return value;
-}
+import type { DataLayer, ProgressionApi } from "../types";
 
 export function createDataLayer(): DataLayer {
-  const discoverable = readGlobal("DISCOVERABLE_ITEMS", {}) as DiscoverableMap;
+  const discoverable = registry.DISCOVERABLE_ITEMS;
+  const progressionApi = (globalThis as any).Progression as ProgressionApi || {
+    load() {},
+    save() {},
+    getUnlockedIngredients: () => []
+  };
 
   return {
-    STARTER_ELEMENTS: readGlobal("STARTER_ELEMENTS", []) as DataLayer["STARTER_ELEMENTS"],
-    UNLOCKABLE_ELEMENTS: readGlobal("UNLOCKABLE_ELEMENTS", []) as DataLayer["UNLOCKABLE_ELEMENTS"],
+    STARTER_ELEMENTS: registry.STARTER_ELEMENTS,
+    UNLOCKABLE_ELEMENTS: registry.UNLOCKABLE_ELEMENTS,
     DISCOVERABLE_ITEMS: discoverable,
-    PROGRESSION_TIERS: readGlobal("PROGRESSION_TIERS", {}) as DataLayer["PROGRESSION_TIERS"],
-    INGREDIENT_MILESTONES: readGlobal("INGREDIENT_MILESTONES", []) as DataLayer["INGREDIENT_MILESTONES"],
-    PLAYER_ACTIONS: readGlobal("PLAYER_ACTIONS", {}) as DataLayer["PLAYER_ACTIONS"],
-    PROGRESSION_CONFIG: readGlobal("PROGRESSION_CONFIG", {}) as DataLayer["PROGRESSION_CONFIG"],
-    PRIMITIVE_INGREDIENT_IDS: readGlobal("PRIMITIVE_INGREDIENT_IDS", new Set()) as Set<string>,
-    transitionIndex: readGlobal("TRANSITION_INDEX", null) as DataLayer["transitionIndex"],
-    Progression: readGlobal("Progression", {
-      load() {},
-      save() {},
-      getUnlockedIngredients: () => []
-    }) as ProgressionApi,
-    combinationEngine: new CombinationEngine(discoverable, globalThis.TRANSITION_INDEX),
-    getIngredientOrigin: readGlobal("getIngredientOrigin", () => "processed") as DataLayer["getIngredientOrigin"],
-    ACHIEVEMENTS: readGlobal("ACHIEVEMENTS", []) as DataLayer["ACHIEVEMENTS"],
-    ACHIEVEMENT_RULES: readGlobal("ACHIEVEMENT_RULES", {}) as DataLayer["ACHIEVEMENT_RULES"]
+    PROGRESSION_TIERS: registry.PROGRESSION_TIERS,
+    INGREDIENT_MILESTONES: registry.INGREDIENT_MILESTONES,
+    PLAYER_ACTIONS: registry.PLAYER_ACTIONS,
+    PROGRESSION_CONFIG: registry.PROGRESSION_CONFIG,
+    PRIMITIVE_INGREDIENT_IDS: registry.PRIMITIVE_INGREDIENT_IDS,
+    transitionIndex: registry.TRANSITION_INDEX,
+    Progression: progressionApi,
+    combinationEngine: new CombinationEngine(discoverable, registry.TRANSITION_INDEX),
+    getIngredientOrigin: registry.getIngredientOrigin,
+    ACHIEVEMENTS: registry.ACHIEVEMENTS,
+    ACHIEVEMENT_RULES: registry.ACHIEVEMENT_RULES
   };
 }
 
