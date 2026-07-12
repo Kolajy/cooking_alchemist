@@ -7,7 +7,7 @@ import {
   saveAchievements
 } from "../progression/achievements";
 import { isPlayerActionUnlocked } from "../progression/skills";
-import { setSoundEnabled } from "../feedback/sounds";
+import { setSoundEnabled, getSoundVolume } from "../feedback/sounds";
 import { getSettingsSnapshot, setReducedMotion } from "../settings";
 import { syncSettingsControls } from "../ui/settings";
 import { clearWorkspace } from "../canvas/workspace";
@@ -76,6 +76,6 @@ export function buildPortableSave(isSoundEnabled: boolean): GameSaveFile {
     discovery: getDiscoverySaveData(),
     progression: data.Progression.getState(),
     achievements: getAchievementsSaveData(),
-    settings: getSettingsSnapshot(isSoundEnabled)
+    settings: getSettingsSnapshot(isSoundEnabled, getSoundVolume())
   };
 }

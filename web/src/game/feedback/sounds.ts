@@ -1,5 +1,6 @@
 import { secureRandom } from "../security/math";
 const SOUND_PREF_KEY = "culinary_sound_enabled";
+const SOUND_VOLUME_KEY = "culinary_sound_volume";
 
 type OscType = OscillatorType;
 
@@ -80,6 +81,7 @@ const SOUND_COOLDOWN_MS: Partial<Record<SoundId, number>> = {
 let audioContext: AudioContext | null = null;
 let masterGainNode: GainNode | null = null;
 let soundEnabled = false;
+let soundVolume = 1.0;
 let unlockBound = false;
 const lastPlayedAt = new Map<string, number>();
 
@@ -101,6 +103,26 @@ function writeSoundPref(enabled: boolean): void {
   }
 }
 
+function readSoundVolumePref(): number {
+  try {
+    const stored = localStorage.getItem(SOUND_VOLUME_KEY);
+    if (stored === null) return 1.0;
+    const val = parseFloat(stored);
+    if (isNaN(val) || val < 0 || val > 1) return 1.0;
+    return val;
+  } catch {
+    return 1.0;
+  }
+}
+
+function writeSoundVolumePref(volume: number): void {
+  try {
+    localStorage.setItem(SOUND_VOLUME_KEY, volume.toString());
+  } catch {
+    // Ignore storage failures.
+  }
+}
+
 function getContext(): AudioContext | null {
   if (!audioContext) {
     const Ctx = window.AudioContext
@@ -110,7 +132,7 @@ function getContext(): AudioContext | null {
 
     // Set up master volume for SFX
     masterGainNode = audioContext.createGain();
-    masterGainNode.gain.value = 0.6; // Base volume for all SFX
+    masterGainNode.gain.value = 0.6 * soundVolume; // Base volume for all SFX
     masterGainNode.connect(audioContext.destination);
   }
   return audioContext;
@@ -535,7 +557,21 @@ export function setSoundEnabled(enabled: boolean): void {
 
 export function loadSoundPreference(): boolean {
   soundEnabled = readSoundPref();
+  soundVolume = readSoundVolumePref();
   return soundEnabled;
+}
+
+export function getSoundVolume(): number {
+  return soundVolume;
+}
+
+export function setSoundVolume(volume: number): void {
+  const v = Math.max(0, Math.min(1, volume));
+  soundVolume = v;
+  writeSoundVolumePref(v);
+  if (masterGainNode) {
+    masterGainNode.gain.value = 0.6 * v;
+  }
 }
 
 export function unlockAudioOnGesture(): void {

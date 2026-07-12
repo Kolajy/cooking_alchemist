@@ -128,8 +128,9 @@ loadSettings();
 assert(isReducedMotionEnabled() === true, "Reduced motion loaded successfully");
 assert(isHighContrastEnabled() === false, "High contrast loaded successfully");
 
-const snapshot = getSettingsSnapshot(true);
+const snapshot = getSettingsSnapshot(true, 1.0);
 assert(snapshot.soundEnabled === true, "Snapshot sound correct");
+assert(snapshot.soundVolume === 1.0, "Snapshot sound volume correct");
 assert(snapshot.reducedMotion === true, "Snapshot motion correct");
 assert(snapshot.highContrast === false, "Snapshot contrast correct");
 
