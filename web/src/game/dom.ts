@@ -8,6 +8,7 @@ export function queryDom(): GameDom {
     cabinetItems: document.getElementById("cabinet-items"),
     unlockedCountEl: document.getElementById("unlocked-count"),
     cabinetSearch: document.getElementById("cabinet-search") as HTMLInputElement | null,
+    cabinetSearchSuggestions: document.getElementById("cabinet-search-suggestions"),
     ingredientTypesContainer: document.getElementById("ingredient-types"),
     ingredientStatesContainer: document.getElementById("ingredient-states"),
     cookingToolbar: document.getElementById("cooking-toolbar"),

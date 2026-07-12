@@ -7,6 +7,7 @@ import {
 } from "./ingredients";
 import { onCabinetPointerDown, handleCabinetItemKeyboardSpawn } from "./canvas/cabinet-drag";
 import { bindHoverPanelEvents } from "./ui/hover-panel";
+import { renderSearchSuggestions } from "./search-suggestions";
 import { INGREDIENT_PROPERTIES } from "../data/ingredients/properties";
 
 const recentHighlightTimers = new Map<string, ReturnType<typeof setTimeout>>();
@@ -31,6 +32,8 @@ export function renderCabinet(): void {
   const { state, dom } = getCtx();
   const { cabinetItems } = dom;
   if (!cabinetItems) return;
+
+  renderSearchSuggestions();
 
   cabinetItems.innerHTML = "";
   const term = state.searchTerm.toLowerCase();

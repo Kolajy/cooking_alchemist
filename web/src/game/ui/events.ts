@@ -19,6 +19,8 @@ import {
 import { applyUndo, refreshUndoButton } from "../feedback/undo";
 import { setupKeyboardShortcuts } from "./keyboard-shortcuts";
 import { loadSettings } from "../settings";
+import { addSearchHistory } from "../search-suggestions";
+
 import { setupSettingsPanel } from "./settings";
 import { initStartMenu } from "./start-menu";
 
@@ -70,6 +72,19 @@ export function setupEventListeners() {
     if (cabinetSearchTimer) clearTimeout(cabinetSearchTimer);
     cabinetSearchTimer = setTimeout(() => renderCabinet(), 150);
   });
+
+  cabinetSearch?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const val = (e.target as HTMLInputElement).value;
+      if (val) addSearchHistory(val);
+    }
+  });
+
+  cabinetSearch?.addEventListener("blur", (e) => {
+    const val = (e.target as HTMLInputElement).value;
+    if (val) addSearchHistory(val);
+  });
+
 
   btnClearWorkspace?.addEventListener("click", () => {
     clearWorkspace();

@@ -179,6 +179,7 @@ export interface GameDom {
   cabinetItems: HTMLElement | null;
   unlockedCountEl: HTMLElement | null;
   cabinetSearch: HTMLInputElement | null;
+  cabinetSearchSuggestions: HTMLElement | null;
   ingredientTypesContainer: HTMLElement | null;
   ingredientStatesContainer: HTMLElement | null;
   cookingToolbar: HTMLElement | null;
