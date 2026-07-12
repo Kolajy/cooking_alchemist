@@ -47,7 +47,7 @@ const smashCategory = {
       dependsOn: ["grind"],
       leadsTo: ["knead"],
       unlockCriteria: {
-        prerequisites: { grind: 4 }
+        prerequisites: { grind: 3 }
       },
       actions: ["press"],
       desc: "Extract liquids and oils by applying continuous pressure."
@@ -58,7 +58,7 @@ const smashCategory = {
       dependsOn: ["press"],
       leadsTo: ["emulsify"],
       unlockCriteria: {
-        prerequisites: { press: 4 }
+        prerequisites: { press: 3 }
       },
       actions: ["knead"],
       desc: "Stagger, fold, and knead dough to develop gluten structures."
@@ -69,7 +69,7 @@ const smashCategory = {
       dependsOn: ["knead"],
       leadsTo: [],
       unlockCriteria: {
-        prerequisites: { knead: 5 }
+        prerequisites: { knead: 4 }
       },
       actions: ["emulsify", "blend"],
       desc: "Emulsify oils and liquids into unified sauces and dressings."
@@ -86,7 +86,7 @@ const tearCategory = {
       dependsOn: [],
       leadsTo: ["cutting"],
       unlockCriteria: {
-        prerequisites: { separate: 4 }
+        prerequisites: { separate: 2 }
       },
       actions: ["tear"],
       desc: "Tear leafy herbs, greens, or cooked meats by hand."
@@ -97,7 +97,7 @@ const tearCategory = {
       dependsOn: ["tear"],
       leadsTo: ["slicing"],
       unlockCriteria: {
-        prerequisites: { tear: 3 }
+        prerequisites: { tear: 2 }
       },
       actions: ["cut", "chop"],
       desc: "Cut foods cleanly using basic knife strokes."
@@ -108,7 +108,7 @@ const tearCategory = {
       dependsOn: ["cutting"],
       leadsTo: ["dicing"],
       unlockCriteria: {
-        prerequisites: { cutting: 4 }
+        prerequisites: { cutting: 3 }
       },
       actions: ["slice"],
       desc: "Slice meats and vegetables into thin, even strips."
@@ -158,7 +158,7 @@ const peelCategory = {
       dependsOn: ["peel"],
       leadsTo: ["fillet_debone"],
       unlockCriteria: {
-        prerequisites: { peel: 3 }
+        prerequisites: { peel: 2 }
       },
       actions: ["core", "seed"],
       desc: "Remove tough cores, seeds, or pits from produce."
@@ -169,7 +169,7 @@ const peelCategory = {
       dependsOn: ["core_seed"],
       leadsTo: [],
       unlockCriteria: {
-        prerequisites: { core_seed: 4 }
+        prerequisites: { core_seed: 3 }
       },
       actions: ["fillet", "debone", "zest"],
       desc: "Cleanly separate fish meat from bones and debone red meats."
@@ -194,7 +194,7 @@ const thermalCategory = {
       dependsOn: ["char"],
       leadsTo: ["hearth_bake"],
       unlockCriteria: {
-        prerequisites: { char: 3 }
+        prerequisites: { char: 2 }
       },
       actions: ["pit_cook", "bake"],
       desc: "Slow roasting underground using heated stone pits."
@@ -205,7 +205,7 @@ const thermalCategory = {
       dependsOn: ["pit_cook"],
       leadsTo: ["cook"],
       unlockCriteria: {
-        prerequisites: { pit_cook: 3 }
+        prerequisites: { pit_cook: 2 }
       },
       actions: ["hearth_bake", "bake"],
       desc: "Baking bread and roasting in clay tandoors or stone hearths."
@@ -216,7 +216,7 @@ const thermalCategory = {
       dependsOn: ["hearth_bake"],
       leadsTo: ["smoke"],
       unlockCriteria: {
-        prerequisites: { hearth_bake: 4 }
+        prerequisites: { hearth_bake: 3 }
       },
       actions: ["cook", "fry", "boil", "simmer", "steam"],
       desc: "Stovetop cooking: boiling, simmering, steaming, and pan-frying."
@@ -227,7 +227,7 @@ const thermalCategory = {
       dependsOn: ["cook"],
       leadsTo: ["precision"],
       unlockCriteria: {
-        prerequisites: { cook: 4 }
+        prerequisites: { cook: 3 }
       },
       actions: ["smoke"],
       desc: "Exposing ingredients to aromatic hardwood smoke for flavor."
@@ -238,7 +238,7 @@ const thermalCategory = {
       dependsOn: ["smoke"],
       leadsTo: [],
       unlockCriteria: {
-        prerequisites: { smoke: 5 }
+        prerequisites: { smoke: 4 }
       },
       actions: ["precision", "sous_vide", "reduce"],
       desc: "Oven baking, temperature-controlled sous-vide, and precise reductions."
@@ -255,7 +255,7 @@ const structureCategory = {
       dependsOn: [],
       leadsTo: ["whisk_churn"],
       unlockCriteria: {
-        prerequisites: { combine: 3 }
+        prerequisites: { combine: 2 }
       },
       actions: ["hand_mix", "stir"],
       desc: "Stirring, blending, and combining ingredients by hand."
@@ -266,7 +266,7 @@ const structureCategory = {
       dependsOn: ["hand_mix"],
       leadsTo: ["gel_foam"],
       unlockCriteria: {
-        prerequisites: { hand_mix: 3 }
+        prerequisites: { hand_mix: 2 }
       },
       actions: ["whisk", "churn"],
       desc: "Incorporate air or butter fat clump formation."
@@ -277,7 +277,7 @@ const structureCategory = {
       dependsOn: ["whisk_churn"],
       leadsTo: [],
       unlockCriteria: {
-        prerequisites: { whisk_churn: 4 }
+        prerequisites: { whisk_churn: 3 }
       },
       actions: ["gel", "foam"],
       desc: "Chemical gelification and culinary foam stabilization."
@@ -302,7 +302,7 @@ const timeCategory = {
       dependsOn: ["rest"],
       leadsTo: ["age"],
       unlockCriteria: {
-        prerequisites: { rest: 3 }
+        prerequisites: { rest: 2 }
       },
       actions: ["ferment", "culture"],
       desc: "Cultivate yeast or bacteria to ferment doughs, brews, or batters."
@@ -313,7 +313,7 @@ const timeCategory = {
       dependsOn: ["ferment"],
       leadsTo: [],
       unlockCriteria: {
-        prerequisites: { ferment: 4 }
+        prerequisites: { ferment: 3 }
       },
       actions: ["age", "cure"],
       desc: "Cure or age ingredients over longer time spans."
@@ -370,7 +370,7 @@ const baseConfig = {
       emoji: "🥣",
       mode: "combine",
       categories: ["structure"],
-      unlockCriteria: { discoveredRecipes: 15 },
+      unlockCriteria: { discoveredRecipes: 10 },
       desc: "Merge ingredients together and mix them into unified blends."
     },
     change: {
@@ -378,7 +378,7 @@ const baseConfig = {
       emoji: "🔥",
       categories: ["thermal"],
       starterSkill: "char",
-      unlockCriteria: { discoveredRecipes: 40 },
+      unlockCriteria: { discoveredRecipes: 25 },
       desc: "Heat, cook, and transform ingredients."
     },
     time: {
@@ -386,32 +386,32 @@ const baseConfig = {
       emoji: "⏳",
       categories: ["time"],
       starterSkill: "rest",
-      unlockCriteria: { discoveredRecipes: 200, requiredIngredients: ["berry_pulp"] },
+      unlockCriteria: { discoveredRecipes: 60 },
       desc: "Steep, rest, ferment, or age ingredients."
     }
   },
 
   milestones: [
     {
-      recipesCount: 3,
-      unlocks: ["seeds", "mushrooms"],
+      recipesCount: 2,
+      unlocks: ["roots", "seeds", "mushrooms"],
       label: "Undergrowth Tracker",
-      desc: "You've discovered wild seeds and forest mushrooms."
+      desc: "You've discovered edible roots, wild seeds, and forest mushrooms."
     },
     {
-      recipesCount: 8,
-      unlocks: ["whole_fish", "shoots"],
+      recipesCount: 6,
+      unlocks: ["fruits", "whole_fish", "shoots"],
       label: "Riverfront Explorer",
-      desc: "You've learned to catch fish and harvest tender shoots."
+      desc: "You've found wild fruits, learned to catch fish, and harvest tender shoots."
     },
     {
-      recipesCount: 20,
+      recipesCount: 12,
       unlocks: ["nuts", "grasses"],
       label: "Grove Harvester",
       desc: "You've unlocked wild nuts and tall grasses."
     },
     {
-      recipesCount: 35,
+      recipesCount: 20,
       unlocks: ["livestock", "garden_produce", "wild_hives"],
       label: "Master Husbandman",
       desc: "You can now tend livestock, cultivate wild flora, and raid wild bee hives."

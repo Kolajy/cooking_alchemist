@@ -6908,7 +6908,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "grind": 4
+                "grind": 3
               }
             },
             "actions": [
@@ -6927,7 +6927,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "press": 4
+                "press": 3
               }
             },
             "actions": [
@@ -6944,7 +6944,7 @@
             "leadsTo": [],
             "unlockCriteria": {
               "prerequisites": {
-                "knead": 5
+                "knead": 4
               }
             },
             "actions": [
@@ -6967,7 +6967,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "separate": 4
+                "separate": 2
               }
             },
             "actions": [
@@ -6986,7 +6986,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "tear": 3
+                "tear": 2
               }
             },
             "actions": [
@@ -7006,7 +7006,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "cutting": 4
+                "cutting": 3
               }
             },
             "actions": [
@@ -7083,7 +7083,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "peel": 3
+                "peel": 2
               }
             },
             "actions": [
@@ -7101,7 +7101,7 @@
             "leadsTo": [],
             "unlockCriteria": {
               "prerequisites": {
-                "core_seed": 4
+                "core_seed": 3
               }
             },
             "actions": [
@@ -7140,7 +7140,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "char": 3
+                "char": 2
               }
             },
             "actions": [
@@ -7160,7 +7160,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "pit_cook": 3
+                "pit_cook": 2
               }
             },
             "actions": [
@@ -7180,7 +7180,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "hearth_bake": 4
+                "hearth_bake": 3
               }
             },
             "actions": [
@@ -7203,7 +7203,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "cook": 4
+                "cook": 3
               }
             },
             "actions": [
@@ -7220,7 +7220,7 @@
             "leadsTo": [],
             "unlockCriteria": {
               "prerequisites": {
-                "smoke": 5
+                "smoke": 4
               }
             },
             "actions": [
@@ -7244,7 +7244,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "combine": 3
+                "combine": 2
               }
             },
             "actions": [
@@ -7264,7 +7264,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "hand_mix": 3
+                "hand_mix": 2
               }
             },
             "actions": [
@@ -7282,7 +7282,7 @@
             "leadsTo": [],
             "unlockCriteria": {
               "prerequisites": {
-                "whisk_churn": 4
+                "whisk_churn": 3
               }
             },
             "actions": [
@@ -7320,7 +7320,7 @@
             ],
             "unlockCriteria": {
               "prerequisites": {
-                "rest": 3
+                "rest": 2
               }
             },
             "actions": [
@@ -7338,7 +7338,7 @@
             "leadsTo": [],
             "unlockCriteria": {
               "prerequisites": {
-                "ferment": 4
+                "ferment": 3
               }
             },
             "actions": [
@@ -7383,7 +7383,7 @@
           "structure"
         ],
         "unlockCriteria": {
-          "discoveredRecipes": 15
+          "discoveredRecipes": 10
         },
         "desc": "Merge ingredients together and mix them into unified blends."
       },
@@ -7395,7 +7395,7 @@
         ],
         "starterSkill": "char",
         "unlockCriteria": {
-          "discoveredRecipes": 40
+          "discoveredRecipes": 25
         },
         "desc": "Heat, cook, and transform ingredients."
       },
@@ -7407,35 +7407,34 @@
         ],
         "starterSkill": "rest",
         "unlockCriteria": {
-          "discoveredRecipes": 200,
-          "requiredIngredients": [
-            "berry_pulp"
-          ]
+          "discoveredRecipes": 60
         },
         "desc": "Steep, rest, ferment, or age ingredients."
       }
     },
     "milestones": [
       {
-        "recipesCount": 3,
+        "recipesCount": 2,
         "unlocks": [
+          "roots",
           "seeds",
           "mushrooms"
         ],
         "label": "Undergrowth Tracker",
-        "desc": "You've discovered wild seeds and forest mushrooms."
+        "desc": "You've discovered edible roots, wild seeds, and forest mushrooms."
       },
       {
-        "recipesCount": 8,
+        "recipesCount": 6,
         "unlocks": [
+          "fruits",
           "whole_fish",
           "shoots"
         ],
         "label": "Riverfront Explorer",
-        "desc": "You've learned to catch fish and harvest tender shoots."
+        "desc": "You've found wild fruits, learned to catch fish, and harvest tender shoots."
       },
       {
-        "recipesCount": 20,
+        "recipesCount": 12,
         "unlocks": [
           "nuts",
           "grasses"
@@ -7444,7 +7443,7 @@
         "desc": "You've unlocked wild nuts and tall grasses."
       },
       {
-        "recipesCount": 35,
+        "recipesCount": 20,
         "unlocks": [
           "livestock",
           "garden_produce",
@@ -7523,7 +7522,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "grind": 4
+            "grind": 3
           }
         },
         "actions": [
@@ -7543,7 +7542,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "press": 4
+            "press": 3
           }
         },
         "actions": [
@@ -7561,7 +7560,7 @@
         "leadsTo": [],
         "unlockCriteria": {
           "prerequisites": {
-            "knead": 5
+            "knead": 4
           }
         },
         "actions": [
@@ -7580,7 +7579,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "separate": 4
+            "separate": 2
           }
         },
         "actions": [
@@ -7600,7 +7599,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "tear": 3
+            "tear": 2
           }
         },
         "actions": [
@@ -7621,7 +7620,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "cutting": 4
+            "cutting": 3
           }
         },
         "actions": [
@@ -7697,7 +7696,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "peel": 3
+            "peel": 2
           }
         },
         "actions": [
@@ -7716,7 +7715,7 @@
         "leadsTo": [],
         "unlockCriteria": {
           "prerequisites": {
-            "core_seed": 4
+            "core_seed": 3
           }
         },
         "actions": [
@@ -7752,7 +7751,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "char": 3
+            "char": 2
           }
         },
         "actions": [
@@ -7773,7 +7772,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "pit_cook": 3
+            "pit_cook": 2
           }
         },
         "actions": [
@@ -7794,7 +7793,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "hearth_bake": 4
+            "hearth_bake": 3
           }
         },
         "actions": [
@@ -7818,7 +7817,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "cook": 4
+            "cook": 3
           }
         },
         "actions": [
@@ -7836,7 +7835,7 @@
         "leadsTo": [],
         "unlockCriteria": {
           "prerequisites": {
-            "smoke": 5
+            "smoke": 4
           }
         },
         "actions": [
@@ -7856,7 +7855,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "combine": 3
+            "combine": 2
           }
         },
         "actions": [
@@ -7877,7 +7876,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "hand_mix": 3
+            "hand_mix": 2
           }
         },
         "actions": [
@@ -7896,7 +7895,7 @@
         "leadsTo": [],
         "unlockCriteria": {
           "prerequisites": {
-            "whisk_churn": 4
+            "whisk_churn": 3
           }
         },
         "actions": [
@@ -7931,7 +7930,7 @@
         ],
         "unlockCriteria": {
           "prerequisites": {
-            "rest": 3
+            "rest": 2
           }
         },
         "actions": [
@@ -7950,7 +7949,7 @@
         "leadsTo": [],
         "unlockCriteria": {
           "prerequisites": {
-            "ferment": 4
+            "ferment": 3
           }
         },
         "actions": [

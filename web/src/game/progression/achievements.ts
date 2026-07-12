@@ -68,7 +68,10 @@ export function loadAchievements(): void {
     if ((window as any).culinaryDesktop?.isElectron) {
       for (const id of state.achievementUnlocks.keys()) {
         try {
-          (window as any).culinaryDesktop.unlockAchievement(id);
+          const steamId = ACHIEVEMENT_BY_ID[id]?.steamId;
+          if (steamId) {
+            (window as any).culinaryDesktop.unlockAchievement(steamId);
+          }
         } catch (err) {
           console.error("[steam] Failed to sync achievement to Steam on load:", err);
         }
@@ -118,7 +121,10 @@ export function unlockAchievement(id: string, options: { silent?: boolean } = {}
 
   if ((window as any).culinaryDesktop?.isElectron) {
     try {
-      (window as any).culinaryDesktop.unlockAchievement(id);
+      const steamId = ACHIEVEMENT_BY_ID[id]?.steamId;
+      if (steamId) {
+        (window as any).culinaryDesktop.unlockAchievement(steamId);
+      }
     } catch (err) {
       console.error("[steam] Failed to unlock achievement on Steam:", err);
     }

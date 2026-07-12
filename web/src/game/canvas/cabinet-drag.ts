@@ -6,6 +6,16 @@ import { switchMainView } from "../ui/views";
 import { pushUndoEntry } from "../feedback/undo";
 import { playSound } from "../feedback/audio";
 
+
+function announceToScreenReader(message: string) {
+  const announcer = document.getElementById("a11y-announcer");
+  if (announcer) {
+    announcer.textContent = message;
+    // Clear after a moment so the same message can be re-announced
+    setTimeout(() => { announcer.textContent = ""; }, 3000);
+  }
+}
+
 function recordSpawnUndo(item, element) {
   const pos = getCanvasPosition(element);
   pushUndoEntry({
@@ -214,6 +224,7 @@ function onCabinetDocumentPointerUp(e) {
       const element = spawnElementOnCanvas(drag.item, rect.left - ws.left, rect.top - ws.top);
       recordSpawnUndo(drag.item, element);
       playSound("ui_place");
+      announceToScreenReader(`Placed ${drag.item.name} on counter.`);
     }
   }
 
@@ -229,7 +240,18 @@ function onCabinetPointerUp(e) {
     const element = spawnElementOnCanvas(drag.item);
     recordSpawnUndo(drag.item, element);
     playSound("ui_place");
+    announceToScreenReader(`Placed ${drag.item.name} on counter.`);
   }
 
   endCabinetDrag(e.pointerId);
+}
+
+export function handleCabinetItemKeyboardSpawn(item) {
+  const { state } = getCtx();
+  if (state.activeMainView === "map") switchMainView("cook");
+
+  const element = spawnElementOnCanvas(item);
+  recordSpawnUndo(item, element);
+  playSound("ui_place");
+  announceToScreenReader(`Placed ${item.name} on counter.`);
 }
