@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "tsx scripts/run_tests.ts",
     "test:packs": "tsx src/data/packs/validate_packs.ts",
-    "test:content-report": "tsx src/engine/content_report.ts"
+    "test:content-report": "tsx src/engine/content_report.ts",
+    "test:perf": "tsx src/engine/perf_bench.ts"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
