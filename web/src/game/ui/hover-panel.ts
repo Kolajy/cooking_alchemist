@@ -95,9 +95,9 @@ function resolveHoverItem(itemId: string): IngredientItem | null {
   return item;
 }
 
+function buildHoverProperties(props: Record<string, any>, isPrimal: boolean): HTMLElement[] {
   // Build properties list
   const propList: HTMLElement[] = [];
-  const isPrimal = stateKey === "primal";
 
   const buildPropItem = (icon: string, labelHtmlParts: Array<string | { value: string; capitalize?: boolean }>, isToxic = false) => {
     const div = document.createElement("div");
@@ -168,7 +168,7 @@ function resolveHoverItem(itemId: string): IngredientItem | null {
   return propList;
 }
 
-function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: string, props: Record<string, any>): string {
+function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: string, props: Record<string, any>): void {
   const isPrimal = stateKey === "primal";
   const propList = buildHoverProperties(props, isPrimal);
   const stateClass = `hover-card__state hover-card__state--${stateKey}`;
@@ -241,6 +241,10 @@ function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: 
     tipBox.append(tipIcon, tipSpan);
     hoverCardEl.appendChild(tipBox);
   }
+}
+
+export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: MouseEvent): void {
+  if (!hoverCardEl || activeHoverTarget === el) return;
 
   const item = resolveHoverItem(itemId);
   if (!item) return;
@@ -251,7 +255,7 @@ function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: 
   const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
 
   activeHoverTarget = el;
-  hoverCardEl.innerHTML = renderHoverCardContent(item, itemId, stateKey, props);
+  renderHoverCardContent(item, itemId, stateKey, props);
   hoverCardEl.classList.add("visible");
   updateHoverPanelPosition(e);
 }
