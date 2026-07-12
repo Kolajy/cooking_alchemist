@@ -45,6 +45,7 @@ export function queryDom(): GameDom {
     settingSound: document.getElementById("setting-sound") as HTMLInputElement | null,
     settingAmbience: document.getElementById("setting-ambience") as HTMLInputElement | null,
     settingReducedMotion: document.getElementById("setting-reduced-motion") as HTMLInputElement | null,
+    settingHighContrast: document.getElementById("setting-high-contrast") as HTMLInputElement | null,
     settingsExport: document.getElementById("settings-export") as HTMLButtonElement | null,
     settingsImport: document.getElementById("settings-import") as HTMLButtonElement | null,
     settingsReset: document.getElementById("settings-reset") as HTMLButtonElement | null,

@@ -27,17 +27,7 @@
   overflow: hidden;
 }
 
-.discovery-spark {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  font-size: 0.85rem;
-  line-height: 1;
-  pointer-events: none;
-  animation: discovery-spark-burst 1.27s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: var(--delay, 0s);
-  opacity: 0;
-}
+
 
 .fireworks-glow {
   position: absolute;
@@ -324,14 +314,57 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+
+.discovery-wave {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.6);
+  transform: translate(-50%, -50%);
+  animation: discovery-wave-expand 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes discovery-wave-expand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 250px;
+    height: 250px;
+    opacity: 0;
+  }
+}
+
+.discovery-spark {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  font-size: 0.85rem;
+  line-height: 1;
+  pointer-events: none;
+  animation: discovery-spark-burst 1.27s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+  z-index: 3;
+}
+
 @keyframes discovery-spark-burst {
   0% {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(0) scale(0.2);
+    filter: drop-shadow(0 0 2px var(--color-gold));
   }
-  18% { opacity: 1; }
+  18% { opacity: 1; filter: drop-shadow(0 0 8px var(--color-gold-glow)); }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(-1 * var(--distance, 60px))) scale(1.1);
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(-1 * var(--distance, 60px))) scale(var(--scale, 1.1));
+    filter: drop-shadow(0 0 2px var(--color-gold));
   }
 }

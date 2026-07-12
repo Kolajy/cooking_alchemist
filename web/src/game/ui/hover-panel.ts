@@ -83,11 +83,8 @@ function updateHoverPanelPosition(e: MouseEvent): void {
   hoverCardEl.style.top = `${y}px`;
 }
 
-export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: MouseEvent): void {
+function resolveHoverItem(itemId: string): IngredientItem | null {
   const { data } = getCtx();
-  if (!hoverCardEl || activeHoverTarget === el) return;
-
-  // Look up item
   let item = data.DISCOVERABLE_ITEMS[itemId] || null;
   if (!item) {
     item = (data.STARTER_ELEMENTS.find(i => i.id === itemId) as IngredientItem) || null;
@@ -95,18 +92,8 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   if (!item) {
     item = (data.UNLOCKABLE_ELEMENTS.find(i => i.id === itemId) as IngredientItem) || null;
   }
-  if (!item) return;
-
-  // Enrich it with global lookup
-  const origin = item.origin || data.getIngredientOrigin(itemId);
-  const stateKey = getIngredientStateKey({ ...item, origin });
-  const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
-
-  activeHoverTarget = el;
-
-  // Build the state badge class & label
-  const stateClass = `hover-card__state hover-card__state--${stateKey}`;
-  const stateLabel = getFriendlyStateLabel(stateKey);
+  return item;
+}
 
   // Build properties list
   const propList: HTMLElement[] = [];
@@ -145,47 +132,47 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   };
 
   if (!isPrimal) {
-    // Edible raw
     if (props.edibleRaw !== undefined) {
       propList.push(buildPropItem("🥦", ["Raw: ", { value: props.edibleRaw ? "Edible" : "Need Cook" }]));
     }
 
-    // Moisture
     if (props.moisture && props.moisture !== "none") {
       propList.push(buildPropItem("💧", ["Moisture: ", { value: String(props.moisture), capitalize: true }]));
     }
 
-    // Fat
     if (props.fat && props.fat !== "none") {
       propList.push(buildPropItem("🧈", ["Fat: ", { value: String(props.fat), capitalize: true }]));
     }
 
-    // Structure
     if (props.structure) {
       propList.push(buildPropItem("🪵", ["Structure: ", { value: String(props.structure), capitalize: true }]));
     }
 
-    // Outer Layer / Peel
     if (props.hasOuterLayer) {
       propList.push(buildPropItem("🍊", ["Has Peel"]));
     }
 
-    // Seeds
     if (props.hasSeeds) {
       propList.push(buildPropItem("🌱", ["Has Seeds"]));
     }
 
-    // Bones
     if (props.hasBones) {
       propList.push(buildPropItem("🦴", ["Has Bones"]));
     }
 
-    // Toxic check
     if (props.toxic) {
       propList.push(buildPropItem("⚠️", ["Toxic if raw!"], true));
     }
   }
 
+  return propList;
+}
+
+function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: string, props: Record<string, any>): string {
+  const isPrimal = stateKey === "primal";
+  const propList = buildHoverProperties(props, isPrimal);
+  const stateClass = `hover-card__state hover-card__state--${stateKey}`;
+  const stateLabel = getFriendlyStateLabel(stateKey);
   const historicalText = isPrimal ? PRIMAL_HISTORICAL_INFO[itemId] : null;
 
   // Construct HTML
@@ -255,6 +242,16 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
     hoverCardEl.appendChild(tipBox);
   }
 
+  const item = resolveHoverItem(itemId);
+  if (!item) return;
+
+  const { data } = getCtx();
+  const origin = item.origin || data.getIngredientOrigin(itemId);
+  const stateKey = getIngredientStateKey({ ...item, origin });
+  const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
+
+  activeHoverTarget = el;
+  hoverCardEl.innerHTML = renderHoverCardContent(item, itemId, stateKey, props);
   hoverCardEl.classList.add("visible");
   updateHoverPanelPosition(e);
 }

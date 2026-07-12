@@ -89,9 +89,17 @@ export function bounceElementsApart(el1, el2) {
 export function createParticles(x, y, count, type) {
   const { dom } = getCtx();
   const isSteam = type === "steam";
+  const isBoil = type === "boil";
+  const isSmoke = type === "smoke";
+  const isSizzle = type === "sizzle";
+
   for (let i = 0; i < count; i++) {
     const particle = document.createElement("div");
-    particle.className = isSteam ? "particle particle--steam" : "particle";
+    if (isSteam) particle.className = "particle particle--steam";
+    else if (isSmoke) particle.className = "particle particle--smoke";
+    else if (isBoil) particle.className = "particle particle--boil";
+    else if (isSizzle) particle.className = "particle particle--sizzle";
+    else particle.className = "particle";
 
     let size = secureRandom() * 8 + 4;
     let color = "var(--color-fire)";
@@ -100,9 +108,17 @@ export function createParticles(x, y, count, type) {
       color = i % 2 === 0 ? "var(--color-gold)" : "var(--color-success)";
     } else if (type === "fail") {
       color = `hsla(220, 12%, 55%, ${0.55 + secureRandom() * 0.25})`;
-    } else if (isSteam) {
-      color = `hsla(40, 30%, 96%, ${0.28 + secureRandom() * 0.22})`;
+    } else if (isSteam || isSmoke) {
+      const lightness = isSmoke ? 30 : 96;
+      const alpha = isSmoke ? (0.2 + secureRandom() * 0.15) : (0.28 + secureRandom() * 0.22);
+      color = `hsla(40, 30%, ${lightness}%, ${alpha})`;
       size = secureRandom() * 16 + 10;
+    } else if (isBoil) {
+      color = `hsla(200, 80%, 80%, ${0.6 + secureRandom() * 0.3})`;
+      size = secureRandom() * 6 + 4;
+    } else if (isSizzle) {
+      color = i % 2 === 0 ? "var(--color-fire)" : "var(--color-gold)";
+      size = secureRandom() * 4 + 2;
     }
 
     particle.style.width = `${size}px`;
@@ -111,13 +127,22 @@ export function createParticles(x, y, count, type) {
     particle.style.left = `${x}px`;
     particle.style.top = `${y}px`;
 
-    if (isSteam) {
-      // Steam drifts gently upward with a slight horizontal waver, then blooms.
+    if (isSteam || isSmoke) {
       const driftX = secureRandom() * 36 - 18;
       const rise = secureRandom() * 40 + 70;
       particle.style.setProperty("--dx", `${driftX}px`);
       particle.style.setProperty("--dy", `${-rise}px`);
       particle.style.setProperty("--dur", `${1.3 + secureRandom() * 0.6}s`);
+    } else if (isBoil) {
+      const driftX = secureRandom() * 10 - 5;
+      const rise = secureRandom() * 20 + 20;
+      particle.style.setProperty("--dx", `${driftX}px`);
+      particle.style.setProperty("--dy", `${-rise}px`);
+    } else if (isSizzle) {
+      const angle = secureRandom() * Math.PI * 2;
+      const speed = secureRandom() * 40 + 10;
+      particle.style.setProperty("--dx", `${Math.cos(angle) * speed}px`);
+      particle.style.setProperty("--dy", `${Math.sin(angle) * speed - 10}px`);
     } else {
       const angle = secureRandom() * Math.PI * 2;
       const speed = secureRandom() * 70 + 20;
@@ -126,7 +151,7 @@ export function createParticles(x, y, count, type) {
     }
 
     dom.workspace.appendChild(particle);
-    setTimeout(() => particle.remove(), isSteam ? 1900 : 800);
+    setTimeout(() => particle.remove(), (isSteam || isSmoke) ? 1900 : (isBoil ? 600 : 800));
   }
 }
 
@@ -282,8 +307,11 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   el.className = "alchemy-element canvas-element";
   el.dataset.id = item.id;
   el.dataset.origin = item.origin;
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.setAttribute("aria-label", `${item.name}`);
   el.appendChild(buildIngredientMarkup(item, false));
-
+  
   if (x === null || y === null) {
     const rect = dom.workspace.getBoundingClientRect();
     x = rect.width / 2 + (secureRandom() * 80 - 40);
@@ -293,6 +321,38 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   setCanvasPosition(el, x, y);
   el.title = "Drag to move · click to apply technique or remove";
   el.addEventListener("pointerdown", onPointerDown);
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      // Use the actual apply technique if we hit enter, as that is the standard action
+      import("../actions/toolbar").then(toolbar => {
+        const wasApplied = toolbar.applyActiveTechniqueToCounter();
+        if (!wasApplied) {
+           // If we didn't apply technique, toggle selection maybe? The game relies on dragging,
+           // but `applyActiveTechniqueToCounter` acts on ALL elements.
+           // To keep it simple, space/enter applies the technique just like the global shortcut.
+        }
+      });
+    } else if (e.key === "Backspace" || e.key === "Delete") {
+      e.preventDefault();
+      import("../feedback/undo").then(undo => {
+        const pos = getCanvasPosition(el);
+        undo.pushUndoEntry({
+          type: "remove",
+          itemId: item.id,
+          x: pos.x,
+          y: pos.y
+        });
+        removeCanvasElement(el);
+      });
+    } else if (e.key === "ArrowRight") {
+       e.preventDefault();
+       focusNextCanvasElement(el, 1);
+    } else if (e.key === "ArrowLeft") {
+       e.preventDefault();
+       focusNextCanvasElement(el, -1);
+    }
+  });
   bindHoverPanelEvents(el, item.id);
 
   dom.workspace.appendChild(el);
@@ -312,3 +372,18 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
 }
 
 export { updateTechniqueTargetHighlights };
+
+export function focusNextCanvasElement(currentEl, dir) {
+  const { state } = getCtx();
+  const els = state.activeElements;
+  if (!els || els.length === 0) return;
+
+  const idx = els.indexOf(currentEl);
+  if (idx === -1) return;
+
+  let nextIdx = idx + dir;
+  if (nextIdx >= els.length) nextIdx = 0;
+  if (nextIdx < 0) nextIdx = els.length - 1;
+
+  els[nextIdx].focus();
+}

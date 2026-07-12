@@ -254,12 +254,17 @@
   box-shadow:
     0 6px 16px hsla(28, 25%, 32%, 0.12),
     0 0 20px hsla(32, 50%, 52%, 0.1);
+  cursor: grab;
+}
+
+.alchemy-element:not(.canvas-element):active {
+  cursor: grabbing;
 }
 
 /* Primitive vs processed ingredient distinction */
 .alchemy-element[data-origin="primitive"] {
   border-color: hsla(265, 30%, 65%, 0.35);
-  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-primitive-tint) 100%);
+  background: linear-gradient(135deg, hsla(44, 55%, 98%, 0.95) 0%, var(--color-primitive-tint) 100%);
 }
 
 .alchemy-element[data-origin="primitive"]:hover {
@@ -271,7 +276,7 @@
 
 .alchemy-element[data-origin="raw"] {
   border-color: hsla(120, 24%, 60%, 0.35);
-  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-raw-tint) 100%);
+  background: linear-gradient(135deg, hsla(44, 55%, 98%, 0.95) 0%, var(--color-raw-tint) 100%);
 }
 
 .alchemy-element[data-origin="raw"]:hover {
@@ -284,7 +289,7 @@
 .alchemy-element[data-origin="processed"],
 .alchemy-element[data-state="prepared"] {
   border-color: hsla(34, 30%, 65%, 0.35);
-  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-processed-tint) 100%);
+  background: linear-gradient(135deg, hsla(44, 55%, 98%, 0.95) 0%, var(--color-processed-tint) 100%);
 }
 
 .alchemy-element[data-origin="processed"]:hover,
@@ -297,7 +302,7 @@
 
 .alchemy-element[data-state="recipe"] {
   border-color: hsla(345, 35%, 65%, 0.35);
-  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-recipe-tint) 100%);
+  background: linear-gradient(135deg, hsla(44, 55%, 98%, 0.95) 0%, var(--color-recipe-tint) 100%);
 }
 
 .alchemy-element[data-state="recipe"]:hover {
@@ -308,8 +313,16 @@
 }
 
 .alchemy-element .element-emoji {
-  font-size: 1.1rem;
-  line-height: 1;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)) contrast(1.1) brightness(1.05);
+  transform-origin: center bottom;
+  transition: transform 0.2s cubic-bezier(0.34, 1.5, 0.64, 1), filter 0.2s ease;
+}
+
+.alchemy-element:hover .element-emoji {
+  transform: scale(1.15) translateY(-2px);
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)) contrast(1.15) brightness(1.1);
 }
 
 .alchemy-element .element-name {
@@ -393,10 +406,18 @@
 }
 
 .cabinet-grid .alchemy-element .element-emoji {
-  font-size: 1.85rem;
+  font-size: 2.1rem;
   flex-shrink: 0;
-  line-height: 1;
+  line-height: 1.1;
   margin: 0;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.18)) contrast(1.1) brightness(1.05);
+  transform-origin: center bottom;
+  transition: transform 0.25s cubic-bezier(0.34, 1.5, 0.64, 1), filter 0.2s ease;
+}
+
+.cabinet-grid .alchemy-element:hover .element-emoji {
+  transform: scale(1.18) translateY(-4px);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.22)) contrast(1.15) brightness(1.1);
 }
 
 .cabinet-grid .alchemy-element .element-name {
@@ -486,7 +507,7 @@ body.is-cabinet-dragging .alchemy-element {
 
 /* Techniques category visual distinction */
 .alchemy-element[data-type="technique"] {
-  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-processed-tint) 100%);
+  background: linear-gradient(135deg, hsla(44, 55%, 98%, 0.95) 0%, var(--color-processed-tint) 100%);
   border-color: hsla(var(--hue-gold), 45%, 55%, 0.35);
 }
 .alchemy-element[data-type="technique"]:hover {

@@ -71,6 +71,17 @@ function getSaveFilePath(key) {
 
 ipcMain.on("save-get-item", (event, key) => {
   try {
+    if (steamClient && steamClient.cloud && steamClient.cloud.isEnabledForApp()) {
+      try {
+        const data = steamClient.cloud.readFile(key);
+        if (data) {
+          event.returnValue = data;
+          return;
+        }
+      } catch (cloudErr) {
+        console.warn(`[steam-cloud] Failed to read ${key} from Cloud, falling back to local:`, cloudErr);
+      }
+    }
     const filePath = getSaveFilePath(key);
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, "utf8");
@@ -86,9 +97,19 @@ ipcMain.on("save-get-item", (event, key) => {
 
 ipcMain.on("save-set-item", (event, key, value) => {
   try {
+    let cloudSuccess = false;
+    if (steamClient && steamClient.cloud && steamClient.cloud.isEnabledForApp()) {
+      try {
+        cloudSuccess = steamClient.cloud.writeFile(key, value);
+        if (cloudSuccess) console.log(`[steam-cloud] Saved key: ${key}`);
+      } catch (cloudErr) {
+        console.error(`[steam-cloud] Error writing key ${key}:`, cloudErr);
+      }
+    }
+
     const filePath = getSaveFilePath(key);
     fs.writeFileSync(filePath, value, "utf8");
-    console.log(`[saves] Saved key: ${key}`);
+    if (!cloudSuccess) console.log(`[saves] Saved key (local only): ${key}`);
     event.returnValue = true;
   } catch (err) {
     console.error(`[saves] Error writing key ${key}:`, err);
@@ -98,6 +119,15 @@ ipcMain.on("save-set-item", (event, key, value) => {
 
 ipcMain.on("save-remove-item", (event, key) => {
   try {
+    if (steamClient && steamClient.cloud && steamClient.cloud.isEnabledForApp()) {
+      try {
+        steamClient.cloud.deleteFile(key);
+        console.log(`[steam-cloud] Removed key: ${key}`);
+      } catch (cloudErr) {
+        console.error(`[steam-cloud] Error deleting key ${key}:`, cloudErr);
+      }
+    }
+
     const filePath = getSaveFilePath(key);
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);

@@ -5,7 +5,7 @@ import {
   matchesCabinetStateFilter,
   matchesCabinetTypeFilter
 } from "./ingredients";
-import { onCabinetPointerDown } from "./canvas/cabinet-drag";
+import { onCabinetPointerDown, handleCabinetItemKeyboardSpawn } from "./canvas/cabinet-drag";
 import { bindHoverPanelEvents } from "./ui/hover-panel";
 import { INGREDIENT_PROPERTIES } from "../data/ingredients/properties";
 
@@ -108,6 +108,7 @@ export function renderCabinet(): void {
     const el = document.createElement("div");
     el.className = "alchemy-element";
     el.setAttribute("role", "listitem");
+    el.setAttribute("tabindex", "0");
     el.dataset.id = item.id;
     el.dataset.origin = item.origin || "";
     el.dataset.state = item.stateKey;
@@ -120,6 +121,13 @@ export function renderCabinet(): void {
     el.appendChild(buildCabinetItemMarkup(item));
     el.title = item.description ? `${item.name} — ${item.description}` : `Drag or click to add ${item.name}`;
     el.addEventListener("pointerdown", onCabinetPointerDown);
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleCabinetItemKeyboardSpawn(item);
+      }
+    });
+
     bindHoverPanelEvents(el, item.id);
     fragment.appendChild(el);
   });
