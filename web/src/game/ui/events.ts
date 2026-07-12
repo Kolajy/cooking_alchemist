@@ -4,7 +4,6 @@ import { buildCabinetFilterButtons, toggleCabinetStateFilter, toggleCabinetTypeF
 import { loadProgress, updateStats } from "../save/persistence";
 import { gameStorage } from "../save/storage";
 import { isPlayerActionUnlocked } from "../progression/skills";
-import { setToolbarMode } from "../actions/toolbar";
 import { openDialog, renderRecipeBook, setupDialogFallbacks } from "./dialogs";
 import { setupDiscoveryDialog } from "./discovery";
 import { switchMainView, switchSidebarTab } from "./views";
