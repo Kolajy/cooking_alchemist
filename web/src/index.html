@@ -339,6 +339,22 @@
 
   <!-- Dialogs & Modals -->
 
+  <!-- Keyboard Shortcuts Modal -->
+  <dialog id="keyboard-shortcuts-modal" closedby="any" aria-labelledby="keyboard-shortcuts-title">
+    <div class="dialog-content">
+      <header class="dialog-header">
+        <h2 id="keyboard-shortcuts-title">⌨️ Keyboard Shortcuts</h2>
+        <button class="close-dialog-btn" aria-label="Close dialog">×</button>
+      </header>
+      <div class="dialog-body">
+        <p class="dialog-intro">Use these shortcuts to quickly navigate the kitchen.</p>
+        <div id="keyboard-shortcuts-list" class="keyboard-shortcuts-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <!-- How to Play -->
   <dialog id="help-modal" closedby="any" aria-labelledby="help-title">
     <div class="dialog-content">
