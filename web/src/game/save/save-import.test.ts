@@ -21,6 +21,7 @@ const validSave = {
   },
   settings: {
     soundEnabled: false,
+    soundVolume: 0.5,
     reducedMotion: true
   },
   achievements: {

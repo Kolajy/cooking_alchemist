@@ -43,6 +43,7 @@ export function queryDom(): GameDom {
     btnDiscoveryOk: document.getElementById("btn-discovery-ok") as HTMLButtonElement | null,
     discoveredRecipesList: document.getElementById("discovered-recipes-list"),
     settingSound: document.getElementById("setting-sound") as HTMLInputElement | null,
+    settingVolume: document.getElementById("setting-volume") as HTMLInputElement | null,
     settingAmbience: document.getElementById("setting-ambience") as HTMLInputElement | null,
     settingReducedMotion: document.getElementById("setting-reduced-motion") as HTMLInputElement | null,
     settingHighContrast: document.getElementById("setting-high-contrast") as HTMLInputElement | null,
