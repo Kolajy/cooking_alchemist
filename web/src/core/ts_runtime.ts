@@ -122,21 +122,28 @@ export class TypeScriptRuntime implements SharedGameRuntime {
   isPlayerActionUnlocked(actionId: string): boolean {
     const cfg = globalThis.PLAYER_ACTIONS[actionId];
     if (!cfg?.unlockCriteria?.discoveredRecipes) return true;
-    const count = [...this.discovered].filter(id => {
+    let count = 0;
+    for (const id of this.discovered) {
       const item = globalThis.DISCOVERABLE_ITEMS[id];
-      return item?.type === "recipe";
-    }).length;
+      if (item?.type === "recipe") count++;
+    }
     return count >= cfg.unlockCriteria.discoveredRecipes;
   }
 
   discoveredRecipeCount(): number {
-    return [...this.discovered].filter(id => globalThis.DISCOVERABLE_ITEMS[id]?.type === "recipe")
-      .length;
+    let count = 0;
+    for (const id of this.discovered) {
+      if (globalThis.DISCOVERABLE_ITEMS[id]?.type === "recipe") count++;
+    }
+    return count;
   }
 
   statsText(): string {
     const total = Object.keys(globalThis.DISCOVERABLE_ITEMS).length;
-    const count = [...this.discovered].filter(id => globalThis.DISCOVERABLE_ITEMS[id]).length;
+    let count = 0;
+    for (const id of this.discovered) {
+      if (globalThis.DISCOVERABLE_ITEMS[id]) count++;
+    }
     return `${count} / ${total} discovered`;
   }
 
