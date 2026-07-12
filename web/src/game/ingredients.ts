@@ -226,8 +226,8 @@ export function matchesCabinetStateFilter(item: CabinetItem): boolean {
     return false;
   }
 
-  const stateIncludes = [...state.stateFilterIncludes].filter(key => key !== "recent");
-  if (stateIncludes.length > 0 && !stateIncludes.includes(item.stateKey)) return false;
+  const hasOtherFilters = state.stateFilterIncludes.size > (state.stateFilterIncludes.has("recent") ? 1 : 0);
+  if (hasOtherFilters && !state.stateFilterIncludes.has(item.stateKey)) return false;
 
   return true;
 }
