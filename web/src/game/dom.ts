@@ -24,6 +24,8 @@ export function queryDom(): GameDom {
     achievementsProgressEl: document.getElementById("achievements-progress-fill"),
     recipeBookModal: document.getElementById("recipe-book-modal") as HTMLDialogElement | null,
     helpModal: document.getElementById("help-modal") as HTMLDialogElement | null,
+    keyboardShortcutsModal: document.getElementById("keyboard-shortcuts-modal") as HTMLDialogElement | null,
+    keyboardShortcutsList: document.getElementById("keyboard-shortcuts-list"),
     settingsModal: document.getElementById("settings-modal") as HTMLDialogElement | null,
     discoveryDialog: document.getElementById("discovery-dialog") as HTMLDialogElement | null,
     discoverySparkles: document.getElementById("discovery-sparkles"),

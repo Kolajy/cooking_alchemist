@@ -39,7 +39,7 @@ export const KEYBOARD_SHORTCUTS: KeyboardShortcut[] = [
   { keys: "M", action: "Toggle progress map", context: "Global" },
   { keys: ",", action: "Open settings", context: "Global" },
   { keys: "S", action: "Toggle sound", context: "Global" },
-  { keys: "?", action: "How to play (this dialog)", context: "Global" },
+  { keys: "?", action: "Keyboard shortcuts (this dialog)", context: "Global" },
   { keys: "Esc", action: "Close dialog or leave progress map", context: "Global" }
 ];
 
@@ -67,7 +67,7 @@ function closeOpenDialogs(): boolean {
   const { dom } = getCtx();
   if (dismissDiscoveryIfOpen()) return true;
 
-  const closable = [dom.helpModal, dom.recipeBookModal, dom.settingsModal];
+  const closable = [dom.helpModal, dom.recipeBookModal, dom.settingsModal, dom.keyboardShortcutsModal];
   for (const dialog of closable) {
     if (isDialogOpen(dialog)) {
       dialog?.close();
@@ -94,6 +94,67 @@ function toggleHelpDialog(): void {
     return;
   }
   openDialog(dom.helpModal);
+}
+
+function renderKeyboardShortcuts(): void {
+  const { dom } = getCtx();
+  if (!dom.keyboardShortcutsList) return;
+  dom.keyboardShortcutsList.textContent = "";
+
+  const table = document.createElement("table");
+  table.className = "keyboard-shortcuts-table";
+  table.style.width = "100%";
+  table.style.borderCollapse = "collapse";
+  table.style.textAlign = "left";
+
+  const thead = document.createElement("thead");
+  const trHead = document.createElement("tr");
+  const th1 = document.createElement("th");
+  th1.textContent = "Keys";
+  th1.style.padding = "0.5rem";
+  th1.style.borderBottom = "2px solid rgba(0, 0, 0, 0.1)";
+  const th2 = document.createElement("th");
+  th2.textContent = "Action";
+  th2.style.padding = "0.5rem";
+  th2.style.borderBottom = "2px solid rgba(0, 0, 0, 0.1)";
+  trHead.appendChild(th1);
+  trHead.appendChild(th2);
+  thead.appendChild(trHead);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  for (const shortcut of KEYBOARD_SHORTCUTS) {
+    const tr = document.createElement("tr");
+
+    const tdKeys = document.createElement("td");
+    tdKeys.style.padding = "0.5rem";
+    tdKeys.style.borderBottom = "1px solid rgba(0, 0, 0, 0.05)";
+
+    const kbd = document.createElement("kbd");
+    kbd.textContent = shortcut.keys;
+    tdKeys.appendChild(kbd);
+
+    const tdAction = document.createElement("td");
+    tdAction.textContent = shortcut.action;
+    tdAction.style.padding = "0.5rem";
+    tdAction.style.borderBottom = "1px solid rgba(0, 0, 0, 0.05)";
+
+    tr.appendChild(tdKeys);
+    tr.appendChild(tdAction);
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  dom.keyboardShortcutsList.appendChild(table);
+}
+
+function toggleKeyboardShortcutsModal(): void {
+  const { dom } = getCtx();
+  if (isDialogOpen(dom.keyboardShortcutsModal)) {
+    dom.keyboardShortcutsModal?.close();
+    return;
+  }
+  renderKeyboardShortcuts();
+  openDialog(dom.keyboardShortcutsModal);
 }
 
 function toggleRecipeBook(): void {
@@ -187,7 +248,7 @@ function handleGlobalShortcut(event: KeyboardEvent): boolean {
   }
 
   if (event.key === "?" || (event.key === "/" && event.shiftKey)) {
-    toggleHelpDialog();
+    toggleKeyboardShortcutsModal();
     event.preventDefault();
     return true;
   }
@@ -272,7 +333,7 @@ export function handleKeyboardShortcut(event: KeyboardEvent): void {
 
   if (hasPrimaryModifier(event)) return;
 
-  if (isDialogOpen(dom.recipeBookModal) || isDialogOpen(dom.helpModal) || isDialogOpen(dom.settingsModal)) {
+  if (isDialogOpen(dom.recipeBookModal) || isDialogOpen(dom.helpModal) || isDialogOpen(dom.settingsModal) || isDialogOpen(dom.keyboardShortcutsModal)) {
     if (event.key === "Escape" || event.key === "?" || (event.key === "/" && event.shiftKey)) {
       handleGlobalShortcut(event);
     }
