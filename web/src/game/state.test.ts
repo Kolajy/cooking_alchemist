@@ -80,6 +80,44 @@ function testCreateInitialState() {
   assert(state.achievementUnlocks !== state2.achievementUnlocks, "Maps should be distinct instances");
 }
 
+function testStateTransitions() {
+  const state: GameState = createInitialState();
+
+  // Test set mutation
+  state.discoveredIds.add("water");
+  assert(state.discoveredIds.has("water"), "discoveredIds should contain added element");
+  assert(state.discoveredIds.size === 1, "discoveredIds size should be 1");
+
+  state.discoveredIds.delete("water");
+  assert(!state.discoveredIds.has("water"), "discoveredIds should not contain removed element");
+  assert(state.discoveredIds.size === 0, "discoveredIds size should be 0");
+
+  // Test array mutation
+  state.activeElements.push({ id: "fire", x: 10, y: 20 });
+  assert(state.activeElements.length === 1, "activeElements should contain 1 item");
+  assert(state.activeElements[0].id === "fire", "activeElements item should be 'fire'");
+  assert(state.activeElements[0].x === 10, "activeElements item x should be 10");
+
+  state.activeElements.pop();
+  assert(state.activeElements.length === 0, "activeElements should be empty after pop");
+
+  // Test primitive updates
+  state.activeAction = "combine";
+  assert(state.activeAction === "combine", "activeAction should update to 'combine'");
+
+  state.activeSidebarTab = "graph";
+  assert(state.activeSidebarTab === "graph", "activeSidebarTab should update to 'graph'");
+
+  // Test map mutation
+  state.achievementUnlocks.set("first_discovery", 1620000000);
+  assert(state.achievementUnlocks.has("first_discovery"), "achievementUnlocks should have 'first_discovery'");
+  assert(state.achievementUnlocks.get("first_discovery") === 1620000000, "achievementUnlocks should return correct timestamp");
+
+  state.achievementUnlocks.delete("first_discovery");
+  assert(!state.achievementUnlocks.has("first_discovery"), "achievementUnlocks should not have 'first_discovery' after deletion");
+}
+
 testCreateInitialState();
+testStateTransitions();
 
 console.log("=== STATE TESTS PASSED ===");
