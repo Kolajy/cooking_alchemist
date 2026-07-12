@@ -1,10 +1,7 @@
 import { getCtx } from "../context";
 import { renderCabinet } from "../cabinet";
-import { buildCabinetFilterButtons, toggleCabinetStateFilter, toggleCabinetTypeFilter, syncCabinetFilterButtons } from "../ingredients";
-import { loadProgress, updateStats } from "../save/persistence";
+import { toggleCabinetStateFilter, toggleCabinetTypeFilter, syncCabinetFilterButtons } from "../ingredients";
 import { gameStorage } from "../save/storage";
-import { isPlayerActionUnlocked } from "../progression/skills";
-import { setToolbarMode } from "../actions/toolbar";
 import { openDialog, renderRecipeBook, setupDialogFallbacks } from "./dialogs";
 import { setupDiscoveryDialog } from "./discovery";
 import { switchMainView, switchSidebarTab } from "./views";
@@ -22,7 +19,6 @@ import { applyUndo, refreshUndoButton } from "../feedback/undo";
 import { setupKeyboardShortcuts } from "./keyboard-shortcuts";
 import { loadSettings } from "../settings";
 import { setupSettingsPanel } from "./settings";
-import { loadAchievements } from "../progression/achievements";
 import { initStartMenu } from "./start-menu";
 
 let cabinetSearchTimer: ReturnType<typeof setTimeout> | null = null;
