@@ -48,56 +48,77 @@ export function renderCabinet(): void {
   }
   parsedSearchTerm = term.replace(tagRegex, "").trim();
 
-  const filtered = getPlayableIngredientCatalog().filter(item => {
+  const catalog = getPlayableIngredientCatalog();
+  const filtered = [];
+
+  for (let i = 0; i < catalog.length; i++) {
+    const item = catalog[i];
+
     // 1. Text Search
     if (parsedSearchTerm && !item.name.toLowerCase().includes(parsedSearchTerm) && !(item.description || "").toLowerCase().includes(parsedSearchTerm)) {
-      return false;
+      continue;
     }
 
     // 2. Tag Queries
-    for (const query of queries) {
+    let queryFailed = false;
+    for (let j = 0; j < queries.length; j++) {
+      const query = queries[j];
       const props = item.properties || INGREDIENT_PROPERTIES[item.id] || {};
 
       if (query === "raw") {
-        if (item.stateKey !== "raw" && props.edibleRaw !== true) return false;
+        if (item.stateKey !== "raw" && props.edibleRaw !== true) { queryFailed = true; break; }
       } else if (query === "edibleraw" || query === "edible") {
-        if (props.edibleRaw !== true) return false;
+        if (props.edibleRaw !== true) { queryFailed = true; break; }
       } else if (query === "needcook" || query === "cook") {
-        if (props.edibleRaw !== false) return false;
+        if (props.edibleRaw !== false) { queryFailed = true; break; }
       } else if (query === "toxic") {
-        if (props.toxic !== true) return false;
+        if (props.toxic !== true) { queryFailed = true; break; }
       } else if (query === "seed" || query === "seeds" || query === "hasseeds") {
-        if (props.hasSeeds !== true) return false;
+        if (props.hasSeeds !== true) { queryFailed = true; break; }
       } else if (query === "bone" || query === "bones" || query === "hasbones") {
-        if (props.hasBones !== true) return false;
+        if (props.hasBones !== true) { queryFailed = true; break; }
       } else if (query === "peel" || query === "outer" || query === "hasouterlayer" || query === "peelable") {
-        if (props.hasOuterLayer !== true) return false;
+        if (props.hasOuterLayer !== true) { queryFailed = true; break; }
       } else if (query === "liquid" || query === "soft" || query === "hard") {
-        if (props.structure !== query) return false;
+        if (props.structure !== query) { queryFailed = true; break; }
       } else if (query === "moist" || query === "moisture") {
-        if (props.moisture !== "high" && props.moisture !== "medium") return false;
+        if (props.moisture !== "high" && props.moisture !== "medium") { queryFailed = true; break; }
       } else if (query === "dry") {
-        if (props.moisture !== "low" && props.moisture !== "none") return false;
+        if (props.moisture !== "low" && props.moisture !== "none") { queryFailed = true; break; }
       } else if (query === "fat" || query === "fatty") {
-        if (props.fat !== "high" && props.fat !== "medium") return false;
+        if (props.fat !== "high" && props.fat !== "medium") { queryFailed = true; break; }
       } else if (query === "lean") {
-        if (props.fat !== "low" && props.fat !== "none") return false;
+        if (props.fat !== "low" && props.fat !== "none") { queryFailed = true; break; }
       } else {
         const cat = (item.category || "").toLowerCase();
         const stateKey = (item.stateKey || "").toLowerCase();
         if (!cat.includes(query) && !stateKey.includes(query)) {
-          return false;
+          queryFailed = true; break;
         }
       }
     }
 
-    return matchesCabinetStateFilter(item) && matchesCabinetTypeFilter(item);
-  });
+    if (queryFailed) {
+      continue;
+    }
+
+    if (matchesCabinetStateFilter(item) && matchesCabinetTypeFilter(item)) {
+      filtered.push(item);
+    }
+  }
+
+  let recentOrderMap: Map<string, number> | null = null;
+  if (state.stateFilterIncludes.has("recent")) {
+    recentOrderMap = new Map();
+    const recentIds = state.recentlyDiscoveredIds;
+    for (let i = 0; i < recentIds.length; i++) {
+      recentOrderMap.set(recentIds[i], i);
+    }
+  }
 
   filtered.sort((a, b) => {
-    if (state.stateFilterIncludes.has("recent")) {
-      const order = new Map(state.recentlyDiscoveredIds.map((id, index) => [id, index]));
-      return (order.get(a.id) ?? 999) - (order.get(b.id) ?? 999);
+    if (recentOrderMap) {
+      return (recentOrderMap.get(a.id) ?? 999) - (recentOrderMap.get(b.id) ?? 999);
     }
 
     const stateDiff = (STATE_SORT_ORDER[a.stateKey] ?? 2) - (STATE_SORT_ORDER[b.stateKey] ?? 2);
@@ -107,7 +128,8 @@ export function renderCabinet(): void {
 
   const fragment = document.createDocumentFragment();
 
-  filtered.forEach(item => {
+  for (let i = 0; i < filtered.length; i++) {
+    const item = filtered[i];
     const el = document.createElement("div");
     el.className = "alchemy-element";
     el.setAttribute("role", "listitem");
@@ -133,7 +155,7 @@ export function renderCabinet(): void {
 
     bindHoverPanelEvents(el, item.id);
     fragment.appendChild(el);
-  });
+  }
 
   cabinetItems.appendChild(fragment);
 

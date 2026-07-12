@@ -340,6 +340,22 @@
 
   <!-- Dialogs & Modals -->
 
+  <!-- Keyboard Shortcuts Modal -->
+  <dialog id="keyboard-shortcuts-modal" closedby="any" aria-labelledby="keyboard-shortcuts-title">
+    <div class="dialog-content">
+      <header class="dialog-header">
+        <h2 id="keyboard-shortcuts-title">⌨️ Keyboard Shortcuts</h2>
+        <button class="close-dialog-btn" aria-label="Close dialog">×</button>
+      </header>
+      <div class="dialog-body">
+        <p class="dialog-intro">Use these shortcuts to quickly navigate the kitchen.</p>
+        <div id="keyboard-shortcuts-list" class="keyboard-shortcuts-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <!-- How to Play -->
   <dialog id="help-modal" closedby="any" aria-labelledby="help-title">
     <div class="dialog-content">
@@ -421,6 +437,20 @@
                 type="checkbox"
                 role="switch"
                 aria-checked="false"
+              >
+            </label>
+            <label class="settings-row" for="setting-volume">
+              <span class="settings-row__text">
+                <span class="settings-row__label">Sound volume</span>
+                <span class="settings-row__hint">Adjust kitchen sounds master volume</span>
+              </span>
+              <input
+                id="setting-volume"
+                class="settings-slider"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
               >
             </label>
             <label class="settings-row" for="setting-ambience">

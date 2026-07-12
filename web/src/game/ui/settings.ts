@@ -5,7 +5,9 @@ import {
   syncSoundUi,
   playSound,
   isAmbienceEnabled,
-  setAmbienceEnabled
+  setAmbienceEnabled,
+  getSoundVolume,
+  setSoundVolume
 } from "../feedback/sounds";
 import {
   isReducedMotionEnabled,
@@ -19,6 +21,10 @@ import { wireSaveDataControls } from "./save-controls";
 export function syncSettingsControls(): void {
   const { dom } = getCtx();
   syncSoundUi();
+
+  if (dom.settingVolume) {
+    dom.settingVolume.value = getSoundVolume().toString();
+  }
 
   if (dom.settingAmbience) {
     dom.settingAmbience.checked = isAmbienceEnabled();
@@ -81,9 +87,17 @@ export function toggleSettingsDialog(): void {
 
 export function setupSettingsPanel(): void {
   const { dom } = getCtx();
-  const { btnSettings, settingSound, settingAmbience, settingReducedMotion, settingHighContrast } = dom;
+  const { btnSettings, settingSound, settingVolume, settingAmbience, settingReducedMotion, settingHighContrast } = dom;
 
   btnSettings?.addEventListener("click", () => openSettingsDialog());
+
+  settingVolume?.addEventListener("input", () => {
+    setSoundVolume(parseFloat(settingVolume.value));
+  });
+
+  settingVolume?.addEventListener("change", () => {
+    playSound("ui_click");
+  });
 
   settingSound?.addEventListener("change", () => {
     const enabled = settingSound.checked;

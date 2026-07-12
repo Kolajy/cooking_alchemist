@@ -144,7 +144,11 @@ function renderSlotsGrid(): void {
 function bootActiveSlot(): void {
   const overlay = document.getElementById("start-menu-overlay");
   if (overlay) {
-    overlay.setAttribute("hidden", "true");
+    overlay.classList.add("fade-out");
+    setTimeout(() => {
+      overlay.setAttribute("hidden", "true");
+      overlay.classList.remove("fade-out");
+    }, 300);
   }
 
   const { data } = getCtx();
@@ -160,7 +164,11 @@ function bootActiveSlot(): void {
 function bootNewSlot(): void {
   const overlay = document.getElementById("start-menu-overlay");
   if (overlay) {
-    overlay.setAttribute("hidden", "true");
+    overlay.classList.add("fade-out");
+    setTimeout(() => {
+      overlay.setAttribute("hidden", "true");
+      overlay.classList.remove("fade-out");
+    }, 300);
   }
 
   const { data } = getCtx();

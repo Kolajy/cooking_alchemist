@@ -126,7 +126,7 @@ export function showCustomAlert(title: string, message: string): Promise<void> {
 
 export function setupDialogFallbacks() {
   const { dom } = getCtx();
-  const dialogs = [dom.recipeBookModal, dom.helpModal, dom.settingsModal, dom.discoveryDialog];
+  const dialogs = [dom.recipeBookModal, dom.helpModal, dom.keyboardShortcutsModal, dom.settingsModal, dom.discoveryDialog];
 
   dialogs.forEach(dialog => {
     if (!dialog) return;

@@ -12,6 +12,7 @@ let reducedMotion = false;
 export interface GameSettingsSnapshot {
   highContrast: boolean;
   soundEnabled: boolean;
+  soundVolume: number;
   reducedMotion: boolean;
 }
 
@@ -110,9 +111,10 @@ export function loadSettings(): void {
   loadHighContrastPreference();
 }
 
-export function getSettingsSnapshot(soundEnabled: boolean): GameSettingsSnapshot {
+export function getSettingsSnapshot(soundEnabled: boolean, soundVolume: number): GameSettingsSnapshot {
   return {
     soundEnabled,
+    soundVolume,
     reducedMotion: isReducedMotionEnabled(),
     highContrast: isHighContrastEnabled()
   };

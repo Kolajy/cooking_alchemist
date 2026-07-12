@@ -196,6 +196,8 @@ export interface GameDom {
   achievementsProgressEl: HTMLElement | null;
   recipeBookModal: HTMLDialogElement | null;
   helpModal: HTMLDialogElement | null;
+  keyboardShortcutsModal: HTMLDialogElement | null;
+  keyboardShortcutsList: HTMLElement | null;
   settingsModal: HTMLDialogElement | null;
   discoveryDialog: HTMLDialogElement | null;
   discoverySparkles: HTMLElement | null;
@@ -215,6 +217,7 @@ export interface GameDom {
   btnDiscoveryOk: HTMLButtonElement | null;
   discoveredRecipesList: HTMLElement | null;
   settingSound: HTMLInputElement | null;
+  settingVolume: HTMLInputElement | null;
   settingAmbience: HTMLInputElement | null;
   settingReducedMotion: HTMLInputElement | null;
   settingsExport: HTMLButtonElement | null;
