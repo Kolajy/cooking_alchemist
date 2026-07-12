@@ -85,9 +85,12 @@ export function findMergeTarget(draggedEl) {
   const { state } = getCtx();
   if (state.activeAction !== "combine" || !draggedEl) return null;
 
-  const rect1 = draggedEl.getBoundingClientRect();
-  const center1X = rect1.left + rect1.width / 2;
-  const center1Y = rect1.top + rect1.height / 2;
+  // Use fast position lookup instead of getBoundingClientRect
+  // getCanvasPosition returns transform coordinates relative to workspace
+  // Since elements are roughly same size (or at least we can use a fixed size proxy),
+  // distance between their top-left corners works just as well.
+  const pos1X = Number(draggedEl.dataset.x) || 0;
+  const pos1Y = Number(draggedEl.dataset.y) || 0;
 
   let closestEl = null;
   let minDistance = 70;
@@ -95,9 +98,10 @@ export function findMergeTarget(draggedEl) {
   state.activeElements.forEach(otherEl => {
     if (otherEl === draggedEl) return;
 
-    const rect2 = otherEl.getBoundingClientRect();
-    const dx = center1X - (rect2.left + rect2.width / 2);
-    const dy = center1Y - (rect2.top + rect2.height / 2);
+    const pos2X = Number(otherEl.dataset.x) || 0;
+    const pos2Y = Number(otherEl.dataset.y) || 0;
+    const dx = pos1X - pos2X;
+    const dy = pos1Y - pos2Y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < minDistance) {
