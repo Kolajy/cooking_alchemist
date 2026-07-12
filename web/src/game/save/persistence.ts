@@ -21,7 +21,7 @@ function isLoggableDiscoveryId(id: string): boolean {
   return Boolean(data.DISCOVERABLE_ITEMS[id]);
 }
 
-function sortDiscoveryLog(entries: DiscoveryLogEntry[]): DiscoveryLogEntry[] {
+export function sortDiscoveryLog(entries: DiscoveryLogEntry[]): DiscoveryLogEntry[] {
   return [...entries].sort((a, b) => {
     if (a.discoveredAt !== b.discoveredAt) {
       return b.discoveredAt - a.discoveredAt;
