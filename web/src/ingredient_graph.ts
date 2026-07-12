@@ -139,7 +139,17 @@ function isUnlockablePrimitive(id) {
     collectAncestorIds(focusId, transitions, maxDepth).forEach(id => focused.add(id));
     collectDescendantIds(focusId, transitions, maxDepth).forEach(id => focused.add(id));
 
-    return new Set([...allIds].filter(id => focused.has(id)));
+    const result = new Set();
+    if (allIds.size < focused.size) {
+      allIds.forEach(id => {
+        if (focused.has(id)) result.add(id);
+      });
+    } else {
+      focused.forEach(id => {
+        if (allIds.has(id)) result.add(id);
+      });
+    }
+    return result;
   }
 
   function filterTransitionsByIngredients(transitions, ingredientIds) {
