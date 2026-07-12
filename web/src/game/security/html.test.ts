@@ -31,4 +31,30 @@ assert(escapeHtmlAttr("") === "", "escapeHtmlAttr should handle empty strings");
 assert(escapeHtmlAttr('onload="alert(1)"') === "onload=&quot;alert(1)&quot;", "escapeHtmlAttr should encode double quotes");
 assert(escapeHtmlAttr("javascript:alert('1')") === "javascript:alert(&#39;1&#39;)", "escapeHtmlAttr should encode single quotes");
 
+// More rigorous XSS validation tests
+assert(
+  escapeHtml("<img src=x onerror=alert(1)>") === "&lt;img src=x onerror=alert(1)&gt;",
+  "escapeHtml should neutralize img onerror vector"
+);
+assert(
+  escapeHtmlAttr("javascript:alert('XSS')") === "javascript:alert(&#39;XSS&#39;)",
+  "escapeHtmlAttr should escape javascript: URIs by escaping quotes, making it safer though CSP is better"
+);
+assert(
+  escapeHtmlAttr('"><script>alert(1)</script>') === "&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;",
+  "escapeHtmlAttr should neutralize closing quote and tag injection"
+);
+assert(
+  escapeHtml("javascript://%250Aalert(1)") === "javascript://%250Aalert(1)",
+  "escapeHtml doesn't modify URL encoding but ensures no raw < or > are executed as HTML"
+);
+assert(
+  escapeHtml("foo &amp; bar") === "foo &amp;amp; bar",
+  "escapeHtml should double-escape existing entities to avoid parser confusion"
+);
+assert(
+  escapeHtml("foo\nbar") === "foo\nbar",
+  "escapeHtml should preserve newlines"
+);
+
 console.log("=== HTML SECURITY TESTS PASSED ===");
