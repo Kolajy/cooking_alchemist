@@ -61,6 +61,11 @@ dialog[open] {
   line-height: 1;
   transition: var(--transition-smooth);
 }
+.close-dialog-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cozy-focus-ring);
+  border-radius: 4px;
+}
 .close-dialog-btn:hover {
   color: var(--color-danger);
 }
