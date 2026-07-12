@@ -82,6 +82,11 @@
   letter-spacing: 0.08em;
 }
 
+.tab-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cozy-focus-ring);
+}
+
 .tab-btn:hover {
   color: var(--scroll-ink);
 }
@@ -164,6 +169,11 @@
   color: var(--scroll-ink-muted);
   cursor: pointer;
   transition: var(--transition-gentle);
+}
+
+.subtab-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cozy-focus-ring);
 }
 
 .subtab-btn:hover {
