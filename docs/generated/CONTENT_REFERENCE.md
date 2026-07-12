@@ -1,6 +1,6 @@
 # Culinary Alchemy — Content Reference
 
-> **Auto-generated** from `content/` on 2026-07-10. Do not edit by hand.
+> **Auto-generated** from `content/` on 2026-07-12. Do not edit by hand.
 > Regenerate with `npm run docs:generate` after content changes.
 
 Human-readable catalogs of **ingredients**, **techniques**, and **transitions** exported from the shared `content/` package.
