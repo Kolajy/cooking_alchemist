@@ -310,8 +310,8 @@ export function spawnElementOnCanvas(itemData, x = null, y = null, options = {})
   el.setAttribute("tabindex", "0");
   el.setAttribute("role", "button");
   el.setAttribute("aria-label", `${item.name}`);
-  el.innerHTML = buildIngredientMarkup(item, false);
-
+  el.appendChild(buildIngredientMarkup(item, false));
+  
   if (x === null || y === null) {
     const rect = dom.workspace.getBoundingClientRect();
     x = rect.width / 2 + (secureRandom() * 80 - 40);

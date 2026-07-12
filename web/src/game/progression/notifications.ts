@@ -167,10 +167,15 @@ export function triggerIngredientUnlockNotification(milestone: { emoji: string; 
 
   const text = document.createElement("div");
   text.className = "levelup-text";
-  text.innerHTML = `
-    <h4 style="color: var(--color-success);">📦 Ingredients Shipment! 📦</h4>
-    <p>${escapeHtml(milestone.msg)}</p>
-  `;
+
+  const title = document.createElement("h4");
+  title.style.color = "var(--color-success)";
+  title.textContent = "📦 Ingredients Shipment! 📦";
+
+  const desc = document.createElement("p");
+  desc.textContent = milestone.msg;
+
+  text.append(title, desc);
 
   notif.append(emoji, text);
   dom.workspace?.appendChild(notif);

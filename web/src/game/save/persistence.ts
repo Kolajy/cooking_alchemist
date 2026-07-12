@@ -255,31 +255,42 @@ export function updateStats() {
 
   const guideTextEl = document.getElementById("grandma-guide-text");
   if (guideTextEl) {
-    let hint = "";
+    guideTextEl.replaceChildren();
+
     const hasSmashedBerries = state.discoveredIds.has("smashed_berries");
     const hasPotato = state.discoveredIds.has("potato");
     const hasMashedPotato = state.discoveredIds.has("mashed_potato");
     const hasSproutedSeeds = state.discoveredIds.has("sprouted_seeds");
     const discoveredRecipesCount = [...state.discoveredIds].filter(id => data.DISCOVERABLE_ITEMS[id]).length;
 
-    if (!hasSmashedBerries) {
-      hint = "Separate 🫐 <strong>Berries</strong> on the counter to find fresh fruit and smashable pulp!";
-    } else if (!hasPotato) {
-      hint = "Separate 🥔 <strong>Tubers</strong> on the counter to find a fresh Potato!";
-    } else if (!hasMashedPotato) {
-      hint = "Use your new ✊ <strong>Force</strong> action to smash the 🥔 <strong>Potato</strong> into a fluffy mash!";
-    } else if (discoveredRecipesCount < 15) {
-      hint = `Keep exploring and separating! Restore <strong>15 recipes</strong> in your Ledger to unlock the 🥣 <strong>Combine</strong> action (Current: <strong>${discoveredRecipesCount}</strong>/15).`;
-    } else if (!hasSproutedSeeds) {
-      hint = "Combine 🌻 <strong>Seeds</strong> and 💧 <strong>Water</strong> on the counter using the 🥣 <strong>Combine</strong> action to grow sprouted greens!";
-    } else if (discoveredRecipesCount < 40) {
-      hint = `Excellent! Continue combining and discovering dishes. Reach <strong>40 recipes</strong> to unlock 🍳 <strong>Heat</strong> (Current: <strong>${discoveredRecipesCount}</strong>/40).`;
-    } else if (discoveredRecipesCount < 200 || !state.discoveredIds.has("berry_pulp")) {
-      hint = `You're a true alchemist. Work towards restoring <strong>200 recipes</strong> and finding <strong>Berry Pulp</strong> to master ⏳ <strong>Time</strong> (Current: <strong>${discoveredRecipesCount}</strong>/200).`;
-    } else {
-      hint = "Grandmother's ledger is nearly restored! Search for remaining rare secrets in the Progress Map.";
-    }
+    const buildHint = (parts: Array<string | { strong: string }>) => {
+      parts.forEach(part => {
+        if (typeof part === "string") {
+          guideTextEl.appendChild(document.createTextNode(part));
+        } else {
+          const strong = document.createElement("strong");
+          strong.textContent = part.strong;
+          guideTextEl.appendChild(strong);
+        }
+      });
+    };
 
-    guideTextEl.innerHTML = hint;
+    if (!hasSmashedBerries) {
+      buildHint(["Separate 🫐 ", { strong: "Berries" }, " on the counter to find fresh fruit and smashable pulp!"]);
+    } else if (!hasPotato) {
+      buildHint(["Separate 🥔 ", { strong: "Tubers" }, " on the counter to find a fresh Potato!"]);
+    } else if (!hasMashedPotato) {
+      buildHint(["Use your new ✊ ", { strong: "Force" }, " action to smash the 🥔 ", { strong: "Potato" }, " into a fluffy mash!"]);
+    } else if (discoveredRecipesCount < 15) {
+      buildHint(["Keep exploring and separating! Restore ", { strong: "15 recipes" }, " in your Ledger to unlock the 🥣 ", { strong: "Combine" }, ` action (Current: `, { strong: `${discoveredRecipesCount}` }, `/15).`]);
+    } else if (!hasSproutedSeeds) {
+      buildHint(["Combine 🌻 ", { strong: "Seeds" }, " and 💧 ", { strong: "Water" }, " on the counter using the 🥣 ", { strong: "Combine" }, " action to grow sprouted greens!"]);
+    } else if (discoveredRecipesCount < 40) {
+      buildHint(["Excellent! Continue combining and discovering dishes. Reach ", { strong: "40 recipes" }, " to unlock 🍳 ", { strong: "Heat" }, ` (Current: `, { strong: `${discoveredRecipesCount}` }, `/40).`]);
+    } else if (discoveredRecipesCount < 200 || !state.discoveredIds.has("berry_pulp")) {
+      buildHint(["You're a true alchemist. Work towards restoring ", { strong: "200 recipes" }, " and finding ", { strong: "Berry Pulp" }, " to master ⏳ ", { strong: "Time" }, ` (Current: `, { strong: `${discoveredRecipesCount}` }, `/200).`]);
+    } else {
+      buildHint(["Grandmother's ledger is nearly restored! Search for remaining rare secrets in the Progress Map."]);
+    }
   }
 }
