@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
     let filePath = path.join(DIRECTORY, req.url.split('?')[0] === '/' ? 'index.html' : req.url.split('?')[0]);
     
     // Safety check to prevent directory traversal
-    if (!filePath.startsWith(DIRECTORY)) {
+    if (filePath !== DIRECTORY && !filePath.startsWith(DIRECTORY + path.sep)) {
         res.writeHead(403);
         res.end('Forbidden');
         return;

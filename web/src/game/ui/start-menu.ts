@@ -86,7 +86,21 @@ function renderSlotsGrid(): void {
               minute: "2-digit"
             })
           : "Unknown";
-        statusEl.innerHTML = `<strong>${info.percent}%</strong> Ledger • ${info.achievementsCount}🏆<br><span style="font-size: 0.75rem; opacity: 0.85;">Saved: ${dateStr}</span>`;
+        statusEl.textContent = "";
+
+        const strongEl = document.createElement("strong");
+        strongEl.textContent = `${info.percent}%`;
+        statusEl.appendChild(strongEl);
+
+        statusEl.appendChild(document.createTextNode(` Ledger • ${info.achievementsCount}🏆`));
+
+        statusEl.appendChild(document.createElement("br"));
+
+        const spanEl = document.createElement("span");
+        spanEl.style.fontSize = "0.75rem";
+        spanEl.style.opacity = "0.85";
+        spanEl.textContent = `Saved: ${dateStr}`;
+        statusEl.appendChild(spanEl);
       }
 
       if (playBtn) {

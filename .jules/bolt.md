@@ -1,0 +1,3 @@
+## 2024-07-12 - [Removed Expensive DOM Method from frequent PointerMove callback]
+**Learning:** In pointermove callbacks, calling `getBoundingClientRect` causes expensive layout recalculations (thrashing). Since dragging occurs very frequently, these calls add up to significant frame drops and stuttering. In `technique-target.ts`, checking for nearby elements on the board for the "merge" mode was checking DOM rects for every active item per pointer frame!
+**Action:** Replaced `getBoundingClientRect` calls with dataset checks and cached DOM measurements where necessary, particularly in `findMergeTarget` which is invoked on every single dragged-frame loop.
