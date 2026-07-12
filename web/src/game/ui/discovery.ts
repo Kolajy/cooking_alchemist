@@ -96,15 +96,32 @@ function spawnDiscoverySparkles(container: HTMLElement | null): void {
   if (!container || isReducedMotionEnabled()) return;
 
   container.replaceChildren();
+
+  const wave = document.createElement("div");
+  wave.className = "discovery-wave";
+  container.appendChild(wave);
+
   const sparkMarks = ["✨", "⭐", "✦", "🌟", "·", "✧"];
 
-  for (let i = 0; i < 14; i += 1) {
+  for (let i = 0; i < 24; i += 1) {
     const spark = document.createElement("span");
     spark.className = "discovery-spark";
     spark.textContent = sparkMarks[i % sparkMarks.length];
-    spark.style.setProperty("--angle", `${(360 / 14) * i}deg`);
-    spark.style.setProperty("--delay", `${0.12 + i * 0.035}s`);
-    spark.style.setProperty("--distance", `${48 + (i % 5) * 14}px`);
+
+    // Add extra layered variance to angle, distance and scale
+    const baseAngle = (360 / 24) * i;
+    const offsetAngle = (Math.random() - 0.5) * 15;
+    spark.style.setProperty("--angle", `${baseAngle + offsetAngle}deg`);
+
+    const delay = 0.05 + (i % 3) * 0.08 + Math.random() * 0.1;
+    spark.style.setProperty("--delay", `${delay}s`);
+
+    const distance = 40 + Math.random() * 80;
+    spark.style.setProperty("--distance", `${distance}px`);
+
+    const scale = 0.5 + Math.random() * 1.5;
+    spark.style.setProperty("--scale", `${scale}`);
+
     container.appendChild(spark);
   }
 }

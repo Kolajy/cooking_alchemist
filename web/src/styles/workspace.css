@@ -404,6 +404,30 @@ body[data-active-tool="freeze"] #workspace {
   animation: steam-rise var(--dur, 1.5s) cubic-bezier(0.33, 0, 0.2, 1) forwards;
 }
 
+.particle--smoke {
+  border-radius: 50%;
+  filter: blur(3px);
+  animation: steam-rise var(--dur, 1.5s) cubic-bezier(0.33, 0, 0.2, 1) forwards;
+}
+
+.particle--boil {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent !important;
+  animation: boil-pop 0.6s ease-out forwards;
+}
+
+.particle--sizzle {
+  border-radius: 50%;
+  animation: float-and-fade 0.4s ease-out forwards;
+}
+
+@keyframes boil-pop {
+  0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
+  80% { transform: translate(var(--dx, 0), var(--dy, -20px)) scale(1.2); opacity: 1; }
+  100% { transform: translate(var(--dx, 0), var(--dy, -25px)) scale(1.5); opacity: 0; }
+}
+
 /* Grandmother's Guide Sticky Note */
 .grandma-guide {
   position: absolute;
