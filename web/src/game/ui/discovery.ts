@@ -181,87 +181,95 @@ function updateDiscoveryExp(actionContext: DiscoveryActionContext | null): void 
   if (textEl) textEl.textContent = summary.detailText;
 }
 
-function presentDiscoveryEntry(entry: DiscoveryQueueEntry): void {
+function presentIngredientDiscovery(entry: IngredientQueueEntry): void {
   const { dom } = getCtx();
+  const { recipe, result, actionContext } = entry;
+  const remaining = discoveryQueue.filter(e => e.type === "ingredient").length;
+  const emojiEl = dom.discoveryItemContainer?.querySelector(".discovered-emoji");
+  const nameEl = dom.discoveryItemContainer?.querySelector(".discovered-name");
+
+  if (dom.discoveryKicker) {
+    dom.discoveryKicker.textContent = remaining > 0 ? "Another discovery!" : "Congratulations!";
+  }
+
+  if (dom.discoveryTitle) {
+    dom.discoveryTitle.textContent = remaining > 0
+      ? `New Ingredient Discovered (${remaining} more)`
+      : "New Ingredient Discovered";
+  }
+
+  if (emojiEl) emojiEl.textContent = result.emoji;
+  if (nameEl) nameEl.textContent = result.name;
+
+  const descEl = document.getElementById("discovery-description");
+  if (descEl) {
+    descEl.textContent = result.description
+      || recipe.description
+      || "You've unlocked something new for your pantry.";
+  }
+
+  const blurbEl = document.getElementById("discovery-blurb");
+  if (blurbEl) {
+    blurbEl.textContent = getDiscoveryBlurb(recipe, result);
+  }
+
+  updateDiscoveryExp(actionContext);
+  spawnDiscoverySparkles(dom.discoverySparkles);
+  replayDiscoveryAnimations();
+  playSound(isFinalizedRecipe(result) ? "recipe_complete" : "discovery");
+
+  if (!dom.discoveryDialog) return;
+
+  try {
+    dom.discoveryDialog.showModal();
+  } catch {
+    dom.discoveryDialog.setAttribute("open", "");
+  }
+
+  requestAnimationFrame(() => {
+    dom.btnDiscoveryOk?.focus({ preventScroll: true });
+  });
+}
+
+function presentMechanicDiscovery(entry: MechanicQueueEntry): void {
+  const { dom } = getCtx();
+  const { name, emoji, desc, isSubaction } = entry;
+
+  if (dom.mechanicKicker) {
+    dom.mechanicKicker.textContent = isSubaction ? "New Cooking Technique!" : "New Core Mechanic!";
+  }
+
+  if (dom.mechanicTitle) {
+    dom.mechanicTitle.textContent = isSubaction ? "Technique Unlocked" : "Action Unlocked";
+  }
+
+  if (dom.mechanicEmoji) dom.mechanicEmoji.textContent = emoji;
+  if (dom.mechanicName) dom.mechanicName.textContent = name;
+  if (dom.mechanicDescription) dom.mechanicDescription.textContent = desc;
+
+  spawnDiscoverySparkles(dom.mechanicSparkles);
+  playSound("unlock");
+
+  if (!dom.mechanicDiscoveryDialog) return;
+
+  try {
+    dom.mechanicDiscoveryDialog.showModal();
+  } catch {
+    dom.mechanicDiscoveryDialog.setAttribute("open", "");
+  }
+
+  requestAnimationFrame(() => {
+    dom.btnMechanicOk?.focus({ preventScroll: true });
+  });
+}
+
+function presentDiscoveryEntry(entry: DiscoveryQueueEntry): void {
   isDiscoveryOpen = true;
 
   if (entry.type === "ingredient") {
-    const { recipe, result, actionContext } = entry;
-    const remaining = discoveryQueue.filter(e => e.type === "ingredient").length;
-    const emojiEl = dom.discoveryItemContainer?.querySelector(".discovered-emoji");
-    const nameEl = dom.discoveryItemContainer?.querySelector(".discovered-name");
-
-    if (dom.discoveryKicker) {
-      dom.discoveryKicker.textContent = remaining > 0 ? "Another discovery!" : "Congratulations!";
-    }
-
-    if (dom.discoveryTitle) {
-      dom.discoveryTitle.textContent = remaining > 0
-        ? `New Ingredient Discovered (${remaining} more)`
-        : "New Ingredient Discovered";
-    }
-
-    if (emojiEl) emojiEl.textContent = result.emoji;
-    if (nameEl) nameEl.textContent = result.name;
-
-    const descEl = document.getElementById("discovery-description");
-    if (descEl) {
-      descEl.textContent = result.description
-        || recipe.description
-        || "You've unlocked something new for your pantry.";
-    }
-
-    const blurbEl = document.getElementById("discovery-blurb");
-    if (blurbEl) {
-      blurbEl.textContent = getDiscoveryBlurb(recipe, result);
-    }
-
-    updateDiscoveryExp(actionContext);
-    spawnDiscoverySparkles(dom.discoverySparkles);
-    replayDiscoveryAnimations();
-    playSound(isFinalizedRecipe(result) ? "recipe_complete" : "discovery");
-
-    if (!dom.discoveryDialog) return;
-
-    try {
-      dom.discoveryDialog.showModal();
-    } catch {
-      dom.discoveryDialog.setAttribute("open", "");
-    }
-
-    requestAnimationFrame(() => {
-      dom.btnDiscoveryOk?.focus({ preventScroll: true });
-    });
+    presentIngredientDiscovery(entry);
   } else {
-    // Mechanic Entry
-    const { name, emoji, desc, isSubaction } = entry;
-
-    if (dom.mechanicKicker) {
-      dom.mechanicKicker.textContent = isSubaction ? "New Cooking Technique!" : "New Core Mechanic!";
-    }
-
-    if (dom.mechanicTitle) {
-      dom.mechanicTitle.textContent = isSubaction ? "Technique Unlocked" : "Action Unlocked";
-    }
-
-    if (dom.mechanicEmoji) dom.mechanicEmoji.textContent = emoji;
-    if (dom.mechanicName) dom.mechanicName.textContent = name;
-    if (dom.mechanicDescription) dom.mechanicDescription.textContent = desc;
-
-    spawnDiscoverySparkles(dom.mechanicSparkles);
-    playSound("unlock");
-
-    if (!dom.mechanicDiscoveryDialog) return;
-
-    try {
-      dom.mechanicDiscoveryDialog.showModal();
-    } catch {
-      dom.mechanicDiscoveryDialog.setAttribute("open", "");
-    }
-
-    requestAnimationFrame(() => {
-      dom.btnMechanicOk?.focus({ preventScroll: true });
-    });
+    presentMechanicDiscovery(entry);
   }
 }
 

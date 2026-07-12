@@ -103,6 +103,12 @@
   gap: 0.4rem;
   font-size: 0.84rem;
   color: var(--scroll-ink-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.hover-card__prop-item:hover {
+  transform: translateX(2px);
+  color: var(--scroll-ink);
 }
 
 .hover-card__prop-icon {
@@ -147,9 +153,21 @@
   padding: 0.55rem 0.65rem;
   border-radius: 8px;
   color: var(--color-sage);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hover-card__tip-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px hsla(var(--hue-sage), 20%, 40%, 0.15);
 }
 
 .hover-card__tip-icon {
   font-size: 1.05rem;
   flex-shrink: 0;
+  animation: bounce-vertical 2s ease-in-out infinite;
+}
+
+@keyframes bounce-vertical {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }

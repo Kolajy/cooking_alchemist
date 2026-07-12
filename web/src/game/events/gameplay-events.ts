@@ -27,11 +27,16 @@ export type GameplayDiscoveryChangedEvent = {
   ids?: string[];
 };
 
+export type GameplayAutoSaveEvent = {
+  timestamp: number;
+};
+
 type GameplayEventMap = {
   discovery: GameplayDiscoveryEvent;
   xp: GameplayXpEvent;
   achievementCheck: GameplayAchievementCheckEvent;
   discoveryChanged: GameplayDiscoveryChangedEvent;
+  autoSaved: GameplayAutoSaveEvent;
 };
 
 type Listener<K extends keyof GameplayEventMap> = (payload: GameplayEventMap[K]) => void;

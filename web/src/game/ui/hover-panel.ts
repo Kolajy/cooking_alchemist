@@ -83,11 +83,8 @@ function updateHoverPanelPosition(e: MouseEvent): void {
   hoverCardEl.style.top = `${y}px`;
 }
 
-export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: MouseEvent): void {
+function resolveHoverItem(itemId: string): IngredientItem | null {
   const { data } = getCtx();
-  if (!hoverCardEl || activeHoverTarget === el) return;
-
-  // Look up item
   let item = data.DISCOVERABLE_ITEMS[itemId] || null;
   if (!item) {
     item = (data.STARTER_ELEMENTS.find(i => i.id === itemId) as IngredientItem) || null;
@@ -95,25 +92,13 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   if (!item) {
     item = (data.UNLOCKABLE_ELEMENTS.find(i => i.id === itemId) as IngredientItem) || null;
   }
-  if (!item) return;
+  return item;
+}
 
-  // Enrich it with global lookup
-  const origin = item.origin || data.getIngredientOrigin(itemId);
-  const stateKey = getIngredientStateKey({ ...item, origin });
-  const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
-
-  activeHoverTarget = el;
-
-  // Build the state badge class & label
-  const stateClass = `hover-card__state hover-card__state--${stateKey}`;
-  const stateLabel = getFriendlyStateLabel(stateKey);
-
-  // Build properties list
+function buildHoverProperties(props: Record<string, any>, isPrimal: boolean): string[] {
   const propList: string[] = [];
-  const isPrimal = stateKey === "primal";
 
   if (!isPrimal) {
-    // Edible raw
     if (props.edibleRaw !== undefined) {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -123,7 +108,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Moisture
     if (props.moisture && props.moisture !== "none") {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -133,7 +117,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Fat
     if (props.fat && props.fat !== "none") {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -143,7 +126,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Structure
     if (props.structure) {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -153,7 +135,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Outer Layer / Peel
     if (props.hasOuterLayer) {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -163,7 +144,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Seeds
     if (props.hasSeeds) {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -173,7 +153,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Bones
     if (props.hasBones) {
       propList.push(`
         <div class="hover-card__prop-item">
@@ -183,7 +162,6 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       `);
     }
 
-    // Toxic check
     if (props.toxic) {
       propList.push(`
         <div class="hover-card__prop-item" style="grid-column: span 2; color: var(--color-danger); font-weight: bold;">
@@ -194,10 +172,17 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
     }
   }
 
+  return propList;
+}
+
+function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: string, props: Record<string, any>): string {
+  const isPrimal = stateKey === "primal";
+  const propList = buildHoverProperties(props, isPrimal);
+  const stateClass = `hover-card__state hover-card__state--${stateKey}`;
+  const stateLabel = getFriendlyStateLabel(stateKey);
   const historicalText = isPrimal ? PRIMAL_HISTORICAL_INFO[itemId] : null;
 
-  // Construct HTML
-  hoverCardEl.innerHTML = `
+  return `
     <div class="hover-card__header">
       <span class="hover-card__emoji">${escapeHtml(item.emoji)}</span>
       <div class="hover-card__meta">
@@ -220,7 +205,21 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
       </div>
     ` : ""}
   `;
+}
 
+export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: MouseEvent): void {
+  if (!hoverCardEl || activeHoverTarget === el) return;
+
+  const item = resolveHoverItem(itemId);
+  if (!item) return;
+
+  const { data } = getCtx();
+  const origin = item.origin || data.getIngredientOrigin(itemId);
+  const stateKey = getIngredientStateKey({ ...item, origin });
+  const props = item.properties || INGREDIENT_PROPERTIES[itemId] || {};
+
+  activeHoverTarget = el;
+  hoverCardEl.innerHTML = renderHoverCardContent(item, itemId, stateKey, props);
   hoverCardEl.classList.add("visible");
   updateHoverPanelPosition(e);
 }
