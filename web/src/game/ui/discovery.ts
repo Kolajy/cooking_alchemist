@@ -1,5 +1,6 @@
 import { getCtx } from "../context";
 import { playSound } from "../feedback/sounds";
+import { secureRandom } from "../security/math";
 import { isFinalizedRecipe } from "../ingredients";
 import { isReducedMotionEnabled } from "../settings";
 import { getTrackExpSummary } from "../progression/skills";
@@ -110,16 +111,16 @@ function spawnDiscoverySparkles(container: HTMLElement | null): void {
 
     // Add extra layered variance to angle, distance and scale
     const baseAngle = (360 / 24) * i;
-    const offsetAngle = (Math.random() - 0.5) * 15;
+    const offsetAngle = (secureRandom() - 0.5) * 15;
     spark.style.setProperty("--angle", `${baseAngle + offsetAngle}deg`);
 
-    const delay = 0.05 + (i % 3) * 0.08 + Math.random() * 0.1;
+    const delay = 0.05 + (i % 3) * 0.08 + secureRandom() * 0.1;
     spark.style.setProperty("--delay", `${delay}s`);
 
-    const distance = 40 + Math.random() * 80;
+    const distance = 40 + secureRandom() * 80;
     spark.style.setProperty("--distance", `${distance}px`);
 
-    const scale = 0.5 + Math.random() * 1.5;
+    const scale = 0.5 + secureRandom() * 1.5;
     spark.style.setProperty("--scale", `${scale}`);
 
     container.appendChild(spark);
