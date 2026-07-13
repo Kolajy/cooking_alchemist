@@ -24,12 +24,17 @@ const PRIMAL_HISTORICAL_INFO: Record<string, string> = {
 let hoverCardEl: HTMLElement | null = null;
 let activeHoverTarget: HTMLElement | null = null;
 
+let cachedCardWidth = 260;
+let cachedCardHeight = 180;
+
 export function setupHoverPanel(): void {
   if (hoverCardEl) return;
 
   hoverCardEl = document.createElement("div");
   hoverCardEl.className = "ingredient-hover-card";
   hoverCardEl.setAttribute("aria-live", "polite");
+  hoverCardEl.style.left = "0px";
+  hoverCardEl.style.top = "0px";
   document.body.appendChild(hoverCardEl);
 }
 
@@ -60,27 +65,24 @@ function getFriendlyStateLabel(stateKey: string): string {
 function updateHoverPanelPosition(e: MouseEvent): void {
   if (!hoverCardEl) return;
 
-  const cardWidth = hoverCardEl.offsetWidth || 260;
-  const cardHeight = hoverCardEl.offsetHeight || 180;
   const padding = 15;
 
   let x = e.clientX + padding;
   let y = e.clientY + padding;
 
   // Clamp inside the window boundary so it never runs off-screen
-  if (x + cardWidth > window.innerWidth) {
-    x = e.clientX - cardWidth - padding;
+  if (x + cachedCardWidth > window.innerWidth) {
+    x = e.clientX - cachedCardWidth - padding;
   }
-  if (y + cardHeight > window.innerHeight) {
-    y = e.clientY - cardHeight - padding;
+  if (y + cachedCardHeight > window.innerHeight) {
+    y = e.clientY - cachedCardHeight - padding;
   }
 
   // Ensure it doesn't clip past top/left
   x = Math.max(padding, x);
   y = Math.max(padding, y);
 
-  hoverCardEl.style.left = `${x}px`;
-  hoverCardEl.style.top = `${y}px`;
+  hoverCardEl.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 }
 
 function resolveHoverItem(itemId: string): IngredientItem | null {
@@ -257,6 +259,10 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   activeHoverTarget = el;
   renderHoverCardContent(item, itemId, stateKey, props);
   hoverCardEl.classList.add("visible");
+
+  cachedCardWidth = hoverCardEl.offsetWidth || 260;
+  cachedCardHeight = hoverCardEl.offsetHeight || 180;
+
   updateHoverPanelPosition(e);
 }
 
