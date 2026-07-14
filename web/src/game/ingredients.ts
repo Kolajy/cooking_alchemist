@@ -309,6 +309,7 @@ export function buildIngredientMarkup(item: IngredientItem, showBadge = true): D
   const emoji = document.createElement("span");
   emoji.className = "element-emoji";
   emoji.textContent = itemData.emoji;
+  emoji.setAttribute("aria-hidden", "true");
 
   const name = document.createElement("span");
   name.className = "element-name";
@@ -336,6 +337,7 @@ export function buildCabinetItemMarkup(item: CabinetItem): DocumentFragment {
   const emoji = document.createElement("span");
   emoji.className = "element-emoji";
   emoji.textContent = item.emoji;
+  emoji.setAttribute("aria-hidden", "true");
 
   const meta = document.createElement("div");
   meta.className = "cabinet-item__meta";
