@@ -248,6 +248,7 @@ export function renderCookingToolbar() {
     const emojiSpan = document.createElement("span");
     emojiSpan.className = "tool-emoji";
     emojiSpan.textContent = emoji;
+    emojiSpan.setAttribute("aria-hidden", "true");
 
     const nameSpan = document.createElement("span");
     nameSpan.className = "tool-name";
