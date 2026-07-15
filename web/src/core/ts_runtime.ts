@@ -138,8 +138,13 @@ export class TypeScriptRuntime implements SharedGameRuntime {
     return count;
   }
 
+  private _totalDiscoverableItemsCache: number | null = null;
+
   statsText(): string {
-    const total = Object.keys(globalThis.DISCOVERABLE_ITEMS).length;
+    if (this._totalDiscoverableItemsCache === null) {
+      this._totalDiscoverableItemsCache = Object.keys(globalThis.DISCOVERABLE_ITEMS).length;
+    }
+    const total = this._totalDiscoverableItemsCache;
     let count = 0;
     for (const id of this.discovered) {
       if (globalThis.DISCOVERABLE_ITEMS[id]) count++;
@@ -148,11 +153,15 @@ export class TypeScriptRuntime implements SharedGameRuntime {
   }
 
   playableItemIds(): string[] {
-    const ids = globalThis.STARTER_ELEMENTS.map(i => i.id);
+    // ⚡ Bolt: Use a Set to prevent O(n^2) lookups when checking for duplicates
+    // This provides a substantial performance boost since playableItemIds is called frequently
+    const idSet = new Set(globalThis.STARTER_ELEMENTS.map(i => i.id));
     for (const id of this.discovered) {
-      if (globalThis.DISCOVERABLE_ITEMS[id] && !ids.includes(id)) ids.push(id);
+      if (globalThis.DISCOVERABLE_ITEMS[id]) {
+        idSet.add(id);
+      }
     }
-    return ids.sort();
+    return Array.from(idSet).sort();
   }
 
   exportSave(): string {
