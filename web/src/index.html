@@ -51,7 +51,7 @@
                 </div>
                 <div class="slot-card__actions">
                   <button class="btn btn-primary slot-btn-play" type="button">Start New</button>
-                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 1">🗑️</button>
+                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 1"><span aria-hidden="true">🗑️</span></button>
                 </div>
               </div>
               <!-- Slot 2 -->
@@ -62,7 +62,7 @@
                 </div>
                 <div class="slot-card__actions">
                   <button class="btn btn-primary slot-btn-play" type="button">Start New</button>
-                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 2">🗑️</button>
+                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 2"><span aria-hidden="true">🗑️</span></button>
                 </div>
               </div>
               <!-- Slot 3 -->
@@ -73,13 +73,13 @@
                 </div>
                 <div class="slot-card__actions">
                   <button class="btn btn-primary slot-btn-play" type="button">Start New</button>
-                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 3">🗑️</button>
+                  <button class="btn btn-danger slot-btn-delete" hidden type="button" aria-label="Delete Slot 3"><span aria-hidden="true">🗑️</span></button>
                 </div>
               </div>
             </div>
 
             <div class="start-menu__footer-actions">
-              <button id="menu-btn-settings" class="btn btn-secondary" type="button">⚙️ Settings</button>
+              <button id="menu-btn-settings" class="btn btn-secondary" type="button"><span aria-hidden="true">⚙️</span> Settings</button>
             </div>
           </div>
         </div>
@@ -122,10 +122,10 @@
 
           <div class="menu-bar-actions">
             <button id="btn-progress-graph" class="btn btn-secondary" aria-label="Open ingredient progress graph">
-              🌳 Progress Map
+              <span aria-hidden="true">🌳</span> Progress Map
             </button>
             <button id="btn-recipe-book" class="btn btn-primary" aria-label="Open Recipe Book">
-              📖 Recipe Book
+              <span aria-hidden="true">📖</span> Recipe Book
             </button>
           </div>
 
@@ -133,13 +133,13 @@
 
           <div class="menu-bar-utilities">
             <button id="btn-sound" class="btn btn-icon" type="button" aria-pressed="false" aria-label="Enable kitchen sounds" title="Enable sounds">
-              🔇
+              <span aria-hidden="true">🔇</span>
             </button>
             <button id="btn-settings" class="btn btn-icon" type="button" aria-label="Open settings" title="Settings">
-              ⚙️
+              <span aria-hidden="true">⚙️</span>
             </button>
             <button id="btn-help" class="btn btn-icon" type="button" aria-label="How to play" title="How to play">
-              ?
+              <span aria-hidden="true">?</span>
             </button>
           </div>
         </div>
@@ -158,7 +158,7 @@
 
           <!-- Grandmother's Guide Sticky Note -->
           <div id="grandma-guide" class="grandma-guide animate-pop">
-            <span class="grandma-guide__pin">📌</span>
+            <span class="grandma-guide__pin" aria-hidden="true">📌</span>
             <h4 class="grandma-guide__title">Ledger Guide</h4>
             <p id="grandma-guide-text" class="grandma-guide__text">Tap berries in the Pantry to place them on the counter, then select the Separate action bar button!</p>
           </div>
@@ -214,16 +214,16 @@
         </div>
         <div class="cabinet-tabs" role="tablist" aria-label="Sidebar panels">
           <button class="tab-btn active" data-sidebar-tab="cabinet" role="tab" aria-selected="true" aria-controls="cabinet-panel">
-            🗄️ Cabinet
+            <span aria-hidden="true">🗄️</span> Cabinet
           </button>
           <button class="tab-btn" data-sidebar-tab="skills" role="tab" aria-selected="false" aria-controls="skills-panel">
-            🎓 Skills
+            <span aria-hidden="true">🎓</span> Skills
           </button>
           <button class="tab-btn" data-sidebar-tab="journal" role="tab" aria-selected="false" aria-controls="journal-panel">
-            📓 Journal
+            <span aria-hidden="true">📓</span> Journal
           </button>
           <button class="tab-btn" data-sidebar-tab="achievements" role="tab" aria-selected="false" aria-controls="achievements-panel">
-            🏆 Trophies
+            <span aria-hidden="true">🏆</span> Trophies
           </button>
         </div>
 
@@ -344,7 +344,7 @@
   <dialog id="keyboard-shortcuts-modal" closedby="any" aria-labelledby="keyboard-shortcuts-title">
     <div class="dialog-content">
       <header class="dialog-header">
-        <h2 id="keyboard-shortcuts-title">⌨️ Keyboard Shortcuts</h2>
+        <h2 id="keyboard-shortcuts-title"><span aria-hidden="true">⌨️</span> Keyboard Shortcuts</h2>
         <button class="close-dialog-btn" aria-label="Close dialog">×</button>
       </header>
       <div class="dialog-body">
@@ -360,14 +360,14 @@
   <dialog id="help-modal" closedby="any" aria-labelledby="help-title">
     <div class="dialog-content">
       <header class="dialog-header">
-        <h2 id="help-title">❔ How to Play</h2>
+        <h2 id="help-title"><span aria-hidden="true">❔</span> How to Play</h2>
         <button class="close-dialog-btn" aria-label="Close dialog">×</button>
       </header>
       <div class="dialog-body help-body">
         <p class="dialog-intro">Drag ingredients from the <strong>Pantry</strong> onto the counter, then use the <strong>Action Bar</strong> to cook and discover new recipes.</p>
 
         <section class="help-section">
-          <h3 class="help-section-title">🗄️ Pantry</h3>
+          <h3 class="help-section-title"><span aria-hidden="true">🗄️</span> Pantry</h3>
           <ul class="help-list">
             <li>Drag an ingredient onto the counter, or tap to place it in the center.</li>
             <li>Filter by <strong>State</strong> (Primal, Raw, Prepared) and <strong>Type</strong> (Produce, Forage, etc.).</li>
@@ -375,7 +375,7 @@
         </section>
 
         <section class="help-section">
-          <h3 class="help-section-title">🍳 Action Bar</h3>
+          <h3 class="help-section-title"><span aria-hidden="true">🍳</span> Action Bar</h3>
           <ul class="help-list">
             <li><strong>Combine</strong> — Select it, then drag one ingredient onto another (or use the Combine sub-action).</li>
             <li><strong>Separate</strong> — Pick Separate, then click an ingredient on the counter (highlighted targets are valid).</li>
@@ -386,7 +386,7 @@
         </section>
 
         <section class="help-section">
-          <h3 class="help-section-title">🎓 Skills & Progress</h3>
+          <h3 class="help-section-title"><span aria-hidden="true">🎓</span> Skills & Progress</h3>
           <ul class="help-list">
             <li>Open the <strong>Skills</strong> tab in the pantry to see your unlocked actions and exp.</li>
             <li>Practicing techniques and discovering recipes earns exp and unlocks new actions.</li>
@@ -397,7 +397,7 @@
         </section>
 
         <section class="help-section">
-          <h3 class="help-section-title">⌨️ Keyboard shortcuts</h3>
+          <h3 class="help-section-title"><span aria-hidden="true">⌨️</span> Keyboard shortcuts</h3>
           <ul class="help-list help-shortcuts">
             <li><kbd>1</kbd>–<kbd>5</kbd> Select method (Combine, Separate, Force, Heat, Time)</li>
             <li><kbd>[</kbd> <kbd>]</kbd> Previous / next sub-technique</li>
@@ -417,7 +417,7 @@
   <dialog id="settings-modal" closedby="any" aria-labelledby="settings-title">
     <div class="dialog-content">
       <header class="dialog-header">
-        <h2 id="settings-title">⚙️ Kitchen Settings</h2>
+        <h2 id="settings-title"><span aria-hidden="true">⚙️</span> Kitchen Settings</h2>
         <button class="close-dialog-btn" aria-label="Close dialog">×</button>
       </header>
       <div class="dialog-body settings-body">
@@ -517,10 +517,10 @@
           <h3 id="settings-data-title" class="settings-section-title">Save data</h3>
           <p class="settings-section-lead">Back up discoveries, skills, and journal timestamps — or start a fresh pantry.</p>
           <div class="settings-actions">
-            <button id="settings-export" class="btn btn-secondary" type="button">💾 Export save</button>
-            <button id="settings-import" class="btn btn-secondary" type="button">📂 Import save</button>
-            <button id="settings-to-menu" class="btn btn-secondary" type="button">🏠 Main Menu</button>
-            <button id="settings-reset" class="btn btn-danger" type="button">⚠️ Reset progress</button>
+            <button id="settings-export" class="btn btn-secondary" type="button"><span aria-hidden="true">💾</span> Export save</button>
+            <button id="settings-import" class="btn btn-secondary" type="button"><span aria-hidden="true">📂</span> Import save</button>
+            <button id="settings-to-menu" class="btn btn-secondary" type="button"><span aria-hidden="true">🏠</span> Main Menu</button>
+            <button id="settings-reset" class="btn btn-danger" type="button"><span aria-hidden="true">⚠️</span> Reset progress</button>
           </div>
           <p class="settings-footnote">Reset removes all discoveries and skill progress on this device. Export first if you want a backup.</p>
         </section>
@@ -532,7 +532,7 @@
   <dialog id="confirm-modal" closedby="any" aria-labelledby="confirm-title">
     <div class="dialog-content confirm-dialog-content">
       <header class="dialog-header">
-        <h2 id="confirm-title">⚠️ Confirmation Required</h2>
+        <h2 id="confirm-title"><span aria-hidden="true">⚠️</span> Confirmation Required</h2>
         <button class="close-dialog-btn" aria-label="Close dialog">×</button>
       </header>
       <div class="dialog-body confirm-dialog-body">
@@ -549,7 +549,7 @@
   <dialog id="recipe-book-modal" closedby="any" aria-labelledby="recipe-book-title">
     <div class="dialog-content">
       <header class="dialog-header">
-        <h2 id="recipe-book-title">📖 Grandmother's Recipe Ledger</h2>
+        <h2 id="recipe-book-title"><span aria-hidden="true">📖</span> Grandmother's Recipe Ledger</h2>
         <button class="close-dialog-btn" aria-label="Close dialog">×</button>
       </header>
       <div class="dialog-body">
@@ -581,7 +581,7 @@
 
         <div id="discovery-exp" class="discovery-exp discovery-reveal" hidden>
           <div class="discovery-exp__header">
-            <span id="discovery-exp-label" class="discovery-exp__label">🥣 Combine</span>
+            <span id="discovery-exp-label" class="discovery-exp__label"><span aria-hidden="true">🥣</span> Combine</span>
             <span id="discovery-exp-gain" class="discovery-exp__gain">+1 exp</span>
           </div>
           <div class="xp-bar-container discovery-exp__bar">
@@ -591,7 +591,7 @@
         </div>
 
         <div class="discovery-blurb-block discovery-reveal">
-          <h3>📜 Did You Know?</h3>
+          <h3><span aria-hidden="true">📜</span> Did You Know?</h3>
           <p id="discovery-blurb">A short historical or culinary fact goes here.</p>
         </div>
 
