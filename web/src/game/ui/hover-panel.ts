@@ -184,6 +184,7 @@ function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: 
   header.className = "hover-card__header";
   const emoji = document.createElement("span");
   emoji.className = "hover-card__emoji";
+  emoji.setAttribute("aria-hidden", "true");
   emoji.textContent = item.emoji;
 
   const meta = document.createElement("div");
@@ -237,6 +238,7 @@ function renderHoverCardContent(item: IngredientItem, itemId: string, stateKey: 
     tipBox.className = "hover-card__tip-box";
     const tipIcon = document.createElement("span");
     tipIcon.className = "hover-card__tip-icon";
+    tipIcon.setAttribute("aria-hidden", "true");
     tipIcon.textContent = "💡";
     const tipSpan = document.createElement("span");
     tipSpan.textContent = item.tip;
