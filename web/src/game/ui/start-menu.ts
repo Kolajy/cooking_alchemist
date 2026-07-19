@@ -92,7 +92,12 @@ function renderSlotsGrid(): void {
         strongEl.textContent = `${info.percent}%`;
         statusEl.appendChild(strongEl);
 
-        statusEl.appendChild(document.createTextNode(` Ledger • ${info.achievementsCount}🏆`));
+        statusEl.appendChild(document.createTextNode(` Ledger • ${info.achievementsCount}`));
+
+        const trophyEmoji = document.createElement("span");
+        trophyEmoji.setAttribute("aria-hidden", "true");
+        trophyEmoji.textContent = "🏆";
+        statusEl.appendChild(trophyEmoji);
 
         statusEl.appendChild(document.createElement("br"));
 
