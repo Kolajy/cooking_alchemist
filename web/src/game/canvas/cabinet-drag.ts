@@ -56,9 +56,9 @@ function positionCabinetDragGhost(ghost, clientX, clientY, grabOffset) {
   ghost.style.transform = `translate3d(${Math.round(clientX - grabOffset.x)}px, ${Math.round(clientY - grabOffset.y)}px, 0)`;
 }
 
-function isPointerOverWorkspace(clientX, clientY) {
-  const { dom } = getCtx();
-  const ws = dom.workspace.getBoundingClientRect();
+function isPointerOverWorkspace(drag, clientX, clientY) {
+  const ws = drag.workspaceRect;
+  if (!ws) return false;
   return clientX >= ws.left && clientX <= ws.right && clientY >= ws.top && clientY <= ws.bottom;
 }
 
@@ -74,7 +74,7 @@ function scheduleCabinetGhostMove(drag, clientX, clientY) {
 
     positionCabinetDragGhost(drag.ghost, drag.pendingX, drag.pendingY, drag.grabOffset);
 
-    const overWorkspace = isPointerOverWorkspace(drag.pendingX, drag.pendingY);
+    const overWorkspace = isPointerOverWorkspace(drag, drag.pendingX, drag.pendingY);
     if (overWorkspace !== drag.overWorkspace) {
       drag.overWorkspace = overWorkspace;
       dom.workspace.classList.toggle("workspace-drop-target", overWorkspace);
@@ -147,7 +147,7 @@ function activateCabinetDrag(drag, pointerId) {
 }
 
 export function onCabinetPointerDown(e) {
-  const { state } = getCtx();
+  const { state, dom } = getCtx();
   const item = resolvePlayableIngredient(e.currentTarget.dataset.id);
   if (!item) return;
 
@@ -175,7 +175,8 @@ export function onCabinetPointerDown(e) {
     overWorkspace: false,
     raf: null,
     pendingX: e.clientX,
-    pendingY: e.clientY
+    pendingY: e.clientY,
+    workspaceRect: dom.workspace.getBoundingClientRect()
   };
 
   sourceEl.setPointerCapture(e.pointerId);
@@ -218,8 +219,8 @@ function onCabinetDocumentPointerUp(e) {
     }
     positionCabinetDragGhost(drag.ghost, e.clientX, e.clientY, drag.grabOffset);
 
-    if (isPointerOverWorkspace(e.clientX, e.clientY)) {
-      const ws = dom.workspace.getBoundingClientRect();
+    if (isPointerOverWorkspace(drag, e.clientX, e.clientY)) {
+      const ws = drag.workspaceRect;
       const rect = drag.ghost.getBoundingClientRect();
       const element = spawnElementOnCanvas(drag.item, rect.left - ws.left, rect.top - ws.top);
       recordSpawnUndo(drag.item, element);
