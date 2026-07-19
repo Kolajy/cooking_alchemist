@@ -110,7 +110,10 @@ function createModeExpCard(methodId: string, cfg: { mode: string; emoji: string;
 
   const name = document.createElement("span");
   name.className = "skill-card-name";
-  name.textContent = `${cfg.emoji} ${cfg.name} Practice`;
+  const emojiSpan = document.createElement("span");
+  emojiSpan.setAttribute("aria-hidden", "true");
+  emojiSpan.textContent = cfg.emoji;
+  name.append(emojiSpan, document.createTextNode(` ${cfg.name} Practice`));
 
   const status = document.createElement("span");
   status.className = "skill-card-status";
@@ -159,7 +162,10 @@ function createLockedSkillCard(skill: { id: string; emoji: string; name: string;
 
   const name = document.createElement("span");
   name.className = "skill-card-name";
-  name.textContent = `${skill.emoji} ${skill.name}`;
+  const emojiSpan = document.createElement("span");
+  emojiSpan.setAttribute("aria-hidden", "true");
+  emojiSpan.textContent = skill.emoji;
+  name.append(emojiSpan, document.createTextNode(` ${skill.name}`));
 
   const status = document.createElement("span");
   status.className = "skill-card-status";
@@ -197,7 +203,10 @@ function createSkillActionCard(skill: { id: string; emoji: string; name: string;
 
   const name = document.createElement("span");
   name.className = "skill-card-name";
-  name.textContent = `${skill.emoji} ${skill.name}`;
+  const emojiSpan = document.createElement("span");
+  emojiSpan.setAttribute("aria-hidden", "true");
+  emojiSpan.textContent = skill.emoji;
+  name.append(emojiSpan, document.createTextNode(` ${skill.name}`));
 
   const status = document.createElement("span");
   status.className = "skill-card-status";
@@ -270,7 +279,10 @@ export function updateSkillsUI(): void {
 
     const title = document.createElement("h3");
     title.className = "skill-method-title";
-    title.textContent = `${cfg.emoji} ${cfg.name}`;
+    const emojiSpan = document.createElement("span");
+    emojiSpan.setAttribute("aria-hidden", "true");
+    emojiSpan.textContent = cfg.emoji;
+    title.append(emojiSpan, document.createTextNode(` ${cfg.name}`));
     group.appendChild(title);
 
     if (cfg.desc) {
