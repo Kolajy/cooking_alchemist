@@ -172,6 +172,7 @@ export interface CabinetDragState {
   raf: number | null;
   pendingX?: number;
   pendingY?: number;
+  workspaceRect?: DOMRect;
 }
 
 export interface GameDom {
