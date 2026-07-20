@@ -171,31 +171,46 @@ export function createParticles(x, y, count, type) {
   }
 }
 
+let lastHighlightedDragEl = null;
+let lastHighlightedAction = null;
+
 export function updateCollisionHighlight(draggedEl) {
   const { state } = getCtx();
   const previousTarget = state.mergeTarget;
 
+  // Clear hover-merge on every frame
   for (let i = 0; i < state.activeElements.length; i++) {
-    const otherEl = state.activeElements[i];
-    otherEl.classList.remove("hover-merge");
-    otherEl.classList.remove("combine-valid-target");
+    state.activeElements[i].classList.remove("hover-merge");
+  }
+
+  // Only recalculate valid targets if the dragged element or action changed
+  if (draggedEl !== lastHighlightedDragEl || state.activeAction !== lastHighlightedAction) {
+    // Clear old targets
+    for (let i = 0; i < state.activeElements.length; i++) {
+      state.activeElements[i].classList.remove("combine-valid-target");
+    }
+
+    lastHighlightedDragEl = draggedEl;
+    lastHighlightedAction = state.activeAction;
+
+    if (state.activeAction === "combine" && draggedEl) {
+      const draggedId = draggedEl.dataset.id;
+      if (draggedId) {
+        for (let i = 0; i < state.activeElements.length; i++) {
+          const otherEl = state.activeElements[i];
+          if (otherEl === draggedEl) continue;
+          const otherId = otherEl.dataset.id;
+          if (otherId && canCombineIngredients(draggedId, otherId)) {
+            otherEl.classList.add("combine-valid-target");
+          }
+        }
+      }
+    }
   }
 
   if (state.activeAction !== "combine" || !draggedEl) {
     state.mergeTarget = null;
     return;
-  }
-
-  const draggedId = draggedEl.dataset.id;
-  if (draggedId) {
-    for (let i = 0; i < state.activeElements.length; i++) {
-      const otherEl = state.activeElements[i];
-      if (otherEl === draggedEl) continue;
-      const otherId = otherEl.dataset.id;
-      if (otherId && canCombineIngredients(draggedId, otherId)) {
-        otherEl.classList.add("combine-valid-target");
-      }
-    }
   }
 
   const closestEl = findMergeTarget(draggedEl);
@@ -303,11 +318,7 @@ function onPointerUp(e) {
   cachedDragElSize = null;
 
   state.draggedElement = null;
-  state.mergeTarget = null;
-
-  for (let i = 0; i < state.activeElements.length; i++) {
-    state.activeElements[i].classList.remove("hover-merge");
-  }
+  updateCollisionHighlight(null);
 
   if (!wasClick && state.activeAction === "combine" && mergeTarget) {
     getCtx().actions.combineElements?.(el, mergeTarget);
