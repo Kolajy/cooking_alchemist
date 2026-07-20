@@ -27,7 +27,10 @@ export function switchMainView(viewName) {
   if (dom.btnProgressGraph) {
     dom.btnProgressGraph.classList.toggle("active", isMap);
     dom.btnProgressGraph.setAttribute("aria-pressed", isMap ? "true" : "false");
-    dom.btnProgressGraph.textContent = isMap ? "🍳 Back to Kitchen" : "🌳 Progress Map";
+    const emojiSpan = document.createElement("span");
+    emojiSpan.setAttribute("aria-hidden", "true");
+    emojiSpan.textContent = isMap ? "🍳" : "🌳";
+    dom.btnProgressGraph.replaceChildren(emojiSpan, document.createTextNode(isMap ? " Back to Kitchen" : " Progress Map"));
   }
 
   if (dom.btnClearWorkspace) dom.btnClearWorkspace.hidden = isMap;

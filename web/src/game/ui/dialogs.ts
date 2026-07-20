@@ -231,7 +231,10 @@ export function renderRecipeBook() {
     tooltipDiv.setAttribute("role", "tooltip");
 
     const tooltipHeader = document.createElement("h4");
-    tooltipHeader.textContent = "📜 Did You Know?";
+    const tooltipEmojiSpan = document.createElement("span");
+    tooltipEmojiSpan.setAttribute("aria-hidden", "true");
+    tooltipEmojiSpan.textContent = "📜";
+    tooltipHeader.replaceChildren(tooltipEmojiSpan, document.createTextNode(" Did You Know?"));
 
     const tooltipText = document.createElement("p");
     tooltipText.textContent = itemData.blurb || itemData.tip || itemData.description || "Keep experimenting to learn more.";

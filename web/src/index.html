@@ -114,7 +114,7 @@
       <div class="stats-and-actions">
         <div class="app-menu-bar">
           <div class="stats-counter" aria-live="polite">
-            <span class="stats-label">📖 Ledger Restored:</span>
+            <span class="stats-label"><span aria-hidden="true">📖</span> Ledger Restored:</span>
             <span id="unlocked-count" class="stats-value">0%</span>
           </div>
           
@@ -208,9 +208,9 @@
       <!-- Sidebar Cabinet (Inventory) -->
       <aside id="sidebar" class="sidebar-cabinet" aria-label="Ingredient Cabinet">
         <div class="sidebar-cabinet__header" aria-hidden="true">
-          <span class="sidebar-cabinet__ornament">❧</span>
+          <span class="sidebar-cabinet__ornament" aria-hidden="true">❧</span>
           <span class="sidebar-cabinet__label">Pantry</span>
-          <span class="sidebar-cabinet__ornament">❧</span>
+          <span class="sidebar-cabinet__ornament" aria-hidden="true">❧</span>
         </div>
         <div class="cabinet-tabs" role="tablist" aria-label="Sidebar panels">
           <button class="tab-btn active" data-sidebar-tab="cabinet" role="tab" aria-selected="true" aria-controls="cabinet-panel">
