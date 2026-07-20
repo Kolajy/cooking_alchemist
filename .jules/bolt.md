@@ -9,3 +9,7 @@
 ## 2025-02-12 - [Cache workspace rect during cabinet drag to avoid layout thrashing]
 **Learning:** In pointermove callbacks, calling `getBoundingClientRect` causes expensive layout recalculations (thrashing). Since dragging occurs very frequently, these calls add up to significant frame drops and stuttering. In `cabinet-drag.ts`, checking if the pointer is over the workspace was checking DOM rects for every dragged frame!
 **Action:** Cached the workspace `DOMRect` on `pointerdown` and reused it in `pointermove` to avoid calling `getBoundingClientRect` repeatedly.
+
+## 2025-02-12 - [Cached Collision Validations in pointermove]
+**Learning:** Checking combination validity `canCombineIngredients` (which performs an O(N) array search on the transition index) and mutating DOM `classList` properties on every single active element in `updateCollisionHighlight` during a `pointermove` event causes extreme CPU overhead and layout thrashing. Since dragging happens at 60fps or higher, doing this unconditionally was a major performance bottleneck.
+**Action:** When performing complex validations in a hot drag loop, memoize the inputs (the dragged element and current action) and only re-calculate and apply classes when those change, rather than unconditionally every frame.
