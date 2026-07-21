@@ -745,7 +745,11 @@ export function updateSoundToggleButton(btn: HTMLButtonElement | null): void {
   btn.setAttribute("aria-pressed", on ? "true" : "false");
   btn.setAttribute("aria-label", on ? "Mute kitchen sounds" : "Enable kitchen sounds");
   btn.title = on ? "Mute sounds" : "Enable sounds";
-  btn.textContent = on ? "🔊" : "🔇";
+
+  const emojiSpan = document.createElement("span");
+  emojiSpan.setAttribute("aria-hidden", "true");
+  emojiSpan.textContent = on ? "🔊" : "🔇";
+  btn.replaceChildren(emojiSpan);
 }
 
 /** Keep header toggle and settings switch in sync. */
