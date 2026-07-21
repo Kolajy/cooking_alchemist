@@ -178,11 +178,6 @@ export function updateCollisionHighlight(draggedEl) {
   const { state } = getCtx();
   const previousTarget = state.mergeTarget;
 
-  // Clear hover-merge on every frame
-  for (let i = 0; i < state.activeElements.length; i++) {
-    state.activeElements[i].classList.remove("hover-merge");
-  }
-
   // Only recalculate valid targets if the dragged element or action changed
   if (draggedEl !== lastHighlightedDragEl || state.activeAction !== lastHighlightedAction) {
     // Clear old targets
@@ -209,15 +204,22 @@ export function updateCollisionHighlight(draggedEl) {
   }
 
   if (state.activeAction !== "combine" || !draggedEl) {
+    if (previousTarget) {
+      previousTarget.classList.remove("hover-merge");
+    }
     state.mergeTarget = null;
     return;
   }
 
   const closestEl = findMergeTarget(draggedEl);
   state.mergeTarget = closestEl;
-  if (closestEl) {
-    closestEl.classList.add("hover-merge");
-    if (closestEl !== previousTarget) {
+
+  if (closestEl !== previousTarget) {
+    if (previousTarget) {
+      previousTarget.classList.remove("hover-merge");
+    }
+    if (closestEl) {
+      closestEl.classList.add("hover-merge");
       playSound("ui_hover");
     }
   }

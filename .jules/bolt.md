@@ -13,3 +13,7 @@
 ## 2025-02-12 - [Cached Collision Validations in pointermove]
 **Learning:** Checking combination validity `canCombineIngredients` (which performs an O(N) array search on the transition index) and mutating DOM `classList` properties on every single active element in `updateCollisionHighlight` during a `pointermove` event causes extreme CPU overhead and layout thrashing. Since dragging happens at 60fps or higher, doing this unconditionally was a major performance bottleneck.
 **Action:** When performing complex validations in a hot drag loop, memoize the inputs (the dragged element and current action) and only re-calculate and apply classes when those change, rather than unconditionally every frame.
+
+## 2025-03-09 - [Only Mutate Merge Target Classes on State Change]
+**Learning:** Unconditionally modifying DOM `classList` properties on every dragged frame loop causes massive layout thrashing and overhead. In `updateCollisionHighlight`, removing the `hover-merge` class from all active elements every frame even if they aren't hovered degrades performance.
+**Action:** When updating conditional visual states during high-frequency events (like pointermove/drag), use a cached check (like `if (closestEl !== previousTarget)`) and only apply `classList` modifications when the underlying state actually changes.
