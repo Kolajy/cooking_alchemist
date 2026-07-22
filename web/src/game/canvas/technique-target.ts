@@ -116,5 +116,6 @@ export function findMergeTarget(draggedEl) {
 export function canCombineIngredients(idA: string, idB: string): boolean {
   const index = getTransitionIndex();
   if (!index || !idA || !idB) return false;
-  return index.combineTransitions.some(t => t.inputs.includes(idA) && t.inputs.includes(idB));
+  // Use O(1) hash map lookup instead of O(N) array search
+  return Boolean(index.getCombineTransition([idA, idB]));
 }

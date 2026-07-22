@@ -17,3 +17,6 @@
 ## 2025-03-09 - [Only Mutate Merge Target Classes on State Change]
 **Learning:** Unconditionally modifying DOM `classList` properties on every dragged frame loop causes massive layout thrashing and overhead. In `updateCollisionHighlight`, removing the `hover-merge` class from all active elements every frame even if they aren't hovered degrades performance.
 **Action:** When updating conditional visual states during high-frequency events (like pointermove/drag), use a cached check (like `if (closestEl !== previousTarget)`) and only apply `classList` modifications when the underlying state actually changes.
+## 2024-07-25 - [Optimize combine ingredients lookup]
+**Learning:** The transition engine utilizes pre-computed hash maps with sorted, comma-separated keys for combinations. When checking combinations, prefer using O(1) lookups like `index.getCombineTransition(inputIds)` over iterating through the `index.combineTransitions` array.
+**Action:** Replaced O(N) array iteration with O(1) hash map lookup via `index.getCombineTransition([idA, idB])` when validating merge targets in `canCombineIngredients`.
