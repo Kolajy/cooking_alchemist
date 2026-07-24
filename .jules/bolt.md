@@ -20,3 +20,6 @@
 ## 2024-07-25 - [Optimize combine ingredients lookup]
 **Learning:** The transition engine utilizes pre-computed hash maps with sorted, comma-separated keys for combinations. When checking combinations, prefer using O(1) lookups like `index.getCombineTransition(inputIds)` over iterating through the `index.combineTransitions` array.
 **Action:** Replaced O(N) array iteration with O(1) hash map lookup via `index.getCombineTransition([idA, idB])` when validating merge targets in `canCombineIngredients`.
+## 2025-05-18 - [Avoid expensive math functions in pointermove callbacks]
+**Learning:** Using `Math.sqrt` and `Math.hypot` inside high-frequency event listeners like `pointermove` or inside iterative functions called during pointer dragging (`findMergeTarget`) adds unnecessary CPU overhead.
+**Action:** Replace `Math.sqrt(dx*dx + dy*dy)` and `Math.hypot(dx, dy)` with squared distance comparisons (`dx*dx + dy*dy < threshold*threshold`) when comparing magnitudes to a threshold or finding the minimum distance, to save calculations per frame.

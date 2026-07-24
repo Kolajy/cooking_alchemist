@@ -93,7 +93,7 @@ export function findMergeTarget(draggedEl) {
   const pos1Y = Number(draggedEl.dataset.y) || 0;
 
   let closestEl = null;
-  let minDistance = 70;
+  let minDistanceSq = 70 * 70;
 
   state.activeElements.forEach(otherEl => {
     if (otherEl === draggedEl) return;
@@ -102,10 +102,12 @@ export function findMergeTarget(draggedEl) {
     const pos2Y = Number(otherEl.dataset.y) || 0;
     const dx = pos1X - pos2X;
     const dy = pos1Y - pos2Y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (dist < minDistance) {
-      minDistance = dist;
+    // Use squared distance instead of Math.sqrt to avoid expensive math calculations per-frame in pointermove
+    const distSq = dx * dx + dy * dy;
+
+    if (distSq < minDistanceSq) {
+      minDistanceSq = distSq;
       closestEl = otherEl;
     }
   });
