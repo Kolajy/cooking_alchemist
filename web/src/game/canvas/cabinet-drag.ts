@@ -195,7 +195,8 @@ function onCabinetPointerMove(e) {
   const dx = e.clientX - drag.startX;
   const dy = e.clientY - drag.startY;
 
-  if (!drag.active && Math.hypot(dx, dy) >= DRAG_THRESHOLD) {
+  // Use squared distance instead of Math.hypot to avoid expensive math calculations per-frame in pointermove
+  if (!drag.active && (dx * dx + dy * dy) >= DRAG_THRESHOLD * DRAG_THRESHOLD) {
     activateCabinetDrag(drag, e.pointerId);
   }
 }

@@ -276,7 +276,8 @@ function onPointerMove(e) {
   const dy = e.clientY - state.dragStart.y;
 
   if (!state.dragMoved) {
-    if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+    // Use squared distance instead of Math.hypot to avoid expensive math calculations per-frame in pointermove
+    if (dx * dx + dy * dy < DRAG_THRESHOLD * DRAG_THRESHOLD) return;
     state.dragMoved = true;
     el.classList.add("dragging");
     el.style.zIndex = "1002";
