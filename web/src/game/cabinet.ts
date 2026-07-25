@@ -3,7 +3,8 @@ import {
   getPlayableIngredientCatalog,
   buildCabinetItemMarkup,
   matchesCabinetStateFilter,
-  matchesCabinetTypeFilter
+  matchesCabinetTypeFilter,
+  syncCabinetFilterButtons
 } from "./ingredients";
 import { onCabinetPointerDown, handleCabinetItemKeyboardSpawn } from "./canvas/cabinet-drag";
 import { bindHoverPanelEvents } from "./ui/hover-panel";
@@ -160,9 +161,37 @@ export function renderCabinet(): void {
   cabinetItems.appendChild(fragment);
 
   if (filtered.length === 0) {
+    const emptyContainer = document.createElement("div");
+    emptyContainer.className = "cabinet-empty-container";
+    emptyContainer.style.display = "flex";
+    emptyContainer.style.flexDirection = "column";
+    emptyContainer.style.alignItems = "center";
+    emptyContainer.style.gap = "1rem";
+    emptyContainer.style.marginTop = "2rem";
+
     const empty = document.createElement("p");
     empty.className = "cabinet-empty-hint";
     empty.textContent = "No ingredients match this filter.";
-    cabinetItems.appendChild(empty);
+
+    const clearBtn = document.createElement("button");
+    clearBtn.type = "button";
+    clearBtn.className = "btn btn-secondary";
+    clearBtn.textContent = "Clear filters";
+    clearBtn.addEventListener("click", () => {
+      state.typeFilterIncludes.clear();
+      state.typeFilterExcludes.clear();
+      state.stateFilterIncludes.clear();
+      state.stateFilterExcludes.clear();
+      state.searchTerm = "";
+      if (dom.cabinetSearch) {
+        dom.cabinetSearch.value = "";
+      }
+      syncCabinetFilterButtons();
+      renderCabinet();
+    });
+
+    emptyContainer.appendChild(empty);
+    emptyContainer.appendChild(clearBtn);
+    cabinetItems.appendChild(emptyContainer);
   }
 }
