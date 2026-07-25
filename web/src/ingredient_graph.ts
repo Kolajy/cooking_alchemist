@@ -907,6 +907,7 @@ function isUnlockablePrimitive(id) {
     const viewState = { scale: 1, panX: 0, panY: 0 };
     let dragging = false;
     let dragStart = { x: 0, y: 0 };
+    let rafId: number | null = null;
 
     function applyTransform() {
       rootGroup.setAttribute("transform", `translate(${viewState.panX} ${viewState.panY}) scale(${viewState.scale})`);
@@ -962,12 +963,27 @@ function isUnlockablePrimitive(id) {
       if (!dragging) return;
       viewState.panX = event.clientX - dragStart.x;
       viewState.panY = event.clientY - dragStart.y;
-      applyTransform();
+
+      // Throttle expensive SVG layout updates to run exactly once per frame (60fps)
+      // rather than firing for every raw pointer event.
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          rafId = null;
+          applyTransform();
+        });
+      }
     });
 
     viewport.addEventListener("pointerup", event => {
       dragging = false;
       viewport.releasePointerCapture(event.pointerId);
+
+      // Clean up animation frame and apply final state synchronously
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+        applyTransform();
+      }
     });
 
     viewport.addEventListener("wheel", event => {

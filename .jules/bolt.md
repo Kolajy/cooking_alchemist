@@ -23,3 +23,6 @@
 ## 2025-05-18 - [Avoid expensive math functions in pointermove callbacks]
 **Learning:** Using `Math.sqrt` and `Math.hypot` inside high-frequency event listeners like `pointermove` or inside iterative functions called during pointer dragging (`findMergeTarget`) adds unnecessary CPU overhead.
 **Action:** Replace `Math.sqrt(dx*dx + dy*dy)` and `Math.hypot(dx, dy)` with squared distance comparisons (`dx*dx + dy*dy < threshold*threshold`) when comparing magnitudes to a threshold or finding the minimum distance, to save calculations per frame.
+## 2025-10-23 - [Throttling SVG layout updates in pointermove via requestAnimationFrame]
+**Learning:** Frequent `pointermove` events updating SVG `transform` attributes cause expensive layout recalculations (thrashing) and repaints in the render loop. If left unthrottled, these updates can fire up to 1000Hz on some devices, leading to severe frame drops and jank when dragging large graph structures.
+**Action:** Always wrap synchronous DOM mutations (such as `setAttribute("transform", ...)`) in high-frequency event handlers like `pointermove` within a `requestAnimationFrame` loop. Ensure the `rafId` is cached, cleared on execution, and safely cancelled during cleanup events like `pointerup`.
