@@ -8,7 +8,9 @@ import {
   canTechniqueAffectElement,
   findMergeTarget,
   updateTechniqueTargetHighlights,
-  canCombineIngredients
+  canCombineIngredients,
+  cacheMergeTargets,
+  clearMergeTargets
 } from "./technique-target";
 import { bindHoverPanelEvents } from "../ui/hover-panel";
 
@@ -174,7 +176,7 @@ export function createParticles(x, y, count, type) {
 let lastHighlightedDragEl = null;
 let lastHighlightedAction = null;
 
-export function updateCollisionHighlight(draggedEl) {
+export function updateCollisionHighlight(draggedEl, draggedPos?: { x: number; y: number }) {
   const { state } = getCtx();
   const previousTarget = state.mergeTarget;
 
@@ -211,7 +213,7 @@ export function updateCollisionHighlight(draggedEl) {
     return;
   }
 
-  const closestEl = findMergeTarget(draggedEl);
+  const closestEl = findMergeTarget(draggedEl, draggedPos?.x, draggedPos?.y);
   state.mergeTarget = closestEl;
 
   if (closestEl !== previousTarget) {
@@ -236,7 +238,7 @@ function moveDraggedElement(el, clientX, clientY, grabOffset) {
     cachedDragElSize
   );
   setCanvasPosition(el, pos.x, pos.y);
-  updateCollisionHighlight(el);
+  updateCollisionHighlight(el, pos);
 }
 
 function onPointerDown(e) {
@@ -255,6 +257,7 @@ function onPointerDown(e) {
 
   cachedWorkspaceRect = dom.workspace.getBoundingClientRect();
   cachedDragElSize = { w: el.offsetWidth, h: el.offsetHeight };
+  cacheMergeTargets();
 
   el.setPointerCapture(e.pointerId);
   el.addEventListener("pointermove", onPointerMove);
@@ -319,6 +322,7 @@ function onPointerUp(e) {
 
   cachedWorkspaceRect = null;
   cachedDragElSize = null;
+  clearMergeTargets();
 
   state.draggedElement = null;
   updateCollisionHighlight(null);
