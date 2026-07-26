@@ -81,7 +81,22 @@ export function updateTechniqueTargetHighlights() {
   });
 }
 
-export function findMergeTarget(draggedEl) {
+let cachedTargetPositions: { el: HTMLElement; x: number; y: number }[] | null = null;
+
+export function cacheMergeTargets() {
+  const { state } = getCtx();
+  cachedTargetPositions = state.activeElements.map(el => ({
+    el,
+    x: Number(el.dataset.x) || 0,
+    y: Number(el.dataset.y) || 0
+  }));
+}
+
+export function clearMergeTargets() {
+  cachedTargetPositions = null;
+}
+
+export function findMergeTarget(draggedEl, draggedX?: number, draggedY?: number) {
   const { state } = getCtx();
   if (state.activeAction !== "combine" || !draggedEl) return null;
 
@@ -89,26 +104,30 @@ export function findMergeTarget(draggedEl) {
   // getCanvasPosition returns transform coordinates relative to workspace
   // Since elements are roughly same size (or at least we can use a fixed size proxy),
   // distance between their top-left corners works just as well.
-  const pos1X = Number(draggedEl.dataset.x) || 0;
-  const pos1Y = Number(draggedEl.dataset.y) || 0;
+  const pos1X = draggedX !== undefined ? draggedX : (Number(draggedEl.dataset.x) || 0);
+  const pos1Y = draggedY !== undefined ? draggedY : (Number(draggedEl.dataset.y) || 0);
 
   let closestEl = null;
   let minDistanceSq = 70 * 70;
 
-  state.activeElements.forEach(otherEl => {
-    if (otherEl === draggedEl) return;
+  const targets = cachedTargetPositions || state.activeElements.map(el => ({
+    el,
+    x: Number(el.dataset.x) || 0,
+    y: Number(el.dataset.y) || 0
+  }));
 
-    const pos2X = Number(otherEl.dataset.x) || 0;
-    const pos2Y = Number(otherEl.dataset.y) || 0;
-    const dx = pos1X - pos2X;
-    const dy = pos1Y - pos2Y;
+  targets.forEach(target => {
+    if (target.el === draggedEl) return;
+
+    const dx = pos1X - target.x;
+    const dy = pos1Y - target.y;
 
     // Use squared distance instead of Math.sqrt to avoid expensive math calculations per-frame in pointermove
     const distSq = dx * dx + dy * dy;
 
     if (distSq < minDistanceSq) {
       minDistanceSq = distSq;
-      closestEl = otherEl;
+      closestEl = target.el;
     }
   });
 
