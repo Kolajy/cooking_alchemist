@@ -57,6 +57,10 @@ export function renderSearchSuggestions(): void {
     btn.className = "search-suggestion-btn";
     btn.textContent = term;
 
+    btn.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+    });
+
     btn.addEventListener("click", () => {
       const { state } = getCtx();
       cabinetSearch.value = term;
