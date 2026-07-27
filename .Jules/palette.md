@@ -7,3 +7,7 @@
 ## 2026-07-20 - Dynamic Text Replacement Destroying ARIA Tags
 **Learning:** Dynamically updating text content using `element.textContent = '...'` on a parent element will destroy any internal child nodes, including spans carrying critical accessibility attributes like `aria-hidden='true'`.
 **Action:** When updating text on elements containing decorative emojis, use `replaceChildren(emojiSpan, document.createTextNode(...))` or similar safe DOM manipulation methods to ensure the textual content is updated while preserving the `aria-hidden` span around the emoji.
+
+## 2026-07-27 - Autocomplete Interaction Prevention
+**Learning:** When implementing search suggestions, a user clicking a suggestion will trigger the input's `blur` event before the suggestion's `click` event. If the `blur` event destroys the suggestion nodes, the click is lost.
+**Action:** Always use `mousedown` and `e.preventDefault()` on clickable suggestion elements to prevent the input from losing focus prematurely.
