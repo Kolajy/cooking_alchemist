@@ -62,20 +62,20 @@ function getFriendlyStateLabel(stateKey: string): string {
   return labels[stateKey] || "Ingredient";
 }
 
-function updateHoverPanelPosition(e: MouseEvent): void {
+function updateHoverPanelPosition(clientX: number, clientY: number): void {
   if (!hoverCardEl) return;
 
   const padding = 15;
 
-  let x = e.clientX + padding;
-  let y = e.clientY + padding;
+  let x = clientX + padding;
+  let y = clientY + padding;
 
   // Clamp inside the window boundary so it never runs off-screen
   if (x + cachedCardWidth > window.innerWidth) {
-    x = e.clientX - cachedCardWidth - padding;
+    x = clientX - cachedCardWidth - padding;
   }
   if (y + cachedCardHeight > window.innerHeight) {
-    y = e.clientY - cachedCardHeight - padding;
+    y = clientY - cachedCardHeight - padding;
   }
 
   // Ensure it doesn't clip past top/left
@@ -266,8 +266,12 @@ export function showHoverPanelForElement(el: HTMLElement, itemId: string, e: Mou
   cachedCardWidth = hoverCardEl.offsetWidth || 260;
   cachedCardHeight = hoverCardEl.offsetHeight || 180;
 
-  updateHoverPanelPosition(e);
+  updateHoverPanelPosition(e.clientX, e.clientY);
 }
+
+let hoverRaf: number | null = null;
+let hoverPendingX = 0;
+let hoverPendingY = 0;
 
 export function bindHoverPanelEvents(el: HTMLElement, itemId: string): void {
   el.addEventListener("pointerenter", (e) => {
@@ -284,7 +288,15 @@ export function bindHoverPanelEvents(el: HTMLElement, itemId: string): void {
       hideHoverPanel();
       return;
     }
-    updateHoverPanelPosition(e);
+
+    hoverPendingX = e.clientX;
+    hoverPendingY = e.clientY;
+    if (!hoverRaf) {
+      hoverRaf = requestAnimationFrame(() => {
+        hoverRaf = null;
+        updateHoverPanelPosition(hoverPendingX, hoverPendingY);
+      });
+    }
   });
 
   el.addEventListener("pointerleave", () => {
