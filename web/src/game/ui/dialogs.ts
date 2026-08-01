@@ -206,6 +206,7 @@ export function renderRecipeBook() {
 
     const emojiSpan = document.createElement("span");
     emojiSpan.className = "recipe-card-emoji";
+    emojiSpan.setAttribute("aria-hidden", "true");
     emojiSpan.textContent = itemData.emoji;
 
     const nameSpan = document.createElement("span");

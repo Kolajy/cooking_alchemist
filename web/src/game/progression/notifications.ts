@@ -163,6 +163,7 @@ export function triggerIngredientUnlockNotification(milestone: { emoji: string; 
 
   const emoji = document.createElement("div");
   emoji.className = "levelup-emoji";
+  emoji.setAttribute("aria-hidden", "true");
   emoji.textContent = milestone.emoji;
 
   const text = document.createElement("div");
