@@ -1,3 +1,3 @@
-## 2024-05-15 - [Debouncing High-Frequency Events]
-**Learning:** Raw `pointermove` events fire very frequently and modifying the DOM (`style.transform`) directly in them can cause unnecessary layout thrashing/style recalculations, hurting game UI performance when moving pointer elements like the hover-panel.
-**Action:** Always wrap raw UI pointer/scroll coordinate-driven DOM updates in `requestAnimationFrame` and capture the event metrics (like `e.clientX`) outside the callback.
+## 2024-06-25 - Debounce SVG transform updates to prevent layout thrashing on zoom
+**Learning:** A codebase-specific layout thrashing bottleneck occurred where synchronous SVG DOM updates (`setAttribute("transform", ...)`) mixed with layout reads (`getBoundingClientRect()`) in unthrottled trackpad `wheel` events caused redundant layout calculations, leading to CPU spikes and dropped frames during zoom.
+**Action:** When handling high-frequency input events (like `wheel` or `pointermove`) that require both reading layout (e.g. `getBoundingClientRect`) and mutating the DOM, always debounce the synchronous DOM mutation inside a `requestAnimationFrame` loop.

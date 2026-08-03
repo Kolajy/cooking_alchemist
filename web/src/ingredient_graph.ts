@@ -910,7 +910,12 @@ function isUnlockablePrimitive(id) {
     let rafId: number | null = null;
 
     function applyTransform() {
-      rootGroup.setAttribute("transform", `translate(${viewState.panX} ${viewState.panY}) scale(${viewState.scale})`);
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          rafId = null;
+          rootGroup.setAttribute("transform", `translate(${viewState.panX} ${viewState.panY}) scale(${viewState.scale})`);
+        });
+      }
     }
 
     function zoomAt(focalX, focalY, nextScale) {
@@ -963,15 +968,7 @@ function isUnlockablePrimitive(id) {
       if (!dragging) return;
       viewState.panX = event.clientX - dragStart.x;
       viewState.panY = event.clientY - dragStart.y;
-
-      // Throttle expensive SVG layout updates to run exactly once per frame (60fps)
-      // rather than firing for every raw pointer event.
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          rafId = null;
-          applyTransform();
-        });
-      }
+      applyTransform();
     });
 
     viewport.addEventListener("pointerup", event => {
@@ -982,7 +979,8 @@ function isUnlockablePrimitive(id) {
       if (rafId) {
         cancelAnimationFrame(rafId);
         rafId = null;
-        applyTransform();
+        // Synchronous update
+        rootGroup.setAttribute("transform", `translate(${viewState.panX} ${viewState.panY}) scale(${viewState.scale})`);
       }
     });
 
