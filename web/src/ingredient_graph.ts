@@ -984,11 +984,26 @@ function isUnlockablePrimitive(id) {
       }
     });
 
+    let cachedViewportRect: DOMRect | null = null;
+    let wheelTimeout: ReturnType<typeof setTimeout> | null = null;
+
     viewport.addEventListener("wheel", event => {
       event.preventDefault();
-      const rect = viewport.getBoundingClientRect();
-      const focalX = event.clientX - rect.left;
-      const focalY = event.clientY - rect.top;
+
+      // Cache getBoundingClientRect during continuous scrolling to prevent layout thrashing
+      if (!cachedViewportRect) {
+        cachedViewportRect = viewport.getBoundingClientRect();
+      }
+
+      if (wheelTimeout) {
+        clearTimeout(wheelTimeout);
+      }
+      wheelTimeout = setTimeout(() => {
+        cachedViewportRect = null;
+      }, 150);
+
+      const focalX = event.clientX - cachedViewportRect.left;
+      const focalY = event.clientY - cachedViewportRect.top;
       const factor = event.deltaY > 0 ? 0.9 : 1.1;
       zoomAt(focalX, focalY, viewState.scale * factor);
     }, { passive: false });
