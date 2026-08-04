@@ -177,6 +177,7 @@ export function renderCabinet(): void {
     clearBtn.type = "button";
     clearBtn.className = "btn btn-secondary";
     clearBtn.textContent = "Clear filters";
+    clearBtn.setAttribute("aria-label", "Clear all pantry filters");
     clearBtn.addEventListener("click", () => {
       state.typeFilterIncludes.clear();
       state.typeFilterExcludes.clear();
