@@ -167,11 +167,12 @@
             type="button"
             class="workspace-undo-btn"
             aria-label="Undo last counter change"
+            aria-describedby="undo-tooltip"
             disabled
             title="Nothing to undo"
           >
             <span class="workspace-undo-btn__icon" aria-hidden="true">↩</span>
-            <span class="workspace-undo-btn__flavor" role="tooltip">
+            <span id="undo-tooltip" class="workspace-undo-btn__flavor" role="tooltip">
               Put that ingredient back — or take it off the counter.
             </span>
           </button>
@@ -180,9 +181,10 @@
             type="button"
             class="workspace-clear-btn"
             aria-label="Clear counter"
+            aria-describedby="clear-tooltip"
           >
             <span class="workspace-clear-btn__icon" aria-hidden="true">🧹</span>
-            <span class="workspace-clear-btn__flavor" role="tooltip">
+            <span id="clear-tooltip" class="workspace-clear-btn__flavor" role="tooltip">
               Sweep the counter bare — a clean slate for your next experiment.
             </span>
           </button>
