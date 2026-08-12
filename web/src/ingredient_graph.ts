@@ -658,7 +658,7 @@ function isUnlockablePrimitive(id) {
       chip.innerHTML = `
         <span class="graph-focus-chip__label">Showing</span>
         <span class="graph-focus-chip__value">${escapeHtml(focused.emoji)} ${escapeHtml(focused.name)}</span>
-        <button type="button" class="graph-focus-chip__clear" aria-label="Clear ingredient selection"><span aria-hidden="true">×</span></button>
+        <button type="button" class="graph-focus-chip__clear" aria-label="Clear ingredient selection" title="Clear ingredient selection"><span aria-hidden="true">×</span></button>
       `;
       chip.querySelector(".graph-focus-chip__clear").addEventListener("click", () => {
         rerenderWithContext({ focusIngredientId: null });
@@ -731,9 +731,9 @@ function isUnlockablePrimitive(id) {
     zoomControls.className = "graph-zoom-controls";
     if (focusId) {
       zoomControls.innerHTML = `
-        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="out" aria-label="Zoom out"><span aria-hidden="true">−</span></button>
-        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="in" aria-label="Zoom in"><span aria-hidden="true">+</span></button>
-        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="reset" aria-label="Reset view">Reset</button>
+        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="out" aria-label="Zoom out" title="Zoom out"><span aria-hidden="true">−</span></button>
+        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="in" aria-label="Zoom in" title="Zoom in"><span aria-hidden="true">+</span></button>
+        <button type="button" class="btn btn-secondary graph-zoom-btn" data-zoom="reset" aria-label="Reset view" title="Reset view">Reset</button>
       `;
     }
 
