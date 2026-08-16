@@ -59,8 +59,16 @@ export function removeCanvasElement(el) {
 function updateWorkspaceHintVisibility() {
   const { state, dom } = getCtx();
   const hint = dom.workspace?.querySelector(".workspace-hint") as HTMLElement | null;
-  if (!hint) return;
-  hint.style.display = state.activeElements.length === 0 ? "" : "none";
+  const isEmpty = state.activeElements.length === 0;
+
+  if (hint) {
+    hint.style.display = isEmpty ? "" : "none";
+  }
+
+  if (dom.btnClearWorkspace) {
+    dom.btnClearWorkspace.disabled = isEmpty;
+    dom.btnClearWorkspace.title = isEmpty ? "Counter is empty" : "Clear counter";
+  }
 }
 
 export function clearWorkspace() {

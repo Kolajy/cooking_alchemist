@@ -197,7 +197,13 @@
   box-shadow:
     0 2px 8px hsla(28, 20%, 24%, 0.1),
     inset 0 1px 0 hsla(48, 55%, 96%, 0.65);
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
+}
+
+.workspace-clear-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .workspace-clear-btn__icon {
@@ -231,8 +237,8 @@
   pointer-events: none;
 }
 
-.workspace-clear-btn:hover,
-.workspace-clear-btn:focus-visible {
+.workspace-clear-btn:not(:disabled):hover,
+.workspace-clear-btn:not(:disabled):focus-visible {
   border-color: hsla(var(--hue-gold), 42%, 52%, 0.55);
   box-shadow:
     0 0 0 2px hsla(var(--hue-gold), 55%, 58%, 0.18),
@@ -241,8 +247,8 @@
   outline: none;
 }
 
-.workspace-clear-btn:hover .workspace-clear-btn__flavor,
-.workspace-clear-btn:focus-visible .workspace-clear-btn__flavor {
+.workspace-clear-btn:not(:disabled):hover .workspace-clear-btn__flavor,
+.workspace-clear-btn:not(:disabled):focus-visible .workspace-clear-btn__flavor {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
