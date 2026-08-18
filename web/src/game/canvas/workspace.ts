@@ -119,6 +119,8 @@ export function createParticles(x, y, count, type) {
   const isSmoke = type === "smoke";
   const isSizzle = type === "sizzle";
 
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < count; i++) {
     const particle = document.createElement("div");
     if (isSteam) particle.className = "particle particle--steam";
@@ -176,9 +178,11 @@ export function createParticles(x, y, count, type) {
       particle.style.setProperty("--dy", `${Math.sin(angle) * speed - 15}px`);
     }
 
-    dom.workspace.appendChild(particle);
+    fragment.appendChild(particle);
     setTimeout(() => particle.remove(), (isSteam || isSmoke) ? 1900 : (isBoil ? 600 : 800));
   }
+
+  dom.workspace.appendChild(fragment);
 }
 
 let lastHighlightedDragEl = null;
