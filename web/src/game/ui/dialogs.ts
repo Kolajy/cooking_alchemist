@@ -190,6 +190,8 @@ export function renderRecipeBook() {
 
   uniqueRecipes.sort((a, b) => a.name.localeCompare(b.name));
 
+  const fragment = document.createDocumentFragment();
+
   uniqueRecipes.forEach(item => {
     const itemData = enrichItem({ id: item.id, ...item });
     const card = document.createElement("div");
@@ -248,6 +250,8 @@ export function renderRecipeBook() {
     card.appendChild(metaSpan);
     card.appendChild(tooltipDiv);
 
-    discoveredRecipesList.appendChild(card);
+    fragment.appendChild(card);
   });
+
+  discoveredRecipesList.appendChild(fragment);
 }

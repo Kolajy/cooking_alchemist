@@ -64,6 +64,8 @@ export function renderAchievementsPanel(): void {
     list.className = "achievements-section__list";
     list.setAttribute("role", "list");
 
+    const fragment = document.createDocumentFragment();
+
     defs.forEach(def => {
       const unlockedAt = unlocked.get(def.id);
       const isEarned = typeof unlockedAt === "number";
@@ -103,9 +105,10 @@ export function renderAchievementsPanel(): void {
         row.appendChild(time);
       }
 
-      list.appendChild(row);
+      fragment.appendChild(row);
     });
 
+    list.appendChild(fragment);
     section.appendChild(list);
     achievementsList.appendChild(section);
   });
