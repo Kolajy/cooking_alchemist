@@ -52,6 +52,8 @@ export function renderDiscoveryJournal(): void {
     return;
   }
 
+  const fragment = document.createDocumentFragment();
+
   entries.forEach(({ entry, item }) => {
     const row = document.createElement("article");
     row.className = "discovery-log-entry";
@@ -75,8 +77,10 @@ export function renderDiscoveryJournal(): void {
       <time class="discovery-log-entry__time" datetime="${entry.discoveredAt ? escapeHtmlAttr(new Date(entry.discoveredAt).toISOString()) : ""}">${escapeHtml(formatDiscoveredAt(entry.discoveredAt))}</time>
     `;
 
-    discoveryLogList.appendChild(row);
+    fragment.appendChild(row);
   });
+
+  discoveryLogList.appendChild(fragment);
 }
 
 export function refreshDiscoveryJournalIfOpen(): void {

@@ -4,3 +4,6 @@
 ## 2026-08-18 - Batch Particle DOM Insertions
 **Learning:** Calling `appendChild` repeatedly inside loops (like particle generation in `createParticles`) causes unnecessary browser layout calculations and repaints.
 **Action:** When repeatedly creating and appending DOM elements within a loop, use a `DocumentFragment` to batch the insertions before appending to the main DOM.
+## 2024-07-28 - Batch UI List Rendering
+**Learning:** Rendering large lists in the UI (e.g. recipe book, achievements, journal) by repeatedly calling `appendChild()` inside loops causes unnecessary layout recalculations and repaints.
+**Action:** When generating and appending multiple DOM elements within a loop, batch them using a `DocumentFragment` (`document.createDocumentFragment()`) before attaching them to the live DOM.
