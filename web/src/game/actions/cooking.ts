@@ -240,12 +240,11 @@ export function combineElements(
   const foundRecipe = match.success ? match.recipe : null;
   const foundResultId = foundRecipe?.result.id;
 
-  const rect1 = el1.getBoundingClientRect();
-  const rect2 = el2.getBoundingClientRect();
-  const workspaceRect = dom.workspace!.getBoundingClientRect();
+  const pos1 = getCanvasPosition(el1);
+  const pos2 = getCanvasPosition(el2);
 
-  const mergeX = ((rect1.left + rect2.left) / 2) - workspaceRect.left + (rect1.width / 2);
-  const mergeY = ((rect1.top + rect2.top) / 2) - workspaceRect.top + (rect1.height / 2);
+  const mergeX = (pos1.x + pos2.x) / 2 + (el1.offsetWidth / 2);
+  const mergeY = (pos1.y + pos2.y) / 2 + (el1.offsetHeight / 2);
 
   if (foundRecipe && foundResultId) {
     return handleCombineSuccess(el1, el2, foundRecipe, foundResultId, mergeX, mergeY);
@@ -419,12 +418,9 @@ export function applyToolToElement(el: HTMLElement, skillIdOverride: string | nu
   const outputResults = resolveToolOutputResults(foundRecipe, state.discoveredIds);
   const newResults = outputResults.filter(result => !state.discoveredIds.has(result.id));
 
-  const rect = el.getBoundingClientRect();
-  const workspaceRect = dom.workspace!.getBoundingClientRect();
-  const spawnX = rect.left - workspaceRect.left;
-  const spawnY = rect.top - workspaceRect.top;
-  const midX = spawnX + rect.width / 2;
-  const midY = spawnY + rect.height / 2;
+  const { x: spawnX, y: spawnY } = getCanvasPosition(el);
+  const midX = spawnX + el.offsetWidth / 2;
+  const midY = spawnY + el.offsetHeight / 2;
 
   if (foundRecipe && outputResults.length === 0) {
     return handleToolFailure(el, inputId, skillId!, matchResult, midX, midY, true);
