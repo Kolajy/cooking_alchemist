@@ -1,4 +1,5 @@
 import { getCtx } from "../context";
+import { getCanvasPosition } from "../canvas/workspace";
 import { isPlayerActionUnlocked } from "./skills";
 import { playSound } from "../feedback/sounds";
 import { emitGameplayEvent } from "../events";
@@ -47,11 +48,10 @@ export function showHintNearElement(el: HTMLElement | null, text: string): void 
 
   const hint = mountHintElement(text, "kitchen-hint kitchen-hint--anchored animate-pop");
 
-  const rect = el.getBoundingClientRect();
-  const workspaceRect = dom.workspace.getBoundingClientRect();
+  const pos = getCanvasPosition(el);
   hint.style.position = "absolute";
-  hint.style.left = `${Math.max(8, rect.left - workspaceRect.left + rect.width / 2 - 120)}px`;
-  hint.style.top = `${Math.max(8, rect.top - workspaceRect.top - 48)}px`;
+  hint.style.left = `${Math.max(8, pos.x + (el.offsetWidth || 64) / 2 - 120)}px`;
+  hint.style.top = `${Math.max(8, pos.y - 48)}px`;
   hint.style.maxWidth = "240px";
 
   window.setTimeout(() => {
@@ -91,11 +91,10 @@ export function showFloatingWarning(el, text) {
   warning.className = "floating-warning animate-pop";
   warning.textContent = text;
 
-  const rect = el.getBoundingClientRect();
-  const workspaceRect = dom.workspace.getBoundingClientRect();
+  const pos = getCanvasPosition(el);
   warning.style.position = "absolute";
-  warning.style.left = `${rect.left - workspaceRect.left + (rect.width / 2) - 100}px`;
-  warning.style.top = `${rect.top - workspaceRect.top - 35}px`;
+  warning.style.left = `${pos.x + ((el.offsetWidth || 64) / 2) - 100}px`;
+  warning.style.top = `${pos.y - 35}px`;
   warning.style.color = "var(--color-fire)";
   warning.style.fontSize = "0.75rem";
   warning.style.fontWeight = "bold";

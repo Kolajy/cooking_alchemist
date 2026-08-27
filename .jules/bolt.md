@@ -7,3 +7,6 @@
 ## 2024-08-26 - Prevent layout thrashing on element combination
 **Learning:** Calling `getBoundingClientRect()` inside high-frequency interaction logic (like item combination) triggers expensive synchronous DOM layout reflows. When calculating canvas element positions relative to the workspace, prefer using the existing `getCanvasPosition(el)` helper (which reads `dataset.x`/`dataset.y`) over `getBoundingClientRect()` to avoid triggering synchronous layout recalculations.
 **Action:** When calculating canvas element positions relative to the workspace, use `getCanvasPosition(el)` rather than `getBoundingClientRect()`.
+## 2024-09-04 - Prevent layout thrashing in notifications
+**Learning:** Calling `getBoundingClientRect()` within notification setup functions (`showHintNearElement`, `showFloatingWarning`) forces synchronous layout reflows, which causes layout thrashing and drops frames, especially when called repeatedly. The position calculation can be handled by `getCanvasPosition(el)` and a simple query of `el.offsetWidth` (or an approximation).
+**Action:** Replace `getBoundingClientRect()` calls in notifications positioning logic with the custom `getCanvasPosition(el)` to avoid triggering synchronous layout recalculations and improve performance.
