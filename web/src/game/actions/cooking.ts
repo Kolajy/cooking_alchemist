@@ -196,7 +196,10 @@ function handleCombineSuccess(el1: HTMLElement, el2: HTMLElement, foundRecipe: M
       expAwarded: foundRecipe.xpAwarded || 1
     });
   } else {
-    spawnElementOnCanvas(foundRecipe.result, mergeX - 50, mergeY - 15, { animate: true });
+    const elSpawn = spawnElementOnCanvas(foundRecipe.result, mergeX - 50, mergeY - 15, { animate: true });
+    const wsRect = dom.workspace!.getBoundingClientRect();
+    const pos = clampCanvasPosition(elSpawn, mergeX - 50, mergeY - 15, wsRect);
+    setCanvasPosition(elSpawn, pos.x, pos.y);
     refreshAfterGameplay();
   }
 
@@ -298,12 +301,13 @@ function handleToolSuccess(
   // clamped to the counter so nothing lands in an unreadable spot.
   const spawnOutputs = (): Array<{ itemId: string; x: number; y: number }> => {
     const offsets = centeredGridOffsets(outputResults.length);
+    const wsRect = dom.workspace!.getBoundingClientRect();
     return outputResults.map((result, index) => {
       const offset = offsets[index] || { x: 0, y: 0 };
       const elSpawn = spawnElementOnCanvas(result, midX, midY, { animate: true });
       const desiredX = midX + offset.x - elSpawn.offsetWidth / 2;
       const desiredY = midY + offset.y - elSpawn.offsetHeight / 2;
-      const pos = clampCanvasPosition(elSpawn, desiredX, desiredY);
+      const pos = clampCanvasPosition(elSpawn, desiredX, desiredY, wsRect);
       setCanvasPosition(elSpawn, pos.x, pos.y);
       return { itemId: result.id, x: pos.x, y: pos.y };
     });
