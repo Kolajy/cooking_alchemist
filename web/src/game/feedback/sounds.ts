@@ -744,7 +744,7 @@ export function updateSoundToggleButton(btn: HTMLButtonElement | null): void {
   const on = soundEnabled;
   btn.setAttribute("aria-pressed", on ? "true" : "false");
   btn.setAttribute("aria-label", on ? "Mute kitchen sounds" : "Enable kitchen sounds");
-  btn.title = on ? "Mute sounds" : "Enable sounds";
+  btn.title = on ? "Mute sounds (S)" : "Enable sounds (S)";
 
   const emojiSpan = document.createElement("span");
   emojiSpan.setAttribute("aria-hidden", "true");

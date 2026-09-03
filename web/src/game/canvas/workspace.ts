@@ -67,7 +67,7 @@ function updateWorkspaceHintVisibility() {
 
   if (dom.btnClearWorkspace) {
     dom.btnClearWorkspace.disabled = isEmpty;
-    dom.btnClearWorkspace.title = isEmpty ? "Counter is empty" : "Clear counter";
+    dom.btnClearWorkspace.title = isEmpty ? "Counter is empty (C)" : "Clear counter (C)";
   }
 }
 
