@@ -23,15 +23,15 @@ export function clearUndoEntry() {
 function getUndoTitle(entry) {
   switch (entry.type) {
     case "spawn":
-      return "Take it off the counter";
+      return "Take it off the counter (U or ⌘Z)";
     case "remove":
-      return "Put that ingredient back";
+      return "Put that ingredient back (U or ⌘Z)";
     case "combine":
-      return "Undo last combine";
+      return "Undo last combine (U or ⌘Z)";
     case "technique":
-      return "Undo last technique";
+      return "Undo last technique (U or ⌘Z)";
     default:
-      return "Undo last action";
+      return "Undo last action (U or ⌘Z)";
   }
 }
 
@@ -44,7 +44,7 @@ export function refreshUndoButton() {
   btn.disabled = !entry;
 
   if (!entry) {
-    btn.title = "Nothing to undo";
+    btn.title = "Nothing to undo (U or ⌘Z)";
     return;
   }
 
