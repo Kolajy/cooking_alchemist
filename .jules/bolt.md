@@ -10,3 +10,6 @@
 ## 2024-09-04 - Prevent layout thrashing in notifications
 **Learning:** Calling `getBoundingClientRect()` within notification setup functions (`showHintNearElement`, `showFloatingWarning`) forces synchronous layout reflows, which causes layout thrashing and drops frames, especially when called repeatedly. The position calculation can be handled by `getCanvasPosition(el)` and a simple query of `el.offsetWidth` (or an approximation).
 **Action:** Replace `getBoundingClientRect()` calls in notifications positioning logic with the custom `getCanvasPosition(el)` to avoid triggering synchronous layout recalculations and improve performance.
+## 2026-09-03 - Prevent layout thrashing on spawning multiple elements
+**Learning:** When generating multiple output elements in a loop (like `spawnOutputs` in `cooking.ts`), calling `clampCanvasPosition` without a cached workspace rect causes it to query `getBoundingClientRect()` repeatedly. This forces a synchronous layout reflow after every element insertion, causing layout thrashing and CPU spikes.
+**Action:** When using `clampCanvasPosition` inside loops, always calculate and cache `dom.workspace.getBoundingClientRect()` outside the loop and pass it as the 4th argument (`cachedWsRect`) to prevent repeated synchronous layout recalculations.
