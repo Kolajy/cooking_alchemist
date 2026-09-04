@@ -298,12 +298,14 @@ function handleToolSuccess(
   // clamped to the counter so nothing lands in an unreadable spot.
   const spawnOutputs = (): Array<{ itemId: string; x: number; y: number }> => {
     const offsets = centeredGridOffsets(outputResults.length);
+    // Cache the workspace rect to avoid synchronous layout recalculations in the loop
+    const cachedWsRect = dom.workspace!.getBoundingClientRect();
     return outputResults.map((result, index) => {
       const offset = offsets[index] || { x: 0, y: 0 };
       const elSpawn = spawnElementOnCanvas(result, midX, midY, { animate: true });
       const desiredX = midX + offset.x - elSpawn.offsetWidth / 2;
       const desiredY = midY + offset.y - elSpawn.offsetHeight / 2;
-      const pos = clampCanvasPosition(elSpawn, desiredX, desiredY);
+      const pos = clampCanvasPosition(elSpawn, desiredX, desiredY, cachedWsRect);
       setCanvasPosition(elSpawn, pos.x, pos.y);
       return { itemId: result.id, x: pos.x, y: pos.y };
     });

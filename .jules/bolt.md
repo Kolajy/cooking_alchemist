@@ -10,3 +10,6 @@
 ## 2024-09-04 - Prevent layout thrashing in notifications
 **Learning:** Calling `getBoundingClientRect()` within notification setup functions (`showHintNearElement`, `showFloatingWarning`) forces synchronous layout reflows, which causes layout thrashing and drops frames, especially when called repeatedly. The position calculation can be handled by `getCanvasPosition(el)` and a simple query of `el.offsetWidth` (or an approximation).
 **Action:** Replace `getBoundingClientRect()` calls in notifications positioning logic with the custom `getCanvasPosition(el)` to avoid triggering synchronous layout recalculations and improve performance.
+## 2024-11-20 - Cache DOM layout rect outside high-frequency spawn loops
+**Learning:** Calling `getBoundingClientRect()` within a `.map()` or `.forEach()` loop (like `outputResults.map` in `cooking.ts`) triggers repeated synchronous layout recalculations for every spawned item, causing performance thrashing.
+**Action:** When using `clampCanvasPosition` or similar helpers inside loops, always calculate and cache layout constraints (like `dom.workspace.getBoundingClientRect()`) outside the loop and pass the cached value down.
