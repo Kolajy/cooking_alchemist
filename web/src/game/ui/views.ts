@@ -31,6 +31,8 @@ export function switchMainView(viewName) {
     emojiSpan.setAttribute("aria-hidden", "true");
     emojiSpan.textContent = isMap ? "🍳" : "🌳";
     dom.btnProgressGraph.replaceChildren(emojiSpan, document.createTextNode(isMap ? " Back to Kitchen" : " Progress Map"));
+    dom.btnProgressGraph.setAttribute("aria-label", isMap ? "Back to Kitchen" : "Open ingredient progress graph");
+    dom.btnProgressGraph.title = isMap ? "Back to Kitchen (M)" : "Open ingredient progress graph (M)";
   }
 
   if (dom.btnClearWorkspace) dom.btnClearWorkspace.hidden = isMap;
