@@ -29,9 +29,9 @@ export function setCanvasPosition(el, x, y) {
   el.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
 }
 
-export function clampCanvasPosition(el, x, y, cachedWsRect = null, cachedElSize = null) {
+export function clampCanvasPosition(el: HTMLElement, x: number, y: number, cachedWsRect: DOMRect | null = null, cachedElSize: { w: number, h: number } | null = null) {
   const { dom } = getCtx();
-  const ws = cachedWsRect || dom.workspace.getBoundingClientRect();
+  const ws = cachedWsRect || dom.workspace!.getBoundingClientRect();
   const w = cachedElSize ? cachedElSize.w : el.offsetWidth;
   const h = cachedElSize ? cachedElSize.h : el.offsetHeight;
   return {

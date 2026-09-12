@@ -13,3 +13,6 @@
 ## 2024-11-20 - Cache DOM layout rect outside high-frequency spawn loops
 **Learning:** Calling `getBoundingClientRect()` within a `.map()` or `.forEach()` loop (like `outputResults.map` in `cooking.ts`) triggers repeated synchronous layout recalculations for every spawned item, causing performance thrashing.
 **Action:** When using `clampCanvasPosition` or similar helpers inside loops, always calculate and cache layout constraints (like `dom.workspace.getBoundingClientRect()`) outside the loop and pass the cached value down.
+## 2024-09-12 - Layout thrashing when spawning multiple canvas elements
+**Learning:** During gameplay (e.g. chopping, separating), multiple resulting output items are spawned on the counter. If the offsetWidth and offsetHeight properties are read synchronously inside the iteration loop without caching, it causes layout thrashing, as browser forced to recalculate layout repeatedly.
+**Action:** When spawning multiple output elements in a loop, cache the first element's offsetWidth and offsetHeight and pass them down into the layout computation (`clampCanvasPosition`) for the rest.

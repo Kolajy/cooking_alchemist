@@ -300,12 +300,18 @@ function handleToolSuccess(
     const offsets = centeredGridOffsets(outputResults.length);
     // Cache the workspace rect to avoid synchronous layout recalculations in the loop
     const cachedWsRect = dom.workspace!.getBoundingClientRect();
+    let cachedElSize: { w: number, h: number } | null = null;
     return outputResults.map((result, index) => {
       const offset = offsets[index] || { x: 0, y: 0 };
       const elSpawn = spawnElementOnCanvas(result, midX, midY, { animate: true });
-      const desiredX = midX + offset.x - elSpawn.offsetWidth / 2;
-      const desiredY = midY + offset.y - elSpawn.offsetHeight / 2;
-      const pos = clampCanvasPosition(elSpawn, desiredX, desiredY, cachedWsRect);
+
+      if (!cachedElSize) {
+        cachedElSize = { w: elSpawn.offsetWidth, h: elSpawn.offsetHeight };
+      }
+
+      const desiredX = midX + offset.x - cachedElSize.w / 2;
+      const desiredY = midY + offset.y - cachedElSize.h / 2;
+      const pos = clampCanvasPosition(elSpawn, desiredX, desiredY, cachedWsRect, cachedElSize);
       setCanvasPosition(elSpawn, pos.x, pos.y);
       return { itemId: result.id, x: pos.x, y: pos.y };
     });
