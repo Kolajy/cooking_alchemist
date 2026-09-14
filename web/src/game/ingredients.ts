@@ -163,20 +163,49 @@ function getCabinetFilterMode(includes: Set<string>, excludes: Set<string>, key:
 function applyCabinetFilterButtonState(btn: Element, mode: string, isAllButton = false): void {
   const el = btn as HTMLElement;
   el.classList.remove("subtab-btn--include", "subtab-btn--exclude", "active");
+
+  // Do not modify aria-label if the button does not have text content
+  const baseName = (el.textContent || "").trim();
+  if (!baseName) {
+    if (isAllButton) {
+      el.classList.toggle("active", mode === "all");
+      el.setAttribute("aria-pressed", mode === "all" ? "true" : "false");
+      return;
+    }
+    if (mode === "include") {
+      el.classList.add("subtab-btn--include");
+      el.setAttribute("aria-pressed", "true");
+    } else if (mode === "exclude") {
+      el.classList.add("subtab-btn--exclude");
+      el.setAttribute("aria-pressed", "true");
+    } else {
+      el.setAttribute("aria-pressed", "false");
+    }
+    return;
+  }
+
   if (isAllButton) {
     el.classList.toggle("active", mode === "all");
     el.setAttribute("aria-pressed", mode === "all" ? "true" : "false");
+    el.removeAttribute("aria-label");
+    el.removeAttribute("title");
     return;
   }
 
   if (mode === "include") {
     el.classList.add("subtab-btn--include");
     el.setAttribute("aria-pressed", "true");
+    el.setAttribute("aria-label", `Include ${baseName}`);
+    el.title = `Include ${baseName}`;
   } else if (mode === "exclude") {
     el.classList.add("subtab-btn--exclude");
     el.setAttribute("aria-pressed", "true");
+    el.setAttribute("aria-label", `Exclude ${baseName}`);
+    el.title = `Exclude ${baseName}`;
   } else {
     el.setAttribute("aria-pressed", "false");
+    el.removeAttribute("aria-label");
+    el.removeAttribute("title");
   }
 }
 
