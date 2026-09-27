@@ -19,3 +19,6 @@
 ## 2024-05-17 - [Optimizing getActiveTechniqueToolIds Object Iteration]
 **Learning:** In high-frequency canvas or rendering functions (like `updateTechniqueTargetHighlights`), chaining array methods (`Object.keys().map().filter()`) on large data structures like `PROGRESSION_TIERS` causes severe garbage collection thrashing and performance overhead due to intermediate O(N) array/object allocations.
 **Action:** Use a single `for...in` loop to iterate over objects directly to avoid intermediate allocations. This simple change yielded a ~3.5x speedup for `getActiveTechniqueToolIds` in benchmarks.
+## 2024-12-05 - Avoid intermediate allocations in high-frequency functions
+**Learning:** In high-frequency functions (like `pointermove` handlers) or frequently called getters, using chaining array methods like `Array.from(set).filter()` or `.map().forEach()` causes unnecessary memory allocations and garbage collection overhead, leading to performance thrashing.
+**Action:** When iterating over collections in hot paths, avoid array methods that create intermediate arrays or objects. Use standard `for` or `for...of` loops instead to reduce memory churn and improve execution speed.
