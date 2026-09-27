@@ -110,26 +110,42 @@ export function findMergeTarget(draggedEl, draggedX?: number, draggedY?: number)
   let closestEl = null;
   let minDistanceSq = 70 * 70;
 
-  const targets = cachedTargetPositions || state.activeElements.map(el => ({
-    el,
-    x: Number(el.dataset.x) || 0,
-    y: Number(el.dataset.y) || 0
-  }));
+  // ⚡ Bolt: Avoid allocating intermediate array and objects with map() and forEach() on every pointermove
+  if (cachedTargetPositions) {
+    for (let i = 0; i < cachedTargetPositions.length; i++) {
+      const target = cachedTargetPositions[i];
+      if (target.el === draggedEl) continue;
 
-  targets.forEach(target => {
-    if (target.el === draggedEl) return;
+      const dx = pos1X - target.x;
+      const dy = pos1Y - target.y;
 
-    const dx = pos1X - target.x;
-    const dy = pos1Y - target.y;
+      const distSq = dx * dx + dy * dy;
 
-    // Use squared distance instead of Math.sqrt to avoid expensive math calculations per-frame in pointermove
-    const distSq = dx * dx + dy * dy;
-
-    if (distSq < minDistanceSq) {
-      minDistanceSq = distSq;
-      closestEl = target.el;
+      if (distSq < minDistanceSq) {
+        minDistanceSq = distSq;
+        closestEl = target.el;
+      }
     }
-  });
+  } else {
+    for (let i = 0; i < state.activeElements.length; i++) {
+      const el = state.activeElements[i];
+      if (el === draggedEl) continue;
+
+      const x = Number(el.dataset.x) || 0;
+      const y = Number(el.dataset.y) || 0;
+
+      const dx = pos1X - x;
+      const dy = pos1Y - y;
+
+      // Use squared distance instead of Math.sqrt to avoid expensive math calculations per-frame in pointermove
+      const distSq = dx * dx + dy * dy;
+
+      if (distSq < minDistanceSq) {
+        minDistanceSq = distSq;
+        closestEl = el;
+      }
+    }
+  }
 
   return closestEl;
 }

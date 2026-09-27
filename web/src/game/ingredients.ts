@@ -400,8 +400,13 @@ export function resolvePlayableIngredient(itemId: string): IngredientItem | unde
 
 export function getProcessedDiscoveryCount(): number {
   const { state, data } = getCtx();
-  return Array.from(state.discoveredIds).filter(id => {
+  let count = 0;
+  // ⚡ Bolt: Use for...of instead of Array.from().filter() to avoid intermediate array allocations
+  for (const id of state.discoveredIds) {
     const item = data.DISCOVERABLE_ITEMS[id];
-    return item && isFinalizedRecipe(item);
-  }).length;
+    if (item && isFinalizedRecipe(item)) {
+      count++;
+    }
+  }
+  return count;
 }
