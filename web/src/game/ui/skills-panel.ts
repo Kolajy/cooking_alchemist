@@ -34,9 +34,14 @@ function getMaxExpBarPercent(trackId: string): number {
 
 function getNextSkillInChain(skillId: string) {
   const { data } = getCtx();
-  return Object.keys(data.PROGRESSION_TIERS)
-    .map(id => ({ id, ...data.PROGRESSION_TIERS[id] }))
-    .find(skill => skill.dependsOn && skill.dependsOn.includes(skillId));
+  // ⚡ Bolt: Prevent expensive intermediate O(N) object allocations and garbage collection thrashing
+  for (const id in data.PROGRESSION_TIERS) {
+    const skill = data.PROGRESSION_TIERS[id];
+    if (skill.dependsOn && skill.dependsOn.includes(skillId)) {
+      return { id, ...skill };
+    }
+  }
+  return undefined;
 }
 
 function getNextLockedSkillForTrack(trackId: string, methodId: string) {

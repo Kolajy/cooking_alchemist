@@ -22,3 +22,6 @@
 ## 2024-12-05 - Avoid intermediate allocations in high-frequency functions
 **Learning:** In high-frequency functions (like `pointermove` handlers) or frequently called getters, using chaining array methods like `Array.from(set).filter()` or `.map().forEach()` causes unnecessary memory allocations and garbage collection overhead, leading to performance thrashing.
 **Action:** When iterating over collections in hot paths, avoid array methods that create intermediate arrays or objects. Use standard `for` or `for...of` loops instead to reduce memory churn and improve execution speed.
+## 2024-09-28 - Avoid Array Methods on Game State Lookups
+**Learning:** In highly called getters and UI rendering updates, transforming static dictionary-like configurations (e.g. `PROGRESSION_TIERS`) using `Object.keys(data.PROGRESSION_TIERS).map(...).find(...)` repeatedly allocates short-lived objects leading to garbage collection churn and unnecessary CPU spikes.
+**Action:** Always favor native loops like `for...in` which support early returns instead of method chains when dealing with dictionaries or heavily queried object pools.
