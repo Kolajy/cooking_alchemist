@@ -243,15 +243,17 @@ export function toggleCabinetTypeFilter(key: string, mode: "include" | "exclude"
   toggleCabinetFilter(state.typeFilterIncludes, state.typeFilterExcludes, key, mode);
 }
 
-export function matchesCabinetStateFilter(item: CabinetItem): boolean {
+// ⚡ Bolt: Added optional recentSet parameter to allow O(1) lookups during batch processing
+export function matchesCabinetStateFilter(item: CabinetItem, recentSet?: Set<string>): boolean {
   const { state } = getCtx();
+  const isRecent = recentSet ? recentSet.has(item.id) : state.recentlyDiscoveredIds.includes(item.id);
 
-  if (state.stateFilterExcludes.has("recent") && state.recentlyDiscoveredIds.includes(item.id)) {
+  if (state.stateFilterExcludes.has("recent") && isRecent) {
     return false;
   }
   if (state.stateFilterExcludes.has(item.stateKey)) return false;
 
-  if (state.stateFilterIncludes.has("recent") && !state.recentlyDiscoveredIds.includes(item.id)) {
+  if (state.stateFilterIncludes.has("recent") && !isRecent) {
     return false;
   }
 

@@ -104,11 +104,15 @@ function finalizeNewDiscovery(
 
 function applyToolToElements(toolIds: string[], skillId: string | null): boolean {
   const { state } = getCtx();
-  const elements = state.activeElements.filter(el => canTechniqueAffectElement(el, toolIds));
   let applied = false;
-  elements.forEach(el => {
-    if (applyToolToElement(el, skillId)) applied = true;
-  });
+  // ⚡ Bolt: Iterate backwards to avoid intermediate array allocation from .filter().forEach()
+  // while safely allowing elements to be removed from state.activeElements during iteration.
+  for (let i = state.activeElements.length - 1; i >= 0; i--) {
+    const el = state.activeElements[i];
+    if (canTechniqueAffectElement(el, toolIds)) {
+      if (applyToolToElement(el, skillId)) applied = true;
+    }
+  }
   return applied;
 }
 

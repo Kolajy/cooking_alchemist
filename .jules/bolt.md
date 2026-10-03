@@ -25,3 +25,6 @@
 ## 2024-09-28 - Avoid Array Methods on Game State Lookups
 **Learning:** In highly called getters and UI rendering updates, transforming static dictionary-like configurations (e.g. `PROGRESSION_TIERS`) using `Object.keys(data.PROGRESSION_TIERS).map(...).find(...)` repeatedly allocates short-lived objects leading to garbage collection churn and unnecessary CPU spikes.
 **Action:** Always favor native loops like `for...in` which support early returns instead of method chains when dealing with dictionaries or heavily queried object pools.
+## 2024-10-24 - O(1) Cache Lookups for Render Loops
+**Learning:** During UI rendering tasks that apply filtering over large lists (e.g., `renderCabinet` iterating over discovery sets), using `Array.prototype.includes` multiple times inside the iteration causes significant $O(N \times M)$ overhead.
+**Action:** When filtering or sorting UI datasets based on dynamic conditions (like recent item lists), cache the target lookup arrays in an $O(1)$ `Set` before the loop and pass it to validation functions.
