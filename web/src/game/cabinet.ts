@@ -52,6 +52,9 @@ export function renderCabinet(): void {
   const catalog = getPlayableIngredientCatalog();
   const filtered = [];
 
+  // ⚡ Bolt: Cache recently discovered items in an O(1) Set lookup to prevent O(N*M) array iteration overhead during rendering.
+  const recentSet = new Set(state.recentlyDiscoveredIds);
+
   for (let i = 0; i < catalog.length; i++) {
     const item = catalog[i];
 
@@ -103,7 +106,7 @@ export function renderCabinet(): void {
       continue;
     }
 
-    if (matchesCabinetStateFilter(item) && matchesCabinetTypeFilter(item)) {
+    if (matchesCabinetStateFilter(item, recentSet) && matchesCabinetTypeFilter(item)) {
       filtered.push(item);
     }
   }
