@@ -75,21 +75,29 @@ export function updateTechniqueTargetHighlights() {
   const toolIds = getActiveTechniqueToolIds();
   const active = isTechniqueApplicationMode();
 
-  state.activeElements.forEach(el => {
+  // ⚡ Bolt: Avoid intermediate closure allocation by using a standard for loop
+  for (let i = 0; i < state.activeElements.length; i++) {
+    const el = state.activeElements[i];
     const valid = active && canTechniqueAffectElement(el, toolIds);
     el.classList.toggle("technique-valid-target", valid);
-  });
+  }
 }
 
 let cachedTargetPositions: { el: HTMLElement; x: number; y: number }[] | null = null;
 
 export function cacheMergeTargets() {
   const { state } = getCtx();
-  cachedTargetPositions = state.activeElements.map(el => ({
-    el,
-    x: Number(el.dataset.x) || 0,
-    y: Number(el.dataset.y) || 0
-  }));
+  const els = state.activeElements;
+  // ⚡ Bolt: Avoid intermediate array and closure allocations by using a standard for loop
+  cachedTargetPositions = new Array(els.length);
+  for (let i = 0; i < els.length; i++) {
+    const el = els[i];
+    cachedTargetPositions[i] = {
+      el,
+      x: Number(el.dataset.x) || 0,
+      y: Number(el.dataset.y) || 0
+    };
+  }
 }
 
 export function clearMergeTargets() {
