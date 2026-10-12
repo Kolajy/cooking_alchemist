@@ -11,7 +11,13 @@ function getTrackLabel(trackId: string): string {
   const tier = data.PROGRESSION_TIERS[trackId];
   if (tier) return `${tier.emoji} ${tier.name}`;
 
-  const actionByMode = Object.values(data.PLAYER_ACTIONS).find(action => action.mode === trackId);
+  let actionByMode: typeof data.PLAYER_ACTIONS[string] | undefined;
+  for (const id in data.PLAYER_ACTIONS) {
+    if (data.PLAYER_ACTIONS[id]?.mode === trackId) {
+      actionByMode = data.PLAYER_ACTIONS[id];
+      break;
+    }
+  }
   if (actionByMode) return `${actionByMode.emoji} ${actionByMode.name}`;
 
   const directAction = data.PLAYER_ACTIONS[trackId];

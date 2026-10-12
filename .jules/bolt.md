@@ -28,3 +28,6 @@
 ## 2024-10-24 - O(1) Cache Lookups for Render Loops
 **Learning:** During UI rendering tasks that apply filtering over large lists (e.g., `renderCabinet` iterating over discovery sets), using `Array.prototype.includes` multiple times inside the iteration causes significant $O(N \times M)$ overhead.
 **Action:** When filtering or sorting UI datasets based on dynamic conditions (like recent item lists), cache the target lookup arrays in an $O(1)$ `Set` before the loop and pass it to validation functions.
+## 2024-10-31 - Explicit typings for replaced map functions
+**Learning:** When refactoring `Object.values(obj).find(...)` to a `for...in` loop to avoid intermediate array allocations, ensure the previously implicitly typed result variable is explicitly typed (e.g., `let result: typeof obj[string] | undefined;`) to prevent TypeScript compilation regressions when `noImplicitAny` is enabled.
+**Action:** When replacing array iterations returning dynamic values with traditional loops, define specific initial types on the variable.
