@@ -16,7 +16,8 @@ function skillLabel(skillId: string): string {
   const tier = data.PROGRESSION_TIERS[skillId];
   if (tier) return `${tier.emoji} ${tier.name}`;
 
-  for (const action of Object.values(data.PLAYER_ACTIONS)) {
+  for (const id in data.PLAYER_ACTIONS) {
+    const action = data.PLAYER_ACTIONS[id];
     if (action.mode === skillId) return `${action.emoji} ${action.name}`;
   }
 
@@ -25,7 +26,8 @@ function skillLabel(skillId: string): string {
 
 function methodLabelForSkill(skillId: string): string | null {
   const { data } = getCtx();
-  for (const [methodId, action] of Object.entries(data.PLAYER_ACTIONS)) {
+  for (const methodId in data.PLAYER_ACTIONS) {
+    const action = data.PLAYER_ACTIONS[methodId];
     if (action.mode === skillId) return action.name;
     if (action.starterSkill === skillId) return action.name;
     if (action.categories?.some(category => {

@@ -25,12 +25,13 @@ export function getSkillCategories(): string[] {
   const seen = new Set<string>();
   const ordered: string[] = [];
 
-  Object.values(data.PROGRESSION_TIERS).forEach(skill => {
+  for (const id in data.PROGRESSION_TIERS) {
+    const skill = data.PROGRESSION_TIERS[id];
     if (!seen.has(skill.category)) {
       seen.add(skill.category);
       ordered.push(skill.category);
     }
-  });
+  }
 
   return ordered;
 }
@@ -106,7 +107,13 @@ function getTrackLabel(trackId: string): string {
   const tier = data.PROGRESSION_TIERS[trackId];
   if (tier) return `${tier.emoji} ${tier.name}`;
 
-  const actionByMode = Object.values(data.PLAYER_ACTIONS).find(action => action.mode === trackId);
+  let actionByMode: typeof data.PLAYER_ACTIONS[string] | undefined;
+  for (const id in data.PLAYER_ACTIONS) {
+    if (data.PLAYER_ACTIONS[id]?.mode === trackId) {
+      actionByMode = data.PLAYER_ACTIONS[id];
+      break;
+    }
+  }
   if (actionByMode) return `${actionByMode.emoji} ${actionByMode.name}`;
 
   const directAction = data.PLAYER_ACTIONS[trackId];
@@ -155,7 +162,13 @@ export function getTrackExpSummary(trackId: string, overrideExp?: number) {
       detailText += ` · ${nextSkill.emoji} ${nextSkill.name} at ${required}`;
     }
   } else {
-    const methodId = Object.keys(data.PLAYER_ACTIONS).find(id => data.PLAYER_ACTIONS[id]?.mode === trackId);
+    let methodId: string | undefined;
+    for (const id in data.PLAYER_ACTIONS) {
+      if (data.PLAYER_ACTIONS[id]?.mode === trackId) {
+        methodId = id;
+        break;
+      }
+    }
     if (methodId) {
       const nextLocked = getNextLockedSkillForTrack(trackId, methodId);
       const needed = nextLocked?.unlockCriteria?.prerequisites?.[trackId];
