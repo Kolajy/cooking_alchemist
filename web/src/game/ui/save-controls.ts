@@ -2,13 +2,14 @@ import { getCtx } from "../context";
 import { exportGameSave } from "../save/save-export";
 import { importGameSaveFromFile } from "../save/save-import";
 import { resetGameProgress } from "../reset-progress";
+import { showCustomAlert } from "./dialogs";
 
-function exportSaveWithFeedback(): void {
+async function exportSaveWithFeedback(): Promise<void> {
   try {
     exportGameSave();
   } catch (error) {
     console.error("Failed to export game save", error);
-    alert("Could not export your save. Please try again.");
+    await showCustomAlert("Export Error", "Could not export your save. Please try again.");
   }
 }
 
@@ -20,11 +21,11 @@ async function importSaveFromInput(input: HTMLInputElement): Promise<void> {
   try {
     const result = await importGameSaveFromFile(file);
     if (!result.ok && result.error !== "Import cancelled.") {
-      alert(result.error);
+      await showCustomAlert("Import Error", result.error || "Could not import your save.");
     }
   } catch (error) {
     console.error("Failed to import game save", error);
-    alert("Could not import your save. Please try again.");
+    await showCustomAlert("Import Error", "Could not import your save. Please try again.");
   }
 }
 
@@ -33,7 +34,9 @@ export function wireSaveDataControls(): void {
   const { dom } = getCtx();
   const { saveFileInput, settingsExport, settingsImport, settingsReset, settingsModal } = dom;
 
-  settingsExport?.addEventListener("click", exportSaveWithFeedback);
+  settingsExport?.addEventListener("click", () => {
+    void exportSaveWithFeedback();
+  });
 
   settingsImport?.addEventListener("click", () => {
     saveFileInput?.click();
