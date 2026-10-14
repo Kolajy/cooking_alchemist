@@ -152,7 +152,15 @@ export class CombinationEngine {
     const isActionUnlocked = (actionId: string) => {
       const cfg = progressionEngine.config.playerActions[actionId];
       if (!cfg) {
-        const actionByKey = Object.values(progressionEngine.config.playerActions).find(a => a.mode === actionId);
+        // Performance optimization: Avoid intermediate O(N) array allocation from Object.values
+        // to reduce GC pressure since this runs frequently.
+        let actionByKey: (typeof progressionEngine.config.playerActions)[string] | undefined;
+        for (const key in progressionEngine.config.playerActions) {
+          if (progressionEngine.config.playerActions[key].mode === actionId) {
+            actionByKey = progressionEngine.config.playerActions[key];
+            break;
+          }
+        }
         if (!actionByKey) return true;
         if (!actionByKey.unlockCriteria) return true;
         return getDiscoveryCount() >= actionByKey.unlockCriteria.discoveredRecipes;
@@ -167,8 +175,17 @@ export class CombinationEngine {
     for (const toolId of allowedTools) {
       const transition = this.transitionIndex.getTechniqueTransition(toolId, inputId);
       if (transition) {
-        const isAction = toolId in progressionEngine.config.playerActions 
-          || Object.values(progressionEngine.config.playerActions).some(a => a.mode === toolId);
+        // Performance optimization: Avoid intermediate O(N) array allocation from Object.values
+        // to reduce GC pressure since this runs frequently.
+        let isAction = toolId in progressionEngine.config.playerActions;
+        if (!isAction) {
+          for (const key in progressionEngine.config.playerActions) {
+            if (progressionEngine.config.playerActions[key].mode === toolId) {
+              isAction = true;
+              break;
+            }
+          }
+        }
         const unlocked = isAction ? isActionUnlocked(toolId) : progressionEngine.isUnlocked(toolId);
         if (unlocked) {
           bestTransition = { transition, toolId };
@@ -196,8 +213,18 @@ export class CombinationEngine {
 
     if (lockedTransition) {
       const skill = progressionEngine.tiers[lockedTransition.toolId];
-      const actionByKey = Object.values(progressionEngine.config.playerActions).find(a => a.mode === lockedTransition.toolId);
-      const action = progressionEngine.config.playerActions[lockedTransition.toolId] || actionByKey;
+      // Performance optimization: Perform O(1) dictionary lookup first.
+      let action = progressionEngine.config.playerActions[lockedTransition.toolId];
+      if (!action) {
+        // Fallback: Avoid intermediate O(N) array allocation from Object.values
+        // to reduce GC pressure since this runs frequently.
+        for (const key in progressionEngine.config.playerActions) {
+          if (progressionEngine.config.playerActions[key].mode === lockedTransition.toolId) {
+            action = progressionEngine.config.playerActions[key];
+            break;
+          }
+        }
+      }
       return {
         success: false,
         lockedSkillId: lockedTransition.toolId,
