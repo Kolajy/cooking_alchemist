@@ -31,3 +31,6 @@
 ## 2024-10-31 - Explicit typings for replaced map functions
 **Learning:** When refactoring `Object.values(obj).find(...)` to a `for...in` loop to avoid intermediate array allocations, ensure the previously implicitly typed result variable is explicitly typed (e.g., `let result: typeof obj[string] | undefined;`) to prevent TypeScript compilation regressions when `noImplicitAny` is enabled.
 **Action:** When replacing array iterations returning dynamic values with traditional loops, define specific initial types on the variable.
+## 2023-10-27 - O(1) Lookups for single ingredient resolution
+**Learning:** Calling `getPlayableIngredientCatalog().find(id => ...)` on high-frequency events (like `pointerdown` or `undo`) forces the generation of an entirely new large array, array spreading, and O(N) iteration just to find one element.
+**Action:** When resolving single playable ingredients by ID, avoid calling `getPlayableIngredientCatalog()`. Instead, perform direct O(1) lookups on `data.DISCOVERABLE_ITEMS`, falling back to array finds on `data.STARTER_ELEMENTS` and `data.UNLOCKABLE_ELEMENTS`.
