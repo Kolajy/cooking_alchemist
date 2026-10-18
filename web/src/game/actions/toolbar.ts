@@ -231,6 +231,7 @@ export function renderCookingToolbar() {
     onClick,
     extraClass = "",
     disabled = false,
+    ariaDisabled = false,
     title = ""
   }) => {
     const btn = document.createElement("button");
@@ -243,6 +244,7 @@ export function renderCookingToolbar() {
       btn.setAttribute("aria-pressed", "false");
     }
     if (disabled) btn.disabled = true;
+    if (ariaDisabled) btn.setAttribute("aria-disabled", "true");
     if (title) btn.title = title;
 
     const emojiSpan = document.createElement("span");
@@ -283,6 +285,7 @@ export function renderCookingToolbar() {
         isActive: false,
         title: getMethodLockHint(methodId),
         extraClass: "toolbar-btn--method toolbar-btn--locked toolbar-btn--veiled",
+        ariaDisabled: true,
         onClick: (event) => {
           playSound("ui_locked");
           flashToolbarButton(event.currentTarget, "fail");

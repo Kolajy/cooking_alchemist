@@ -71,6 +71,7 @@ export function renderAchievementsPanel(): void {
       const row = document.createElement("article");
       row.className = `achievement-card${isEarned ? " achievement-card--unlocked" : " achievement-card--locked"}`;
       row.setAttribute("role", "listitem");
+      row.setAttribute("aria-label", isEarned ? `Unlocked: ${def.name}` : `Locked: ${def.hint}`);
 
       const main = document.createElement("div");
       main.className = "achievement-card__main";
