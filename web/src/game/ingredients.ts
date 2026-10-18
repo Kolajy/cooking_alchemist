@@ -397,7 +397,16 @@ export function buildCabinetItemMarkup(item: CabinetItem): DocumentFragment {
 }
 
 export function resolvePlayableIngredient(itemId: string): IngredientItem | undefined {
-  return getPlayableIngredientCatalog().find(item => item.id === itemId);
+  const { data } = getCtx();
+  // ⚡ Bolt: Fast O(1) dictionary lookup for the vast majority of items instead of O(N) array search on the full playable catalog
+  let item = data.DISCOVERABLE_ITEMS[itemId];
+  if (!item) {
+    item = data.STARTER_ELEMENTS.find(i => i.id === itemId) as IngredientItem;
+  }
+  if (!item) {
+    item = data.UNLOCKABLE_ELEMENTS.find(i => i.id === itemId) as IngredientItem;
+  }
+  return item;
 }
 
 export function getProcessedDiscoveryCount(): number {
