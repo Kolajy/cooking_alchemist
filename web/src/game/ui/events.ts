@@ -86,11 +86,19 @@ export function setupEventListeners() {
   });
 
 
-  btnClearWorkspace?.addEventListener("click", () => {
+  btnClearWorkspace?.addEventListener("click", (e) => {
+    if (btnClearWorkspace.getAttribute("aria-disabled") === "true") {
+      e.preventDefault();
+      return;
+    }
     clearWorkspace();
   });
 
-  btnUndoWorkspace?.addEventListener("click", () => {
+  btnUndoWorkspace?.addEventListener("click", (e) => {
+    if (btnUndoWorkspace.getAttribute("aria-disabled") === "true") {
+      e.preventDefault();
+      return;
+    }
     applyUndo();
   });
 

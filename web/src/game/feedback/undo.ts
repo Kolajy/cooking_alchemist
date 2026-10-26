@@ -41,7 +41,13 @@ export function refreshUndoButton() {
   if (!btn) return;
 
   const entry = state.undoEntry;
-  btn.disabled = !entry;
+  if (!entry) {
+    btn.setAttribute("aria-disabled", "true");
+    btn.removeAttribute("disabled");
+  } else {
+    btn.removeAttribute("aria-disabled");
+    btn.removeAttribute("disabled");
+  }
 
   if (!entry) {
     btn.title = "Nothing to undo (U or ⌘Z)";

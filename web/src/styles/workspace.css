@@ -125,7 +125,7 @@
   transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
 }
 
-.workspace-undo-btn:disabled {
+.workspace-undo-btn[aria-disabled="true"] {
   opacity: 0.42;
   cursor: not-allowed;
   transform: none;
@@ -162,8 +162,8 @@
   pointer-events: none;
 }
 
-.workspace-undo-btn:not(:disabled):hover,
-.workspace-undo-btn:not(:disabled):focus-visible {
+.workspace-undo-btn:not([aria-disabled="true"]):hover,
+.workspace-undo-btn:not([aria-disabled="true"]):focus-visible {
   border-color: hsla(var(--hue-gold), 42%, 52%, 0.55);
   box-shadow:
     0 0 0 2px hsla(var(--hue-gold), 55%, 58%, 0.18),
@@ -172,8 +172,8 @@
   outline: none;
 }
 
-.workspace-undo-btn:not(:disabled):hover .workspace-undo-btn__flavor,
-.workspace-undo-btn:not(:disabled):focus-visible .workspace-undo-btn__flavor {
+.workspace-undo-btn:not([aria-disabled="true"]):hover .workspace-undo-btn__flavor,
+.workspace-undo-btn:not([aria-disabled="true"]):focus-visible .workspace-undo-btn__flavor {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -200,7 +200,7 @@
   transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
 }
 
-.workspace-clear-btn:disabled {
+.workspace-clear-btn[aria-disabled="true"] {
   opacity: 0.42;
   cursor: not-allowed;
   transform: none;
@@ -237,8 +237,8 @@
   pointer-events: none;
 }
 
-.workspace-clear-btn:not(:disabled):hover,
-.workspace-clear-btn:not(:disabled):focus-visible {
+.workspace-clear-btn:not([aria-disabled="true"]):hover,
+.workspace-clear-btn:not([aria-disabled="true"]):focus-visible {
   border-color: hsla(var(--hue-gold), 42%, 52%, 0.55);
   box-shadow:
     0 0 0 2px hsla(var(--hue-gold), 55%, 58%, 0.18),
@@ -247,8 +247,8 @@
   outline: none;
 }
 
-.workspace-clear-btn:not(:disabled):hover .workspace-clear-btn__flavor,
-.workspace-clear-btn:not(:disabled):focus-visible .workspace-clear-btn__flavor {
+.workspace-clear-btn:not([aria-disabled="true"]):hover .workspace-clear-btn__flavor,
+.workspace-clear-btn:not([aria-disabled="true"]):focus-visible .workspace-clear-btn__flavor {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
