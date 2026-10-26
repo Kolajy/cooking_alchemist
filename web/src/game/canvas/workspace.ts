@@ -66,7 +66,13 @@ function updateWorkspaceHintVisibility() {
   }
 
   if (dom.btnClearWorkspace) {
-    dom.btnClearWorkspace.disabled = isEmpty;
+    if (isEmpty) {
+      dom.btnClearWorkspace.setAttribute("aria-disabled", "true");
+      dom.btnClearWorkspace.removeAttribute("disabled");
+    } else {
+      dom.btnClearWorkspace.removeAttribute("aria-disabled");
+      dom.btnClearWorkspace.removeAttribute("disabled");
+    }
     dom.btnClearWorkspace.title = isEmpty ? "Counter is empty (C)" : "Clear counter (C)";
   }
 }
