@@ -141,11 +141,14 @@ export class CombinationEngine {
       };
     };
 
+    let cachedDiscoveryCount: number | null = null;
     const getDiscoveryCount = () => {
+      if (cachedDiscoveryCount !== null) return cachedDiscoveryCount;
       let count = 0;
-      discoveredIds.forEach(id => {
+      for (const id of discoveredIds) {
         if (this.items[id]?.type === "recipe") count++;
-      });
+      }
+      cachedDiscoveryCount = count;
       return count;
     };
 
