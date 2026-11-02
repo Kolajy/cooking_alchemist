@@ -34,3 +34,6 @@
 ## 2023-10-27 - O(1) Lookups for single ingredient resolution
 **Learning:** Calling `getPlayableIngredientCatalog().find(id => ...)` on high-frequency events (like `pointerdown` or `undo`) forces the generation of an entirely new large array, array spreading, and O(N) iteration just to find one element.
 **Action:** When resolving single playable ingredients by ID, avoid calling `getPlayableIngredientCatalog()`. Instead, perform direct O(1) lookups on `data.DISCOVERABLE_ITEMS`, falling back to array finds on `data.STARTER_ELEMENTS` and `data.UNLOCKABLE_ELEMENTS`.
+## 2024-12-15 - Memoize expensive Set iterations in hot paths
+**Learning:** In high-frequency functions like `matchToolRecipe`, recalculating the same value (like counting discovered recipes by iterating over a `Set`) multiple times per call across different criteria checks causes significant performance overhead and GC pressure.
+**Action:** When a computed value depends on external state that doesn't change during the function call, memoize the result locally. Additionally, prefer `for...of` loops over `.forEach()` for `Set` iteration to avoid closure allocation.
