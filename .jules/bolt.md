@@ -37,3 +37,9 @@
 ## 2024-12-15 - Memoize expensive Set iterations in hot paths
 **Learning:** In high-frequency functions like `matchToolRecipe`, recalculating the same value (like counting discovered recipes by iterating over a `Set`) multiple times per call across different criteria checks causes significant performance overhead and GC pressure.
 **Action:** When a computed value depends on external state that doesn't change during the function call, memoize the result locally. Additionally, prefer `for...of` loops over `.forEach()` for `Set` iteration to avoid closure allocation.
+
+## $(date +%Y-%m-%d) - Cached Set-derived state using `.size`
+
+**Learning:** When game logic continuously derives values (e.g. valid elements count, playable IDs, recipe counts) from an append-only structure like `this.discovered` (a `Set`), frequent getters (like `statsText` and `playableItemIds`) will trigger redundant O(N) loops. `playableItemIds()` returning a newly allocated and sorted array dynamically is particularly bad because it can trigger React-side re-renders if the arrays are strictly checked by reference.
+
+**Action:** Consolidate these iterations into a single caching function (e.g., `_recalculateCaches`) and use `this.discovered.size` as an O(1) invalidation key to return memoized results on all subsequent accesses.
