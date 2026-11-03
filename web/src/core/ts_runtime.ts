@@ -16,6 +16,12 @@ export class TypeScriptRuntime implements SharedGameRuntime {
   private combination: CombinationEngine;
   private discovered: Set<string>;
 
+  private _cachedDiscoveredSize = -1;
+  private _cachedRecipeCount = -1;
+  private _cachedValidCount = -1;
+  private _cachedPlayableItemIds: string[] | null = null;
+  private _totalDiscoverableItemsCache: number | null = null;
+
   constructor(initialSave?: ProgressionState) {
     this.progression = new ProgressionEngine(
       globalThis.PROGRESSION_CONFIG,
@@ -119,49 +125,56 @@ export class TypeScriptRuntime implements SharedGameRuntime {
     };
   }
 
+  private _recalculateCaches(): void {
+    if (this.discovered.size === this._cachedDiscoveredSize) return;
+
+    let recipeCount = 0;
+    let validCount = 0;
+    const idSet = new Set(globalThis.STARTER_ELEMENTS.map(i => i.id));
+
+    for (const id of this.discovered) {
+      const item = globalThis.DISCOVERABLE_ITEMS[id];
+      if (item) {
+        validCount++;
+        idSet.add(id);
+        if (item.type === "recipe") {
+          recipeCount++;
+        }
+      }
+    }
+
+    this._cachedRecipeCount = recipeCount;
+    this._cachedValidCount = validCount;
+    this._cachedPlayableItemIds = Array.from(idSet).sort();
+    this._cachedDiscoveredSize = this.discovered.size;
+  }
+
   isPlayerActionUnlocked(actionId: string): boolean {
     const cfg = globalThis.PLAYER_ACTIONS[actionId];
     if (!cfg?.unlockCriteria?.discoveredRecipes) return true;
-    let count = 0;
-    for (const id of this.discovered) {
-      const item = globalThis.DISCOVERABLE_ITEMS[id];
-      if (item?.type === "recipe") count++;
-    }
-    return count >= cfg.unlockCriteria.discoveredRecipes;
+    this._recalculateCaches();
+    return this._cachedRecipeCount >= cfg.unlockCriteria.discoveredRecipes;
   }
 
   discoveredRecipeCount(): number {
-    let count = 0;
-    for (const id of this.discovered) {
-      if (globalThis.DISCOVERABLE_ITEMS[id]?.type === "recipe") count++;
-    }
-    return count;
+    this._recalculateCaches();
+    return this._cachedRecipeCount;
   }
-
-  private _totalDiscoverableItemsCache: number | null = null;
 
   statsText(): string {
     if (this._totalDiscoverableItemsCache === null) {
       this._totalDiscoverableItemsCache = Object.keys(globalThis.DISCOVERABLE_ITEMS).length;
     }
     const total = this._totalDiscoverableItemsCache;
-    let count = 0;
-    for (const id of this.discovered) {
-      if (globalThis.DISCOVERABLE_ITEMS[id]) count++;
-    }
-    return `${count} / ${total} discovered`;
+    this._recalculateCaches();
+    return `${this._cachedValidCount} / ${total} discovered`;
   }
 
   playableItemIds(): string[] {
-    // ⚡ Bolt: Use a Set to prevent O(n^2) lookups when checking for duplicates
+    // ⚡ Bolt: Cache derived values to prevent O(N) recalculations on every render
     // This provides a substantial performance boost since playableItemIds is called frequently
-    const idSet = new Set(globalThis.STARTER_ELEMENTS.map(i => i.id));
-    for (const id of this.discovered) {
-      if (globalThis.DISCOVERABLE_ITEMS[id]) {
-        idSet.add(id);
-      }
-    }
-    return Array.from(idSet).sort();
+    this._recalculateCaches();
+    return this._cachedPlayableItemIds!;
   }
 
   exportSave(): string {
