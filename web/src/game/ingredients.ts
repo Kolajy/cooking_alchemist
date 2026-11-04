@@ -138,10 +138,23 @@ export function getIngredientTypes(): string[] {
   Object.values(data.DISCOVERABLE_ITEMS).forEach(collect);
 
   const preferredOrder = ["Liquids", "Produce", "Forage", "Proteins", "Pantry"];
-  return [
-    ...preferredOrder.filter(type => types.has(type)),
-    ...Array.from(types).filter(type => !preferredOrder.includes(type)).sort()
-  ];
+  // ⚡ Bolt: Use explicit loops instead of Array.from().filter() and spread syntax to avoid intermediate allocations
+  const res = [];
+  for (const type of preferredOrder) {
+    if (types.has(type)) {
+      res.push(type);
+    }
+  }
+  const otherTypes = [];
+  for (const type of types) {
+    if (!preferredOrder.includes(type)) {
+      otherTypes.push(type);
+    }
+  }
+  otherTypes.sort();
+  res.push(...otherTypes);
+
+  return res;
 }
 
 export function isCabinetTypeFilterClear(): boolean {
