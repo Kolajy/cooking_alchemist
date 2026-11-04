@@ -43,7 +43,8 @@ export class CombinationEngine {
     progressionEngine: ProgressionEngine
   ) {
     const skillCategory = skill.category;
-    for (const toolId of Object.keys(this.transitionIndex.byTechnique)) {
+    // ⚡ Bolt: Use for...in loop instead of spreading Object.keys() to avoid intermediate array allocations
+    for (const toolId in this.transitionIndex.byTechnique) {
       const transition = this.transitionIndex.byTechnique[toolId]?.[inputId];
       if (!transition) continue;
 
@@ -85,7 +86,10 @@ export class CombinationEngine {
           actionCfg.categories.forEach(category => {
             const categoryCfg = progressionEngine.config.techniqueCategories[category];
             if (categoryCfg && categoryCfg.techniques) {
-              allowedTools.push(...Object.keys(categoryCfg.techniques));
+              // ⚡ Bolt: Use for...in loop instead of spreading Object.keys() to avoid intermediate array allocations
+              for (const key in categoryCfg.techniques) {
+                allowedTools.push(key);
+              }
             }
           });
         }

@@ -78,11 +78,15 @@ export class ProgressionEngine {
   }
 
   getActiveTier(category: string): (TechniqueTier & { id: string }) | null {
-    const categorySkills = Object.keys(this.tiers)
-      .map(id => ({ id, ...this.tiers[id] }))
-      .filter(s => s.category === category);
+    // ⚡ Bolt: Use for...in loop instead of Object.keys().map().filter() to avoid intermediate array allocations
+    const unlocked = [];
+    for (const id in this.tiers) {
+      const skill = this.tiers[id];
+      if (skill.category === category && this.isUnlocked(id)) {
+        unlocked.push({ id, ...skill });
+      }
+    }
 
-    const unlocked = categorySkills.filter(s => this.isUnlocked(s.id));
     if (unlocked.length === 0) return null;
 
     let active = unlocked[0];
@@ -127,15 +131,27 @@ export class ProgressionEngine {
     }
 
     const maxExp = this.config.maxSkillExp ?? 99;
-    const previouslyLocked = Object.keys(this.tiers).filter(id => !this.isUnlocked(id));
+    // ⚡ Bolt: Use for...in loop to avoid intermediate array allocations from Object.keys().filter()
+    const previouslyLocked: string[] = [];
+    for (const id in this.tiers) {
+      if (!this.isUnlocked(id)) {
+        previouslyLocked.push(id);
+      }
+    }
+
     this.state.xp[skillId] = Math.min(this.state.xp[skillId] + amount, maxExp);
     this.clearUnlockCache();
 
-    const newlyUnlocked = previouslyLocked.filter(id => this.isUnlocked(id));
+    const newlyUnlockedSkills = [];
+    for (const id of previouslyLocked) {
+      if (this.isUnlocked(id)) {
+        newlyUnlockedSkills.push({ id, ...this.tiers[id] });
+      }
+    }
 
     return {
-      leveledUp: newlyUnlocked.length > 0,
-      newlyUnlockedSkills: newlyUnlocked.map(id => ({ id, ...this.tiers[id] }))
+      leveledUp: newlyUnlockedSkills.length > 0,
+      newlyUnlockedSkills
     };
   }
 
