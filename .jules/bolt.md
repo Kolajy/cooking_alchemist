@@ -47,3 +47,7 @@
 ## 2024-12-16 - Avoid intermediate array allocations in performance-critical paths
 **Learning:** Using array chaining methods like `Object.keys(obj).map(...).filter(...)` or spreading keys into an array (`arr.push(...Object.keys(obj))`) causes intermediate arrays to be allocated and rapidly discarded, leading to high garbage collection pressure, particularly in performance-sensitive engine methods that are called frequently.
 **Action:** To avoid intermediate array allocations in performance-critical sections (like engine logic), avoid using spread syntax with `Object.keys()` or method chains. Instead, iterate over the object or collection directly using a standard `for...in` or `for...of` loop.
+
+## $(date +%Y-%m-%d) - Avoid intermediate array allocations in performance-critical paths
+**Learning:** Using array chaining methods like `Object.keys(obj).map(...).filter(...)` or spreading keys into an array (`arr.push(...Object.keys(obj))`) causes intermediate arrays to be allocated and rapidly discarded, leading to high garbage collection pressure, particularly in performance-sensitive engine methods that are called frequently.
+**Action:** To avoid intermediate array allocations in performance-critical sections (like engine logic), avoid using spread syntax with `Object.keys()` or method chains. Instead, iterate over the object or collection directly using a standard `for...in` or `for...of` loop.
