@@ -109,12 +109,17 @@ export function getPlayableIngredientCatalog(): CabinetItem[] {
     customUnlocked.push("tubers");
   }
 
-  const catalog: CabinetItem[] = [
-    ...data.STARTER_ELEMENTS.map(toCabinetItem),
-    ...data.UNLOCKABLE_ELEMENTS
-      .filter(item => customUnlocked.includes(item.id))
-      .map(toCabinetItem)
-  ];
+  const catalog: CabinetItem[] = [];
+
+  for (const item of data.STARTER_ELEMENTS) {
+    catalog.push(toCabinetItem(item));
+  }
+
+  for (const item of data.UNLOCKABLE_ELEMENTS) {
+    if (customUnlocked.includes(item.id)) {
+      catalog.push(toCabinetItem(item));
+    }
+  }
 
   for (const id of state.discoveredIds) {
     const item = data.DISCOVERABLE_ITEMS[id];
@@ -129,13 +134,19 @@ export function getPlayableIngredientCatalog(): CabinetItem[] {
 export function getIngredientTypes(): string[] {
   const { data } = getCtx();
   const types = new Set<string>();
-  const collect = (item: IngredientItem) => {
-    if (item.category) types.add(item.category);
-  };
 
-  data.STARTER_ELEMENTS.forEach(collect);
-  data.UNLOCKABLE_ELEMENTS.forEach(collect);
-  Object.values(data.DISCOVERABLE_ITEMS).forEach(collect);
+  for (const item of data.STARTER_ELEMENTS) {
+    if (item.category) types.add(item.category);
+  }
+
+  for (const item of data.UNLOCKABLE_ELEMENTS) {
+    if (item.category) types.add(item.category);
+  }
+
+  for (const id in data.DISCOVERABLE_ITEMS) {
+    const item = data.DISCOVERABLE_ITEMS[id];
+    if (item && item.category) types.add(item.category);
+  }
 
   const preferredOrder = ["Liquids", "Produce", "Forage", "Proteins", "Pantry"];
   // ⚡ Bolt: Use explicit loops instead of Array.from().filter() and spread syntax to avoid intermediate allocations

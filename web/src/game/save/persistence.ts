@@ -110,7 +110,12 @@ export function sanitizeDiscoveredIds() {
 
 function sanitizeRecentDiscoveries() {
   const { state } = getCtx();
-  const next = state.recentlyDiscoveredIds.filter(id => state.discoveredIds.has(id));
+  const next = [];
+  for (const id of state.recentlyDiscoveredIds) {
+    if (state.discoveredIds.has(id)) {
+      next.push(id);
+    }
+  }
   if (next.length !== state.recentlyDiscoveredIds.length) {
     state.recentlyDiscoveredIds = next;
   }
@@ -121,10 +126,12 @@ export function recordRecentDiscoveries(ids: string[]) {
   const incoming = ids.filter(id => id && state.discoveredIds.has(id));
   if (incoming.length === 0) return;
 
-  const next = [
-    ...incoming,
-    ...state.recentlyDiscoveredIds.filter(id => !incoming.includes(id))
-  ];
+  const next = [...incoming];
+  for (const id of state.recentlyDiscoveredIds) {
+    if (!incoming.includes(id)) {
+      next.push(id);
+    }
+  }
   state.recentlyDiscoveredIds = next.slice(0, MAX_RECENT_DISCOVERIES);
   incoming.forEach(id => state.recentHighlightIds.add(id));
   recordDiscoveryTimestamps(incoming);
